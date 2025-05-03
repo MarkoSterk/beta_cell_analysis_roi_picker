@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-12 col-xl-5 mx-auto m-1">
+        <div id="video-controls" class="video-controls" style="width: {{ width }}px;">
+            <button id="play-pause" jolt-click="playPauseVideo" class="btn btn-sm btn-dark rounded text-center" style="width: 59px;">Play</button>
+            <div class="video-seekbar" jolt-click="seek">
+                <div id="seekbar" class="seekbar"></div>
+            </div>
+            <div class="playback-slider">
+                <label for="playback-speed">Speed: 1.0x</label>
+                <input type="range" min="0.5" max="16.0" value="1.0" step="0.5" class="slider" id="playback-speed" jolt-change="setPlaybackSpeed">
+            </div>
+        </div>
+        <div id="video-container">
+            <video loop id="video" width="{{ width }}" height="{{ height }}" jolt-timeupdate="updateSeekBar" preload="auto">
+                <source src="{{ protocol }}://{{ host }}:{{ port }}{{ url_for('static', path='lif_video.mp4') }}" type="video/mp4">
+            </video>
+            <canvas id="canvas" width="{{ width }}" height="{{ height }}" jolt-mousedown="canvasClick" jolt-mousemove="canvasMouseMove" jolt-mouseup="canvasMouseUp"></canvas>
+            {% raw %}
+            <div data-bind="app.rois">
+                {{? this.selectedRois.length != 0 }}
+                    <span class="float-right">
+                        <a role="button" class="btn btn-sm btn-secondary" href="/api/v1/files/export-timeseries" router-ignore="true" target="_blank">
+                            Export time series
+                        </a>
+                    </span>
+                    <span class="float-right">
+                        <a role="button" class="btn btn-sm btn-secondary" href="/api/v1/files/export-coordinates" router-ignore="true" target="_blank">
+                            Export coordinates
+                        </a>
+                    </span>
+                {{?}}
+            </div>
+            {% endraw %}
+        </div>
+    </div>
+    <div class="col-12 col-xl-6 mx-auto m-1">
+        <div>
+            <small class="d-block text-muted fw-bold">All</small>
+            <ts-plot-all style="width: 100%;" :width="{{ts_width}}" :height="{{ts_height}}"></ts-plot-all>
+        </div>
+        <div>
+            <small class="d-block text-muted fw-bold">Last selected</small>
+            <single-plot style="width: 100%;" :width="{{ts_width}}" :height="{{ts_height - 100}}"></single-plot>
+        </div>
+    </div>
+</div>

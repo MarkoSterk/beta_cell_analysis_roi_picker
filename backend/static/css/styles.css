@@ -1,0 +1,39 @@
+body {
+    overflow-x:hidden;
+}
+
+#video-container {
+    position: relative;
+}
+#canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.video-controls {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 5px;
+}
+
+.video-seekbar {
+    flex-grow: 1;
+    height: 5px;
+    background-color: #ddd;
+    cursor: pointer;
+    margin: 0 10px;
+}
+  
+.seekbar {
+    width: 0%;
+    height: 100%;
+    background-color: #2196F3;
+}
+
+a[data-disabled] {
+    color: ghostwhite;
+    pointer-events: none;
+    cursor: default;
+}

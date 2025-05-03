@@ -1,0 +1,23 @@
+{
+  "name": "beta_cell_analysis_gui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "vite": "vite dev",
+    "build": "vite build",
+    "watch": "vite build --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@editorjs/editorjs": "^2.30.8",
+    "@editorjs/header": "^2.8.8",
+    "@editorjs/list": "^2.0.6",
+    "jolt-ui": "^2.0.3",
+    "vite": "^6.3.2"
+  },
+  "devDependencies": {
+    "vite-plugin-top-level-await": "^1.5.0"
+  }
+}
