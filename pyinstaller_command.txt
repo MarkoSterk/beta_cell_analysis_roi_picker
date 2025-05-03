@@ -1,0 +1,12 @@
+//WORKS FOR MacOS
+uv run pyinstaller \
+  --name RoiPicker \
+  --onedir \
+  --console \
+  --add-data "backend/static:backend/static" \
+  --add-data "backend/logs:backend/logs" \
+  --add-data "backend/templates:backend/templates" \
+  --add-data "backend/static/temp_files:backend/static/temp_files" \
+  --collect-submodules reportlab.graphics.barcode \
+  --noconfirm \
+  run.py

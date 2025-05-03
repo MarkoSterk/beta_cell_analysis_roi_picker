@@ -7,6 +7,6 @@ from backend import create_app
 
 if __name__ == "__main__":
     app: PyJolt = create_app() #creates PyJolt application
-    app.run("backend:create_app", factory=True, reload=True)
-    #desktop: DesktopUI = DesktopUI(app)
-    #desktop.run()
+    #app.run("backend:create_app", factory=True, reload=True)
+    desktop: DesktopUI = DesktopUI(app)
+    desktop.run()
