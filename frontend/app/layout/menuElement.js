@@ -1,6 +1,6 @@
 import { ElementFactory, html, css, querySelectorAll, querySelector } from "jolt-ui";
 import { handleFile } from "../components/uploadDropZone";
-import { startOverlaySpinner } from "../utilities/spinner";
+import { startOverlaySpinner, removeOverlaySpinner } from "../utilities/spinner";
 
 async function menuElementMarkup(){
     return html`
@@ -57,10 +57,11 @@ async function menuElementMarkup(){
 }
 
 async function shutdownApp(elem, event, args){
+  startOverlaySpinner();
   let response = await fetch("/shutdown");
-  console.log(response)
   if(!response.ok || response?.status != 200){
-    throw new Error("Something went wrong. Failed to shutdown");
+    removeOverlaySpinner();
+    return this.ext.messenger.setMessage({msg: "Something went wrong. Failed to shutdown.", status: "danger"})
   }
   window.close()
 }
