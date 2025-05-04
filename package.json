@@ -14,6 +14,7 @@
     "@editorjs/editorjs": "^2.30.8",
     "@editorjs/header": "^2.8.8",
     "@editorjs/list": "^2.0.6",
+    "beta_cell_analysis_gui": "file:",
     "jolt-ui": "^2.0.3",
     "vite": "^6.3.2"
   },
