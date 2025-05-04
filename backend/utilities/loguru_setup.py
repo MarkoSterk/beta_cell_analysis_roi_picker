@@ -13,12 +13,13 @@ def loguru_setup(app: PyJolt):
     logger.remove()
 
     # 2) add console sink (INFO+ only, colorized)
-    logger.add(
-        sys.stderr,
-        level="INFO",
-        format="<green>{time:HH:mm:ss}</green> | <level>{level: <7}</level> | {message}",
-        colorize=True,
-    )
+    if sys.stderr is not None:
+        logger.add(
+            sys.stderr,
+            level="INFO",
+            format="<green>{time:HH:mm:ss}</green> | <level>{level: <7}</level> | {message}",
+            colorize=True,
+        )
 
     # 3) add file sink (DEBUG+, rotation & retention)
     logger.add(
@@ -27,4 +28,5 @@ def loguru_setup(app: PyJolt):
         rotation="3 MB",      # rotate when >3MB
         retention=3,          # keep 3 most recent files
         format="{time:YYYY-MM-DD HH:mm:ss} | {level: <7} | {message}",
+        backtrace=True, diagnose=True
     )
