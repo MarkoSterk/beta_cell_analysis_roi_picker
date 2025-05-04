@@ -3,6 +3,7 @@ uv run pyinstaller \
   --name RoiPicker \
   --onedir \
   --console \
+  --icon=icon.ico \
   --distpath dist/macos \
   --add-data "backend/static:backend/static" \
   --add-data "backend/logs:backend/logs" \
