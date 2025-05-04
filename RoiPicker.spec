@@ -6,7 +6,7 @@ hiddenimports += collect_submodules('reportlab.graphics.barcode')
 
 
 a = Analysis(
-    ['run.py'],
+    ['run_prod.py'],
     pathex=[],
     binaries=[],
     datas=[('backend/static', 'backend/static'), ('backend/logs', 'backend/logs'), ('backend/templates', 'backend/templates'), ('backend/static/temp_files', 'backend/static/temp_files')],
@@ -30,7 +30,7 @@ exe = EXE(
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=True,
+    console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
@@ -45,4 +45,10 @@ coll = COLLECT(
     upx=True,
     upx_exclude=[],
     name='RoiPicker',
+)
+app = BUNDLE(
+    coll,
+    name='RoiPicker.app',
+    icon=None,
+    bundle_identifier=None,
 )

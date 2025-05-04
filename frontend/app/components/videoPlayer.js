@@ -241,6 +241,14 @@ function removeTrace(index){
     this.singlePlot.drawTimeSeries(last)
 }
 
+async function tryNativeExport(elem, event, args){
+    if(!window.pywebview){
+        return;
+    }
+    event.preventDefault();
+    await window.pywebview.api[args.next]();
+}
+
 const videoPlayer = ElementFactory({
     tagName: "video-player",
     markup: async function(){
@@ -264,6 +272,7 @@ const videoPlayer = ElementFactory({
         findClickedEllipseIndex,
         removeTrace,
         redrawAllTS,
+        tryNativeExport
     },
     beforeInit: {
         getInitialSampling: function(){

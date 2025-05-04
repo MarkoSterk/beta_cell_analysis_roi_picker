@@ -3,10 +3,26 @@ uv run pyinstaller \
   --name RoiPicker \
   --onedir \
   --console \
+  --distpath dist/macos \
   --add-data "backend/static:backend/static" \
   --add-data "backend/logs:backend/logs" \
   --add-data "backend/templates:backend/templates" \
   --add-data "backend/static/temp_files:backend/static/temp_files" \
   --collect-submodules reportlab.graphics.barcode \
   --noconfirm \
-  run.py
+  run_prod.py
+
+
+//FOR WINDOWS
+uv run pyinstaller \
+  --name RoiPicker \
+  --onedir \
+  --windowed \
+  --distpath dist/windows \
+  --add-data "backend/static;backend/static" \
+  --add-data "backend/logs;backend/logs" \
+  --add-data "backend/templates;backend/templates" \
+  --add-data "backend/static/temp_files;backend/static/temp_files" \
+  --collect-submodules reportlab.graphics.barcode \
+  --noconfirm \
+  run_prod.py

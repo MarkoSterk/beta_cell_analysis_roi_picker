@@ -2,6 +2,19 @@
 Configurations for application
 """
 import os
+import socket
+
+def find_available_port(preferred_port=8080):
+    """Return 8080 if free, else find and return an available port."""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        try:
+            sock.bind(("127.0.0.1", preferred_port))
+            return preferred_port
+        except OSError:
+            # Port 8080 is in use; find a random free port
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as temp_sock:
+                temp_sock.bind(("127.0.0.1", 0))  # OS assigns an available port
+                return temp_sock.getsockname()[1]
 
 class Config:
     """
@@ -9,11 +22,10 @@ class Config:
     """
     APP_PATH: str = os.path.dirname(__file__)
     LOGS_DIR: str = os.path.join(APP_PATH, "logs")
-    CHROMIUM_PATH: str = os.path.join(APP_PATH, "chromium")
     TEMP_FOLDER: str = "temp_files"
     APP_NAME: str = "Beta cell analysis"
     HOST: str = "localhost"
-    PORT: int = 8080
+    PORT: int = find_available_port()
     PROTOCOL: str = "http"
     INDEX_ROUTE: str = "/app"
     TEMPLATES_STRICT: bool = True

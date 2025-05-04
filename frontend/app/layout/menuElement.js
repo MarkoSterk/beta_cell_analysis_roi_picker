@@ -22,7 +22,7 @@ async function menuElementMarkup(){
                 <input class="lif-upload" type="file" accept=".lif" jolt-change="uploadFile" hidden>
                 <li><a role="button" jolt-click="openProject">Open project</a></li>
                 <input class="pkl-upload" type="file" accept=".pkl" jolt-change="uploadPkl" hidden>
-                <li><a href="/api/v1/files/save-project" jolt-click="saveProject" target="_blank" router-ignore="true">Save project</a></li>
+                <li><a href="/api/v1/files/save-project" jolt-click="saveProject" :next="native_save_project" target="_blank" router-ignore="true">Save project</a></li>
                 <hr class="p-0 m-0" />
                 <li><a role="button" jolt-click="shutdownApp">Exit</a></li>
             </ul>
@@ -168,9 +168,14 @@ function closeMenus(){
   })
 }
 
-function saveProject(elem, event, args){
+async function saveProject(elem, event, args){
   elem.blur();
   this.closeMenus();
+  if(!window.pywebview){
+    return;
+  }
+  event.preventDefault();
+  await window.pywebview.api[args.next]();
 }
 
 async function importLif(elem, event, args){

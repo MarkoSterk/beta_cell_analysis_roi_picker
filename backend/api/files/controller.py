@@ -6,15 +6,16 @@ import os
 from pyjolt import Blueprint, Request, Response, UploadedFile, abort
 import torch
 import numpy as np
+import webview
 from readlif.reader import LifFile
 from pyeditorjs import EditorJsParser
 from xhtml2pdf import pisa
 from loguru import logger
 
-from backend.extensions import islet
+from backend.extensions import islet, desktop
 from backend.utilities.utils import delete_file
 from .lif_handlers import create_frames_array, frames_to_video, get_lif_video_url
-from .schemas import ExportTimeSeriesOrPosSchema
+
 
 files_controller: Blueprint = Blueprint(__name__,
                                         "files",
@@ -105,6 +106,25 @@ async def export_quicknotes(_: Request, res: Response) -> Response:
     parser = EditorJsParser(quicknotes)
     html = parser.html(sanitize=True)
     project_name: str = islet.project_name()
+    full_html: str = create_pdf_markup(html, project_name)
+
+    pdf_buffer = io.BytesIO()
+    pisa_status = pisa.CreatePDF(src=full_html, dest=pdf_buffer, default_css=None, encoding="utf-8")
+    if pisa_status.err:
+        logger.debug(f"Failed to generate PDF: {pisa_status.err}")
+        abort(msg="Failed to export PDF.", status_code=500, status="error")
+
+    pdf_bytes = pdf_buffer.getvalue()
+    return res.send_file(pdf_bytes, headers={
+        "Content-Type": "application/pdf",
+        "Content-Disposition": f'attachment; filename="quicknotes_{project_name}.pdf"',
+        "Content-Length": str(len(pdf_bytes))
+    })
+
+def create_pdf_markup(html: str, project_name: str) -> str:
+    """
+    Creates pdf markup with styling
+    """
     CUSTOM_CSS: str = """
         /* page box + margin */
         @page {
@@ -146,16 +166,122 @@ async def export_quicknotes(_: Request, res: Response) -> Response:
                 {html}
             </body>
         </html>"""
+    return full_html
 
-    pdf_buffer = io.BytesIO()
-    pisa_status = pisa.CreatePDF(src=full_html, dest=pdf_buffer, default_css=None, encoding="utf-8")
+@desktop.expose
+def native_export_coordinates():
+    """Export of coordinates with native file dialog"""
+    project_name: str = islet.project_name()
+    filename: str = f"coordinates_{project_name}.txt"
+    result = desktop.window.create_file_dialog(
+            webview.SAVE_DIALOG,
+            save_filename=filename,
+            file_types=['Text file (*.txt)']
+    )
+    if not result:
+        return False
+    arr = islet.get_all_coordinates()
+    np.savetxt(result, arr, fmt="%.2lf")
+    return True
+
+@desktop.expose
+def native_export_timeseries():
+    """Export of coordinates with native file dialog"""
+    project_name: str = islet.project_name()
+    filename: str = f"time_series_{project_name}.txt"
+    result = desktop.window.create_file_dialog(
+            webview.SAVE_DIALOG,
+            save_filename=filename,
+            file_types=['Text file (*.txt)']
+    )
+    if not result:
+        return {
+            "status": "aborted",
+            "ok": True
+        }
+    arr = islet.get_all_time_series()
+    np.savetxt(result, arr, fmt="%.5lf")
+    return {
+        "status": "success",
+        "ok": True
+    }
+
+@desktop.expose
+def native_export_quicknotes():
+    """Exports quicknotes as PDF using a native file dialog"""
+
+    quicknotes: dict = islet.get_quick_notes()
+    parser = EditorJsParser(quicknotes)
+    html = parser.html(sanitize=True)
+    project_name: str = islet.project_name()
+    full_html: str = create_pdf_markup(html, project_name)
+
+    # Open native save dialog
+    result = webview.windows[0].create_file_dialog(
+        webview.SAVE_DIALOG,
+        save_filename=f"quicknotes_{project_name}.pdf",
+        file_types=['PDF file (*.pdf)']
+    )
+
+    if not result:
+        return {
+            "status": "aborted",
+            "ok": True
+        }
+
+    filepath = result[0] if isinstance(result, list) else result
+
+    # Generate and save the PDF
+    with open(filepath, "wb") as pdf_file:
+        pisa_status = pisa.CreatePDF(
+            src=full_html,
+            dest=pdf_file,
+            encoding="utf-8"
+        )
+
     if pisa_status.err:
-        logger.debug(f"Failed to generate PDF: {pisa_status.err}")
-        abort(msg="Failed to export PDF.", status_code=500, status="error")
+        return {
+            "status": "failed",
+            "ok": False
+        }
 
-    pdf_bytes = pdf_buffer.getvalue()
-    return res.send_file(pdf_bytes, headers={
-        "Content-Type": "application/pdf",
-        "Content-Disposition": f'attachment; filename="quicknotes_{project_name}.pdf"',
-        "Content-Length": str(len(pdf_bytes))
-    })
+    return {
+        "status": "success",
+        "ok": True
+    }
+
+@desktop.expose
+def native_save_project():
+    """Saves entire project as a pickle file via native file dialog"""
+    pickle_data: bytes = islet.save_as_pickle()
+    project_name: str = islet.project_name()
+
+    # Ask user where to save the file
+    result = webview.windows[0].create_file_dialog(
+        webview.SAVE_DIALOG,
+        save_filename=f"{project_name}.pkl",
+        file_types=['Pickle file (*.pkl)']
+    )
+
+    if not result:
+        return {
+            "status": "aborted",
+            "ok": True
+        }
+
+    filepath = result[0] if isinstance(result, list) else result
+
+    try:
+        with open(filepath, "wb") as f:
+            f.write(pickle_data)
+    #pylint: disable-next=W0718
+    except Exception:
+        return {
+            "status": "failed",
+            "ok": False
+        }
+
+    return {
+        "status": "aborted",
+        "ok": True
+    }
