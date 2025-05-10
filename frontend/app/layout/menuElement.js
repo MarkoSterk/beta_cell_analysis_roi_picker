@@ -1,5 +1,5 @@
-import { ElementFactory, html, css, querySelectorAll, querySelector } from "jolt-ui";
-import { handleFile } from "../components/uploadDropZone";
+import { ElementFactory, html, css, querySelectorAll, querySelector, defineValue } from "jolt-ui";
+import { handleFile, checkProgress, handleFailedProgressCheck } from "../components/uploadDropZone";
 import { startOverlaySpinner, removeOverlaySpinner } from "../utilities/spinner";
 
 async function menuElementMarkup(){
@@ -196,7 +196,10 @@ async function uploadFile(elem, event, args){
 async function openAboutModal(elem, event, args){
   await this.app.ext.messenger.infoModal({
     title: "About",
-    content: "<about-info></about-info>"
+    content: "<about-info></about-info>",
+    modalOptions: {
+      size: "modal-lg"
+    }
   })
 }
 
@@ -242,12 +245,16 @@ const menuElement = ElementFactory({
       openProject,
       uploadPkl,
       newProject,
-      startNewProject
+      startNewProject,
+      handleFailedProgressCheck,
+      checkProgress
     },
     define: {
       dropdownMenus: querySelectorAll(".dropdown-menu"),
       fileUpload: querySelector('.lif-upload'),
       pklUpload: querySelector('.pkl-upload'),
+      checkId: defineValue(null),
+      checkDelay: defineValue(3000),
       video: {
         get(){
           return this.getData("video");

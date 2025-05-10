@@ -45,8 +45,8 @@ class Config:
     ABOUT: dict[str, str] = {
         "version": 1.0,
         "name": APP_NAME,
-        "author": "Marko Šterk",
-        "homepage": "/",
+        "author": "Marko Šterk, Marko Gosak",
+        "homepage": "https://github.com/MarkoSterk/beta_cell_analysis_roi_picker",
         "description": """Tool for selecting and exporting cellular time series from .lif 
                             files from microscopy recordings. This tool is distributed as 
                             open source software as is. Feel free to use it for your research,

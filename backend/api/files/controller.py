@@ -3,6 +3,7 @@ Files controller
 """
 import io
 import os
+from concurrent.futures import ThreadPoolExecutor
 from pyjolt import Blueprint, Request, Response, UploadedFile, abort
 import torch
 import numpy as np
@@ -16,10 +17,61 @@ from backend.extensions import islet, desktop
 from backend.utilities.utils import delete_file
 from .lif_handlers import create_frames_array, frames_to_video, get_lif_video_url
 
+executor = ThreadPoolExecutor(max_workers=4)
 
 files_controller: Blueprint = Blueprint(__name__,
                                         "files",
                                         url_prefix="/api/v1/files")
+
+def process_lif_upload(temp_file: str):
+    """
+    Processes the lif upload
+    """
+    try:
+        torch_array: torch.Tensor = create_frames_array(LifFile(temp_file), islet)
+        if torch_array is False:
+            return islet.set_process_status({
+                "perc": 100.0,
+                "status": "failed",
+                "alive": False,
+                "finished": True,
+                "message": "There is no time series data in the provided LIF file."
+            })
+        islet.save_torch_array(torch_array)
+        frames_to_video(torch_array, islet)
+        delete_file(temp_file)
+
+        islet.video_url = get_lif_video_url()
+        return islet.set_process_status({
+            "perc": 100.0,
+            "status": "finished",
+            "alive": True,
+            "finished": True,
+            "message": "Lif upload finished.",
+            "video": islet.video_url
+        })
+    #pylint: disable-next=W0718
+    except Exception as err:
+        logger.debug(f"Failed to process LIF file: {err}")
+        islet.set_process_status({
+            "perc": 100.0,
+            "status": "failed",
+            "alive": False,
+            "finished": False,
+            "message": "Failed to process LIF file. Please check uploaded data."
+        })
+
+
+@files_controller.get("/progress-check")
+async def check_lif_progress(_: Request, res: Response) -> Response:
+    """
+    Checks and returns current status of LIF processing
+    """
+    return res.json({
+        "status": "success",
+        "message": "Progress checked successfully",
+        "data": islet.get_process_status()
+    })
 
 @files_controller.post("/")
 async def upload_lif_file(req: Request, res: Response) -> Response:
@@ -32,18 +84,22 @@ async def upload_lif_file(req: Request, res: Response) -> Response:
     temp_lif: str = req.app.get_conf("TEMP_LIF")
     temp_file: str = os.path.join(app_path, "static", temp_folder, temp_lif)
     data["file"].save(temp_file)
-    torch_array: torch.Tensor = create_frames_array(LifFile(temp_file))
-    islet.save_torch_array(torch_array)
-    frames_to_video(torch_array)
-    delete_file(temp_file)
 
-    islet.video_url = get_lif_video_url()
+    executor.submit(process_lif_upload, temp_file)
+
+    islet.set_process_status({
+        "perc": 0,
+        "status": "processing",
+        "alive": True,
+        "finished": False,
+        "message": "Processing LIF file."
+    })
 
     return res.json({
-        "message": "File uploaded successfully",
+        "message": "Process started",
         "status": "success",
-        "data": islet.video_url
-    })
+        "data": req.app.url_for('files.check_lif_progress')
+    }).status(200)
 
 @files_controller.get("/save-project")
 async def save_project(_: Request, res: Response) -> Response:
@@ -62,7 +118,7 @@ async def open_project(req: Request, res: Response) -> Response:
     islet.reset_islet()
     data: dict[str, UploadedFile] = await req.get_data("form_and_files")
     islet.load_from_pickle(data["file"])
-    frames_to_video(islet.get_torch_array())
+    frames_to_video(islet.get_torch_array(), islet)
     islet.video_url = get_lif_video_url()
     return res.json({
         "message": "Project opened successfully.",

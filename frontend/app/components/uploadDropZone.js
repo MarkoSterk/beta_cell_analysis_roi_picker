@@ -1,5 +1,5 @@
-import { ElementFactory, html, querySelector } from "jolt-ui";
-import { startOverlaySpinner, removeOverlaySpinner } from "../utilities/spinner";
+import { defineValue, ElementFactory, html, querySelector, RequestMaker } from "jolt-ui";
+import { startOverlaySpinner, removeOverlaySpinner, setOverlaySpinnerMessage, setOverlaySpinnerPerc } from "../utilities/spinner";
 
 async function uploadDropZoneMarkup(){
     return html`
@@ -57,14 +57,46 @@ export async function handleFile(file) {
     const status = response.status;
     try{
         response = await response.json();
-        this.setData("video", response.data);
+        await this.checkProgress(response.data)
+        this.checkId = setInterval(async () => {
+            await this.checkProgress(response.data)
+        }, this.checkDelay)
     }catch{
         this.ext.messenger.setMessage({
             msg: "Failed to parse LIF file.",
             status: "warning"
         })
     }
+}
+
+export function handleFailedProgressCheck(){
+    clearInterval(this.checkId);
     removeOverlaySpinner();
+    return this.ext.messenger.setMessage({
+        message: "Failed to process LIF",
+        status: "danger"
+    })
+}
+
+export async function checkProgress(checkUrl){
+    let [error, response] = await RequestMaker.get({url: checkUrl});
+    if(error){
+        return this.handleFailedProgressCheck();
+    }
+    [error, response] = await response.json();
+    if(error){
+        return this.handleFailedProgressCheck();
+    }
+    if(!response?.data?.alive){
+        return this.handleFailedProgressCheck();
+    }
+    setOverlaySpinnerMessage(response.data.message);
+    setOverlaySpinnerPerc(`${response.data.perc}%`);
+    if(response?.data?.status == "finished" && response?.data?.finished){
+        clearInterval(this.checkId);
+        this.setData("video", response.data.video)
+        removeOverlaySpinner();
+    }
 }
 
 async function uploadLif(){
@@ -88,11 +120,15 @@ const uploadDropZone = ElementFactory({
         dragLeaveHandler,
         uploadFile,
         startOverlaySpinner,
-        removeOverlaySpinner
+        removeOverlaySpinner,
+        checkProgress,
+        handleFailedProgressCheck
     },
     define: {
         dropzone: querySelector(".dropzone"),
-        fileInput: querySelector('input[type="file"]')
+        fileInput: querySelector('input[type="file"]'),
+        checkId: defineValue(null),
+        checkDelay: defineValue(3000)
     }
 })
 

@@ -28,7 +28,7 @@ async function basicUsageTabMarkup(){
             <ul>
                 <li>Play or scrub the video to the frame you want.</li>
                 <li>Adjust playback speed as needed.</li>
-                <li>Right-click and drag on the video display to draw an ellipse for each ROI.</li>
+                <li>Right-click and drag on the video display (upper/left) or the mean frame (lower/right) panel to draw an ellipse for each ROI.</li>
                 <li>To remove a ROI, hold down <kbd>D</kbd> and left-click on that ROI.</li>
             </ul>
         </li>
@@ -36,7 +36,7 @@ async function basicUsageTabMarkup(){
             <strong>View Time Series</strong>
             <ul>
                 <li>As you create ROIs, the <strong>upper graph</strong> on the right updates to show the time series for all selected cells.</li>
-                <li>The <strong>lower graph</strong> shows only the time series for the most recently selected ROI.</li>
+                <li>The <strong>lower graph</strong> shows the time series for the most recently selected ROI or any other ROI you select by right-clicking on it</li>
             </ul>
         </li>
         <li>

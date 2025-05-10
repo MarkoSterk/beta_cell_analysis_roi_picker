@@ -11,48 +11,48 @@ import torch
 import numpy as np
 from torchvision.transforms import PILToTensor
 import imageio as iio
-from pyjolt import abort
-from loguru import logger
 
 from backend.utilities.utils import get_device
 from backend.configs import Config
 
 
-def create_frames_array(lif: LifFile) -> torch.Tensor:
+def create_frames_array(lif: LifFile, islet) -> torch.Tensor:
     """
     Creates a 3D/4D array from frames of video
     """
-    try:
-        image_series: LifImage | None = None
-        for lif_img in lif.get_iter_image():
-            if lif_img.dims.t > 1:
-                image_series = lif_img
-                break
-        if image_series is None:
-            return abort(msg="Provided LIF file does not contain any time series data.",
-                         status_code=400, status="error")
-        #image_series = list(lif.get_iter_image())[2]
-        meta_data = image_series.info['dims']
-        width, height, frames = meta_data.x, meta_data.y, meta_data.t
-        torch_array = torch.empty(frames, height, width, dtype=torch.uint8)
-        transform = PILToTensor()
+    islet.change_process_status({
+        "message": "Parsing LIF file for time series data"
+    })
+    image_series: LifImage | None = None
+    for lif_img in lif.get_iter_image():
+        if lif_img.dims.t > 1:
+            image_series = lif_img
+            break
+    if image_series is None:
+        return False
+    islet.change_process_status({
+        "message": "Time series data found. Constructing video frames."
+    })
+    meta_data = image_series.info['dims']
+    width, height, frames = meta_data.x, meta_data.y, meta_data.t
+    torch_array = torch.empty(frames, height, width, dtype=torch.uint8)
+    transform = PILToTensor()
 
-        for index, frame in enumerate(image_series.get_iter_t(z=0, c=0)):
-            torch_array[index,:,:] = transform(frame)
+    for index, frame in enumerate(image_series.get_iter_t(z=0, c=0)):
+        torch_array[index,:,:] = transform(frame)
+        if index%100 == 0:
+            islet.change_process_status({
+                "perc": round((index/frames)*100.0, 2)
+            })
 
-        torch_array = torch_array.to(get_device())
+    torch_array = torch_array.to(get_device())
+    islet.change_process_status({
+        "message": "Video frames created"
+    })
+    gc.collect()
+    return torch_array
 
-        gc.collect()
-        return torch_array
-    #pylint: disable-next=W0718
-    except Exception:
-        return abort(
-            msg="Unexpected error during LIF parsing. Please check input data",
-            status_code=500,
-            status="error"
-        )
-
-def frames_to_video(data: torch.Tensor):
+def frames_to_video(data: torch.Tensor, islet):
     """
     Creates .avi video from sequence of images from LIF file
     """
@@ -64,46 +64,43 @@ def frames_to_video(data: torch.Tensor):
     avg_frame_name: str = getattr(Config, "AVG_FRAME")
     output_path: str = os.path.join(app_path, "static", video_name)
     avg_frame_path: str = os.path.join(app_path, "static", avg_frame_name)
-
+    islet.change_process_status({
+        "perc": 0,
+        "message": "Constructing video."
+    })
     # Ensure output folder exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-    try:
-        # move data to cpu if on gpu/cuda
-        data = data.detach().cpu()
+    # move data to cpu if on gpu/cuda
+    data = data.detach().cpu()
+    # Create video writer with correct codec and pixel format
+    writer = iio.get_writer(
+        output_path,
+        fps=fps,
+        codec='libx264',
+        format='mp4',
+        pixelformat='yuv420p'
+    )
+    avg_frame: np.ndarray = np.zeros((height, width), float)
+    for i in range(frames):
+        frame = data[i].numpy()  # (height, width)
+        avg_frame+=frame
+        if frame.ndim == 2:
+            # Expand grayscale frame to 3 channels (RGB)
+            frame = np.stack([frame]*3, axis=-1)  # shape (height, width, 3)
 
-        # Create video writer with correct codec and pixel format
-        writer = iio.get_writer(
-            output_path,
-            fps=fps,
-            codec='libx264',
-            format='mp4',
-            pixelformat='yuv420p'
-        )
-        avg_frame: np.ndarray = np.zeros((height, width), float)
-        for i in range(frames):
-            frame = data[i].numpy()  # (height, width)
-            avg_frame+=frame
-            if frame.ndim == 2:
-                # Expand grayscale frame to 3 channels (RGB)
-                frame = np.stack([frame]*3, axis=-1)  # shape (height, width, 3)
+        writer.append_data(frame)
+        if i % 100 == 0:
+            islet.change_process_status({
+                "perc": round((i/frames)*100.0, 2),
+            })
 
-            writer.append_data(frame)
-
-        writer.close()
-        avg_frame = avg_frame / frames
-        avg_frame = np.rint(avg_frame)
-        avg_frame = np.clip(avg_frame, 0, 255)
-        avg_frame = avg_frame.astype(np.uint8)
-        iio.imsave(avg_frame_path, avg_frame)
-    #pylint: disable-next=W0718
-    except Exception as e:
-        logger.debug(f"Failed to create avg frame and video: {e}")
-        abort(
-            msg="Unexpected error during video creation. Please check input data",
-            status_code=500,
-            status="error"
-        )
+    writer.close()
+    avg_frame = avg_frame / frames
+    avg_frame = np.rint(avg_frame)
+    avg_frame = np.clip(avg_frame, 0, 255)
+    avg_frame = avg_frame.astype(np.uint8)
+    iio.imsave(avg_frame_path, avg_frame)
 
 def get_lif_video_url():
     """

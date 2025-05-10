@@ -10,7 +10,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 (async () => {
-  var _s2, _e, _h, _r2, _t2, _o2, _a2, _i2, _l2, _p, _c2, _n2, _d2, _f, _m, _g, _u, _v, _w, _E, _x, _C, _b, _y, _k, _T, _S, _s3, _cs_instances, e_fn, _h2, _r3, _t3, _o3, a_fn, _i3, _l3, _p2, _c3, _n3, _d3, _f2, _m2, _g2, _u2, _v2, _s4, _e2, _h3, _r4, _t4, _o4, _a3, _i4, _l4, _p3, _c4, _n4, _d4, _f3, _m3, _g3, _u3, _v3;
+  var _s2, _e, _h, _r2, _t2, _o2, _a2, _i2, _l2, _p, _c2, _n2, _d2, _f, _m, _g, _u, _b, _w, _E, _x, _C, _v, _y, _k, _T, _S, _s3, _us_instances, e_fn, _h2, _r3, _t3, _o3, a_fn, _i3, _l3, _p2, _c3, _n3, _d3, _f2, _m2, _g2, _u2, _b2, _s4, _e2, _h3, _r4, _t4, _o4, _a3, _i4, _l4, _p3, _c4, _n4, _d4, _f3, _m3, _g3, _u3, _b3;
   (function() {
     const e = document.createElement("link").relList;
     if (e && e.supports && e.supports("modulepreload")) return;
@@ -101,34 +101,34 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return s && jn(n, s, t);
     });
   }
-  function Xe(n) {
+  function Ge(n) {
     return n.replace(/\\('|\\)/g, "$1").replace(/[\r\t\n]/g, " ");
   }
   Ve.template = function(n, e, t) {
     e = e || Ve.templateSettings;
     var o = e.append ? gn.append : gn.split, i, s = 0, r;
-    n = e.use || e.define ? jn(e, n, t || {}) : n, n = n.replace(/<([a-zA-Z0-9\-]+)([^>]*)\sdata-bind="([^"]+)"([^>]*)>/g, (d, h, g, v, b) => {
-      var w = this.generateHash(), y = `<${h}${g} data-bind="${ht(v)}" data-bind-id="${w}"${b}>`;
+    n = e.use || e.define ? jn(e, n, t || {}) : n, n = n.replace(/<([a-zA-Z0-9\-]+)([^>]*)\sdata-bind="([^"]+)"([^>]*)>/g, (d, h, g, b, v) => {
+      var w = this.generateHash(), y = `<${h}${g} data-bind="${pt(b)}" data-bind-id="${w}"${v}>`;
       return y;
     });
     const l = document.createElement("div");
     this.app._originalInnerHTML.call(l, n), l.querySelectorAll("[data-bind]").forEach((d) => {
-      const h = d.getAttribute("data-bind"), g = d.getAttribute("data-bind-id"), v = d.innerHTML;
+      const h = d.getAttribute("data-bind"), g = d.getAttribute("data-bind-id"), b = d.innerHTML;
       e.dataBinds.has(h) || e.dataBinds.set(h, {});
-      const b = document.createElement("textarea");
-      b.innerHTML = v;
+      const v = document.createElement("textarea");
+      v.innerHTML = b;
       const w = e.dataBinds.get(h);
-      w[g] = b.value, e.dataBinds.set(h, w);
+      w[g] = v.value, e.dataBinds.set(h, w);
     }), n = ("var out='" + (e.strip ? n.replace(/(^|\r|\n)\t* +| +\t*(\r|\n|$)/g, " ").replace(/\r|\n|\t|\/\*[\s\S]*?\*\//g, "") : n).replace(/'|\\/g, "\\$&").replace(e.interpolate || He, function(d, h) {
-      return o.start + Xe(h) + o.end;
+      return o.start + Ge(h) + o.end;
     }).replace(e.encode || He, function(d, h) {
-      return i = true, o.startencode + Xe(h) + o.end;
+      return i = true, o.startencode + Ge(h) + o.end;
     }).replace(e.conditional || He, function(d, h, g) {
-      return h ? g ? "';}else if(" + Xe(g) + "){out+='" : "';}else{out+='" : g ? "';if(" + Xe(g) + "){out+='" : "';}out+='";
-    }).replace(e.iterate || He, function(d, h, g, v) {
-      return h ? (s += 1, r = v || "i" + s, h = Xe(h), "';var arr" + s + "=" + h + ";if(arr" + s + "){var " + g + "," + r + "=-1,l" + s + "=arr" + s + ".length-1;while(" + r + "<l" + s + "){" + g + "=arr" + s + "[" + r + "+=1];out+='") : "';} } out+='";
+      return h ? g ? "';}else if(" + Ge(g) + "){out+='" : "';}else{out+='" : g ? "';if(" + Ge(g) + "){out+='" : "';}out+='";
+    }).replace(e.iterate || He, function(d, h, g, b) {
+      return h ? (s += 1, r = b || "i" + s, h = Ge(h), "';var arr" + s + "=" + h + ";if(arr" + s + "){var " + g + "," + r + "=-1,l" + s + "=arr" + s + ".length-1;while(" + r + "<l" + s + "){" + g + "=arr" + s + "[" + r + "+=1];out+='") : "';} } out+='";
     }).replace(e.evaluate || He, function(d, h) {
-      return "';" + Xe(h) + "out+='";
+      return "';" + Ge(h) + "out+='";
     }) + "';return out;").replace(/\n/g, "\\n").replace(/\t/g, "\\t").replace(/\r/g, "\\r").replace(/(\s|;|\}|^|\{)out\+='';/g, "$1").replace(/\+''/g, ""), i && (n = "var encodeHTML = " + Ve.encodeHTMLSource.toString() + "(" + (e.doNotSkipEncoded || "") + ");" + n);
     try {
       return new Function(e.varname, n);
@@ -139,7 +139,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Ve.compile = function(n, e) {
     return Ve.template(n, null, e);
   };
-  const rs = {
+  const ls = {
     evaluate: /\{\{([\s\S]+?)\}\}/g,
     interpolate: /\{\{=([\s\S]+?)\}\}/g,
     encode: /\{\{!([\s\S]+?)\}\}/g,
@@ -154,10 +154,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     dataBinds: /* @__PURE__ */ new Map(),
     def: {}
   };
-  function as(n = 1e4, e = 1) {
+  function cs(n = 1e4, e = 1) {
     return Math.floor(Math.random() * (n - e + 1)) + e;
   }
-  function be(n) {
+  function ae(n) {
     return function(t) {
       const o = window.structuredClone(n);
       return [
@@ -168,12 +168,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           return this._values[t];
         },
         set(i) {
-          this._values[t] = i, this._refreshBoundElements(ht(t));
+          this._values[t] = i, this._refreshBoundElements(pt(t));
         }
       };
     };
   }
-  function me(n) {
+  function be(n) {
     if ([
       void 0,
       null,
@@ -188,7 +188,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     };
   }
-  function ls(n) {
+  function ds(n) {
     if ([
       void 0,
       null,
@@ -241,11 +241,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         this._startInitilization(), this._abort = false;
         const e = (_a4 = this.closest("[app-id]")) == null ? void 0 : _a4.app;
         if (!e) throw new Error("Could not find container with application.");
-        if (this.app = e, this.app.addEventListener(je.ABORTROUTETRANSITION, __privateGet(this, _a2)), this.rndId = as(), this.hashId = this.getAttribute("data-hash-id") || this.generateHash(), this.getAttribute("data-hash-id") || this.setAttribute("data-hash-id", this.hashId), !this.getAttribute("data-parent-id")) {
+        if (this.app = e, this.app.addEventListener(je.ABORTROUTETRANSITION, __privateGet(this, _a2)), this.rndId = cs(), this.hashId = this.getAttribute("data-hash-id") || this.generateHash(), this.getAttribute("data-hash-id") || this.setAttribute("data-hash-id", this.hashId), !this.getAttribute("data-parent-id")) {
           let t = this.parentElement.closest("[data-hash-id]");
           t && (this.setAttribute("data-parent-id", t.getAttribute("data-hash-id")), this._parent = t);
         }
-        if (this._templateVariables = {}, __privateSet(this, _t2, window.structuredClone(rs)), __privateGet(this, _i2).call(this), __privateSet(this, _r2, Object.getOwnPropertyNames(this)), __privateGet(this, _p).call(this), __privateGet(this, _l2).call(this), await __privateGet(this, _n2).call(this, this._beforeInit), this.app.addEventListener(Ne.CHANGE, this._updateBoundAppDataParts), this.app.addEventListener(Ne.QUERYCHANGE, this._updateBoundQueryDataParts), await __privateGet(this, _d2).call(this), await this.render(), this._abort) {
+        if (this._templateVariables = {}, __privateSet(this, _t2, window.structuredClone(ls)), __privateGet(this, _i2).call(this), __privateSet(this, _r2, Object.getOwnPropertyNames(this)), __privateGet(this, _p).call(this), __privateGet(this, _l2).call(this), await __privateGet(this, _n2).call(this, this._beforeInit), this.app.addEventListener(Ne.CHANGE, this._updateBoundAppDataParts), this.app.addEventListener(Ne.QUERYCHANGE, this._updateBoundQueryDataParts), await __privateGet(this, _d2).call(this), await this.render(), this._abort) {
           this.resolveInitialization();
           return;
         }
@@ -317,8 +317,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         for (const [t, o] of Object.entries(e)) await o.bind(this)();
       });
       __privateAdd(this, _d2, async () => {
-        var _a4, _b2;
-        Hn && (__privateSet(this, _s2, ((_a4 = this == null ? void 0 : this.css) == null ? void 0 : _a4.scoped) || false), __privateSet(this, _e, await ((_b2 = this.css) == null ? void 0 : _b2.style.bind(this)()) || null), __privateGet(this, _f).call(this));
+        var _a4, _b4;
+        Hn && (__privateSet(this, _s2, ((_a4 = this == null ? void 0 : this.css) == null ? void 0 : _a4.scoped) || false), __privateSet(this, _e, await ((_b4 = this.css) == null ? void 0 : _b4.style.bind(this)()) || null), __privateGet(this, _f).call(this));
       });
       __privateAdd(this, _f, () => {
         if (!__privateGet(this, _e)) return;
@@ -329,7 +329,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           t.removeAttribute("disabled");
           return;
         }
-        const o = t.sheet, i = (r, l) => r.split(" ").map((d) => d.replace(/([a-zA-Z0-9\.\#\-_]+)([:].*)?/, (h, g, v) => g + l + (v || ""))).join(" "), s = [];
+        const o = t.sheet, i = (r, l) => r.split(" ").map((d) => d.replace(/([a-zA-Z0-9\.\#\-_]+)([:].*)?/, (h, g, b) => g + l + (b || ""))).join(" "), s = [];
         for (let r of o.cssRules) if (r instanceof CSSStyleRule) {
           const l = r.selectorText.split(",").map((d) => i(d.trim(), e)).join(", ");
           s.push(`${l} { ${r.style.cssText} }`);
@@ -357,7 +357,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         this.innerHTML = e;
       });
       __privateAdd(this, _g, (e) => {
-        e = __privateGet(this, _v).call(this, e), e = __privateGet(this, _w).call(this, e), e = __privateGet(this, _E).call(this, e);
+        e = __privateGet(this, _b).call(this, e), e = __privateGet(this, _w).call(this, e), e = __privateGet(this, _E).call(this, e);
         const t = document.createElement("div");
         return t.classList.add(__privateGet(this, _h)), this.app._originalInsertAdjacentHTML.call(t, "afterbegin", e), this.lastRender = Date.now(), __privateGet(this, _x).call(this, t), __privateGet(this, _S).call(this, t);
       });
@@ -385,7 +385,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       __publicField(this, "clearTemplateVariables", () => {
         this._templateVariables = {};
       });
-      __privateAdd(this, _v, (e) => e.replace(/@(\w+)=/g, "jolt-$1="));
+      __privateAdd(this, _b, (e) => e.replace(/@(\w+)=/g, "jolt-$1="));
       __privateAdd(this, _w, (e) => e.replace(/:(\w+)=/g, "data-$1="));
       __privateAdd(this, _E, (e) => e.replace(/<([A-Z][a-zA-Z0-9]*|[a-z][a-zA-Z0-9]*)([^>]*)\s*(\/?)>/g, (t, o, i, s) => {
         if (this.app._elements[o]) {
@@ -425,7 +425,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           null
         ];
       });
-      __privateAdd(this, _b, (e) => {
+      __privateAdd(this, _v, (e) => {
         for (let t of e) {
           const o = t.element, i = t.eventName, s = t.methodName;
           if (o[`jolt-${i}:active`]) return;
@@ -443,7 +443,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
       __publicField(this, "createEventListenerMethod", (e, t) => this._createEventListenerMethod(e, t));
       __publicField(this, "_setEventListeners", (e) => {
-        __privateGet(this, _b).call(this, e);
+        __privateGet(this, _v).call(this, e);
       });
       __privateAdd(this, _y, (e) => {
         const t = [];
@@ -465,7 +465,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       __publicField(this, "_allElementsWithEvents", (e) => __privateGet(this, _y).call(this, e));
       __privateAdd(this, _T, () => {
         const e = __privateGet(this, _y).call(this, this.querySelectorAll(`[data-parent-id="${this.hashId}"][data-render-time="${this.lastRender}"]`));
-        __privateGet(this, _b).call(this, e);
+        __privateGet(this, _v).call(this, e);
       });
       __publicField(this, "_hydrate", () => {
         __privateGet(this, _T).call(this);
@@ -481,14 +481,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
       __publicField(this, "getQueryParams", (e = false) => this.app.getQueryParams(e));
       __publicField(this, "getHTMLtemplate", async (e) => {
-        var _a4, _b2;
+        var _a4, _b4;
         try {
           const t = await fetch(e, {
             redirect: "manual"
           });
           return t.status == 200 ? await t.text() : (this._abort = true, ((_a4 = this.app) == null ? void 0 : _a4.router) ? this.app.router._abortPageLoad(t.status) : console.error(`Failed to fetch html markup for ${this.tagName} with response code ${t.status}`), "");
         } catch {
-          return this._abort = true, ((_b2 = this.app) == null ? void 0 : _b2.router) ? this.app.router._abortPageLoad(500) : console.error(`Failed to fetch html markup for ${this.tagName}. Server failed to respond.`), "";
+          return this._abort = true, ((_b4 = this.app) == null ? void 0 : _b4.router) ? this.app.router._abortPageLoad(500) : console.error(`Failed to fetch html markup for ${this.tagName}. Server failed to respond.`), "";
         }
       });
       this.resolveInitialization = null, this.initComplete = null, this._startInitilization();
@@ -517,7 +517,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     activateElement(e) {
       typeof e == "string" && (e = this.querySelector(e));
       const t = __privateGet(this, _y).call(this, e.querySelectorAll(`[data-parent-id="${this.hashId}"][data-render-time="${this.lastRender}"]`));
-      __privateGet(this, _b).call(this, t);
+      __privateGet(this, _v).call(this, t);
     }
     get attrs() {
       return this.getAttrs(this);
@@ -607,19 +607,19 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   _m = new WeakMap();
   _g = new WeakMap();
   _u = new WeakMap();
-  _v = new WeakMap();
+  _b = new WeakMap();
   _w = new WeakMap();
   _E = new WeakMap();
   _x = new WeakMap();
   _C = new WeakMap();
-  _b = new WeakMap();
+  _v = new WeakMap();
   _y = new WeakMap();
   _k = new WeakMap();
   _T = new WeakMap();
   _S = new WeakMap();
   __publicField(_Le, "tagName");
   let Le = _Le;
-  function ue({ tagName: n, markup: e, css: t = null, methods: o = {}, beforeInit: i = {}, beforeInitResolve: s = {}, afterInit: r = {}, beforeRerender: l = {}, afterRerender: d = {}, afterDisconnect: h = {}, define: g = {}, templateFunctions: v = {} }) {
+  function he({ tagName: n, markup: e, css: t = null, methods: o = {}, beforeInit: i = {}, beforeInitResolve: s = {}, afterInit: r = {}, beforeRerender: l = {}, afterRerender: d = {}, afterDisconnect: h = {}, define: g = {}, templateFunctions: b = {} }) {
     var _a4;
     if (!n || !e) throw new Error("Missing tagName or markup method in ElementFactory");
     if (!((w) => /^[a-z]+(-[a-z]+)*$/.test(w))(n)) throw new Error("Element tagName must be in a valid kebab-case synatx");
@@ -636,7 +636,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         __publicField(this, "_afterRerender", d);
         __publicField(this, "_afterDisconnect", h);
         __publicField(this, "_define", g);
-        __publicField(this, "_templateFunctions", v);
+        __publicField(this, "_templateFunctions", b);
       }
     }, __publicField(_a4, "tagName", n), _a4;
   }
@@ -648,9 +648,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     ERRORPAGEFINISHED: "route-change.error-page.finished",
     ABORTROUTETRANSITION: "route-change.abort"
   };
-  class cs {
+  class us {
     constructor({ baseUrl: e = "", routes: t, baseLayout: o, defaultTarget: i, pageNotFoundCode: s = 404, index: r = "/", app: l }) {
-      __privateAdd(this, _cs_instances);
+      __privateAdd(this, _us_instances);
       __privateAdd(this, _s3);
       __publicField(this, "_currentRoute");
       __privateAdd(this, _h2, (e, t) => {
@@ -658,8 +658,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return o !== 0 ? o : e[0].includes("<str:") && t[0].includes("<int:") ? -1 : e[0].includes("<int:") && t[0].includes("<str:") ? 1 : 0;
       });
       __privateAdd(this, _r3, async (e) => {
-        var _a4, _b2, _c5, _d5;
-        const t = (_a4 = e == null ? void 0 : e.target) == null ? void 0 : _a4.matches("a"), o = (_b2 = e == null ? void 0 : e.target) == null ? void 0 : _b2.closest("a"), i = t ? (_c5 = e == null ? void 0 : e.target) == null ? void 0 : _c5.getAttribute("router-ignore") : o == null ? void 0 : o.getAttribute("router-ignore"), s = t ? (_d5 = e == null ? void 0 : e.target) == null ? void 0 : _d5.href : o == null ? void 0 : o.href;
+        var _a4, _b4, _c5, _d5;
+        const t = (_a4 = e == null ? void 0 : e.target) == null ? void 0 : _a4.matches("a"), o = (_b4 = e == null ? void 0 : e.target) == null ? void 0 : _b4.closest("a"), i = t ? (_c5 = e == null ? void 0 : e.target) == null ? void 0 : _c5.getAttribute("router-ignore") : o == null ? void 0 : o.getAttribute("router-ignore"), s = t ? (_d5 = e == null ? void 0 : e.target) == null ? void 0 : _d5.href : o == null ? void 0 : o.href;
         if ((t || o) && !i && s && !s.startsWith("mailto:")) {
           if (e.preventDefault(), this._inTransition && this._transitionToRoute == s) {
             e.preventDefault();
@@ -685,15 +685,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         history.pushState(t, null, e), await this.route();
       });
       __publicField(this, "route", async () => {
-        var _a4, _b2;
+        var _a4, _b4;
         let e = location.pathname;
         e = e.replace(this.baseUrl, ""), e === "" && (e = "/");
-        const t = __privateMethod(this, _cs_instances, a_fn).call(this, e);
+        const t = __privateMethod(this, _us_instances, a_fn).call(this, e);
         if (t && !((_a4 = this.app) == null ? void 0 : _a4.authenticatorInstalled)) {
           await __privateGet(this, _i3).call(this, t);
           return;
         }
-        if (t && ((_b2 = this.app) == null ? void 0 : _b2.authenticatorInstalled)) {
+        if (t && ((_b4 = this.app) == null ? void 0 : _b4.authenticatorInstalled)) {
           if (!t.authenticationRequired) {
             await __privateGet(this, _i3).call(this, t);
             return;
@@ -729,14 +729,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           if (d.querySelector(l.tagName) && i.length != 1 && s < i.length - 1) continue;
           const g = this.app.generateHash();
           this.app._originalInnerHTML.call(d, l.generate(g, (_a4 = e.attributes) == null ? void 0 : _a4[l.tagName]));
-          const v = this.app.querySelector(`[data-hash-id="${g}"]`);
-          v && await v.initComplete, t.push([
+          const b = this.app.querySelector(`[data-hash-id="${g}"]`);
+          b && await b.initComplete, t.push([
             r,
             g,
             l
           ]);
         }
-        __privateGet(this, _v2).call(this, e.title), this._currentRoute = {
+        __privateGet(this, _b2).call(this, e.title), this._currentRoute = {
           ...e,
           renderSequence: t,
           href: window.location.href
@@ -831,7 +831,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           y: window.scrollY
         }
       }));
-      __privateAdd(this, _v2, (e) => {
+      __privateAdd(this, _b2, (e) => {
         const t = document.querySelector("title");
         if (!t) throw new Error("Missing title tag in page header. This is considered bad practice!");
         if (!e) return;
@@ -847,7 +847,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }), this._baseUrl = e, this.index = r, this.app.addEventListener("click", __privateGet(this, _r3)), window.addEventListener("popstate", __privateGet(this, _t3)), this._currentRoute = null;
     }
     _parseRoutes({ routes: e, parentPath: t = "", parentHandlers: o = {}, layout: i }) {
-      this.routeMap = new Map(Object.entries(__privateMethod(this, _cs_instances, e_fn).call(this, {
+      this.routeMap = new Map(Object.entries(__privateMethod(this, _us_instances, e_fn).call(this, {
         routes: e,
         parentPath: t,
         parentHandlers: o,
@@ -887,7 +887,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
   }
   _s3 = new WeakMap();
-  _cs_instances = new WeakSet();
+  _us_instances = new WeakSet();
   e_fn = function({ routes: e, parentPath: t = "", parentHandlers: o = {}, layout: i }) {
     let s = i;
     s || (s = this.baseLayout);
@@ -901,8 +901,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       } : {
         ...o
       };
-      l.handlers && Object.keys(l.handlers).forEach((v) => {
-        h[v] = l.handlers[v];
+      l.handlers && Object.keys(l.handlers).forEach((b) => {
+        h[b] = l.handlers[b];
       });
       const g = l.layout || s;
       r[d] = {
@@ -922,7 +922,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         rolesRequired: [
           void 0
         ].includes(l == null ? void 0 : l.authenticationRequired) ? [] : l == null ? void 0 : l.rolesRequired
-      }, l.children && Object.assign(r, __privateMethod(this, _cs_instances, e_fn).call(this, {
+      }, l.children && Object.assign(r, __privateMethod(this, _us_instances, e_fn).call(this, {
         routes: l.children,
         parentPath: d,
         parentHandlers: h,
@@ -941,9 +941,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         if (h === "int") return "(\\d+)";
       }), l = e.match(new RegExp(`^${r}$`));
       if (l) {
-        const d = i.reduce((h, g, v) => {
-          let b = l[v + 1];
-          return s[v] === "int" && (b = parseInt(b, 10)), h[g] = b, h;
+        const d = i.reduce((h, g, b) => {
+          let v = l[b + 1];
+          return s[b] === "int" && (v = parseInt(v, 10)), h[g] = v, h;
         }, {});
         return this.routeParameters = d || null, {
           route: t,
@@ -970,7 +970,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   _m2 = new WeakMap();
   _g2 = new WeakMap();
   _u2 = new WeakMap();
-  _v2 = new WeakMap();
+  _b2 = new WeakMap();
   var V;
   (function(n) {
     n.Attribute = "attribute", n.Pseudo = "pseudo", n.PseudoElement = "pseudo-element", n.Tag = "tag", n.Universal = "universal", n.Adjacent = "adjacent", n.Child = "child", n.Descendant = "descendant", n.Parent = "parent", n.Sibling = "sibling", n.ColumnCombinator = "column-combinator";
@@ -979,7 +979,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   (function(n) {
     n.Any = "any", n.Element = "element", n.End = "end", n.Equals = "equals", n.Exists = "exists", n.Hyphen = "hyphen", n.Not = "not", n.Start = "start";
   })(Z || (Z = {}));
-  const mn = /^[^\\#]?(?:\\(?:[\da-f]{1,6}\s?|.)|[\w\-\u00b0-\uFFFF])+/, ds = /\\([\da-f]{1,6}\s?|(\s)|.)/gi, us = /* @__PURE__ */ new Map([
+  const mn = /^[^\\#]?(?:\\(?:[\da-f]{1,6}\s?|.)|[\w\-\u00b0-\uFFFF])+/, hs = /\\([\da-f]{1,6}\s?|(\s)|.)/gi, ps = /* @__PURE__ */ new Map([
     [
       126,
       Z.Element
@@ -1004,7 +1004,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       124,
       Z.Hyphen
     ]
-  ]), hs = /* @__PURE__ */ new Set([
+  ]), fs = /* @__PURE__ */ new Set([
     "has",
     "not",
     "matches",
@@ -1013,7 +1013,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     "host",
     "host-context"
   ]);
-  function ps(n) {
+  function gs(n) {
     switch (n.type) {
       case V.Adjacent:
       case V.Child:
@@ -1026,82 +1026,82 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return false;
     }
   }
-  const fs = /* @__PURE__ */ new Set([
+  const ms = /* @__PURE__ */ new Set([
     "contains",
     "icontains"
   ]);
-  function gs(n, e, t) {
+  function bs(n, e, t) {
     const o = parseInt(e, 16) - 65536;
     return o !== o || t ? e : o < 0 ? String.fromCharCode(o + 65536) : String.fromCharCode(o >> 10 | 55296, o & 1023 | 56320);
   }
-  function st(n) {
-    return n.replace(ds, gs);
+  function rt(n) {
+    return n.replace(hs, bs);
   }
   function Gt(n) {
     return n === 39 || n === 34;
   }
-  function vn(n) {
+  function bn(n) {
     return n === 32 || n === 9 || n === 10 || n === 12 || n === 13;
   }
-  function ms(n) {
+  function vs(n) {
     const e = [], t = Fn(e, `${n}`, 0);
     if (t < n.length) throw new Error(`Unmatched selector: ${n.slice(t)}`);
     return e;
   }
   function Fn(n, e, t) {
     let o = [];
-    function i(b) {
-      const w = e.slice(t + b).match(mn);
+    function i(v) {
+      const w = e.slice(t + v).match(mn);
       if (!w) throw new Error(`Expected name, found ${e.slice(t)}`);
       const [y] = w;
-      return t += b + y.length, st(y);
+      return t += v + y.length, rt(y);
     }
-    function s(b) {
-      for (t += b; t < e.length && vn(e.charCodeAt(t)); ) t++;
+    function s(v) {
+      for (t += v; t < e.length && bn(e.charCodeAt(t)); ) t++;
     }
     function r() {
       t += 1;
-      const b = t;
+      const v = t;
       let w = 1;
       for (; w > 0 && t < e.length; t++) e.charCodeAt(t) === 40 && !l(t) ? w++ : e.charCodeAt(t) === 41 && !l(t) && w--;
       if (w) throw new Error("Parenthesis not matched");
-      return st(e.slice(b, t - 1));
+      return rt(e.slice(v, t - 1));
     }
-    function l(b) {
+    function l(v) {
       let w = 0;
-      for (; e.charCodeAt(--b) === 92; ) w++;
+      for (; e.charCodeAt(--v) === 92; ) w++;
       return (w & 1) === 1;
     }
     function d() {
-      if (o.length > 0 && ps(o[o.length - 1])) throw new Error("Did not expect successive traversals.");
+      if (o.length > 0 && gs(o[o.length - 1])) throw new Error("Did not expect successive traversals.");
     }
-    function h(b) {
+    function h(v) {
       if (o.length > 0 && o[o.length - 1].type === V.Descendant) {
-        o[o.length - 1].type = b;
+        o[o.length - 1].type = v;
         return;
       }
       d(), o.push({
-        type: b
+        type: v
       });
     }
-    function g(b, w) {
+    function g(v, w) {
       o.push({
         type: V.Attribute,
-        name: b,
+        name: v,
         action: w,
         value: i(1),
         namespace: null,
         ignoreCase: "quirks"
       });
     }
-    function v() {
+    function b() {
       if (o.length && o[o.length - 1].type === V.Descendant && o.pop(), o.length === 0) throw new Error("Empty sub-selector");
       n.push(o);
     }
     if (s(0), e.length === t) return t;
     e: for (; t < e.length; ) {
-      const b = e.charCodeAt(t);
-      switch (b) {
+      const v = e.charCodeAt(t);
+      switch (v) {
         case 32:
         case 9:
         case 10:
@@ -1141,7 +1141,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           let w, y = null;
           e.charCodeAt(t) === 124 ? w = i(1) : e.startsWith("*|", t) ? (y = "*", w = i(2)) : (w = i(0), e.charCodeAt(t) === 124 && e.charCodeAt(t + 1) !== 61 && (y = w, w = i(1))), s(0);
           let T = Z.Exists;
-          const W = us.get(e.charCodeAt(t));
+          const W = ps.get(e.charCodeAt(t));
           if (W) {
             if (T = W, e.charCodeAt(t + 1) !== 61) throw new Error("Expected `=`");
             s(2);
@@ -1153,11 +1153,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
               let re = t + 1;
               for (; re < e.length && (e.charCodeAt(re) !== J || l(re)); ) re += 1;
               if (e.charCodeAt(re) !== J) throw new Error("Attribute value didn't end");
-              U = st(e.slice(t + 1, re)), t = re + 1;
+              U = rt(e.slice(t + 1, re)), t = re + 1;
             } else {
               const J = t;
-              for (; t < e.length && (!vn(e.charCodeAt(t)) && e.charCodeAt(t) !== 93 || l(t)); ) t += 1;
-              U = st(e.slice(J, t));
+              for (; t < e.length && (!bn(e.charCodeAt(t)) && e.charCodeAt(t) !== 93 || l(t)); ) t += 1;
+              U = rt(e.slice(J, t));
             }
             s(0);
             const te = e.charCodeAt(t) | 32;
@@ -1165,7 +1165,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           }
           if (e.charCodeAt(t) !== 93) throw new Error("Attribute selector didn't terminate");
           t += 1;
-          const ae = {
+          const le = {
             type: V.Attribute,
             name: w,
             action: T,
@@ -1173,7 +1173,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             namespace: y,
             ignoreCase: q
           };
-          o.push(ae);
+          o.push(le);
           break;
         }
         case 58: {
@@ -1187,16 +1187,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           }
           const w = i(1).toLowerCase();
           let y = null;
-          if (e.charCodeAt(t) === 40) if (hs.has(w)) {
+          if (e.charCodeAt(t) === 40) if (fs.has(w)) {
             if (Gt(e.charCodeAt(t + 1))) throw new Error(`Pseudo-selector ${w} cannot be quoted`);
             if (y = [], t = Fn(y, e, t + 1), e.charCodeAt(t) !== 41) throw new Error(`Missing closing parenthesis in :${w} (${e})`);
             t += 1;
           } else {
-            if (y = r(), fs.has(w)) {
+            if (y = r(), ms.has(w)) {
               const T = y.charCodeAt(0);
               T === y.charCodeAt(y.length - 1) && Gt(T) && (y = y.slice(1, -1));
             }
-            y = st(y);
+            y = rt(y);
           }
           o.push({
             type: V.Pseudo,
@@ -1206,7 +1206,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           break;
         }
         case 44: {
-          v(), o = [], s(1);
+          b(), o = [], s(1);
           break;
         }
         default: {
@@ -1217,8 +1217,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             break;
           }
           let w = null, y;
-          if (b === 42) t += 1, y = "*";
-          else if (b === 124) {
+          if (v === 42) t += 1, y = "*";
+          else if (v === 124) {
             if (y = "", e.charCodeAt(t + 1) === 124) {
               h(V.ColumnCombinator), s(2);
               break;
@@ -1236,7 +1236,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         }
       }
     }
-    return v(), t;
+    return b(), t;
   }
   const Vn = [
     "\\",
@@ -1245,7 +1245,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     ...Vn,
     "(",
     ")"
-  ], vs = new Set(Vn.map((n) => n.charCodeAt(0))), bn = new Set($n.map((n) => n.charCodeAt(0))), Qe = new Set([
+  ], ys = new Set(Vn.map((n) => n.charCodeAt(0))), vn = new Set($n.map((n) => n.charCodeAt(0))), et = new Set([
     ...$n,
     "~",
     "^",
@@ -1261,9 +1261,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     "."
   ].map((n) => n.charCodeAt(0)));
   function Un(n) {
-    return n.map((e) => e.map(bs).join("")).join(", ");
+    return n.map((e) => e.map(ks).join("")).join(", ");
   }
-  function bs(n, e, t) {
+  function ks(n, e, t) {
     switch (n.type) {
       case V.Child:
         return e === 0 ? "> " : " > ";
@@ -1282,18 +1282,18 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       case V.Tag:
         return yn(n);
       case V.PseudoElement:
-        return `::${Me(n.name, Qe)}${n.data === null ? "" : `(${Me(n.data, bn)})`}`;
+        return `::${Me(n.name, et)}${n.data === null ? "" : `(${Me(n.data, vn)})`}`;
       case V.Pseudo:
-        return `:${Me(n.name, Qe)}${n.data === null ? "" : `(${typeof n.data == "string" ? Me(n.data, bn) : Un(n.data)})`}`;
+        return `:${Me(n.name, et)}${n.data === null ? "" : `(${typeof n.data == "string" ? Me(n.data, vn) : Un(n.data)})`}`;
       case V.Attribute: {
-        if (n.name === "id" && n.action === Z.Equals && n.ignoreCase === "quirks" && !n.namespace) return `#${Me(n.value, Qe)}`;
-        if (n.name === "class" && n.action === Z.Element && n.ignoreCase === "quirks" && !n.namespace) return `.${Me(n.value, Qe)}`;
+        if (n.name === "id" && n.action === Z.Equals && n.ignoreCase === "quirks" && !n.namespace) return `#${Me(n.value, et)}`;
+        if (n.name === "class" && n.action === Z.Element && n.ignoreCase === "quirks" && !n.namespace) return `.${Me(n.value, et)}`;
         const o = yn(n);
-        return n.action === Z.Exists ? `[${o}]` : `[${o}${ys(n.action)}="${Me(n.value, vs)}"${n.ignoreCase === null ? "" : n.ignoreCase ? " i" : " s"}]`;
+        return n.action === Z.Exists ? `[${o}]` : `[${o}${ws(n.action)}="${Me(n.value, ys)}"${n.ignoreCase === null ? "" : n.ignoreCase ? " i" : " s"}]`;
       }
     }
   }
-  function ys(n) {
+  function ws(n) {
     switch (n) {
       case Z.Equals:
         return "";
@@ -1314,10 +1314,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
   }
   function yn(n) {
-    return `${zn(n.namespace)}${Me(n.name, Qe)}`;
+    return `${zn(n.namespace)}${Me(n.name, et)}`;
   }
   function zn(n) {
-    return n !== null ? `${n === "*" ? "*" : Me(n, Qe)}|` : "";
+    return n !== null ? `${n === "*" ? "*" : Me(n, et)}|` : "";
   }
   function Me(n, e) {
     let t = 0, o = "";
@@ -1331,7 +1331,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         let t = e.name.replace(/:/g, "data-");
         return t = t.replace(/@/g, "jolt-"), {
           ...e,
-          name: ht(t)
+          name: pt(t)
         };
       }
       return {
@@ -1339,13 +1339,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     });
   }
-  function wt(n) {
-    const e = ms(n), t = qn(e);
+  function Et(n) {
+    const e = vs(n), t = qn(e);
     return Un(t);
   }
-  var Ke = {}, kn;
-  function ks() {
-    if (kn) return Ke;
+  var Ze = {}, kn;
+  function Es() {
+    if (kn) return Ze;
     kn = 1;
     var n = function() {
       return n = Object.assign || function(c) {
@@ -1547,19 +1547,19 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         h(u, f, a);
       });
     }
-    var v = function(u) {
+    var b = function(u) {
       var c = [];
       return c.push(u.nodeName), u.nodeName !== "#text" && u.nodeName !== "#comment" && (u = u, u.attributes && (u.attributes.class && c.push("".concat(u.nodeName, ".").concat(u.attributes.class.replace(/ /g, "."))), u.attributes.id && c.push("".concat(u.nodeName, "#").concat(u.attributes.id)))), c;
-    }, b = function(u) {
+    }, v = function(u) {
       var c = {}, a = {};
       return u.forEach(function(f) {
-        v(f).forEach(function(p) {
+        b(f).forEach(function(p) {
           var m = p in c, x = p in a;
           !m && !x ? c[p] = true : m && (delete c[p], a[p] = true);
         });
       }), c;
     }, w = function(u, c) {
-      var a = b(u), f = b(c), p = {};
+      var a = v(u), f = v(c), p = {};
       return Object.keys(a).forEach(function(m) {
         f[m] && (p[m] = true);
       }), p;
@@ -1634,10 +1634,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return [];
       }), _ = w(u, c), B = x === A;
       B && u.some(function(E, X) {
-        var le = v(E), se = v(c[X]);
-        if (le.length !== se.length) return B = false, true;
-        if (le.some(function(K, Ye) {
-          if (K !== se[Ye]) return B = false, true;
+        var ce = b(E), se = b(c[X]);
+        if (ce.length !== se.length) return B = false, true;
+        if (ce.some(function(K, Ke) {
+          if (K !== se[Ke]) return B = false, true;
         }), !B) return true;
       });
       for (var L = 0; L < x; L++) for (var F = u[L], I = 0; I < A; I++) {
@@ -1652,12 +1652,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         newValue: m[1] - p,
         length: p
       };
-    }, ae = function(u, c) {
+    }, le = function(u, c) {
       return e([], new Array(u)).map(function() {
         return c;
       });
     }, te = function(u, c, a) {
-      var f = u.childNodes ? ae(u.childNodes.length, true) : [], p = c.childNodes ? ae(c.childNodes.length, true) : [], m = 0;
+      var f = u.childNodes ? le(u.childNodes.length, true) : [], p = c.childNodes ? le(c.childNodes.length, true) : [], m = 0;
       return a.forEach(function(x) {
         for (var A = x.oldValue + x.length, C = x.newValue + x.length, _ = x.oldValue; _ < A; _ += 1) f[_] = m;
         for (var _ = x.newValue; _ < C; _ += 1) p[_] = m;
@@ -1669,7 +1669,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }, J = function(u, c, a, f) {
       u[a.oldValue + f] = true, c[a.newValue + f] = true;
     }, re = function(u, c) {
-      for (var a = u.childNodes ? u.childNodes : [], f = c.childNodes ? c.childNodes : [], p = ae(a.length, false), m = ae(f.length, false), x = [], A = function() {
+      for (var a = u.childNodes ? u.childNodes : [], f = c.childNodes ? c.childNodes : [], p = le(a.length, false), m = le(f.length, false), x = [], A = function() {
         return arguments[1];
       }, C = false, _ = function() {
         var B = q(a, f, p, m);
@@ -1889,7 +1889,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       source: true,
       track: true,
       wbr: true
-    }, he = function(u, c) {
+    }, pe = function(u, c) {
       var a = {
         nodeName: "",
         attributes: {}
@@ -1934,13 +1934,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return u.replace(Y, function(C, _) {
         var B = C.charAt(1) !== "/", L = C.startsWith("<!--"), F = _ + C.length, I = u.charAt(F);
         if (L) {
-          var R = he(C, c.caseSensitive).node;
+          var R = pe(C, c.caseSensitive).node;
           if (p < 0) return a.push(R), "";
           var E = m[p];
           return E && R.nodeName && (E.node.childNodes || (E.node.childNodes = []), E.node.childNodes.push(R)), "";
         }
         if (B) {
-          if (f = he(C, c.caseSensitive || x), f.node.nodeName === "svg" && (x = true), p++, !f.voidElement && I && I !== "<") {
+          if (f = pe(C, c.caseSensitive || x), f.node.nodeName === "svg" && (x = true), p++, !f.voidElement && I && I !== "<") {
             f.node.childNodes || (f.node.childNodes = []);
             var X = ie(u.slice(F, u.indexOf("<", F)));
             f.node.childNodes.push({
@@ -1949,8 +1949,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             }), c.valueDiffing && f.node.nodeName === "TEXTAREA" && (f.node.value = X);
           }
           p === 0 && f.node.nodeName && a.push(f.node);
-          var le = m[p - 1];
-          le && f.node.nodeName && (le.node.childNodes || (le.node.childNodes = []), le.node.childNodes.push(f.node)), m[p] = f;
+          var ce = m[p - 1];
+          ce && f.node.nodeName && (ce.node.childNodes || (ce.node.childNodes = []), ce.node.childNodes.push(f.node)), m[p] = f;
         }
         if ((!B || f.voidElement) && (p > -1 && (f.voidElement || c.caseSensitive && f.node.nodeName === C.slice(2, -1) || !c.caseSensitive && f.node.nodeName.toUpperCase() === C.slice(2, -1).toUpperCase()) && (p--, p > -1 && (f.node.nodeName === "svg" && (x = false), f = m[p])), I !== "<" && I)) {
           var se = p === -1 ? a : m[p].node.childNodes || [], K = u.indexOf("<", F), X = ie(u.slice(F, K === -1 ? void 0 : K));
@@ -2026,38 +2026,38 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         }
         return c.innerDone = true, C;
       }, u.prototype.attemptGroupRelocation = function(c, a, f, p, m) {
-        for (var x = te(c, a, f), A = x.gaps1, C = x.gaps2, _ = c.childNodes.slice(), B = a.childNodes.slice(), L = Math.min(A.length, C.length), F, I, R, E, X, le = [], se = 0, K = 0; se < L; K += 1, se += 1) if (!(m && (A[se] === true || C[se] === true))) {
+        for (var x = te(c, a, f), A = x.gaps1, C = x.gaps2, _ = c.childNodes.slice(), B = a.childNodes.slice(), L = Math.min(A.length, C.length), F, I, R, E, X, ce = [], se = 0, K = 0; se < L; K += 1, se += 1) if (!(m && (A[se] === true || C[se] === true))) {
           if (A[K] === true) if (E = _[K], E.nodeName === "#text") if (B[se].nodeName === "#text") {
             if (E.data !== B[se].data) {
-              for (var Ye = K; _.length > Ye + 1 && _[Ye + 1].nodeName === "#text"; ) if (Ye += 1, B[se].data === _[Ye].data) {
+              for (var Ke = K; _.length > Ke + 1 && _[Ke + 1].nodeName === "#text"; ) if (Ke += 1, B[se].data === _[Ke].data) {
                 X = true;
                 break;
               }
-              X || le.push(new t().setValue(this.options._const.action, this.options._const.modifyTextElement).setValue(this.options._const.route, p.concat(K)).setValue(this.options._const.oldValue, E.data).setValue(this.options._const.newValue, B[se].data));
+              X || ce.push(new t().setValue(this.options._const.action, this.options._const.modifyTextElement).setValue(this.options._const.route, p.concat(K)).setValue(this.options._const.oldValue, E.data).setValue(this.options._const.newValue, B[se].data));
             }
-          } else le.push(new t().setValue(this.options._const.action, this.options._const.removeTextElement).setValue(this.options._const.route, p.concat(K)).setValue(this.options._const.value, E.data)), A.splice(K, 1), _.splice(K, 1), L = Math.min(A.length, C.length), K -= 1, se -= 1;
-          else C[se] === true ? le.push(new t().setValue(this.options._const.action, this.options._const.replaceElement).setValue(this.options._const.oldValue, T(E)).setValue(this.options._const.newValue, T(B[se])).setValue(this.options._const.route, p.concat(K))) : (le.push(new t().setValue(this.options._const.action, this.options._const.removeElement).setValue(this.options._const.route, p.concat(K)).setValue(this.options._const.element, T(E))), A.splice(K, 1), _.splice(K, 1), L = Math.min(A.length, C.length), K -= 1, se -= 1);
-          else if (C[se] === true) E = B[se], E.nodeName === "#text" ? (le.push(new t().setValue(this.options._const.action, this.options._const.addTextElement).setValue(this.options._const.route, p.concat(K)).setValue(this.options._const.value, E.data)), A.splice(K, 0, true), _.splice(K, 0, {
+          } else ce.push(new t().setValue(this.options._const.action, this.options._const.removeTextElement).setValue(this.options._const.route, p.concat(K)).setValue(this.options._const.value, E.data)), A.splice(K, 1), _.splice(K, 1), L = Math.min(A.length, C.length), K -= 1, se -= 1;
+          else C[se] === true ? ce.push(new t().setValue(this.options._const.action, this.options._const.replaceElement).setValue(this.options._const.oldValue, T(E)).setValue(this.options._const.newValue, T(B[se])).setValue(this.options._const.route, p.concat(K))) : (ce.push(new t().setValue(this.options._const.action, this.options._const.removeElement).setValue(this.options._const.route, p.concat(K)).setValue(this.options._const.element, T(E))), A.splice(K, 1), _.splice(K, 1), L = Math.min(A.length, C.length), K -= 1, se -= 1);
+          else if (C[se] === true) E = B[se], E.nodeName === "#text" ? (ce.push(new t().setValue(this.options._const.action, this.options._const.addTextElement).setValue(this.options._const.route, p.concat(K)).setValue(this.options._const.value, E.data)), A.splice(K, 0, true), _.splice(K, 0, {
             nodeName: "#text",
             data: E.data
-          }), L = Math.min(A.length, C.length)) : (le.push(new t().setValue(this.options._const.action, this.options._const.addElement).setValue(this.options._const.route, p.concat(K)).setValue(this.options._const.element, T(E))), A.splice(K, 0, true), _.splice(K, 0, T(E)), L = Math.min(A.length, C.length));
+          }), L = Math.min(A.length, C.length)) : (ce.push(new t().setValue(this.options._const.action, this.options._const.addElement).setValue(this.options._const.route, p.concat(K)).setValue(this.options._const.element, T(E))), A.splice(K, 0, true), _.splice(K, 0, T(E)), L = Math.min(A.length, C.length));
           else if (A[K] !== C[se]) {
-            if (le.length > 0) return le;
+            if (ce.length > 0) return ce;
             if (R = f[A[K]], I = Math.min(R.newValue, _.length - R.length), I !== R.oldValue && I > -1) {
               F = false;
-              for (var kt = 0; kt < R.length; kt += 1) U(_[I + kt], _[R.oldValue + kt], {}, false, true) || (F = true);
+              for (var wt = 0; wt < R.length; wt += 1) U(_[I + wt], _[R.oldValue + wt], {}, false, true) || (F = true);
               if (F) return [
                 new t().setValue(this.options._const.action, this.options._const.relocateGroup).setValue(this.options._const.groupLength, R.length).setValue(this.options._const.from, R.oldValue).setValue(this.options._const.to, I).setValue(this.options._const.route, p)
               ];
             }
           }
         }
-        return le;
+        return ce;
       }, u.prototype.findValueDiff = function(c, a, f) {
         var p = [];
         return c.selected !== a.selected && p.push(new t().setValue(this.options._const.action, this.options._const.modifySelected).setValue(this.options._const.oldValue, c.selected).setValue(this.options._const.newValue, a.selected).setValue(this.options._const.route, f)), (c.value || a.value) && c.value !== a.value && c.nodeName !== "OPTION" && p.push(new t().setValue(this.options._const.action, this.options._const.modifyValue).setValue(this.options._const.oldValue, c.value || "").setValue(this.options._const.newValue, a.value || "").setValue(this.options._const.route, f)), c.checked !== a.checked && p.push(new t().setValue(this.options._const.action, this.options._const.modifyChecked).setValue(this.options._const.oldValue, c.checked).setValue(this.options._const.newValue, a.checked).setValue(this.options._const.route, f)), p;
       }, u;
-    }(), it = {
+    }(), st = {
       debug: false,
       diffcap: 10,
       maxDepth: false,
@@ -2081,7 +2081,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       components: []
     }, Xt = function() {
       function u(c) {
-        if (c === void 0 && (c = {}), Object.entries(it).forEach(function(p) {
+        if (c === void 0 && (c = {}), Object.entries(st).forEach(function(p) {
           var m = p[0], x = p[1];
           Object.prototype.hasOwnProperty.call(c, m) || (c[m] = x);
         }), !c._const) {
@@ -2175,10 +2175,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
 `).concat(a);
       }, u;
     }();
-    return Ke.DiffDOM = Xt, Ke.TraceLogger = Kt, Ke.nodeToObj = D, Ke.stringToObj = xe, Ke;
+    return Ze.DiffDOM = Xt, Ze.TraceLogger = Kt, Ze.nodeToObj = D, Ze.stringToObj = xe, Ze;
   }
-  var ws = ks();
-  class Es {
+  var xs = Es();
+  class Cs {
     constructor({ targetElement: e, newMarkup: t, customElement: o }) {
       __publicField(this, "performDiff", () => {
         const e = this.diffDom.diff(this.target, this.clone);
@@ -2212,7 +2212,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       __publicField(this, "setInnerHTML", () => {
         this.performDiff(), this.apply();
       });
-      this.diffDom = new ws.DiffDOM(), this.target = e, this.customElement = o;
+      this.diffDom = new xs.DiffDOM(), this.target = e, this.customElement = o;
       const i = e.cloneNode(true), s = o._dotJSengine(t);
       o.app._originalInnerHTML.call(i, s), this.clone = i, this.diff = null;
     }
@@ -2227,16 +2227,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     CHANGE: "app-data-change",
     QUERYCHANGE: "query-data-change"
   };
-  function ht(n) {
+  function pt(n) {
     return n.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
   }
-  const xs = /* @__PURE__ */ new Set([
+  const Ts = /* @__PURE__ */ new Set([
     "viewBox",
     "preserveAspectRatio",
     "patternTransform",
     "clipPathUnits"
   ]);
-  class Cs {
+  class Ss {
     constructor() {
       __publicField(this, "container");
       __publicField(this, "querySelector", (e) => this.container.querySelector(e));
@@ -2262,8 +2262,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.container.childNodes;
     }
   }
-  class Ts extends Cs {
-    constructor({ appName: e, dataStructure: t = {}, elements: o = {}, renderFunctions: i = {}, router: s = null, authenticator: r = null, extensions: l = {}, properties: d = {}, methods: h = {}, beforeInit: g = {}, afterInit: v = {}, errorPages: b = null }) {
+  class _s extends Ss {
+    constructor({ appName: e, dataStructure: t = {}, elements: o = {}, renderFunctions: i = {}, router: s = null, authenticator: r = null, extensions: l = {}, properties: d = {}, methods: h = {}, beforeInit: g = {}, afterInit: b = {}, errorPages: v = null }) {
       super();
       __publicField(this, "identifier", "app");
       __privateAdd(this, _s4);
@@ -2328,7 +2328,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
               e._originalInnerHTML.call(this, t);
               return;
             }
-            new Es({
+            new Cs({
               targetElement: this,
               newMarkup: t,
               customElement: o
@@ -2347,23 +2347,23 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           }
         }), Element.prototype.setAttribute = function(t, o) {
           let i = t.startsWith(":") ? `data-${t.substring(1)}` : t;
-          this instanceof SVGElement && xs.has(i) || (i = ht(i)), e._originalSetAttribute.call(this, i, o), this instanceof Le && this._refreshBoundElements(`attrs.${i.replace("data-", "")}`);
+          this instanceof SVGElement && Ts.has(i) || (i = pt(i)), e._originalSetAttribute.call(this, i, o), this instanceof Le && this._refreshBoundElements(`attrs.${i.replace("data-", "")}`);
         }, Element.prototype.setAttributes = function(t) {
           for (const [o, i] of Object.entries(t)) this.setAttribute(o, i);
         }, Element.prototype.removeAttribute = function(t, o) {
           const i = t.startsWith(":") ? `data-${t.substring(1)}` : t;
           e._originalRemoveAttribute.call(this, i, o), this instanceof Le && this._refreshBoundElements(`attrs.${i.replace("data-", "")}`);
         }, this._originalDocQS = Document.prototype.querySelector, this._originalDocQSA = Document.prototype.querySelectorAll, this._originalElQS = Element.prototype.querySelector, this._originalElQSA = Element.prototype.querySelectorAll, Document.prototype.querySelector = function(t) {
-          const o = wt(t);
+          const o = Et(t);
           return e._originalDocQS.call(this, o);
         }, Document.prototype.querySelectorAll = function(t) {
-          const o = wt(t);
+          const o = Et(t);
           return e._originalDocQSA.call(this, o);
         }, Element.prototype.querySelector = function(t) {
-          const o = wt(t);
+          const o = Et(t);
           return e._originalElQS.call(this, o);
         }, Element.prototype.querySelectorAll = function(t) {
-          const o = wt(t);
+          const o = Et(t);
           return e._originalElQSA.call(this, o);
         };
       });
@@ -2401,7 +2401,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       __privateAdd(this, _g3, (e) => {
         const t = new CustomEvent(Ne.CHANGE, {
           detail: {
-            field: ht(e)
+            field: pt(e)
           }
         });
         this.container.dispatchEvent(t);
@@ -2415,7 +2415,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         });
         this.container.dispatchEvent(o);
       });
-      __privateAdd(this, _v3, () => {
+      __privateAdd(this, _b3, () => {
         const e = new CustomEvent(Ne.QUERYCHANGE, {
           detail: {
             query: this.queryParams
@@ -2441,7 +2441,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return window.crypto.getRandomValues(t), Array.from(t, (o) => o.toString(16).padStart(2, "0")).join("");
       });
       if (!e) throw new Error("Missing appName parameter");
-      __privateSet(this, _s4, e), __privateGet(this, _f3).call(this, t), __privateSet(this, _l4, o), this._router = s, this._authenticator = r, this._extensions = l, this._renderFunctions = i, this._errorPages = b, __privateSet(this, _t4, d), __privateSet(this, _h3, g), __privateSet(this, _r4, v), this._methods = h, __privateSet(this, _p3, Object.getOwnPropertyNames(this));
+      __privateSet(this, _s4, e), __privateGet(this, _f3).call(this, t), __privateSet(this, _l4, o), this._router = s, this._authenticator = r, this._extensions = l, this._renderFunctions = i, this._errorPages = v, __privateSet(this, _t4, d), __privateSet(this, _h3, g), __privateSet(this, _r4, b), this._methods = h, __privateSet(this, _p3, Object.getOwnPropertyNames(this));
     }
     isCustomElement(e) {
       return e instanceof Le && customElements.get(e.tagName.toLowerCase());
@@ -2477,7 +2477,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       for (const [o, i] of Object.entries(e)) t.searchParams.set(o, i);
       window.history.replaceState(null, null, t);
       for (const [o, i] of Object.entries(e)) __privateGet(this, _u3).call(this, o, i);
-      __privateGet(this, _v3).call(this);
+      __privateGet(this, _b3).call(this);
     }
     removeQueryParams(e) {
       const t = this.queryParams, o = {};
@@ -2529,7 +2529,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   _m3 = new WeakMap();
   _g3 = new WeakMap();
   _u3 = new WeakMap();
-  _v3 = new WeakMap();
+  _b3 = new WeakMap();
   class De extends Error {
     constructor({ msg: e, name: t, statusCode: o, response: i }) {
       super(e);
@@ -2548,7 +2548,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.statusCode = o, this.name = t, this.response = i, this.init();
     }
   }
-  class Ss extends De {
+  class Bs extends De {
     constructor(e) {
       super({
         msg: "Bad request",
@@ -2558,7 +2558,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class _s extends De {
+  class Ms extends De {
     constructor(e) {
       super({
         msg: "Unauthorized",
@@ -2568,7 +2568,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class Bs extends De {
+  class Os extends De {
     constructor(e) {
       super({
         msg: "Forbidden resource",
@@ -2578,7 +2578,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class Ms extends De {
+  class As extends De {
     constructor(e) {
       super({
         msg: "Resource not found",
@@ -2588,7 +2588,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class Os extends De {
+  class Is extends De {
     constructor(e) {
       super({
         msg: "This HTTP method is not allowed",
@@ -2598,7 +2598,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class As extends De {
+  class Ls extends De {
     constructor(e) {
       super({
         msg: "The request timed out.",
@@ -2608,7 +2608,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class Is extends De {
+  class Ns extends De {
     constructor(e) {
       super({
         msg: "To many requests to the server.",
@@ -2618,7 +2618,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class Ls extends De {
+  class Ps extends De {
     constructor(e) {
       super({
         msg: "Internal server error",
@@ -2628,18 +2628,18 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  const Ns = {
-    400: Ss,
-    401: _s,
-    403: Bs,
-    404: Ms,
-    405: Os,
-    408: As,
-    429: Is,
-    500: Ls
+  const Ds = {
+    400: Bs,
+    401: Ms,
+    403: Os,
+    404: As,
+    405: Is,
+    408: Ls,
+    429: Ns,
+    500: Ps
   };
-  new Map(Object.entries(Ns));
-  class Ps {
+  new Map(Object.entries(Ds));
+  class Rs {
     constructor(e) {
       this._response = e, this._consumedJson = null, this._consumedText = null, this._consumedBlob = null, this._consumedArrayBuffer = null;
     }
@@ -2740,9 +2740,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     }
   }
-  const _jt = class _jt {
+  const _bt = class _bt {
   };
-  __publicField(_jt, "requestConfigs", {
+  __publicField(_bt, "requestConfigs", {
     mode: "cors",
     cache: "no-cache",
     credentials: "same-origin",
@@ -2752,12 +2752,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     redirect: "follow",
     referrerPolicy: "no-referrer"
   });
-  __publicField(_jt, "catchError", async (e, t) => {
+  __publicField(_bt, "catchError", async (e, t) => {
     try {
       const o = await e;
       return [
         void 0,
-        new Ps(o)
+        new Rs(o)
       ];
     } catch (o) {
       if (!t || t.some((i) => o instanceof i)) return [
@@ -2767,92 +2767,92 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       throw o;
     }
   });
-  __publicField(_jt, "getHTML", async ({ url: e, errors: t }) => {
+  __publicField(_bt, "getHTML", async ({ url: e, errors: t }) => {
     if (!e) throw new Error("Missing url parameter in GET getHTML call. Forgot to provide a config object? {}");
-    const [o, i] = await _jt.catchError(fetch(e), t);
+    const [o, i] = await _bt.catchError(fetch(e), t);
     return o ? [
       o,
       void 0
     ] : await i.text();
   });
-  __publicField(_jt, "get", async ({ url: e, requestConfigs: t = {}, errors: o }) => {
+  __publicField(_bt, "get", async ({ url: e, requestConfigs: t = {}, errors: o }) => {
     if (!e) throw new Error("Missing url parameter in GET call. Forgot to provide a config object? {}");
-    return await _jt.catchError(fetch(e, {
-      ..._jt.requestConfigs,
+    return await _bt.catchError(fetch(e, {
+      ..._bt.requestConfigs,
       ...t
     }), o);
   });
-  __publicField(_jt, "post", async ({ url: e, data: t, requestConfigs: o = {}, errors: i }) => {
+  __publicField(_bt, "post", async ({ url: e, data: t, requestConfigs: o = {}, errors: i }) => {
     if (!e) throw new Error("Missing url parameter in POST call. Forgot to provide a config object? {}");
-    return await _jt.catchError(fetch(e, {
-      ..._jt.requestConfigs,
+    return await _bt.catchError(fetch(e, {
+      ..._bt.requestConfigs,
       ...o,
       method: "POST",
       body: JSON.stringify(t)
     }), i);
   });
-  __publicField(_jt, "postForm", async ({ url: e, data: t, requestConfigs: o = {}, errors: i }) => {
+  __publicField(_bt, "postForm", async ({ url: e, data: t, requestConfigs: o = {}, errors: i }) => {
     if (!e) throw new Error("Missing url parameter in POST form call. Forgot to provide a config object? {}");
-    const s = _jt._multipartFormDataConfigs(o);
-    return await _jt.catchError(fetch(e, {
+    const s = _bt._multipartFormDataConfigs(o);
+    return await _bt.catchError(fetch(e, {
       ...s,
       method: "POST",
       body: t
     }), i);
   });
-  __publicField(_jt, "put", async ({ url: e, data: t, requestConfigs: o = {}, errors: i }) => {
+  __publicField(_bt, "put", async ({ url: e, data: t, requestConfigs: o = {}, errors: i }) => {
     if (!e) throw new Error("Missing url parameter in PUT call. Forgot to provide a config object? {}");
-    return await _jt.catchError(fetch(e, {
-      ..._jt.requestConfigs,
+    return await _bt.catchError(fetch(e, {
+      ..._bt.requestConfigs,
       ...o,
       method: "PUT",
       body: JSON.stringify(t)
     }), i);
   });
-  __publicField(_jt, "putForm", async ({ url: e, data: t, requestConfigs: o = {}, errors: i }) => {
+  __publicField(_bt, "putForm", async ({ url: e, data: t, requestConfigs: o = {}, errors: i }) => {
     if (!e) throw new Error("Missing url parameter in PUT form call. Forgot to provide a config object? {}");
-    const s = _jt._multipartFormDataConfigs(o);
-    return await _jt.catchError(fetch(e, {
+    const s = _bt._multipartFormDataConfigs(o);
+    return await _bt.catchError(fetch(e, {
       ...s,
       method: "PUT",
       body: t
     }), i);
   });
-  __publicField(_jt, "patch", async ({ url: e, data: t, requestConfigs: o = {}, errors: i }) => {
+  __publicField(_bt, "patch", async ({ url: e, data: t, requestConfigs: o = {}, errors: i }) => {
     if (!e) throw new Error("Missing url parameter in PATCH call. Forgot to provide a config object? {}");
-    return await _jt.catchError(fetch(e, {
-      ..._jt.requestConfigs,
+    return await _bt.catchError(fetch(e, {
+      ..._bt.requestConfigs,
       ...o,
       method: "PUT",
       body: JSON.stringify(t)
     }), i);
   });
-  __publicField(_jt, "patchForm", async ({ url: e, data: t, configs: o = {}, errors: i }) => {
+  __publicField(_bt, "patchForm", async ({ url: e, data: t, configs: o = {}, errors: i }) => {
     if (!e) throw new Error("Missing url parameter in PATCH form call. Forgot to provide a config object? {}");
-    const s = _jt._multipartFormDataConfigs(o);
-    return await _jt.catchError(fetch(e, {
+    const s = _bt._multipartFormDataConfigs(o);
+    return await _bt.catchError(fetch(e, {
       ...s,
       method: "PUT",
       body: t
     }), i);
   });
-  __publicField(_jt, "delete", async ({ url: e, requestConfigs: t = {}, errors: o }) => {
+  __publicField(_bt, "delete", async ({ url: e, requestConfigs: t = {}, errors: o }) => {
     if (!e) throw new Error("Missing url parameter in DELETE call. Forgot to provide a config object? {}");
-    return await _jt.catchError(fetch(e, {
-      ..._jt.requestConfigs,
+    return await _bt.catchError(fetch(e, {
+      ..._bt.requestConfigs,
       ...t,
       method: "DELETE"
     }), o);
   });
-  __publicField(_jt, "_multipartFormDataConfigs", (e) => ({
-    ..._jt.requestConfigs,
+  __publicField(_bt, "_multipartFormDataConfigs", (e) => ({
+    ..._bt.requestConfigs,
     headers: {
       "Content-Type": "multipart/form-data"
     },
     ...e
   }));
-  let jt = _jt;
-  async function Ds() {
+  let bt = _bt;
+  async function js() {
     return ne`
         <div class="vh-100">
             <messenger-element class="toast-container position-fixed top-0 end-0 p-3"
@@ -2872,31 +2872,53 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         </div>
     `;
   }
-  const Rs = ue({
+  const Hs = he({
     tagName: "base-layout",
-    markup: Ds
+    markup: js
   });
-  function js() {
+  function Fs() {
     return ne`
     <div
         id="spinner-overlay"
         class="position-fixed top-0 start-0 w-100 vh-100 bg-dark bg-opacity-75 d-flex align-items-center justify-content-center"
         style="z-index: 2050;"
-    >
-        <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
+        >
+        <div class="d-flex flex-column align-items-center">
+            <!-- Spinner -->
+            <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
             <span class="visually-hidden">Loading...</span>
+            </div>
+
+            <!-- Percentage -->
+            <div id="spinner-percentage" class="text-light fw-bold mt-3">
+
+            </div>
+
+            <!-- Message -->
+            <div id="spinner-message" class="text-light small">
+
+            </div>
         </div>
-    </div>
+        </div>
+
     `;
   }
-  function tt() {
-    const n = js();
+  function qe() {
+    const n = Fs();
     document.body.insertAdjacentHTML("afterbegin", n);
   }
-  function mt() {
+  function We() {
     document.querySelector("#spinner-overlay").remove();
   }
-  async function Hs() {
+  function Vs(n) {
+    const e = document.getElementById("spinner-message");
+    e && (e.innerHTML = n);
+  }
+  function $s(n) {
+    const e = document.getElementById("spinner-percentage");
+    e && (e.innerHTML = n);
+  }
+  async function Us() {
     return ne`
         <div class="row mt-5">
             <div class="col-8 mx-auto mt-5 border rounded text-center dropzone p-3" 
@@ -2909,22 +2931,22 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         </div>
     `;
   }
-  async function Fs(n, e, t) {
+  async function zs(n, e, t) {
     e.preventDefault(), e.stopPropagation();
   }
-  async function Vs(n, e, t) {
+  async function qs(n, e, t) {
     e.preventDefault(), e.stopPropagation(), this.dropzone.style.borderColor = "blue", this.dropzone.classList.add("bg-secondary");
   }
-  async function $s(n, e, t) {
+  async function Ws(n, e, t) {
     e.preventDefault(), e.stopPropagation(), this.dropzone.style.borderColor = "#aaa", this.dropzone.classList.remove("bg-secondary");
   }
-  async function Us(n, e, t) {
+  async function Ys(n, e, t) {
     e.preventDefault(), e.stopPropagation();
     const o = e.dataTransfer.files;
     this.handleFile(o[0]), this.dropzone.style.borderColor = "#aaa", this.dropzone.classList.remove("bg-secondary");
   }
   async function Wn(n) {
-    tt();
+    qe();
     const e = new FormData();
     e.append("file", n);
     let t = await fetch("/api/v1/files", {
@@ -2933,42 +2955,63 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     });
     t.status;
     try {
-      t = await t.json(), this.setData("video", t.data);
+      t = await t.json(), await this.checkProgress(t.data), this.checkId = setInterval(async () => {
+        await this.checkProgress(t.data);
+      }, this.checkDelay);
     } catch {
       this.ext.messenger.setMessage({
         msg: "Failed to parse LIF file.",
         status: "warning"
       });
     }
-    mt();
   }
-  async function zs() {
+  function Yn() {
+    return clearInterval(this.checkId), We(), this.ext.messenger.setMessage({
+      message: "Failed to process LIF",
+      status: "danger"
+    });
+  }
+  async function Xn(n) {
+    var _a4, _b4, _c5;
+    let [e, t] = await bt.get({
+      url: n
+    });
+    if (e) return this.handleFailedProgressCheck();
+    if ([e, t] = await t.json(), e) return this.handleFailedProgressCheck();
+    if (!((_a4 = t == null ? void 0 : t.data) == null ? void 0 : _a4.alive)) return this.handleFailedProgressCheck();
+    Vs(t.data.message), $s(`${t.data.perc}%`), ((_b4 = t == null ? void 0 : t.data) == null ? void 0 : _b4.status) == "finished" && ((_c5 = t == null ? void 0 : t.data) == null ? void 0 : _c5.finished) && (clearInterval(this.checkId), this.setData("video", t.data.video), We());
+  }
+  async function Xs() {
     this.fileInput.click();
   }
-  async function qs(n, e, t) {
+  async function Ks(n, e, t) {
     const o = n.files[0];
     await this.handleFile(o);
   }
-  const Ws = ue({
+  const Gs = he({
     tagName: "upload-dropzone",
-    markup: Hs,
+    markup: Us,
     methods: {
-      uploadLif: zs,
+      uploadLif: Xs,
       handleFile: Wn,
-      dropHandler: Us,
-      dragEnterHandler: Fs,
-      dragOverHandler: Vs,
-      dragLeaveHandler: $s,
-      uploadFile: qs,
-      startOverlaySpinner: tt,
-      removeOverlaySpinner: mt
+      dropHandler: Ys,
+      dragEnterHandler: zs,
+      dragOverHandler: qs,
+      dragLeaveHandler: Ws,
+      uploadFile: Ks,
+      startOverlaySpinner: qe,
+      removeOverlaySpinner: We,
+      checkProgress: Xn,
+      handleFailedProgressCheck: Yn
     },
     define: {
-      dropzone: me(".dropzone"),
-      fileInput: me('input[type="file"]')
+      dropzone: be(".dropzone"),
+      fileInput: be('input[type="file"]'),
+      checkId: ae(null),
+      checkDelay: ae(3e3)
     }
   });
-  async function Ys() {
+  async function Zs() {
     return ne`
     <ul class="menu-bar" class="m-0 p-0">
         <!-- File Menu -->
@@ -3021,16 +3064,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     </ul>
     `;
   }
-  async function Xs(n, e, t) {
-    tt();
+  async function Qs(n, e, t) {
+    qe();
     let o = await fetch("/shutdown");
-    if (!o.ok || (o == null ? void 0 : o.status) != 200) return mt(), this.ext.messenger.setMessage({
+    if (!o.ok || (o == null ? void 0 : o.status) != 200) return We(), this.ext.messenger.setMessage({
       msg: "Something went wrong. Failed to shutdown.",
       status: "danger"
     });
     window.close();
   }
-  async function Ks() {
+  async function Js() {
     return Hn`
     /* Custom styling to mimic a Windows menu bar */
     .menu-bar {
@@ -3081,13 +3124,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     `;
   }
-  async function Gs(n, e, t) {
+  async function er(n, e, t) {
     n.blur(), this.pklUpload.click();
   }
-  async function Zs(n) {
+  async function tr(n) {
     if (!(n == null ? void 0 : n.files) || !n.files[0]) return;
     const e = new FormData();
-    e.append("file", n.files[0]), tt();
+    e.append("file", n.files[0]), qe();
     let t = await fetch("/api/v1/files/open-project", {
       method: "POST",
       body: e
@@ -3098,38 +3141,41 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     });
     t = await t.json(), location.reload();
   }
-  function Qs(n, e, t) {
+  function or(n, e, t) {
     this.dropdownMenus.forEach(function(o) {
       o.id !== t.menu && o.classList.remove("show");
     }), document.getElementById(t.menu).classList.toggle("show");
   }
-  function Js(n) {
+  function nr(n) {
     n.target.matches(".menu-bar a") || this.dropdownMenus.forEach(function(e) {
       e.classList.remove("show");
     });
   }
-  function er() {
+  function ir() {
     this.dropdownMenus.forEach((n) => {
       n.classList.remove("show");
     });
   }
-  async function tr(n, e, t) {
+  async function sr(n, e, t) {
     n.blur(), this.closeMenus(), window.pywebview && (e.preventDefault(), await window.pywebview.api[t.next]());
   }
-  async function or(n, e, t) {
+  async function rr(n, e, t) {
     n.blur(), !(t == null ? void 0 : t.disabled) && (this.closeMenus(), this.fileUpload.click());
   }
-  async function nr(n, e, t) {
+  async function ar(n, e, t) {
     const o = n.files[0];
     await this.handleFile(o);
   }
-  async function ir(n, e, t) {
+  async function lr(n, e, t) {
     await this.app.ext.messenger.infoModal({
       title: "About",
-      content: "<about-info></about-info>"
+      content: "<about-info></about-info>",
+      modalOptions: {
+        size: "modal-lg"
+      }
     });
   }
-  async function sr(n, e, t) {
+  async function cr(n, e, t) {
     this.closeMenus(), await this.app.ext.messenger.confirmModal({
       title: "New project",
       content: "Are you sure you want to start a new project? All current data will be deleted.",
@@ -3138,39 +3184,43 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     });
   }
-  async function rr() {
+  async function dr() {
     let n = await fetch("/new-project");
     (!n || !(n == null ? void 0 : n.ok) || (n == null ? void 0 : n.status) != 200) && this.ext.messenger.setMessage({
       msg: "Failed to start new project. Check application.",
       status: "warning"
     }), location.reload();
   }
-  const ar = ue({
+  const ur = he({
     tagName: "menu-element",
-    markup: Ys,
+    markup: Zs,
     css: {
       scoped: false,
-      style: Ks
+      style: Js
     },
     methods: {
-      toggleDropdown: Qs,
-      closeOnMissclick: Js,
-      importLif: or,
-      openAboutModal: ir,
-      closeMenus: er,
+      toggleDropdown: or,
+      closeOnMissclick: nr,
+      importLif: rr,
+      openAboutModal: lr,
+      closeMenus: ir,
       handleFile: Wn,
-      uploadFile: nr,
-      shutdownApp: Xs,
-      saveProject: tr,
-      openProject: Gs,
-      uploadPkl: Zs,
-      newProject: sr,
-      startNewProject: rr
+      uploadFile: ar,
+      shutdownApp: Qs,
+      saveProject: sr,
+      openProject: er,
+      uploadPkl: tr,
+      newProject: cr,
+      startNewProject: dr,
+      handleFailedProgressCheck: Yn,
+      checkProgress: Xn
     },
     define: {
-      dropdownMenus: ls(".dropdown-menu"),
-      fileUpload: me(".lif-upload"),
-      pklUpload: me(".pkl-upload"),
+      dropdownMenus: ds(".dropdown-menu"),
+      fileUpload: be(".lif-upload"),
+      pklUpload: be(".pkl-upload"),
+      checkId: ae(null),
+      checkDelay: ae(3e3),
       video: {
         get() {
           return this.getData("video");
@@ -3188,7 +3238,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     }
   });
-  async function lr() {
+  async function hr() {
     return ne`
         <div data-bind="app.video">
             {{? this.video == null }}
@@ -3199,9 +3249,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         </div>
     `;
   }
-  const Yn = ue({
+  const Kn = he({
     tagName: "home-page",
-    markup: lr,
+    markup: hr,
     define: {
       video: {
         get() {
@@ -3210,7 +3260,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     }
   });
-  async function cr() {
+  async function pr() {
     return ne`
         <div>
             <a href="/app" class="text-reset btn btn-sm"><i class="fas fa-arrow-left"></i> Go back</a>
@@ -3259,11 +3309,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         </div>
     `;
   }
-  const Xn = ue({
+  const Gn = he({
     tagName: "documentation-page",
-    markup: cr
+    markup: pr
   });
-  async function dr() {
+  async function fr() {
     return ne`
     <div class="offcanvas offcanvas-start w-75" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1" id="analysisConfigs" aria-labelledby="analysisConfigsLabel">
         <div class="offcanvas-header">
@@ -3309,17 +3359,17 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     </div> 
     `;
   }
-  function ur(n, e, t) {
+  function gr(n, e, t) {
     location.reload();
   }
-  async function hr(n, e, t) {
+  async function mr(n, e, t) {
     n.blur();
     const o = {
       [this.projectName.id]: this.projectName.value,
       [this.sampling.id]: this.sampling.value,
       [this.pxToUm.id]: this.pxToUm.value
     };
-    let [i, s] = await jt.post({
+    let [i, s] = await bt.post({
       url: `${this.properties.apiUrl}/preferences`,
       data: o
     });
@@ -3334,7 +3384,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     this.setData("preferences", s.data);
   }
   async function wn() {
-    let [n, e] = await jt.get({
+    let [n, e] = await bt.get({
       url: `${this.properties.apiUrl}/preferences`
     });
     if (n) return this.ext.messenger.setMessage({
@@ -3347,22 +3397,22 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     });
     this.setData("preferences", e.data);
   }
-  const pr = ue({
+  const br = he({
     tagName: "configurations-offcanvas",
-    markup: dr,
+    markup: fr,
     methods: {
-      savePreferences: hr,
+      savePreferences: mr,
       loadPreferences: wn,
-      refreshApp: ur
+      refreshApp: gr
     },
     beforeInit: {
       loadPreferences: wn
     },
     define: {
-      preferences: be(null),
-      projectName: me("#project_name"),
-      sampling: me("#sampling"),
-      pxToUm: me("#px_to_um"),
+      preferences: ae(null),
+      projectName: be("#project_name"),
+      sampling: be("#sampling"),
+      pxToUm: be("#px_to_um"),
       preferences: {
         get() {
           return this.getData("preferences");
@@ -3380,11 +3430,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       console.error("vite-plugin-css-injected-by-js", e);
     }
   })();
-  var pt = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
+  var ft = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
   function Ht(n) {
     return n && n.__esModule && Object.prototype.hasOwnProperty.call(n, "default") ? n.default : n;
   }
-  function fr(n) {
+  function vr(n) {
     if (n.__esModule) return n;
     var e = n.default;
     if (typeof e == "function") {
@@ -3457,8 +3507,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   window.cancelIdleCallback = window.cancelIdleCallback || function(n) {
     clearTimeout(n);
   };
-  let gr = (n = 21) => crypto.getRandomValues(new Uint8Array(n)).reduce((e, t) => (t &= 63, t < 36 ? e += t.toString(36) : t < 62 ? e += (t - 26).toString(36).toUpperCase() : t > 62 ? e += "-" : e += "_", e), "");
-  var Kn = ((n) => (n.VERBOSE = "VERBOSE", n.INFO = "INFO", n.WARN = "WARN", n.ERROR = "ERROR", n))(Kn || {});
+  let yr = (n = 21) => crypto.getRandomValues(new Uint8Array(n)).reduce((e, t) => (t &= 63, t < 36 ? e += t.toString(36) : t < 62 ? e += (t - 26).toString(36).toUpperCase() : t > 62 ? e += "-" : e += "_", e), "");
+  var Zn = ((n) => (n.VERBOSE = "VERBOSE", n.INFO = "INFO", n.WARN = "WARN", n.ERROR = "ERROR", n))(Zn || {});
   const P = {
     BACKSPACE: 8,
     TAB: 9,
@@ -3469,7 +3519,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     DOWN: 40,
     RIGHT: 39,
     DELETE: 46
-  }, mr = {
+  }, kr = {
     LEFT: 0
   };
   function vt(n, e, t = "log", o, i = "color: inherit") {
@@ -3512,7 +3562,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
   }
   vt.logLevel = "VERBOSE";
-  function vr(n) {
+  function wr(n) {
     vt.logLevel = n;
   }
   const z = vt.bind(window, false), we = vt.bind(window, true);
@@ -3522,13 +3572,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function Q(n) {
     return Ue(n) === "function" || Ue(n) === "asyncfunction";
   }
-  function de(n) {
+  function ue(n) {
     return Ue(n) === "object";
   }
   function Ie(n) {
     return Ue(n) === "string";
   }
-  function br(n) {
+  function Er(n) {
     return Ue(n) === "boolean";
   }
   function En(n) {
@@ -3540,10 +3590,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function Ee(n) {
     return n ? Object.keys(n).length === 0 && n.constructor === Object : true;
   }
-  function Gn(n) {
+  function Qn(n) {
     return n > 47 && n < 58 || n === 32 || n === 13 || n === 229 || n > 64 && n < 91 || n > 95 && n < 112 || n > 185 && n < 193 || n > 218 && n < 223;
   }
-  async function yr(n, e = () => {
+  async function xr(n, e = () => {
   }, t = () => {
   }) {
     async function o(i, s, r) {
@@ -3555,19 +3605,19 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     return n.reduce(async (i, s) => (await i, o(s, e, t)), Promise.resolve());
   }
-  function Zn(n) {
+  function Jn(n) {
     return Array.prototype.slice.call(n);
   }
-  function Mt(n, e) {
+  function Ot(n, e) {
     return function() {
       const t = this, o = arguments;
       window.setTimeout(() => n.apply(t, o), e);
     };
   }
-  function kr(n) {
+  function Cr(n) {
     return n.name.split(".").pop();
   }
-  function wr(n) {
+  function Tr(n) {
     return /^[-\w]+\/([-+\w]+|\*)$/.test(n);
   }
   function Cn(n, e, t) {
@@ -3592,7 +3642,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return o = this, i = arguments, g <= 0 || g > e ? (r && (clearTimeout(r), r = null), l = h, s = n.apply(o, i), r || (o = i = null)) : !r && t.trailing !== false && (r = setTimeout(d, g)), s;
     };
   }
-  function Er() {
+  function Sr() {
     const n = {
       win: false,
       mac: false,
@@ -3601,13 +3651,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }, e = Object.keys(n).find((t) => window.navigator.appVersion.toLowerCase().indexOf(t) !== -1);
     return e && (n[e] = true), n;
   }
-  function Ot(n) {
+  function At(n) {
     return n[0].toUpperCase() + n.slice(1);
   }
   function ro(n, ...e) {
     if (!e.length) return n;
     const t = e.shift();
-    if (de(n) && de(t)) for (const o in t) de(t[o]) ? (n[o] || Object.assign(n, {
+    if (ue(n) && ue(t)) for (const o in t) ue(t[o]) ? (n[o] || Object.assign(n, {
       [o]: {}
     }), ro(n[o], t[o])) : Object.assign(n, {
       [o]: t[o]
@@ -3615,30 +3665,30 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     return ro(n, ...e);
   }
   function fo(n) {
-    const e = Er();
+    const e = Sr();
     return n = n.replace(/shift/gi, "\u21E7").replace(/backspace/gi, "\u232B").replace(/enter/gi, "\u23CE").replace(/up/gi, "\u2191").replace(/left/gi, "\u2192").replace(/down/gi, "\u2193").replace(/right/gi, "\u2190").replace(/escape/gi, "\u238B").replace(/insert/gi, "Ins").replace(/delete/gi, "\u2421").replace(/\+/gi, " + "), e.mac ? n = n.replace(/ctrl|cmd/gi, "\u2318").replace(/alt/gi, "\u2325") : n = n.replace(/cmd/gi, "Ctrl").replace(/windows/gi, "WIN"), n;
   }
-  function xr(n) {
+  function _r(n) {
     try {
       return new URL(n).href;
     } catch {
     }
     return n.substring(0, 2) === "//" ? window.location.protocol + n : window.location.origin + n;
   }
-  function Cr() {
-    return gr(10);
+  function Br() {
+    return yr(10);
   }
-  function Tr(n) {
+  function Mr(n) {
     window.open(n, "_blank");
   }
-  function Sr(n = "") {
+  function Or(n = "") {
     return `${n}${Math.floor(Math.random() * 1e8).toString(16)}`;
   }
   function ao(n, e, t) {
     const o = `\xAB${e}\xBB is deprecated and will be removed in the next major release. Please use the \xAB${t}\xBB instead.`;
     n && we(o, "warn");
   }
-  function ot(n, e, t) {
+  function nt(n, e, t) {
     const o = t.value ? "value" : "get", i = t[o], s = `#${e}Cache`;
     if (t[o] = function(...r) {
       return this[s] === void 0 && (this[s] = i.apply(this, ...r)), this[s];
@@ -3650,16 +3700,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     return t;
   }
-  const Qn = 650;
-  function nt() {
-    return window.matchMedia(`(max-width: ${Qn}px)`).matches;
+  const ei = 650;
+  function it() {
+    return window.matchMedia(`(max-width: ${ei}px)`).matches;
   }
   const lo = typeof window < "u" && window.navigator && window.navigator.platform && (/iP(ad|hone|od)/.test(window.navigator.platform) || window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
-  function _r(n, e) {
-    const t = Array.isArray(n) || de(n), o = Array.isArray(e) || de(e);
+  function Ar(n, e) {
+    const t = Array.isArray(n) || ue(n), o = Array.isArray(e) || ue(e);
     return t || o ? JSON.stringify(n) === JSON.stringify(e) : n === e;
   }
-  let k = class ge {
+  let k = class me {
     static isSingleTag(e) {
       return e.tagName && [
         "AREA",
@@ -3729,19 +3779,19 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       ].map((e) => `input[type="${e}"]`).join(", ");
     }
     static findAllInputs(e) {
-      return Zn(e.querySelectorAll(ge.allInputsSelector)).reduce((t, o) => ge.isNativeInput(o) || ge.containsOnlyInlineElements(o) ? [
+      return Jn(e.querySelectorAll(me.allInputsSelector)).reduce((t, o) => me.isNativeInput(o) || me.containsOnlyInlineElements(o) ? [
         ...t,
         o
       ] : [
         ...t,
-        ...ge.getDeepestBlockElements(o)
+        ...me.getDeepestBlockElements(o)
       ], []);
     }
     static getDeepestNode(e, t = false) {
       const o = t ? "lastChild" : "firstChild", i = t ? "previousSibling" : "nextSibling";
       if (e && e.nodeType === Node.ELEMENT_NODE && e[o]) {
         let s = e[o];
-        if (ge.isSingleTag(s) && !ge.isNativeInput(s) && !ge.isLineBreakTag(s)) if (s[i]) s = s[i];
+        if (me.isSingleTag(s) && !me.isNativeInput(s) && !me.isLineBreakTag(s)) if (s[i]) s = s[i];
         else if (s.parentNode[i]) s = s.parentNode[i];
         else return s.parentNode;
         return this.getDeepestNode(s, t);
@@ -3766,7 +3816,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     static canSetCaret(e) {
       let t = true;
-      if (ge.isNativeInput(e)) switch (e.type) {
+      if (me.isNativeInput(e)) switch (e.type) {
         case "file":
         case "checkbox":
         case "radio":
@@ -3778,7 +3828,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           t = false;
           break;
       }
-      else t = ge.isContentEditable(e);
+      else t = me.isContentEditable(e);
       return t;
     }
     static isNodeEmpty(e, t) {
@@ -3799,11 +3849,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return true;
     }
     static isHTMLString(e) {
-      const t = ge.make("div");
+      const t = me.make("div");
       return t.innerHTML = e, t.childElementCount > 0;
     }
     static getContentLength(e) {
-      return ge.isNativeInput(e) ? e.value.length : e.nodeType === Node.TEXT_NODE ? e.length : e.textContent.length;
+      return me.isNativeInput(e) ? e.value.length : e.nodeType === Node.TEXT_NODE ? e.length : e.textContent.length;
     }
     static get blockElements() {
       return [
@@ -3851,15 +3901,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     static containsOnlyInlineElements(e) {
       let t;
       Ie(e) ? (t = document.createElement("div"), t.innerHTML = e) : t = e;
-      const o = (i) => !ge.blockElements.includes(i.tagName.toLowerCase()) && Array.from(i.children).every(o);
+      const o = (i) => !me.blockElements.includes(i.tagName.toLowerCase()) && Array.from(i.children).every(o);
       return Array.from(t.children).every(o);
     }
     static getDeepestBlockElements(e) {
-      return ge.containsOnlyInlineElements(e) ? [
+      return me.containsOnlyInlineElements(e) ? [
         e
       ] : Array.from(e.children).reduce((t, o) => [
         ...t,
-        ...ge.getDeepestBlockElements(o)
+        ...me.getDeepestBlockElements(o)
       ], []);
     }
     static getHolder(e) {
@@ -3878,17 +3928,17 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
   };
-  function Br(n) {
+  function Ir(n) {
     return !/[^\t\n\r ]/.test(n);
   }
-  function Mr(n) {
+  function Lr(n) {
     const e = window.getComputedStyle(n), t = parseFloat(e.fontSize), o = parseFloat(e.lineHeight) || t * 1.2, i = parseFloat(e.paddingTop), s = parseFloat(e.borderTopWidth), r = parseFloat(e.marginTop), l = t * 0.8, d = (o - t) / 2;
     return r + s + i + d + l;
   }
-  function Jn(n) {
+  function ti(n) {
     n.dataset.empty = k.isEmpty(n) ? "true" : "false";
   }
-  const Or = {
+  const Nr = {
     blockTunes: {
       toggler: {
         "Click to tune": "",
@@ -3910,19 +3960,19 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       "Nothing found": "",
       "Convert to": ""
     }
-  }, Ar = {
+  }, Pr = {
     Text: "",
     Link: "",
     Bold: "",
     Italic: ""
-  }, Ir = {
+  }, Dr = {
     link: {
       "Add a link": ""
     },
     stub: {
       "The block can not be displayed correctly.": ""
     }
-  }, Lr = {
+  }, Rr = {
     delete: {
       Delete: "",
       "Click to delete": ""
@@ -3933,34 +3983,34 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     moveDown: {
       "Move down": ""
     }
-  }, ei = {
-    ui: Or,
-    toolNames: Ar,
-    tools: Ir,
-    blockTunes: Lr
-  }, ti = class Ge {
+  }, oi = {
+    ui: Nr,
+    toolNames: Pr,
+    tools: Dr,
+    blockTunes: Rr
+  }, ni = class Qe {
     static ui(e, t) {
-      return Ge._t(e, t);
+      return Qe._t(e, t);
     }
     static t(e, t) {
-      return Ge._t(e, t);
+      return Qe._t(e, t);
     }
     static setDictionary(e) {
-      Ge.currentDictionary = e;
+      Qe.currentDictionary = e;
     }
     static _t(e, t) {
-      const o = Ge.getNamespace(e);
+      const o = Qe.getNamespace(e);
       return !o || !o[t] ? t : o[t];
     }
     static getNamespace(e) {
-      return e.split(".").reduce((t, o) => !t || !Object.keys(t).length ? {} : t[o], Ge.currentDictionary);
+      return e.split(".").reduce((t, o) => !t || !Object.keys(t).length ? {} : t[o], Qe.currentDictionary);
     }
   };
-  ti.currentDictionary = ei;
-  let ve = ti;
-  class oi extends Error {
+  ni.currentDictionary = oi;
+  let ve = ni;
+  class ii extends Error {
   }
-  class bt {
+  class yt {
     constructor() {
       this.subscribers = {};
     }
@@ -4041,12 +4091,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     });
   }
-  class yt {
+  class kt {
     constructor() {
       this.allListeners = [];
     }
     on(e, t, o, i = false) {
-      const s = Sr("l"), r = {
+      const s = Or("l"), r = {
         id: s,
         element: e,
         eventType: t,
@@ -4104,7 +4154,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   }
   class j {
     constructor({ config: e, eventsDispatcher: t }) {
-      if (this.nodes = {}, this.listeners = new yt(), this.readOnlyMutableListeners = {
+      if (this.nodes = {}, this.listeners = new kt(), this.readOnlyMutableListeners = {
         on: (o, i, s, r = false) => {
           this.mutableListenerIds.push(this.listeners.on(o, i, s, r));
         },
@@ -4269,30 +4319,30 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       o.selectNodeContents(e), t.addRange(o);
     }
   }
-  function Nr(n, e) {
+  function jr(n, e) {
     const { type: t, target: o, addedNodes: i, removedNodes: s } = n;
     return n.type === "attributes" && n.attributeName === "data-empty" ? false : !!(e.contains(o) || t === "childList" && (Array.from(i).some((r) => r === e) || Array.from(s).some((r) => r === e)));
   }
-  const co = "redactor dom changed", ni = "block changed", ii = "fake cursor is about to be toggled", si = "fake cursor have been set", ft = "editor mobile layout toggled";
+  const co = "redactor dom changed", si = "block changed", ri = "fake cursor is about to be toggled", ai = "fake cursor have been set", gt = "editor mobile layout toggled";
   function uo(n, e) {
     if (!n.conversionConfig) return false;
     const t = n.conversionConfig[e];
     return Q(t) || Ie(t);
   }
-  function At(n, e) {
+  function It(n, e) {
     return uo(n.tool, e);
   }
-  function ri(n, e) {
-    return Object.entries(n).some(([t, o]) => e[t] && _r(e[t], o));
+  function li(n, e) {
+    return Object.entries(n).some(([t, o]) => e[t] && Ar(e[t], o));
   }
-  async function ai(n, e) {
+  async function ci(n, e) {
     const t = (await n.save()).data, o = e.find((i) => i.name === n.name);
     return o !== void 0 && !uo(o, "export") ? [] : e.reduce((i, s) => {
       if (!uo(s, "import") || s.toolbox === void 0) return i;
       const r = s.toolbox.filter((l) => {
         if (Ee(l) || l.icon === void 0) return false;
         if (l.data !== void 0) {
-          if (ri(l.data, t)) return false;
+          if (li(l.data, t)) return false;
         } else if (s.name === n.name) return false;
         return true;
       });
@@ -4303,9 +4353,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }, []);
   }
   function Tn(n, e) {
-    return n.mergeable ? n.name === e.name ? true : At(e, "export") && At(n, "import") : false;
+    return n.mergeable ? n.name === e.name ? true : It(e, "export") && It(n, "import") : false;
   }
-  function Pr(n, e) {
+  function Hr(n, e) {
     const t = e == null ? void 0 : e.export;
     return Q(t) ? t(n) : Ie(t) ? n[t] : (t !== void 0 && z("Conversion \xABexport\xBB property must be a string or function. String means key of saved data object to export. Function should export processed string to export."), "");
   }
@@ -4316,18 +4366,18 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     } : (o !== void 0 && z("Conversion \xABimport\xBB property must be a string or function. String means key of tool data to import. Function accepts a imported string and return composed tool data."), {});
   }
   var G = ((n) => (n.Default = "default", n.Separator = "separator", n.Html = "html", n))(G || {}), Ae = ((n) => (n.APPEND_CALLBACK = "appendCallback", n.RENDERED = "rendered", n.MOVED = "moved", n.UPDATED = "updated", n.REMOVED = "removed", n.ON_PASTE = "onPaste", n))(Ae || {});
-  class ce extends bt {
-    constructor({ id: e = Cr(), data: t, tool: o, readOnly: i, tunesData: s }, r) {
+  class de extends yt {
+    constructor({ id: e = Br(), data: t, tool: o, readOnly: i, tunesData: s }, r) {
       super(), this.cachedInputs = [], this.toolRenderedElement = null, this.tunesInstances = /* @__PURE__ */ new Map(), this.defaultTunesInstances = /* @__PURE__ */ new Map(), this.unavailableTunesData = {}, this.inputIndex = 0, this.editorEventBus = null, this.handleFocus = () => {
         this.dropInputsCache(), this.updateCurrentInput();
       }, this.didMutated = (l = void 0) => {
         const d = l === void 0, h = l instanceof InputEvent;
         !d && !h && this.detectToolRootChange(l);
         let g;
-        d || h ? g = true : g = !(l.length > 0 && l.every((v) => {
-          const { addedNodes: b, removedNodes: w, target: y } = v;
+        d || h ? g = true : g = !(l.length > 0 && l.every((b) => {
+          const { addedNodes: v, removedNodes: w, target: y } = b;
           return [
-            ...Array.from(b),
+            ...Array.from(v),
             ...Array.from(w),
             y
           ].some((T) => (k.isElement(T) || (T = T.parentElement), T && T.closest('[data-mutation-free="true"]') !== null));
@@ -4401,25 +4451,25 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     set selected(e) {
       var t, o;
-      this.holder.classList.toggle(ce.CSS.selected, e);
+      this.holder.classList.toggle(de.CSS.selected, e);
       const i = e === true && M.isRangeInsideContainer(this.holder), s = e === false && M.isFakeCursorInsideContainer(this.holder);
-      (i || s) && ((t = this.editorEventBus) == null || t.emit(ii, {
+      (i || s) && ((t = this.editorEventBus) == null || t.emit(ri, {
         state: e
-      }), i ? M.addFakeCursor() : M.removeFakeCursor(this.holder), (o = this.editorEventBus) == null || o.emit(si, {
+      }), i ? M.addFakeCursor() : M.removeFakeCursor(this.holder), (o = this.editorEventBus) == null || o.emit(ai, {
         state: e
       }));
     }
     get selected() {
-      return this.holder.classList.contains(ce.CSS.selected);
+      return this.holder.classList.contains(de.CSS.selected);
     }
     set stretched(e) {
-      this.holder.classList.toggle(ce.CSS.wrapperStretched, e);
+      this.holder.classList.toggle(de.CSS.wrapperStretched, e);
     }
     get stretched() {
-      return this.holder.classList.contains(ce.CSS.wrapperStretched);
+      return this.holder.classList.contains(de.CSS.wrapperStretched);
     }
     set dropTarget(e) {
-      this.holder.classList.toggle(ce.CSS.dropTarget, e);
+      this.holder.classList.toggle(de.CSS.dropTarget, e);
     }
     get pluginsContent() {
       return this.toolRenderedElement;
@@ -4496,14 +4546,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       const e = this.tool.toolbox;
       if (e.length === 1) return Promise.resolve(this.tool.toolbox[0]);
       const t = await this.data, o = e;
-      return o == null ? void 0 : o.find((i) => ri(i.data, t));
+      return o == null ? void 0 : o.find((i) => li(i.data, t));
     }
     async exportDataAsString() {
       const e = await this.data;
-      return Pr(e, this.tool.conversionConfig);
+      return Hr(e, this.tool.conversionConfig);
     }
     compose() {
-      const e = k.make("div", ce.CSS.wrapper), t = k.make("div", ce.CSS.content), o = this.toolInstance.render();
+      const e = k.make("div", de.CSS.wrapper), t = k.make("div", de.CSS.content), o = this.toolInstance.render();
       e.setAttribute("data-cy", "block-wrapper"), e.dataset.id = this.id, this.toolRenderedElement = o, t.appendChild(this.toolRenderedElement);
       let i = t;
       return [
@@ -4538,7 +4588,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       var e;
       this.redactorDomChangedCallback = (t) => {
         const { mutations: o } = t;
-        o.some((i) => Nr(i, this.toolRenderedElement)) && this.didMutated(o);
+        o.some((i) => jr(i, this.toolRenderedElement)) && this.didMutated(o);
       }, (e = this.editorEventBus) == null || e.on(co, this.redactorDomChangedCallback);
     }
     unwatchBlockMutations() {
@@ -4557,10 +4607,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.cachedInputs = [];
     }
     toggleInputsEmptyMark() {
-      this.inputs.forEach(Jn);
+      this.inputs.forEach(ti);
     }
   }
-  class Dr extends j {
+  class Fr extends j {
     constructor() {
       super(...arguments), this.insert = (e = this.config.defaultBlock, t = {}, o = {}, i, s, r, l) => {
         const d = this.Editor.BlockManager.insert({
@@ -4574,7 +4624,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return new Oe(d);
       }, this.composeBlockData = async (e) => {
         const t = this.Editor.Tools.blockTools.get(e);
-        return new ce({
+        return new de({
           tool: t,
           api: this.Editor.API,
           readOnly: true,
@@ -4592,14 +4642,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         if (!d) throw new Error(`Block with id "${e}" not found`);
         const h = l.blockTools.get(d.name), g = l.blockTools.get(t);
         if (!g) throw new Error(`Block Tool with type "${t}" not found`);
-        const v = ((i = h == null ? void 0 : h.conversionConfig) == null ? void 0 : i.export) !== void 0, b = ((s = g.conversionConfig) == null ? void 0 : s.import) !== void 0;
-        if (v && b) {
+        const b = ((i = h == null ? void 0 : h.conversionConfig) == null ? void 0 : i.export) !== void 0, v = ((s = g.conversionConfig) == null ? void 0 : s.import) !== void 0;
+        if (b && v) {
           const w = await r.convert(d, t, o);
           return new Oe(w);
         } else {
           const w = [
-            v ? false : Ot(d.name),
-            b ? false : Ot(t)
+            b ? false : At(d.name),
+            v ? false : At(t)
           ].filter(Boolean).join(" and ");
           throw new Error(`Conversion from "${d.name}" to "${t}" is not possible. ${w} tool(s) should provide a "conversionConfig"`);
         }
@@ -4710,13 +4760,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       if (e === null) throw new Error("Index should be greater than or equal to 0");
     }
   }
-  function Rr(n, e) {
+  function Vr(n, e) {
     return typeof n == "number" ? e.BlockManager.getBlockByIndex(n) : typeof n == "string" ? e.BlockManager.getBlockById(n) : e.BlockManager.getBlockById(n.id);
   }
-  class jr extends j {
+  class $r extends j {
     constructor() {
       super(...arguments), this.setToFirstBlock = (e = this.Editor.Caret.positions.DEFAULT, t = 0) => this.Editor.BlockManager.firstBlock ? (this.Editor.Caret.setToBlock(this.Editor.BlockManager.firstBlock, e, t), true) : false, this.setToLastBlock = (e = this.Editor.Caret.positions.DEFAULT, t = 0) => this.Editor.BlockManager.lastBlock ? (this.Editor.Caret.setToBlock(this.Editor.BlockManager.lastBlock, e, t), true) : false, this.setToPreviousBlock = (e = this.Editor.Caret.positions.DEFAULT, t = 0) => this.Editor.BlockManager.previousBlock ? (this.Editor.Caret.setToBlock(this.Editor.BlockManager.previousBlock, e, t), true) : false, this.setToNextBlock = (e = this.Editor.Caret.positions.DEFAULT, t = 0) => this.Editor.BlockManager.nextBlock ? (this.Editor.Caret.setToBlock(this.Editor.BlockManager.nextBlock, e, t), true) : false, this.setToBlock = (e, t = this.Editor.Caret.positions.DEFAULT, o = 0) => {
-        const i = Rr(e, this.Editor);
+        const i = Vr(e, this.Editor);
         return i === void 0 ? false : (this.Editor.Caret.setToBlock(i, t, o), true);
       }, this.focus = (e = false) => e ? this.setToLastBlock(this.Editor.Caret.positions.END) : this.setToFirstBlock(this.Editor.Caret.positions.START);
     }
@@ -4731,7 +4781,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
   }
-  class Hr extends j {
+  class Ur extends j {
     get methods() {
       return {
         emit: (e, t) => this.emit(e, t),
@@ -4766,7 +4816,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class Fr extends j {
+  class zr extends j {
     get methods() {
       return {
         blocks: this.Editor.BlocksAPI.methods,
@@ -4793,7 +4843,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class Vr extends j {
+  class qr extends j {
     get methods() {
       return {
         close: () => this.close(),
@@ -4807,7 +4857,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.Editor.InlineToolbar.close();
     }
   }
-  class $r extends j {
+  class Wr extends j {
     get methods() {
       return {
         on: (e, t, o, i) => this.on(e, t, o, i),
@@ -4825,7 +4875,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.listeners.offById(e);
     }
   }
-  var li = {
+  var di = {
     exports: {}
   };
   (function(n, e) {
@@ -4933,16 +4983,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             return s.toString = function() {
               return this.map(function(r) {
                 var l = function(d, h) {
-                  var g = d[1] || "", v = d[3];
-                  if (!v) return g;
+                  var g = d[1] || "", b = d[3];
+                  if (!b) return g;
                   if (h && typeof btoa == "function") {
-                    var b = (y = v, "/*# sourceMappingURL=data:application/json;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(y)))) + " */"), w = v.sources.map(function(T) {
-                      return "/*# sourceURL=" + v.sourceRoot + T + " */";
+                    var v = (y = b, "/*# sourceMappingURL=data:application/json;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(y)))) + " */"), w = b.sources.map(function(T) {
+                      return "/*# sourceURL=" + b.sourceRoot + T + " */";
                     });
                     return [
                       g
                     ].concat(w).concat([
-                      b
+                      v
                     ]).join(`
 `);
                   }
@@ -4967,8 +5017,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
                 typeof g == "number" && (d[g] = true);
               }
               for (h = 0; h < r.length; h++) {
-                var v = r[h];
-                typeof v[0] == "number" && d[v[0]] || (l && !v[2] ? v[2] = l : l && (v[2] = "(" + v[2] + ") and (" + l + ")"), s.push(v));
+                var b = r[h];
+                typeof b[0] == "number" && d[b[0]] || (l && !b[2] ? b[2] = l : l && (b[2] = "(" + b[2] + ") and (" + l + ")"), s.push(b));
               }
             }, s;
           };
@@ -4995,7 +5045,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
               }
               return S[N];
             };
-          }(), g = null, v = 0, b = [], w = i(5);
+          }(), g = null, b = 0, v = [], w = i(5);
           function y(O, S) {
             for (var N = 0; N < O.length; N++) {
               var D = O[N], Y = l[D.id];
@@ -5033,8 +5083,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           function W(O, S) {
             var N = h(O.insertInto);
             if (!N) throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
-            var D = b[b.length - 1];
-            if (O.insertAt === "top") D ? D.nextSibling ? N.insertBefore(S, D.nextSibling) : N.appendChild(S) : N.insertBefore(S, N.firstChild), b.push(S);
+            var D = v[v.length - 1];
+            if (O.insertAt === "top") D ? D.nextSibling ? N.insertBefore(S, D.nextSibling) : N.appendChild(S) : N.insertBefore(S, N.firstChild), v.push(S);
             else if (O.insertAt === "bottom") N.appendChild(S);
             else {
               if (typeof O.insertAt != "object" || !O.insertAt.before) throw new Error(`[Style Loader]
@@ -5050,14 +5100,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           function U(O) {
             if (O.parentNode === null) return false;
             O.parentNode.removeChild(O);
-            var S = b.indexOf(O);
-            S >= 0 && b.splice(S, 1);
+            var S = v.indexOf(O);
+            S >= 0 && v.splice(S, 1);
           }
           function q(O) {
             var S = document.createElement("style");
-            return O.attrs.type === void 0 && (O.attrs.type = "text/css"), ae(S, O.attrs), W(O, S), S;
+            return O.attrs.type === void 0 && (O.attrs.type = "text/css"), le(S, O.attrs), W(O, S), S;
           }
-          function ae(O, S) {
+          function le(O, S) {
             Object.keys(S).forEach(function(N) {
               O.setAttribute(N, S[N]);
             });
@@ -5070,15 +5120,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
               O.css = $;
             }
             if (S.singleton) {
-              var ie = v++;
+              var ie = b++;
               N = g || (g = q(S)), D = _e3.bind(null, N, ie, false), Y = _e3.bind(null, N, ie, true);
             } else O.sourceMap && typeof URL == "function" && typeof URL.createObjectURL == "function" && typeof URL.revokeObjectURL == "function" && typeof Blob == "function" && typeof btoa == "function" ? (N = function(H) {
-              var he = document.createElement("link");
-              return H.attrs.type === void 0 && (H.attrs.type = "text/css"), H.attrs.rel = "stylesheet", ae(he, H.attrs), W(H, he), he;
-            }(S), D = (function(H, he, xe) {
-              var Be = xe.css, it = xe.sourceMap, Xt = he.convertToAbsoluteUrls === void 0 && it;
-              (he.convertToAbsoluteUrls || Xt) && (Be = w(Be)), it && (Be += `
-/*# sourceMappingURL=data:application/json;base64,` + btoa(unescape(encodeURIComponent(JSON.stringify(it)))) + " */");
+              var pe = document.createElement("link");
+              return H.attrs.type === void 0 && (H.attrs.type = "text/css"), H.attrs.rel = "stylesheet", le(pe, H.attrs), W(H, pe), pe;
+            }(S), D = (function(H, pe, xe) {
+              var Be = xe.css, st = xe.sourceMap, Xt = pe.convertToAbsoluteUrls === void 0 && st;
+              (pe.convertToAbsoluteUrls || Xt) && (Be = w(Be)), st && (Be += `
+/*# sourceMappingURL=data:application/json;base64,` + btoa(unescape(encodeURIComponent(JSON.stringify(st)))) + " */");
               var Kt = new Blob([
                 Be
               ], {
@@ -5087,8 +5137,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
               H.href = URL.createObjectURL(Kt), u && URL.revokeObjectURL(u);
             }).bind(null, N, S), Y = function() {
               U(N), N.href && URL.revokeObjectURL(N.href);
-            }) : (N = q(S), D = (function(H, he) {
-              var xe = he.css, Be = he.media;
+            }) : (N = q(S), D = (function(H, pe) {
+              var xe = pe.css, Be = pe.media;
               if (Be && H.setAttribute("media", Be), H.styleSheet) H.styleSheet.cssText = xe;
               else {
                 for (; H.firstChild; ) H.removeChild(H.firstChild);
@@ -5116,7 +5166,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
               for (D && y(T(D, S), S), $ = 0; $ < Y.length; $++) {
                 var H;
                 if ((H = Y[$]).refs === 0) {
-                  for (var he = 0; he < H.parts.length; he++) H.parts[he]();
+                  for (var pe = 0; pe < H.parts.length; pe++) H.parts[pe]();
                   delete l[H.id];
                 }
               }
@@ -5142,29 +5192,29 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             if (!i || typeof i != "string") return i;
             var r = s.protocol + "//" + s.host, l = r + s.pathname.replace(/\/[^\/]*$/, "/");
             return i.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(d, h) {
-              var g, v = h.trim().replace(/^"(.*)"$/, function(b, w) {
+              var g, b = h.trim().replace(/^"(.*)"$/, function(v, w) {
                 return w;
-              }).replace(/^'(.*)'$/, function(b, w) {
+              }).replace(/^'(.*)'$/, function(v, w) {
                 return w;
               });
-              return /^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(v) ? d : (g = v.indexOf("//") === 0 ? v : v.indexOf("/") === 0 ? r + v : l + v.replace(/^\.\//, ""), "url(" + JSON.stringify(g) + ")");
+              return /^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(b) ? d : (g = b.indexOf("//") === 0 ? b : b.indexOf("/") === 0 ? r + b : l + b.replace(/^\.\//, ""), "url(" + JSON.stringify(g) + ")");
             });
           };
         },
         function(t, o, i) {
-          var s, r, l, d, h, g, v, b, w;
-          t.exports = (s = "cdx-notifies", r = "cdx-notify", l = "cdx-notify__cross", d = "cdx-notify__button--confirm", h = "cdx-notify__button--cancel", g = "cdx-notify__input", v = "cdx-notify__button", b = "cdx-notify__btns-wrapper", {
+          var s, r, l, d, h, g, b, v, w;
+          t.exports = (s = "cdx-notifies", r = "cdx-notify", l = "cdx-notify__cross", d = "cdx-notify__button--confirm", h = "cdx-notify__button--cancel", g = "cdx-notify__input", b = "cdx-notify__button", v = "cdx-notify__btns-wrapper", {
             alert: w = function(y) {
               var T = document.createElement("DIV"), W = document.createElement("DIV"), U = y.message, q = y.style;
               return T.classList.add(r), q && T.classList.add(r + "--" + q), T.innerHTML = U, W.classList.add(l), W.addEventListener("click", T.remove.bind(T)), T.appendChild(W), T;
             },
             confirm: function(y) {
-              var T = w(y), W = document.createElement("div"), U = document.createElement("button"), q = document.createElement("button"), ae = T.querySelector("." + l), te = y.cancelHandler, J = y.okHandler;
-              return W.classList.add(b), U.innerHTML = y.okText || "Confirm", q.innerHTML = y.cancelText || "Cancel", U.classList.add(v), q.classList.add(v), U.classList.add(d), q.classList.add(h), te && typeof te == "function" && (q.addEventListener("click", te), ae.addEventListener("click", te)), J && typeof J == "function" && U.addEventListener("click", J), U.addEventListener("click", T.remove.bind(T)), q.addEventListener("click", T.remove.bind(T)), W.appendChild(U), W.appendChild(q), T.appendChild(W), T;
+              var T = w(y), W = document.createElement("div"), U = document.createElement("button"), q = document.createElement("button"), le = T.querySelector("." + l), te = y.cancelHandler, J = y.okHandler;
+              return W.classList.add(v), U.innerHTML = y.okText || "Confirm", q.innerHTML = y.cancelText || "Cancel", U.classList.add(b), q.classList.add(b), U.classList.add(d), q.classList.add(h), te && typeof te == "function" && (q.addEventListener("click", te), le.addEventListener("click", te)), J && typeof J == "function" && U.addEventListener("click", J), U.addEventListener("click", T.remove.bind(T)), q.addEventListener("click", T.remove.bind(T)), W.appendChild(U), W.appendChild(q), T.appendChild(W), T;
             },
             prompt: function(y) {
-              var T = w(y), W = document.createElement("div"), U = document.createElement("button"), q = document.createElement("input"), ae = T.querySelector("." + l), te = y.cancelHandler, J = y.okHandler;
-              return W.classList.add(b), U.innerHTML = y.okText || "Ok", U.classList.add(v), U.classList.add(d), q.classList.add(g), y.placeholder && q.setAttribute("placeholder", y.placeholder), y.default && (q.value = y.default), y.inputType && (q.type = y.inputType), te && typeof te == "function" && ae.addEventListener("click", te), J && typeof J == "function" && U.addEventListener("click", function() {
+              var T = w(y), W = document.createElement("div"), U = document.createElement("button"), q = document.createElement("input"), le = T.querySelector("." + l), te = y.cancelHandler, J = y.okHandler;
+              return W.classList.add(v), U.innerHTML = y.okText || "Ok", U.classList.add(b), U.classList.add(d), q.classList.add(g), y.placeholder && q.setAttribute("placeholder", y.placeholder), y.default && (q.value = y.default), y.inputType && (q.type = y.inputType), te && typeof te == "function" && le.addEventListener("click", te), J && typeof J == "function" && U.addEventListener("click", function() {
                 J(q.value);
               }), U.addEventListener("click", T.remove.bind(T)), W.appendChild(q), W.appendChild(U), T.appendChild(W), T;
             },
@@ -5176,20 +5226,20 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         }
       ]);
     });
-  })(li);
-  var Ur = li.exports;
-  const zr = Ht(Ur);
-  class qr {
+  })(di);
+  var Yr = di.exports;
+  const Xr = Ht(Yr);
+  class Kr {
     show(e) {
-      zr.show(e);
+      Xr.show(e);
     }
   }
-  class Wr extends j {
+  class Gr extends j {
     constructor({ config: e, eventsDispatcher: t }) {
       super({
         config: e,
         eventsDispatcher: t
-      }), this.notifier = new qr();
+      }), this.notifier = new Kr();
     }
     get methods() {
       return {
@@ -5200,7 +5250,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.notifier.show(e);
     }
   }
-  class Yr extends j {
+  class Zr extends j {
     get methods() {
       const e = () => this.isEnabled;
       return {
@@ -5217,21 +5267,21 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.Editor.ReadOnly.isEnabled;
     }
   }
-  var ci = {
+  var ui = {
     exports: {}
   };
   (function(n, e) {
     (function(t, o) {
       n.exports = o();
-    })(pt, function() {
-      function t(v) {
-        var b = v.tags, w = Object.keys(b), y = w.map(function(T) {
-          return typeof b[T];
+    })(ft, function() {
+      function t(b) {
+        var v = b.tags, w = Object.keys(v), y = w.map(function(T) {
+          return typeof v[T];
         }).every(function(T) {
           return T === "object" || T === "boolean" || T === "function";
         });
         if (!y) throw new Error("The configuration was invalid");
-        this.config = v;
+        this.config = b;
       }
       var o = [
         "P",
@@ -5247,8 +5297,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         "H6",
         "PRE"
       ];
-      function i(v) {
-        return o.indexOf(v.nodeName) !== -1;
+      function i(b) {
+        return o.indexOf(b.nodeName) !== -1;
       }
       var s = [
         "A",
@@ -5261,90 +5311,90 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         "U",
         "STRIKE"
       ];
-      function r(v) {
-        return s.indexOf(v.nodeName) !== -1;
+      function r(b) {
+        return s.indexOf(b.nodeName) !== -1;
       }
-      t.prototype.clean = function(v) {
-        const b = document.implementation.createHTMLDocument(), w = b.createElement("div");
-        return w.innerHTML = v, this._sanitize(b, w), w.innerHTML;
-      }, t.prototype._sanitize = function(v, b) {
-        var w = l(v, b), y = w.firstChild();
+      t.prototype.clean = function(b) {
+        const v = document.implementation.createHTMLDocument(), w = v.createElement("div");
+        return w.innerHTML = b, this._sanitize(v, w), w.innerHTML;
+      }, t.prototype._sanitize = function(b, v) {
+        var w = l(b, v), y = w.firstChild();
         if (y) do {
           if (y.nodeType === Node.TEXT_NODE) if (y.data.trim() === "" && (y.previousElementSibling && i(y.previousElementSibling) || y.nextElementSibling && i(y.nextElementSibling))) {
-            b.removeChild(y), this._sanitize(v, b);
+            v.removeChild(y), this._sanitize(b, v);
             break;
           } else continue;
           if (y.nodeType === Node.COMMENT_NODE) {
-            b.removeChild(y), this._sanitize(v, b);
+            v.removeChild(y), this._sanitize(b, v);
             break;
           }
           var T = r(y), W;
           T && (W = Array.prototype.some.call(y.childNodes, i));
-          var U = !!b.parentNode, q = i(b) && i(y) && U, ae = y.nodeName.toLowerCase(), te = d(this.config, ae, y), J = T && W;
+          var U = !!v.parentNode, q = i(v) && i(y) && U, le = y.nodeName.toLowerCase(), te = d(this.config, le, y), J = T && W;
           if (J || h(y, te) || !this.config.keepNestedBlockElements && q) {
-            if (!(y.nodeName === "SCRIPT" || y.nodeName === "STYLE")) for (; y.childNodes.length > 0; ) b.insertBefore(y.childNodes[0], y);
-            b.removeChild(y), this._sanitize(v, b);
+            if (!(y.nodeName === "SCRIPT" || y.nodeName === "STYLE")) for (; y.childNodes.length > 0; ) v.insertBefore(y.childNodes[0], y);
+            v.removeChild(y), this._sanitize(b, v);
             break;
           }
           for (var re = 0; re < y.attributes.length; re += 1) {
             var _e3 = y.attributes[re];
             g(_e3, te, y) && (y.removeAttribute(_e3.name), re = re - 1);
           }
-          this._sanitize(v, y);
+          this._sanitize(b, y);
         } while (y = w.nextSibling());
       };
-      function l(v, b) {
-        return v.createTreeWalker(b, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT, null, false);
+      function l(b, v) {
+        return b.createTreeWalker(v, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT, null, false);
       }
-      function d(v, b, w) {
-        return typeof v.tags[b] == "function" ? v.tags[b](w) : v.tags[b];
+      function d(b, v, w) {
+        return typeof b.tags[v] == "function" ? b.tags[v](w) : b.tags[v];
       }
-      function h(v, b) {
-        return typeof b > "u" ? true : typeof b == "boolean" ? !b : false;
+      function h(b, v) {
+        return typeof v > "u" ? true : typeof v == "boolean" ? !v : false;
       }
-      function g(v, b, w) {
-        var y = v.name.toLowerCase();
-        return b === true ? false : typeof b[y] == "function" ? !b[y](v.value, w) : typeof b[y] > "u" || b[y] === false ? true : typeof b[y] == "string" ? b[y] !== v.value : false;
+      function g(b, v, w) {
+        var y = b.name.toLowerCase();
+        return v === true ? false : typeof v[y] == "function" ? !v[y](b.value, w) : typeof v[y] > "u" || v[y] === false ? true : typeof v[y] == "string" ? v[y] !== b.value : false;
       }
       return t;
     });
-  })(ci);
-  var Xr = ci.exports;
-  const Kr = Ht(Xr);
+  })(ui);
+  var Qr = ui.exports;
+  const Jr = Ht(Qr);
   function mo(n, e) {
     return n.map((t) => {
       const o = Q(e) ? e(t.tool) : e;
-      return Ee(o) || (t.data = vo(t.data, o)), t;
+      return Ee(o) || (t.data = bo(t.data, o)), t;
     });
   }
   function Te(n, e = {}) {
     const t = {
       tags: e
     };
-    return new Kr(t).clean(n);
+    return new Jr(t).clean(n);
   }
-  function vo(n, e) {
-    return Array.isArray(n) ? Gr(n, e) : de(n) ? Zr(n, e) : Ie(n) ? Qr(n, e) : n;
+  function bo(n, e) {
+    return Array.isArray(n) ? ea(n, e) : ue(n) ? ta(n, e) : Ie(n) ? oa(n, e) : n;
   }
-  function Gr(n, e) {
-    return n.map((t) => vo(t, e));
+  function ea(n, e) {
+    return n.map((t) => bo(t, e));
   }
-  function Zr(n, e) {
+  function ta(n, e) {
     const t = {};
     for (const o in n) {
       if (!Object.prototype.hasOwnProperty.call(n, o)) continue;
-      const i = n[o], s = Jr(e[o]) ? e[o] : e;
-      t[o] = vo(i, s);
+      const i = n[o], s = na(e[o]) ? e[o] : e;
+      t[o] = bo(i, s);
     }
     return t;
   }
-  function Qr(n, e) {
-    return de(e) ? Te(n, e) : e === false ? Te(n, {}) : n;
+  function oa(n, e) {
+    return ue(e) ? Te(n, e) : e === false ? Te(n, {}) : n;
   }
-  function Jr(n) {
-    return de(n) || br(n) || Q(n);
+  function na(n) {
+    return ue(n) || Er(n) || Q(n);
   }
-  class ea extends j {
+  class ia extends j {
     get methods() {
       return {
         clean: (e, t) => this.clean(e, t)
@@ -5354,7 +5404,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return Te(e, t);
     }
   }
-  class ta extends j {
+  class sa extends j {
     get methods() {
       return {
         save: () => this.save()
@@ -5365,7 +5415,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.Editor.ReadOnly.isEnabled ? (we(e, "warn"), Promise.reject(new Error(e))) : this.Editor.Saver.save();
     }
   }
-  class oa extends j {
+  class ra extends j {
     constructor() {
       super(...arguments), this.selectionUtils = new M();
     }
@@ -5386,14 +5436,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.selectionUtils.expandToTag(e);
     }
   }
-  class na extends j {
+  class aa extends j {
     get methods() {
       return {
         getBlockTools: () => Array.from(this.Editor.Tools.blockTools.values())
       };
     }
   }
-  class ia extends j {
+  class la extends j {
     get classes() {
       return {
         block: "cdx-block",
@@ -5407,7 +5457,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
   }
-  class sa extends j {
+  class ca extends j {
     get methods() {
       return {
         close: () => this.close(),
@@ -5437,7 +5487,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       e ?? !this.Editor.Toolbar.toolbox.opened ? (this.Editor.Toolbar.moveAndOpen(), this.Editor.Toolbar.toolbox.open()) : this.Editor.Toolbar.toolbox.close();
     }
   }
-  var di = {
+  var hi = {
     exports: {}
   };
   (function(n, e) {
@@ -5581,20 +5631,20 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
               this.prepend(document.head, h);
             }
             placeBottom(l, d) {
-              const h = l.getBoundingClientRect(), g = h.left + l.clientWidth / 2 - this.nodes.wrapper.offsetWidth / 2, v = h.bottom + window.pageYOffset + this.offsetTop + d.marginTop;
-              this.applyPlacement("bottom", g, v);
+              const h = l.getBoundingClientRect(), g = h.left + l.clientWidth / 2 - this.nodes.wrapper.offsetWidth / 2, b = h.bottom + window.pageYOffset + this.offsetTop + d.marginTop;
+              this.applyPlacement("bottom", g, b);
             }
             placeTop(l, d) {
-              const h = l.getBoundingClientRect(), g = h.left + l.clientWidth / 2 - this.nodes.wrapper.offsetWidth / 2, v = h.top + window.pageYOffset - this.nodes.wrapper.clientHeight - this.offsetTop;
-              this.applyPlacement("top", g, v);
+              const h = l.getBoundingClientRect(), g = h.left + l.clientWidth / 2 - this.nodes.wrapper.offsetWidth / 2, b = h.top + window.pageYOffset - this.nodes.wrapper.clientHeight - this.offsetTop;
+              this.applyPlacement("top", g, b);
             }
             placeLeft(l, d) {
-              const h = l.getBoundingClientRect(), g = h.left - this.nodes.wrapper.offsetWidth - this.offsetLeft - d.marginLeft, v = h.top + window.pageYOffset + l.clientHeight / 2 - this.nodes.wrapper.offsetHeight / 2;
-              this.applyPlacement("left", g, v);
+              const h = l.getBoundingClientRect(), g = h.left - this.nodes.wrapper.offsetWidth - this.offsetLeft - d.marginLeft, b = h.top + window.pageYOffset + l.clientHeight / 2 - this.nodes.wrapper.offsetHeight / 2;
+              this.applyPlacement("left", g, b);
             }
             placeRight(l, d) {
-              const h = l.getBoundingClientRect(), g = h.right + this.offsetRight + d.marginRight, v = h.top + window.pageYOffset + l.clientHeight / 2 - this.nodes.wrapper.offsetHeight / 2;
-              this.applyPlacement("right", g, v);
+              const h = l.getBoundingClientRect(), g = h.right + this.offsetRight + d.marginRight, b = h.top + window.pageYOffset + l.clientHeight / 2 - this.nodes.wrapper.offsetHeight / 2;
+              this.applyPlacement("right", g, b);
             }
             applyPlacement(l, d, h) {
               this.nodes.wrapper.classList.add(this.CSS.placement[l]), this.nodes.wrapper.style.left = d + "px", this.nodes.wrapper.style.top = h + "px";
@@ -5602,7 +5652,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             make(l, d = null, h = {}) {
               const g = document.createElement(l);
               Array.isArray(d) ? g.classList.add(...d) : d && g.classList.add(d);
-              for (const v in h) h.hasOwnProperty(v) && (g[v] = h[v]);
+              for (const b in h) h.hasOwnProperty(b) && (g[b] = h[b]);
               return g;
             }
             append(l, d) {
@@ -5618,26 +5668,26 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         }
       ]).default;
     });
-  })(di);
-  var ra = di.exports;
-  const aa = Ht(ra);
+  })(hi);
+  var da = hi.exports;
+  const ua = Ht(da);
   let Ce = null;
-  function bo() {
-    Ce || (Ce = new aa());
+  function vo() {
+    Ce || (Ce = new ua());
   }
-  function la(n, e, t) {
-    bo(), Ce == null ? void 0 : Ce.show(n, e, t);
+  function ha(n, e, t) {
+    vo(), Ce == null ? void 0 : Ce.show(n, e, t);
   }
-  function It(n = false) {
-    bo(), Ce == null ? void 0 : Ce.hide(n);
+  function Lt(n = false) {
+    vo(), Ce == null ? void 0 : Ce.hide(n);
   }
-  function Lt(n, e, t) {
-    bo(), Ce == null ? void 0 : Ce.onHover(n, e, t);
+  function Nt(n, e, t) {
+    vo(), Ce == null ? void 0 : Ce.onHover(n, e, t);
   }
-  function ca() {
+  function pa() {
     Ce == null ? void 0 : Ce.destroy(), Ce = null;
   }
-  class da extends j {
+  class fa extends j {
     constructor({ config: e, eventsDispatcher: t }) {
       super({
         config: e,
@@ -5652,16 +5702,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
     show(e, t, o) {
-      la(e, t, o);
+      ha(e, t, o);
     }
     hide() {
-      It();
+      Lt();
     }
     onHover(e, t, o) {
-      Lt(e, t, o);
+      Nt(e, t, o);
     }
   }
-  class ua extends j {
+  class ga extends j {
     get methods() {
       return {
         nodes: this.editorNodes
@@ -5674,26 +5724,26 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
   }
-  function ui(n, e) {
+  function pi(n, e) {
     const t = {};
     return Object.entries(n).forEach(([o, i]) => {
-      if (de(i)) {
+      if (ue(i)) {
         const s = e ? `${e}.${o}` : o;
-        Object.values(i).every((r) => Ie(r)) ? t[o] = s : t[o] = ui(i, s);
+        Object.values(i).every((r) => Ie(r)) ? t[o] = s : t[o] = pi(i, s);
         return;
       }
       t[o] = i;
     }), t;
   }
-  const ke = ui(ei);
-  function ha(n, e) {
+  const ke = pi(oi);
+  function ma(n, e) {
     const t = {};
     return Object.keys(n).forEach((o) => {
       const i = e[o];
       i !== void 0 ? t[i] = n[o] : t[o] = n[o];
     }), t;
   }
-  const hi = class ct {
+  const fi = class dt {
     constructor(e, t) {
       this.cursor = -1, this.items = [], this.items = e || [], this.focusedCssClass = t;
     }
@@ -5707,10 +5757,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.items = e;
     }
     next() {
-      this.cursor = this.leafNodesAndReturnIndex(ct.directions.RIGHT);
+      this.cursor = this.leafNodesAndReturnIndex(dt.directions.RIGHT);
     }
     previous() {
-      this.cursor = this.leafNodesAndReturnIndex(ct.directions.LEFT);
+      this.cursor = this.leafNodesAndReturnIndex(dt.directions.LEFT);
     }
     dropCursor() {
       this.cursor !== -1 && (this.items[this.cursor].classList.remove(this.focusedCssClass), this.cursor = -1);
@@ -5718,14 +5768,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     leafNodesAndReturnIndex(e) {
       if (this.items.length === 0) return this.cursor;
       let t = this.cursor;
-      return t === -1 ? t = e === ct.directions.RIGHT ? -1 : 0 : this.items[t].classList.remove(this.focusedCssClass), e === ct.directions.RIGHT ? t = (t + 1) % this.items.length : t = (this.items.length + t - 1) % this.items.length, k.canSetCaret(this.items[t]) && Mt(() => M.setCursor(this.items[t]), 50)(), this.items[t].classList.add(this.focusedCssClass), t;
+      return t === -1 ? t = e === dt.directions.RIGHT ? -1 : 0 : this.items[t].classList.remove(this.focusedCssClass), e === dt.directions.RIGHT ? t = (t + 1) % this.items.length : t = (this.items.length + t - 1) % this.items.length, k.canSetCaret(this.items[t]) && Ot(() => M.setCursor(this.items[t]), 50)(), this.items[t].classList.add(this.focusedCssClass), t;
     }
   };
-  hi.directions = {
+  fi.directions = {
     RIGHT: "right",
     LEFT: "left"
   };
-  let rt = hi;
+  let at = fi;
   class ze {
     constructor(e) {
       this.iterator = null, this.activated = false, this.flipCallbacks = [], this.onKeyDown = (t) => {
@@ -5745,7 +5795,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             this.handleEnterPress(t);
             break;
         }
-      }, this.iterator = new rt(e.items, e.focusedItemClass), this.activateCallback = e.activateCallback, this.allowedKeys = e.allowedKeys || ze.usedKeys;
+      }, this.iterator = new at(e.items, e.focusedItemClass), this.activateCallback = e.activateCallback, this.allowedKeys = e.allowedKeys || ze.usedKeys;
     }
     get isActivated() {
       return this.activated;
@@ -5791,11 +5841,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.activated && this.allowedKeys.includes(e.keyCode);
     }
     handleTabPress(e) {
-      switch (e.shiftKey ? rt.directions.LEFT : rt.directions.RIGHT) {
-        case rt.directions.RIGHT:
+      switch (e.shiftKey ? at.directions.LEFT : at.directions.RIGHT) {
+        case at.directions.RIGHT:
           this.flipRight();
           break;
-        case rt.directions.LEFT:
+        case at.directions.LEFT:
           this.flipLeft();
           break;
       }
@@ -5807,34 +5857,34 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.iterator.currentItem && this.iterator.currentItem.scrollIntoViewIfNeeded(), this.flipCallbacks.forEach((e) => e());
     }
   }
-  const pa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9 12L9 7.1C9 7.04477 9.04477 7 9.1 7H10.4C11.5 7 14 7.1 14 9.5C14 9.5 14 12 11 12M9 12V16.8C9 16.9105 9.08954 17 9.2 17H12.5C14 17 15 16 15 14.5C15 11.7046 11 12 11 12M9 12H11"/></svg>', fa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7 10L11.8586 14.8586C11.9367 14.9367 12.0633 14.9367 12.1414 14.8586L17 10"/></svg>', ga = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M14.5 17.5L9.64142 12.6414C9.56331 12.5633 9.56331 12.4367 9.64142 12.3586L14.5 7.5"/></svg>', ma = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9.58284 17.5L14.4414 12.6414C14.5195 12.5633 14.5195 12.4367 14.4414 12.3586L9.58284 7.5"/></svg>', va = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7 15L11.8586 10.1414C11.9367 10.0633 12.0633 10.0633 12.1414 10.1414L17 15"/></svg>', ba = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 8L12 12M12 12L16 16M12 12L16 8M12 12L8 16"/></svg>', ya = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg>', ka = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M13.34 10C12.4223 12.7337 11 17 11 17"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M14.21 7H14.2"/></svg>', _n = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7.69998 12.6L7.67896 12.62C6.53993 13.7048 6.52012 15.5155 7.63516 16.625V16.625C8.72293 17.7073 10.4799 17.7102 11.5712 16.6314L13.0263 15.193C14.0703 14.1609 14.2141 12.525 13.3662 11.3266L13.22 11.12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16.22 11.12L16.3564 10.9805C17.2895 10.0265 17.3478 8.5207 16.4914 7.49733V7.49733C15.5691 6.39509 13.9269 6.25143 12.8271 7.17675L11.3901 8.38588C10.0935 9.47674 9.95706 11.4241 11.0888 12.6852L11.12 12.72"/></svg>', wa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M9.40999 7.29999H9.4"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M14.6 7.29999H14.59"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M9.30999 12H9.3"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M14.6 12H14.59"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M9.40999 16.7H9.4"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M14.6 16.7H14.59"/></svg>', Ea = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 7V12M12 17V12M17 12H12M12 12H7"/></svg>', pi = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M11.5 17.5L5 11M5 11V15.5M5 11H9.5"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12.5 6.5L19 13M19 13V8.5M19 13H14.5"/></svg>', xa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="5.5" stroke="currentColor" stroke-width="2"/><line x1="15.4142" x2="19" y1="15" y2="18.5858" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>', Ca = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M15.7795 11.5C15.7795 11.5 16.053 11.1962 16.5497 10.6722C17.4442 9.72856 17.4701 8.2475 16.5781 7.30145V7.30145C15.6482 6.31522 14.0873 6.29227 13.1288 7.25073L11.8796 8.49999"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8.24517 12.3883C8.24517 12.3883 7.97171 12.6922 7.47504 13.2161C6.58051 14.1598 6.55467 15.6408 7.44666 16.5869V16.5869C8.37653 17.5731 9.93744 17.5961 10.8959 16.6376L12.1452 15.3883"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M17.7802 15.1032L16.597 14.9422C16.0109 14.8624 15.4841 15.3059 15.4627 15.8969L15.4199 17.0818"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6.39064 9.03238L7.58432 9.06668C8.17551 9.08366 8.6522 8.58665 8.61056 7.99669L8.5271 6.81397"/><line x1="12.1142" x2="11.7" y1="12.2" y2="11.7858" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>', Ta = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><rect width="14" height="14" x="5" y="5" stroke="currentColor" stroke-width="2" rx="4"/><line x1="12" x2="12" y1="9" y2="12" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 15.02V15.01"/></svg>', Sa = "__", _a = "--";
+  const ba = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9 12L9 7.1C9 7.04477 9.04477 7 9.1 7H10.4C11.5 7 14 7.1 14 9.5C14 9.5 14 12 11 12M9 12V16.8C9 16.9105 9.08954 17 9.2 17H12.5C14 17 15 16 15 14.5C15 11.7046 11 12 11 12M9 12H11"/></svg>', va = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7 10L11.8586 14.8586C11.9367 14.9367 12.0633 14.9367 12.1414 14.8586L17 10"/></svg>', ya = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M14.5 17.5L9.64142 12.6414C9.56331 12.5633 9.56331 12.4367 9.64142 12.3586L14.5 7.5"/></svg>', ka = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9.58284 17.5L14.4414 12.6414C14.5195 12.5633 14.5195 12.4367 14.4414 12.3586L9.58284 7.5"/></svg>', wa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7 15L11.8586 10.1414C11.9367 10.0633 12.0633 10.0633 12.1414 10.1414L17 15"/></svg>', Ea = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 8L12 12M12 12L16 16M12 12L16 8M12 12L8 16"/></svg>', xa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg>', Ca = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M13.34 10C12.4223 12.7337 11 17 11 17"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M14.21 7H14.2"/></svg>', _n = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7.69998 12.6L7.67896 12.62C6.53993 13.7048 6.52012 15.5155 7.63516 16.625V16.625C8.72293 17.7073 10.4799 17.7102 11.5712 16.6314L13.0263 15.193C14.0703 14.1609 14.2141 12.525 13.3662 11.3266L13.22 11.12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16.22 11.12L16.3564 10.9805C17.2895 10.0265 17.3478 8.5207 16.4914 7.49733V7.49733C15.5691 6.39509 13.9269 6.25143 12.8271 7.17675L11.3901 8.38588C10.0935 9.47674 9.95706 11.4241 11.0888 12.6852L11.12 12.72"/></svg>', Ta = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M9.40999 7.29999H9.4"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M14.6 7.29999H14.59"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M9.30999 12H9.3"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M14.6 12H14.59"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M9.40999 16.7H9.4"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M14.6 16.7H14.59"/></svg>', Sa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 7V12M12 17V12M17 12H12M12 12H7"/></svg>', gi = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M11.5 17.5L5 11M5 11V15.5M5 11H9.5"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12.5 6.5L19 13M19 13V8.5M19 13H14.5"/></svg>', _a = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="5.5" stroke="currentColor" stroke-width="2"/><line x1="15.4142" x2="19" y1="15" y2="18.5858" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>', Ba = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M15.7795 11.5C15.7795 11.5 16.053 11.1962 16.5497 10.6722C17.4442 9.72856 17.4701 8.2475 16.5781 7.30145V7.30145C15.6482 6.31522 14.0873 6.29227 13.1288 7.25073L11.8796 8.49999"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8.24517 12.3883C8.24517 12.3883 7.97171 12.6922 7.47504 13.2161C6.58051 14.1598 6.55467 15.6408 7.44666 16.5869V16.5869C8.37653 17.5731 9.93744 17.5961 10.8959 16.6376L12.1452 15.3883"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M17.7802 15.1032L16.597 14.9422C16.0109 14.8624 15.4841 15.3059 15.4627 15.8969L15.4199 17.0818"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6.39064 9.03238L7.58432 9.06668C8.17551 9.08366 8.6522 8.58665 8.61056 7.99669L8.5271 6.81397"/><line x1="12.1142" x2="11.7" y1="12.2" y2="11.7858" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>', Ma = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><rect width="14" height="14" x="5" y="5" stroke="currentColor" stroke-width="2" rx="4"/><line x1="12" x2="12" y1="9" y2="12" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 15.02V15.01"/></svg>', Oa = "__", Aa = "--";
   function Re(n) {
     return (e, t) => [
       [
         n,
         e
-      ].filter((o) => !!o).join(Sa),
+      ].filter((o) => !!o).join(Oa),
       t
-    ].filter((o) => !!o).join(_a);
+    ].filter((o) => !!o).join(Aa);
   }
-  const at = Re("ce-hint"), lt = {
-    root: at(),
-    alignedStart: at(null, "align-left"),
-    alignedCenter: at(null, "align-center"),
-    title: at("title"),
-    description: at("description")
+  const lt = Re("ce-hint"), ct = {
+    root: lt(),
+    alignedStart: lt(null, "align-left"),
+    alignedCenter: lt(null, "align-center"),
+    title: lt("title"),
+    description: lt("description")
   };
-  class Ba {
+  class Ia {
     constructor(e) {
       this.nodes = {
         root: k.make("div", [
-          lt.root,
-          e.alignment === "center" ? lt.alignedCenter : lt.alignedStart
+          ct.root,
+          e.alignment === "center" ? ct.alignedCenter : ct.alignedStart
         ]),
-        title: k.make("div", lt.title, {
+        title: k.make("div", ct.title, {
           textContent: e.title
         })
-      }, this.nodes.root.appendChild(this.nodes.title), e.description !== void 0 && (this.nodes.description = k.make("div", lt.description, {
+      }, this.nodes.root.appendChild(this.nodes.title), e.description !== void 0 && (this.nodes.description = k.make("div", ct.description, {
         textContent: e.description
       }), this.nodes.root.appendChild(this.nodes.description));
     }
@@ -5850,7 +5900,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       if (this.params !== void 0 && "name" in this.params) return this.params.name;
     }
     destroy() {
-      It();
+      Lt();
     }
     onChildrenOpen() {
       var e;
@@ -5865,8 +5915,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.params !== void 0 && "onActivate" in this.params && ((t = (e = this.params).onActivate) == null || t.call(e, this.params));
     }
     addHint(e, t) {
-      const o = new Ba(t);
-      Lt(e, o.getElement(), {
+      const o = new Ia(t);
+      Nt(e, o.getElement(), {
         placement: t.position,
         hidingDelay: 100
       });
@@ -5977,7 +6027,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         ee.icon,
         ee.iconTool
       ], {
-        innerHTML: e.icon || ya
+        innerHTML: e.icon || xa
       }), r.appendChild(this.nodes.icon), e.title !== void 0 && r.appendChild(k.make("div", ee.title, {
         innerHTML: e.title || ""
       })), e.secondaryLabel && r.appendChild(k.make("div", ee.secondaryTitle, {
@@ -5986,7 +6036,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         ee.icon,
         ee.iconChevronRight
       ], {
-        innerHTML: ma
+        innerHTML: ka
       })), this.isActive && r.classList.add(ee.active), e.isDisabled && r.classList.add(ee.disabled), e.hint !== void 0 && ((o = t == null ? void 0 : t.hint) == null ? void 0 : o.enabled) !== false && this.addHint(r, {
         ...e.hint,
         position: ((i = t == null ? void 0 : t.hint) == null ? void 0 : i.position) || "right"
@@ -6035,7 +6085,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     line: Qt("line"),
     hidden: Qt(null, "hidden")
   };
-  class fi extends yo {
+  class mi extends yo {
     constructor() {
       super(), this.nodes = {
         root: k.make("div", Jt.container),
@@ -6051,29 +6101,29 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
   }
   var Se = ((n) => (n.Closed = "closed", n.ClosedOnActivate = "closed-on-activate", n))(Se || {});
-  const fe = Re("ce-popover"), oe = {
-    popover: fe(),
-    popoverContainer: fe("container"),
-    popoverOpenTop: fe(null, "open-top"),
-    popoverOpenLeft: fe(null, "open-left"),
-    popoverOpened: fe(null, "opened"),
-    search: fe("search"),
-    nothingFoundMessage: fe("nothing-found-message"),
-    nothingFoundMessageDisplayed: fe("nothing-found-message", "displayed"),
-    items: fe("items"),
-    overlay: fe("overlay"),
-    overlayHidden: fe("overlay", "hidden"),
-    popoverNested: fe(null, "nested"),
-    getPopoverNestedClass: (n) => fe(null, `nested-level-${n.toString()}`),
-    popoverInline: fe(null, "inline"),
-    popoverHeader: fe("header")
+  const ge = Re("ce-popover"), oe = {
+    popover: ge(),
+    popoverContainer: ge("container"),
+    popoverOpenTop: ge(null, "open-top"),
+    popoverOpenLeft: ge(null, "open-left"),
+    popoverOpened: ge(null, "opened"),
+    search: ge("search"),
+    nothingFoundMessage: ge("nothing-found-message"),
+    nothingFoundMessageDisplayed: ge("nothing-found-message", "displayed"),
+    items: ge("items"),
+    overlay: ge("overlay"),
+    overlayHidden: ge("overlay", "hidden"),
+    popoverNested: ge(null, "nested"),
+    getPopoverNestedClass: (n) => ge(null, `nested-level-${n.toString()}`),
+    popoverInline: ge(null, "inline"),
+    popoverHeader: ge("header")
   };
-  var Je = ((n) => (n.NestingLevel = "--nesting-level", n.PopoverHeight = "--popover-height", n.InlinePopoverWidth = "--inline-popover-width", n.TriggerItemLeft = "--trigger-item-left", n.TriggerItemTop = "--trigger-item-top", n))(Je || {});
+  var tt = ((n) => (n.NestingLevel = "--nesting-level", n.PopoverHeight = "--popover-height", n.InlinePopoverWidth = "--inline-popover-width", n.TriggerItemLeft = "--trigger-item-left", n.TriggerItemTop = "--trigger-item-top", n))(tt || {});
   const Bn = Re("ce-popover-item-html"), Mn = {
     root: Bn(),
     hidden: Bn(null, "hidden")
   };
-  class gt extends yo {
+  class mt extends yo {
     constructor(e, t) {
       var o, i;
       super(e), this.nodes = {
@@ -6095,9 +6145,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return Array.from(e);
     }
   }
-  class gi extends bt {
+  class bi extends yt {
     constructor(e, t = {}) {
-      super(), this.params = e, this.itemsRenderParams = t, this.listeners = new yt(), this.messages = {
+      super(), this.params = e, this.itemsRenderParams = t, this.listeners = new kt(), this.messages = {
         nothingFound: "Nothing found",
         search: "Search"
       }, this.items = this.buildItems(e.items), e.messages && (this.messages = {
@@ -6143,16 +6193,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return e.map((t) => {
         switch (t.type) {
           case G.Separator:
-            return new fi();
+            return new mi();
           case G.Html:
-            return new gt(t, this.itemsRenderParams[G.Html]);
+            return new mt(t, this.itemsRenderParams[G.Html]);
           default:
             return new Fe(t, this.itemsRenderParams[G.Default]);
         }
       });
     }
     getTargetItem(e) {
-      return this.items.filter((t) => t instanceof Fe || t instanceof gt).find((t) => {
+      return this.items.filter((t) => t instanceof Fe || t instanceof mt).find((t) => {
         const o = t.getElement();
         return o === null ? false : e.composedPath().includes(o);
       });
@@ -6183,23 +6233,23 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     }
   }
-  var Nt = ((n) => (n.Search = "search", n))(Nt || {});
+  var Pt = ((n) => (n.Search = "search", n))(Pt || {});
   const eo = Re("cdx-search-field"), to = {
     wrapper: eo(),
     icon: eo("icon"),
     input: eo("input")
   };
-  class Ma extends bt {
+  class La extends yt {
     constructor({ items: e, placeholder: t }) {
-      super(), this.listeners = new yt(), this.items = e, this.wrapper = k.make("div", to.wrapper);
+      super(), this.listeners = new kt(), this.items = e, this.wrapper = k.make("div", to.wrapper);
       const o = k.make("div", to.icon, {
-        innerHTML: xa
+        innerHTML: _a
       });
       this.input = k.make("input", to.input, {
         placeholder: t,
         tabIndex: -1
       }), this.wrapper.appendChild(o), this.wrapper.appendChild(this.input), this.listeners.on(this.input, "input", () => {
-        this.searchQuery = this.input.value, this.emit(Nt.Search, {
+        this.searchQuery = this.input.value, this.emit(Pt.Search, {
           query: this.searchQuery,
           items: this.foundItems
         });
@@ -6212,7 +6262,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.input.focus();
     }
     clear() {
-      this.input.value = "", this.searchQuery = "", this.emit(Nt.Search, {
+      this.input.value = "", this.searchQuery = "", this.emit(Pt.Search, {
         query: "",
         items: this.foundItems
       });
@@ -6229,11 +6279,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return s !== void 0 ? i.includes(s) : false;
     }
   }
-  var Oa = Object.defineProperty, Aa = Object.getOwnPropertyDescriptor, Ia = (n, e, t, o) => {
-    for (var i = Aa(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
-    return i && Oa(e, t, i), i;
+  var Na = Object.defineProperty, Pa = Object.getOwnPropertyDescriptor, Da = (n, e, t, o) => {
+    for (var i = Pa(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
+    return i && Na(e, t, i), i;
   };
-  const mi = class vi extends gi {
+  const vi = class yi extends bi {
     constructor(e, t) {
       super(e, t), this.nestingLevel = 0, this.nestedPopoverTriggerItem = null, this.previouslyHoveredItem = null, this.scopeElement = document.body, this.hide = () => {
         var o;
@@ -6246,7 +6296,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         const s = o.query === "", r = o.items.length === 0;
         this.items.forEach((d) => {
           let h = false;
-          d instanceof Fe ? h = !o.items.includes(d) : (d instanceof fi || d instanceof gt) && (h = r || !s), d.toggleHidden(h);
+          d instanceof Fe ? h = !o.items.includes(d) : (d instanceof mi || d instanceof mt) && (h = r || !s), d.toggleHidden(h);
         }), this.toggleNothingFoundMessage(r);
         const l = o.query === "" ? this.flippableElements : o.items.map((d) => d.getElement());
         (i = this.flipper) != null && i.isActivated && (this.flipper.deactivate(), this.flipper.activate(l));
@@ -6272,7 +6322,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     show() {
       var e;
-      this.nodes.popover.style.setProperty(Je.PopoverHeight, this.size.height + "px"), this.shouldOpenBottom || this.nodes.popover.classList.add(oe.popoverOpenTop), this.shouldOpenRight || this.nodes.popover.classList.add(oe.popoverOpenLeft), super.show(), (e = this.flipper) == null || e.activate(this.flippableElements);
+      this.nodes.popover.style.setProperty(tt.PopoverHeight, this.size.height + "px"), this.shouldOpenBottom || this.nodes.popover.classList.add(oe.popoverOpenTop), this.shouldOpenRight || this.nodes.popover.classList.add(oe.popoverOpenLeft), super.show(), (e = this.flipper) == null || e.activate(this.flippableElements);
     }
     destroy() {
       this.hide(), super.destroy();
@@ -6286,7 +6336,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     setTriggerItemPosition(e, t) {
       const o = t.getElement(), i = (o ? o.offsetTop : 0) - this.scrollTop, s = this.offsetTop + i;
-      e.style.setProperty(Je.TriggerItemTop, s + "px");
+      e.style.setProperty(tt.TriggerItemTop, s + "px");
     }
     destroyNestedPopoverIfExists() {
       var e, t;
@@ -6294,7 +6344,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     showNestedPopoverForItem(e) {
       var t;
-      this.nestedPopover = new vi({
+      this.nestedPopover = new yi({
         searchable: e.isChildrenSearchable,
         items: e.children,
         nestingLevel: this.nestingLevel + 1,
@@ -6302,7 +6352,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         messages: this.messages
       }), e.onChildrenOpen(), this.nestedPopover.on(Se.ClosedOnActivate, this.hide);
       const o = this.nestedPopover.getElement();
-      return this.nodes.popover.appendChild(o), this.setTriggerItemPosition(o, e), o.style.setProperty(Je.NestingLevel, this.nestedPopover.nestingLevel.toString()), this.nestedPopover.show(), (t = this.flipper) == null || t.deactivate(), this.nestedPopover;
+      return this.nodes.popover.appendChild(o), this.setTriggerItemPosition(o, e), o.style.setProperty(tt.NestingLevel, this.nestedPopover.nestingLevel.toString()), this.nestedPopover.show(), (t = this.flipper) == null || t.deactivate(), this.nestedPopover;
     }
     get shouldOpenBottom() {
       if (this.nodes.popover === void 0 || this.nodes.popover === null) return false;
@@ -6329,14 +6379,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     get flippableElements() {
       return this.items.map((e) => {
         if (e instanceof Fe) return e.getElement();
-        if (e instanceof gt) return e.getControls();
+        if (e instanceof mt) return e.getControls();
       }).flat().filter((e) => e != null);
     }
     addSearch() {
-      this.search = new Ma({
+      this.search = new La({
         items: this.itemsDefault,
         placeholder: this.messages.search
-      }), this.search.on(Nt.Search, this.onSearch);
+      }), this.search.on(Pt.Search, this.onSearch);
       const e = this.search.getElement();
       e.classList.add(oe.search), this.nodes.popoverContainer.insertBefore(e, this.nodes.popoverContainer.firstChild);
     }
@@ -6344,13 +6394,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.nodes.nothingFoundMessage.classList.toggle(oe.nothingFoundMessageDisplayed, e);
     }
   };
-  Ia([
-    ot
-  ], mi.prototype, "size");
-  let ko = mi;
-  class La extends ko {
+  Da([
+    nt
+  ], vi.prototype, "size");
+  let ko = vi;
+  class Ra extends ko {
     constructor(e) {
-      const t = !nt();
+      const t = !it();
       super({
         ...e,
         class: oe.popoverInline
@@ -6371,20 +6421,20 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           }
         }
       }), this.items.forEach((o) => {
-        !(o instanceof Fe) && !(o instanceof gt) || o.hasChildren && o.isChildrenOpen && this.showNestedItems(o);
+        !(o instanceof Fe) && !(o instanceof mt) || o.hasChildren && o.isChildrenOpen && this.showNestedItems(o);
       });
     }
     get offsetLeft() {
       return this.nodes.popoverContainer === null ? 0 : this.nodes.popoverContainer.offsetLeft;
     }
     show() {
-      this.nestingLevel === 0 && this.nodes.popover.style.setProperty(Je.InlinePopoverWidth, this.size.width + "px"), super.show();
+      this.nestingLevel === 0 && this.nodes.popover.style.setProperty(tt.InlinePopoverWidth, this.size.width + "px"), super.show();
     }
     handleHover() {
     }
     setTriggerItemPosition(e, t) {
       const o = t.getElement(), i = o ? o.offsetLeft : 0, s = this.offsetLeft + i;
-      e.style.setProperty(Je.TriggerItemLeft, s + "px");
+      e.style.setProperty(tt.TriggerItemLeft, s + "px");
     }
     showNestedItems(e) {
       if (this.nestedPopoverTriggerItem === e) {
@@ -6402,36 +6452,36 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       e !== this.nestedPopoverTriggerItem && ((t = this.nestedPopoverTriggerItem) == null || t.handleClick(), super.destroyNestedPopoverIfExists()), super.handleItemClick(e);
     }
   }
-  const bi = class dt {
+  const ki = class ut {
     constructor() {
       this.scrollPosition = null;
     }
     lock() {
-      lo ? this.lockHard() : document.body.classList.add(dt.CSS.scrollLocked);
+      lo ? this.lockHard() : document.body.classList.add(ut.CSS.scrollLocked);
     }
     unlock() {
-      lo ? this.unlockHard() : document.body.classList.remove(dt.CSS.scrollLocked);
+      lo ? this.unlockHard() : document.body.classList.remove(ut.CSS.scrollLocked);
     }
     lockHard() {
-      this.scrollPosition = window.pageYOffset, document.documentElement.style.setProperty("--window-scroll-offset", `${this.scrollPosition}px`), document.body.classList.add(dt.CSS.scrollLockedHard);
+      this.scrollPosition = window.pageYOffset, document.documentElement.style.setProperty("--window-scroll-offset", `${this.scrollPosition}px`), document.body.classList.add(ut.CSS.scrollLockedHard);
     }
     unlockHard() {
-      document.body.classList.remove(dt.CSS.scrollLockedHard), this.scrollPosition !== null && window.scrollTo(0, this.scrollPosition), this.scrollPosition = null;
+      document.body.classList.remove(ut.CSS.scrollLockedHard), this.scrollPosition !== null && window.scrollTo(0, this.scrollPosition), this.scrollPosition = null;
     }
   };
-  bi.CSS = {
+  ki.CSS = {
     scrollLocked: "ce-scroll-locked",
     scrollLockedHard: "ce-scroll-locked--hard"
   };
-  let Na = bi;
+  let ja = ki;
   const oo = Re("ce-popover-header"), no = {
     root: oo(),
     text: oo("text"),
     backButton: oo("back-button")
   };
-  class Pa {
+  class Ha {
     constructor({ text: e, onBackButtonClick: t }) {
-      this.listeners = new yt(), this.text = e, this.onBackButtonClick = t, this.nodes = {
+      this.listeners = new kt(), this.text = e, this.onBackButtonClick = t, this.nodes = {
         root: k.make("div", [
           no.root
         ]),
@@ -6441,7 +6491,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         text: k.make("div", [
           no.text
         ])
-      }, this.nodes.backButton.innerHTML = ga, this.nodes.root.appendChild(this.nodes.backButton), this.listeners.on(this.nodes.backButton, "click", this.onBackButtonClick), this.nodes.text.innerText = this.text, this.nodes.root.appendChild(this.nodes.text);
+      }, this.nodes.backButton.innerHTML = ya, this.nodes.root.appendChild(this.nodes.backButton), this.listeners.on(this.nodes.backButton, "click", this.onBackButtonClick), this.nodes.text.innerText = this.text, this.nodes.root.appendChild(this.nodes.text);
     }
     getElement() {
       return this.nodes.root;
@@ -6450,7 +6500,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.nodes.root.remove(), this.listeners.destroy();
     }
   }
-  class Da {
+  class Fa {
     constructor() {
       this.history = [];
     }
@@ -6470,7 +6520,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       for (; this.history.length > 1; ) this.pop();
     }
   }
-  class yi extends gi {
+  class wi extends bi {
     constructor(e) {
       super(e, {
         [G.Default]: {
@@ -6483,7 +6533,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             enabled: false
           }
         }
-      }), this.scrollLocker = new Na(), this.history = new Da(), this.isHidden = true, this.nodes.overlay = k.make("div", [
+      }), this.scrollLocker = new ja(), this.history = new Fa(), this.isHidden = true, this.nodes.overlay = k.make("div", [
         oe.overlay,
         oe.overlayHidden
       ]), this.nodes.popover.insertBefore(this.nodes.overlay, this.nodes.popover.firstChild), this.listeners.on(this.nodes.overlay, "click", () => {
@@ -6509,7 +6559,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     updateItemsAndHeader(e, t) {
       if (this.header !== null && this.header !== void 0 && (this.header.destroy(), this.header = null), t !== void 0) {
-        this.header = new Pa({
+        this.header = new Ha({
           text: t,
           onBackButtonClick: () => {
             this.history.pop(), this.updateItemsAndHeader(this.history.currentItems, this.history.currentTitle);
@@ -6528,7 +6578,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class Ra extends j {
+  class Va extends j {
     constructor() {
       super(...arguments), this.opened = false, this.selection = new M(), this.popover = null, this.close = () => {
         this.opened && (this.opened = false, M.isAtEditor || this.selection.restore(), this.selection.clearSaved(), !this.Editor.CrossBlockSelection.isCrossBlockSelectionStarted && this.Editor.BlockManager.currentBlock && this.Editor.BlockSelection.unselectBlock(this.Editor.BlockManager.currentBlock), this.eventsDispatcher.emit(this.events.closed), this.popover && (this.popover.off(Se.Closed, this.onPopoverClose), this.popover.destroy(), this.popover.getElement().remove(), this.popover = null));
@@ -6554,17 +6604,17 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     make() {
       this.nodes.wrapper = k.make("div", [
         this.CSS.settings
-      ]), this.nodes.wrapper.setAttribute("data-cy", "block-tunes"), this.eventsDispatcher.on(ft, this.close);
+      ]), this.nodes.wrapper.setAttribute("data-cy", "block-tunes"), this.eventsDispatcher.on(gt, this.close);
     }
     destroy() {
-      this.removeAllNodes(), this.listeners.destroy(), this.eventsDispatcher.off(ft, this.close);
+      this.removeAllNodes(), this.listeners.destroy(), this.eventsDispatcher.off(gt, this.close);
     }
     async open(e = this.Editor.BlockManager.currentBlock) {
       var t;
       this.opened = true, this.selection.save(), this.Editor.BlockSelection.selectBlock(e), this.Editor.BlockSelection.clearCache();
       const { toolTunes: o, commonTunes: i } = e.getTunes();
       this.eventsDispatcher.emit(this.events.opened);
-      const s = nt() ? yi : ko;
+      const s = it() ? wi : ko;
       this.popover = new s({
         searchable: true,
         items: await this.getTunesItems(e, i, o),
@@ -6583,20 +6633,20 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       o !== void 0 && o.length > 0 && (i.push(...o), i.push({
         type: G.Separator
       }));
-      const s = Array.from(this.Editor.Tools.blockTools.values()), r = (await ai(e, s)).reduce((l, d) => (d.toolbox.forEach((h) => {
+      const s = Array.from(this.Editor.Tools.blockTools.values()), r = (await ci(e, s)).reduce((l, d) => (d.toolbox.forEach((h) => {
         l.push({
           icon: h.icon,
           title: ve.t(ke.toolNames, h.title),
           name: d.name,
           closeOnActivate: true,
           onActivate: async () => {
-            const { BlockManager: g, Caret: v, Toolbar: b } = this.Editor, w = await g.convert(e, d.name, h.data);
-            b.close(), v.setToBlock(w, v.positions.END);
+            const { BlockManager: g, Caret: b, Toolbar: v } = this.Editor, w = await g.convert(e, d.name, h.data);
+            v.close(), b.setToBlock(w, b.positions.END);
           }
         });
       }), l), []);
       return r.length > 0 && (i.push({
-        icon: pi,
+        icon: gi,
         name: "convert-to",
         title: ve.ui(ke.ui.popover, "Convert to"),
         children: {
@@ -6609,13 +6659,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     resolveTuneAliases(e) {
       if (e.type === G.Separator || e.type === G.Html) return e;
-      const t = ha(e, {
+      const t = ma(e, {
         label: "title"
       });
       return e.confirmation && (t.confirmation = this.resolveTuneAliases(e.confirmation)), t;
     }
   }
-  var ki = {
+  var Ei = {
     exports: {}
   };
   (function(n, e) {
@@ -6668,8 +6718,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         function(t, o, i) {
           function s(d, h) {
             for (var g = 0; g < h.length; g++) {
-              var v = h[g];
-              v.enumerable = v.enumerable || false, v.configurable = true, "value" in v && (v.writable = true), Object.defineProperty(d, v.key, v);
+              var b = h[g];
+              b.enumerable = b.enumerable || false, b.configurable = true, "value" in b && (b.writable = true), Object.defineProperty(d, b.key, b);
             }
           }
           function r(d, h, g) {
@@ -6679,10 +6729,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           var l = function() {
             function d(h) {
               var g = this;
-              (function(v, b) {
-                if (!(v instanceof b)) throw new TypeError("Cannot call a class as a function");
-              })(this, d), this.commands = {}, this.keys = {}, this.name = h.name, this.parseShortcutName(h.name), this.element = h.on, this.callback = h.callback, this.executeShortcut = function(v) {
-                g.execute(v);
+              (function(b, v) {
+                if (!(b instanceof v)) throw new TypeError("Cannot call a class as a function");
+              })(this, d), this.commands = {}, this.keys = {}, this.name = h.name, this.parseShortcutName(h.name), this.element = h.on, this.callback = h.callback, this.executeShortcut = function(b) {
+                g.execute(b);
               }, this.element.addEventListener("keydown", this.executeShortcut, false);
             }
             return r(d, null, [
@@ -6767,12 +6817,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
                   h = h.split("+");
                   for (var g = 0; g < h.length; g++) {
                     h[g] = h[g].toUpperCase();
-                    var v = false;
-                    for (var b in d.supportedCommands) if (d.supportedCommands[b].includes(h[g])) {
-                      v = this.commands[b] = true;
+                    var b = false;
+                    for (var v in d.supportedCommands) if (d.supportedCommands[v].includes(h[g])) {
+                      b = this.commands[v] = true;
                       break;
                     }
-                    v || (this.keys[h[g]] = true);
+                    b || (this.keys[h[g]] = true);
                   }
                   for (var w in d.supportedCommands) this.commands[w] || (this.commands[w] = false);
                 }
@@ -6780,15 +6830,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
               {
                 key: "execute",
                 value: function(h) {
-                  var g, v = {
+                  var g, b = {
                     CMD: h.ctrlKey || h.metaKey,
                     SHIFT: h.shiftKey,
                     ALT: h.altKey
-                  }, b = true;
-                  for (g in this.commands) this.commands[g] !== v[g] && (b = false);
+                  }, v = true;
+                  for (g in this.commands) this.commands[g] !== b[g] && (v = false);
                   var w, y = true;
                   for (w in this.keys) y = y && h.keyCode === d.keyCodes[w];
-                  b && y && this.callback(h);
+                  v && y && this.callback(h);
                 }
               },
               {
@@ -6803,16 +6853,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         }
       ]).default;
     });
-  })(ki);
-  var ja = ki.exports;
-  const Ha = Ht(ja);
-  class Fa {
+  })(Ei);
+  var $a = Ei.exports;
+  const Ua = Ht($a);
+  class za {
     constructor() {
       this.registeredShortcuts = /* @__PURE__ */ new Map();
     }
     add(e) {
       if (this.findShortcut(e.on, e.name)) throw Error(`Shortcut ${e.name} is already registered for ${e.on}. Please remove it before add a new handler.`);
-      const t = new Ha({
+      const t = new Ua({
         name: e.name,
         on: e.on,
         callback: e.handler
@@ -6833,20 +6883,20 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return (this.registeredShortcuts.get(e) || []).find(({ name: o }) => o === t);
     }
   }
-  const et = new Fa();
-  var Va = Object.defineProperty, $a = Object.getOwnPropertyDescriptor, wi = (n, e, t, o) => {
-    for (var i = $a(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
-    return i && Va(e, t, i), i;
-  }, Ct = ((n) => (n.Opened = "toolbox-opened", n.Closed = "toolbox-closed", n.BlockAdded = "toolbox-block-added", n))(Ct || {});
-  const wo = class Ei extends bt {
+  const ot = new za();
+  var qa = Object.defineProperty, Wa = Object.getOwnPropertyDescriptor, xi = (n, e, t, o) => {
+    for (var i = Wa(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
+    return i && qa(e, t, i), i;
+  }, Tt = ((n) => (n.Opened = "toolbox-opened", n.Closed = "toolbox-closed", n.BlockAdded = "toolbox-block-added", n))(Tt || {});
+  const wo = class Ci extends yt {
     constructor({ api: e, tools: t, i18nLabels: o }) {
-      super(), this.opened = false, this.listeners = new yt(), this.popover = null, this.handleMobileLayoutToggle = () => {
+      super(), this.opened = false, this.listeners = new kt(), this.popover = null, this.handleMobileLayoutToggle = () => {
         this.destroyPopover(), this.initPopover();
       }, this.onPopoverClose = () => {
         this.opened = false, this.emit("toolbox-closed");
       }, this.api = e, this.tools = t, this.i18nLabels = o, this.enableShortcuts(), this.nodes = {
-        toolbox: k.make("div", Ei.CSS.toolbox)
-      }, this.initPopover(), this.nodes.toolbox.setAttribute("data-cy", "toolbox"), this.api.events.on(ft, this.handleMobileLayoutToggle);
+        toolbox: k.make("div", Ci.CSS.toolbox)
+      }, this.initPopover(), this.nodes.toolbox.setAttribute("data-cy", "toolbox"), this.api.events.on(gt, this.handleMobileLayoutToggle);
     }
     get isEmpty() {
       return this.toolsToBeDisplayed.length === 0;
@@ -6864,7 +6914,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     destroy() {
       var e;
-      super.destroy(), this.nodes && this.nodes.toolbox && this.nodes.toolbox.remove(), this.removeAllShortcuts(), (e = this.popover) == null || e.off(Se.Closed, this.onPopoverClose), this.listeners.destroy(), this.api.events.off(ft, this.handleMobileLayoutToggle);
+      super.destroy(), this.nodes && this.nodes.toolbox && this.nodes.toolbox.remove(), this.removeAllShortcuts(), (e = this.popover) == null || e.off(Se.Closed, this.onPopoverClose), this.listeners.destroy(), this.api.events.off(gt, this.handleMobileLayoutToggle);
     }
     toolButtonActivated(e, t) {
       this.insertNewBlock(e, t);
@@ -6882,7 +6932,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     initPopover() {
       var e;
-      const t = nt() ? yi : ko;
+      const t = it() ? wi : ko;
       this.popover = new t({
         scopeElement: this.api.ui.nodes.redactor,
         searchable: true,
@@ -6905,7 +6955,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     get toolboxItemsToBeDisplayed() {
       const e = (t, o, i = true) => ({
         icon: t.icon,
-        title: ve.t(ke.toolNames, t.title || Ot(o.name)),
+        title: ve.t(ke.toolNames, t.title || At(o.name)),
         name: o.name,
         onActivate: () => {
           this.toolButtonActivated(o.name, t.data);
@@ -6923,7 +6973,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
     enableShortcutForTool(e, t) {
-      et.add({
+      ot.add({
         name: t,
         on: this.api.ui.nodes.redactor,
         handler: async (o) => {
@@ -6942,7 +6992,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     removeAllShortcuts() {
       this.toolsToBeDisplayed.forEach((e) => {
         const t = e.shortcut;
-        t && et.remove(this.api.ui.nodes.redactor, t);
+        t && ot.remove(this.api.ui.nodes.redactor, t);
       });
     }
     async insertNewBlock(e, t) {
@@ -6960,15 +7010,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }), this.api.toolbar.close();
     }
   };
-  wi([
-    ot
+  xi([
+    nt
   ], wo.prototype, "toolsToBeDisplayed");
-  wi([
-    ot
+  xi([
+    nt
   ], wo.prototype, "toolboxItemsToBeDisplayed");
-  let Ua = wo;
-  const xi = "block hovered";
-  async function za(n, e) {
+  let Ya = wo;
+  const Ti = "block hovered";
+  async function Xa(n, e) {
     const t = navigator.keyboard;
     if (!t) return e;
     try {
@@ -6977,7 +7027,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return console.error(o), e;
     }
   }
-  class qa extends j {
+  class Ka extends j {
     constructor({ config: e, eventsDispatcher: t }) {
       super({
         config: e,
@@ -7064,11 +7114,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       const s = 20, r = e.firstInput, l = t.getBoundingClientRect(), d = r !== void 0 ? r.getBoundingClientRect() : null, h = d !== null ? d.top - l.top : null, g = h !== null ? h > s : void 0;
       if (o) i = t.offsetTop + t.offsetHeight;
       else if (r === void 0 || g) {
-        const v = parseInt(window.getComputedStyle(e.pluginsContent).paddingTop);
-        i = t.offsetTop + v;
+        const b = parseInt(window.getComputedStyle(e.pluginsContent).paddingTop);
+        i = t.offsetTop + b;
       } else {
-        const v = Mr(r), b = parseInt(window.getComputedStyle(this.nodes.plusButton).height, 10);
-        i = t.offsetTop + v - b + 8 + h;
+        const b = Lr(r), v = parseInt(window.getComputedStyle(this.nodes.plusButton).height, 10);
+        i = t.offsetTop + b - v + 8 + h;
       }
       this.nodes.wrapper.style.top = `${Math.floor(i)}px`, this.Editor.BlockManager.blocks.length === 1 && e.isEmpty ? this.blockTunesToggler.hide() : this.blockTunesToggler.show(), this.open();
     }
@@ -7089,38 +7139,38 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       ].forEach((s) => {
         this.nodes[s] = k.make("div", this.CSS[s]);
       }), k.append(this.nodes.wrapper, this.nodes.content), k.append(this.nodes.content, this.nodes.actions), this.nodes.plusButton = k.make("div", this.CSS.plusButton, {
-        innerHTML: Ea
+        innerHTML: Sa
       }), k.append(this.nodes.actions, this.nodes.plusButton), this.readOnlyMutableListeners.on(this.nodes.plusButton, "click", () => {
-        It(true), this.plusButtonClicked();
+        Lt(true), this.plusButtonClicked();
       }, false);
       const e = k.make("div");
       e.appendChild(document.createTextNode(ve.ui(ke.ui.toolbar.toolbox, "Add"))), e.appendChild(k.make("div", this.CSS.plusButtonShortcut, {
         textContent: "/"
-      })), Lt(this.nodes.plusButton, e, {
+      })), Nt(this.nodes.plusButton, e, {
         hidingDelay: 400
       }), this.nodes.settingsToggler = k.make("span", this.CSS.settingsToggler, {
-        innerHTML: wa
+        innerHTML: Ta
       }), k.append(this.nodes.actions, this.nodes.settingsToggler);
-      const t = k.make("div"), o = k.text(ve.ui(ke.ui.blockTunes.toggler, "Click to tune")), i = await za("Slash", "/");
+      const t = k.make("div"), o = k.text(ve.ui(ke.ui.blockTunes.toggler, "Click to tune")), i = await Xa("Slash", "/");
       t.appendChild(o), t.appendChild(k.make("div", this.CSS.plusButtonShortcut, {
         textContent: fo(`CMD + ${i}`)
-      })), Lt(this.nodes.settingsToggler, t, {
+      })), Nt(this.nodes.settingsToggler, t, {
         hidingDelay: 400
       }), k.append(this.nodes.actions, this.makeToolbox()), k.append(this.nodes.actions, this.Editor.BlockSettings.getElement()), k.append(this.Editor.UI.nodes.wrapper, this.nodes.wrapper);
     }
     makeToolbox() {
-      return this.toolboxInstance = new Ua({
+      return this.toolboxInstance = new Ya({
         api: this.Editor.API.methods,
         tools: this.Editor.Tools.blockTools,
         i18nLabels: {
           filter: ve.ui(ke.ui.popover, "Filter"),
           nothingFound: ve.ui(ke.ui.popover, "Nothing found")
         }
-      }), this.toolboxInstance.on(Ct.Opened, () => {
+      }), this.toolboxInstance.on(Tt.Opened, () => {
         this.Editor.UI.nodes.wrapper.classList.add(this.CSS.openedToolboxHolderModifier);
-      }), this.toolboxInstance.on(Ct.Closed, () => {
+      }), this.toolboxInstance.on(Tt.Closed, () => {
         this.Editor.UI.nodes.wrapper.classList.remove(this.CSS.openedToolboxHolderModifier);
-      }), this.toolboxInstance.on(Ct.BlockAdded, ({ block: e }) => {
+      }), this.toolboxInstance.on(Tt.BlockAdded, ({ block: e }) => {
         const { BlockManager: t, Caret: o } = this.Editor, i = t.getBlockById(e.id);
         i.inputs.length === 0 && (i === t.lastBlock ? (t.insertAtEnd(), o.setToBlock(t.lastBlock)) : o.setToBlock(t.nextBlock));
       }), this.toolboxInstance.getElement();
@@ -7132,8 +7182,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     enableModuleBindings() {
       this.readOnlyMutableListeners.on(this.nodes.settingsToggler, "mousedown", (e) => {
         var t;
-        e.stopPropagation(), this.settingsTogglerClicked(), (t = this.toolboxInstance) != null && t.opened && this.toolboxInstance.close(), It(true);
-      }, true), nt() || this.eventsDispatcher.on(xi, (e) => {
+        e.stopPropagation(), this.settingsTogglerClicked(), (t = this.toolboxInstance) != null && t.opened && this.toolboxInstance.close(), Lt(true);
+      }, true), it() || this.eventsDispatcher.on(Ti, (e) => {
         var t;
         this.Editor.BlockSettings.opened || (t = this.toolboxInstance) != null && t.opened || this.moveAndOpen(e.block);
       });
@@ -7151,7 +7201,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.removeAllNodes(), this.toolboxInstance && this.toolboxInstance.destroy();
     }
   }
-  var $e = ((n) => (n[n.Block = 0] = "Block", n[n.Inline = 1] = "Inline", n[n.Tune = 2] = "Tune", n))($e || {}), Tt = ((n) => (n.Shortcut = "shortcut", n.Toolbox = "toolbox", n.EnabledInlineTools = "inlineToolbar", n.EnabledBlockTunes = "tunes", n.Config = "config", n))(Tt || {}), Ci = ((n) => (n.Shortcut = "shortcut", n.SanitizeConfig = "sanitize", n))(Ci || {}), Ze = ((n) => (n.IsEnabledLineBreaks = "enableLineBreaks", n.Toolbox = "toolbox", n.ConversionConfig = "conversionConfig", n.IsReadOnlySupported = "isReadOnlySupported", n.PasteConfig = "pasteConfig", n))(Ze || {}), Pt = ((n) => (n.IsInline = "isInline", n.Title = "title", n.IsReadOnlySupported = "isReadOnlySupported", n))(Pt || {}), ho = ((n) => (n.IsTune = "isTune", n))(ho || {});
+  var $e = ((n) => (n[n.Block = 0] = "Block", n[n.Inline = 1] = "Inline", n[n.Tune = 2] = "Tune", n))($e || {}), St = ((n) => (n.Shortcut = "shortcut", n.Toolbox = "toolbox", n.EnabledInlineTools = "inlineToolbar", n.EnabledBlockTunes = "tunes", n.Config = "config", n))(St || {}), Si = ((n) => (n.Shortcut = "shortcut", n.SanitizeConfig = "sanitize", n))(Si || {}), Je = ((n) => (n.IsEnabledLineBreaks = "enableLineBreaks", n.Toolbox = "toolbox", n.ConversionConfig = "conversionConfig", n.IsReadOnlySupported = "isReadOnlySupported", n.PasteConfig = "pasteConfig", n))(Je || {}), Dt = ((n) => (n.IsInline = "isInline", n.Title = "title", n.IsReadOnlySupported = "isReadOnlySupported", n))(Dt || {}), ho = ((n) => (n.IsTune = "isTune", n))(ho || {});
   class Eo {
     constructor({ name: e, constructable: t, config: o, api: i, isDefault: s, isInternal: r = false, defaultPlaceholder: l }) {
       this.api = i, this.name = e, this.constructable = t, this.config = o, this.isDefault = s, this.isInternal = r, this.defaultPlaceholder = l;
@@ -7186,14 +7236,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.type === $e.Tune;
     }
   }
-  class Wa extends j {
+  class Ga extends j {
     constructor({ config: e, eventsDispatcher: t }) {
       super({
         config: e,
         eventsDispatcher: t
       }), this.CSS = {
         inlineToolbar: "ce-inline-toolbar"
-      }, this.opened = false, this.popover = null, this.toolbarVerticalMargin = nt() ? 20 : 6, this.tools = /* @__PURE__ */ new Map(), window.requestIdleCallback(() => {
+      }, this.opened = false, this.popover = null, this.toolbarVerticalMargin = it() ? 20 : 6, this.tools = /* @__PURE__ */ new Map(), window.requestIdleCallback(() => {
         this.make();
       }, {
         timeout: 2e3
@@ -7207,7 +7257,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       if (this.opened) {
         for (const [o, i] of this.tools) {
           const s = this.getToolShortcut(o.name);
-          s !== void 0 && et.remove(this.Editor.UI.nodes.redactor, s), Q(i.clear) && i.clear();
+          s !== void 0 && ot.remove(this.Editor.UI.nodes.redactor, s), Q(i.clear) && i.clear();
         }
         this.tools = /* @__PURE__ */ new Map(), this.reset(), this.opened = false, (e = this.popover) == null || e.hide(), (t = this.popover) == null || t.destroy(), this.popover = null;
       }
@@ -7232,7 +7282,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       if (this.opened) return;
       this.opened = true, this.popover !== null && this.popover.destroy(), this.createToolsInstances();
       const t = await this.getPopoverItems();
-      this.popover = new La({
+      this.popover = new Ra({
         items: t,
         scopeElement: this.Editor.API.methods.ui.nodes.redactor,
         messages: {
@@ -7281,12 +7331,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           this.enableShortcuts(o.name, r);
         } catch {
         }
-        const l = r !== void 0 ? fo(r) : void 0, d = ve.t(ke.toolNames, o.title || Ot(o.name));
+        const l = r !== void 0 ? fo(r) : void 0, d = ve.t(ke.toolNames, o.title || At(o.name));
         [
           s
         ].flat().forEach((h) => {
-          var g, v;
-          const b = {
+          var g, b;
+          const v = {
             name: o.name,
             onActivate: () => {
               this.toolClicked(i);
@@ -7298,7 +7348,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           };
           if (k.isElement(h)) {
             const w = {
-              ...b,
+              ...v,
               element: h,
               type: G.Html
             };
@@ -7314,10 +7364,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
                   }
                 ]
               };
-            } else (v = i.checkState) == null || v.call(i, M.get());
+            } else (b = i.checkState) == null || b.call(i, M.get());
             e.push(w);
           } else if (h.type === G.Html) e.push({
-            ...b,
+            ...v,
             ...h,
             type: G.Html
           });
@@ -7326,7 +7376,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           });
           else {
             const w = {
-              ...b,
+              ...v,
               ...h,
               type: G.Default
             };
@@ -7342,10 +7392,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     getToolShortcut(e) {
       const { Tools: t } = this.Editor, o = t.inlineTools.get(e), i = t.internal.inlineTools;
-      return Array.from(i.keys()).includes(e) ? this.inlineTools[e][Ci.Shortcut] : o == null ? void 0 : o.shortcut;
+      return Array.from(i.keys()).includes(e) ? this.inlineTools[e][Si.Shortcut] : o == null ? void 0 : o.shortcut;
     }
     enableShortcuts(e, t) {
-      et.add({
+      ot.add({
         name: t,
         handler: (o) => {
           var i;
@@ -7374,7 +7424,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }), e;
     }
   }
-  function Ti() {
+  function _i() {
     const n = window.getSelection();
     if (n === null) return [
       null,
@@ -7389,35 +7439,35 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       t
     ]);
   }
-  function Si(n, e, t, o) {
+  function Bi(n, e, t, o) {
     const i = document.createRange();
     o === "left" ? (i.setStart(n, 0), i.setEnd(e, t)) : (i.setStart(e, t), i.setEnd(n, n.childNodes.length));
     const s = i.cloneContents(), r = document.createElement("div");
     r.appendChild(s);
     const l = r.textContent || "";
-    return Br(l);
+    return Ir(l);
   }
-  function St(n) {
+  function _t(n) {
     const e = k.getDeepestNode(n);
     if (e === null || k.isEmpty(n)) return true;
     if (k.isNativeInput(e)) return e.selectionEnd === 0;
     if (k.isEmpty(n)) return true;
-    const [t, o] = Ti();
-    return t === null ? false : Si(n, t, o, "left");
+    const [t, o] = _i();
+    return t === null ? false : Bi(n, t, o, "left");
   }
-  function _t(n) {
+  function Bt(n) {
     const e = k.getDeepestNode(n, true);
     if (e === null) return true;
     if (k.isNativeInput(e)) return e.selectionEnd === e.value.length;
-    const [t, o] = Ti();
-    return t === null ? false : Si(n, t, o, "right");
+    const [t, o] = _i();
+    return t === null ? false : Bi(n, t, o, "right");
   }
-  var _i = {}, xo = {}, Ft = {}, qe = {}, Co = {}, To = {};
+  var Mi = {}, xo = {}, Ft = {}, Ye = {}, Co = {}, To = {};
   Object.defineProperty(To, "__esModule", {
     value: true
   });
-  To.allInputsSelector = Ya;
-  function Ya() {
+  To.allInputsSelector = Za;
+  function Za() {
     var n = [
       "text",
       "password",
@@ -7443,12 +7493,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     });
   })(Co);
-  var We = {}, So = {};
+  var Xe = {}, So = {};
   Object.defineProperty(So, "__esModule", {
     value: true
   });
-  So.isNativeInput = Xa;
-  function Xa(n) {
+  So.isNativeInput = Qa;
+  function Qa(n) {
     var e = [
       "INPUT",
       "TEXTAREA"
@@ -7466,13 +7516,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.isNativeInput;
       }
     });
-  })(We);
-  var Bi = {}, _o = {};
+  })(Xe);
+  var Oi = {}, _o = {};
   Object.defineProperty(_o, "__esModule", {
     value: true
   });
-  _o.append = Ka;
-  function Ka(n, e) {
+  _o.append = Ja;
+  function Ja(n, e) {
     Array.isArray(e) ? e.forEach(function(t) {
       n.appendChild(t);
     }) : n.appendChild(e);
@@ -7488,13 +7538,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.append;
       }
     });
-  })(Bi);
+  })(Oi);
   var Bo = {}, Mo = {};
   Object.defineProperty(Mo, "__esModule", {
     value: true
   });
-  Mo.blockElements = Ga;
-  function Ga() {
+  Mo.blockElements = el;
+  function el() {
     return [
       "address",
       "article",
@@ -7549,12 +7599,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     });
   })(Bo);
-  var Mi = {}, Oo = {};
+  var Ai = {}, Oo = {};
   Object.defineProperty(Oo, "__esModule", {
     value: true
   });
-  Oo.calculateBaseline = Za;
-  function Za(n) {
+  Oo.calculateBaseline = tl;
+  function tl(n) {
     var e = window.getComputedStyle(n), t = parseFloat(e.fontSize), o = parseFloat(e.lineHeight) || t * 1.2, i = parseFloat(e.paddingTop), s = parseFloat(e.borderTopWidth), r = parseFloat(e.marginTop), l = t * 0.8, d = (o - t) / 2, h = r + s + i + d + l;
     return h;
   }
@@ -7569,13 +7619,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.calculateBaseline;
       }
     });
-  })(Mi);
-  var Oi = {}, Ao = {}, Io = {}, Lo = {};
+  })(Ai);
+  var Ii = {}, Ao = {}, Io = {}, Lo = {};
   Object.defineProperty(Lo, "__esModule", {
     value: true
   });
-  Lo.isContentEditable = Qa;
-  function Qa(n) {
+  Lo.isContentEditable = ol;
+  function ol(n) {
     return n.contentEditable === "true";
   }
   (function(n) {
@@ -7593,11 +7643,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Ao, "__esModule", {
     value: true
   });
-  Ao.canSetCaret = tl;
-  var Ja = We, el = Io;
-  function tl(n) {
+  Ao.canSetCaret = sl;
+  var nl = Xe, il = Io;
+  function sl(n) {
     var e = true;
-    if ((0, Ja.isNativeInput)(n)) switch (n.type) {
+    if ((0, nl.isNativeInput)(n)) switch (n.type) {
       case "file":
       case "checkbox":
       case "radio":
@@ -7609,7 +7659,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         e = false;
         break;
     }
-    else e = (0, el.isContentEditable)(n);
+    else e = (0, il.isContentEditable)(n);
     return e;
   }
   (function(n) {
@@ -7623,9 +7673,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.canSetCaret;
       }
     });
-  })(Oi);
+  })(Ii);
   var Vt = {}, No = {};
-  function ol(n, e, t) {
+  function rl(n, e, t) {
     const o = t.value !== void 0 ? "value" : "get", i = t[o], s = `#${e}Cache`;
     if (t[o] = function(...r) {
       return this[s] === void 0 && (this[s] = i.apply(this, r)), this[s];
@@ -7637,7 +7687,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     return t;
   }
-  function Ai() {
+  function Li() {
     const n = {
       win: false,
       mac: false,
@@ -7649,25 +7699,25 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function Po(n) {
     return n != null && n !== "" && (typeof n != "object" || Object.keys(n).length > 0);
   }
-  function nl(n) {
+  function al(n) {
     return !Po(n);
   }
-  const il = () => typeof window < "u" && window.navigator !== null && Po(window.navigator.platform) && (/iP(ad|hone|od)/.test(window.navigator.platform) || window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
-  function sl(n) {
-    const e = Ai();
+  const ll = () => typeof window < "u" && window.navigator !== null && Po(window.navigator.platform) && (/iP(ad|hone|od)/.test(window.navigator.platform) || window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
+  function cl(n) {
+    const e = Li();
     return n = n.replace(/shift/gi, "\u21E7").replace(/backspace/gi, "\u232B").replace(/enter/gi, "\u23CE").replace(/up/gi, "\u2191").replace(/left/gi, "\u2192").replace(/down/gi, "\u2193").replace(/right/gi, "\u2190").replace(/escape/gi, "\u238B").replace(/insert/gi, "Ins").replace(/delete/gi, "\u2421").replace(/\+/gi, "+"), e.mac ? n = n.replace(/ctrl|cmd/gi, "\u2318").replace(/alt/gi, "\u2325") : n = n.replace(/cmd/gi, "Ctrl").replace(/windows/gi, "WIN"), n;
   }
-  function rl(n) {
+  function dl(n) {
     return n[0].toUpperCase() + n.slice(1);
   }
-  function al(n) {
+  function ul(n) {
     const e = document.createElement("div");
     e.style.position = "absolute", e.style.left = "-999px", e.style.bottom = "-999px", e.innerHTML = n, document.body.appendChild(e);
     const t = window.getSelection(), o = document.createRange();
     if (o.selectNode(e), t === null) throw new Error("Cannot copy text to clipboard");
     t.removeAllRanges(), t.addRange(o), document.execCommand("copy"), document.body.removeChild(e);
   }
-  function ll(n, e, t) {
+  function hl(n, e, t) {
     let o;
     return (...i) => {
       const s = this, r = () => {
@@ -7679,55 +7729,55 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function Pe(n) {
     return Object.prototype.toString.call(n).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
   }
-  function cl(n) {
+  function pl(n) {
     return Pe(n) === "boolean";
   }
-  function Ii(n) {
+  function Ni(n) {
     return Pe(n) === "function" || Pe(n) === "asyncfunction";
   }
-  function dl(n) {
-    return Ii(n) && /^\s*class\s+/.test(n.toString());
+  function fl(n) {
+    return Ni(n) && /^\s*class\s+/.test(n.toString());
   }
-  function ul(n) {
+  function gl(n) {
     return Pe(n) === "number";
   }
-  function Bt(n) {
+  function Mt(n) {
     return Pe(n) === "object";
   }
-  function hl(n) {
+  function ml(n) {
     return Promise.resolve(n) === n;
   }
-  function pl(n) {
+  function bl(n) {
     return Pe(n) === "string";
   }
-  function fl(n) {
+  function vl(n) {
     return Pe(n) === "undefined";
   }
   function po(n, ...e) {
     if (!e.length) return n;
     const t = e.shift();
-    if (Bt(n) && Bt(t)) for (const o in t) Bt(t[o]) ? (n[o] === void 0 && Object.assign(n, {
+    if (Mt(n) && Mt(t)) for (const o in t) Mt(t[o]) ? (n[o] === void 0 && Object.assign(n, {
       [o]: {}
     }), po(n[o], t[o])) : Object.assign(n, {
       [o]: t[o]
     });
     return po(n, ...e);
   }
-  function gl(n, e, t) {
+  function yl(n, e, t) {
     const o = `\xAB${e}\xBB is deprecated and will be removed in the next major release. Please use the \xAB${t}\xBB instead.`;
     n && console.warn(o);
   }
-  function ml(n) {
+  function kl(n) {
     try {
       return new URL(n).href;
     } catch {
     }
     return n.substring(0, 2) === "//" ? window.location.protocol + n : window.location.origin + n;
   }
-  function vl(n) {
+  function wl(n) {
     return n > 47 && n < 58 || n === 32 || n === 13 || n === 229 || n > 64 && n < 91 || n > 95 && n < 112 || n > 185 && n < 193 || n > 218 && n < 223;
   }
-  const bl = {
+  const El = {
     BACKSPACE: 8,
     TAB: 9,
     ENTER: 13,
@@ -7743,14 +7793,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     DELETE: 46,
     META: 91,
     SLASH: 191
-  }, yl = {
+  }, xl = {
     LEFT: 0,
     WHEEL: 1,
     RIGHT: 2,
     BACKWARD: 3,
     FORWARD: 4
   };
-  let kl = class {
+  let Cl = class {
     constructor() {
       this.completed = Promise.resolve();
     }
@@ -7760,7 +7810,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   };
-  function wl(n, e, t = void 0) {
+  function Tl(n, e, t = void 0) {
     let o, i, s, r = null, l = 0;
     t || (t = {});
     const d = function() {
@@ -7773,47 +7823,47 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return o = this, i = arguments, g <= 0 || g > e ? (r && (clearTimeout(r), r = null), l = h, s = n.apply(o, i), r === null && (o = i = null)) : !r && t.trailing !== false && (r = setTimeout(d, g)), s;
     };
   }
-  const El = Object.freeze(Object.defineProperty({
+  const Sl = Object.freeze(Object.defineProperty({
     __proto__: null,
-    PromiseQueue: kl,
-    beautifyShortcut: sl,
-    cacheable: ol,
-    capitalize: rl,
-    copyTextToClipboard: al,
-    debounce: ll,
+    PromiseQueue: Cl,
+    beautifyShortcut: cl,
+    cacheable: rl,
+    capitalize: dl,
+    copyTextToClipboard: ul,
+    debounce: hl,
     deepMerge: po,
-    deprecationAssert: gl,
-    getUserOS: Ai,
-    getValidUrl: ml,
-    isBoolean: cl,
-    isClass: dl,
-    isEmpty: nl,
-    isFunction: Ii,
-    isIosDevice: il,
-    isNumber: ul,
-    isObject: Bt,
-    isPrintableKey: vl,
-    isPromise: hl,
-    isString: pl,
-    isUndefined: fl,
-    keyCodes: bl,
-    mouseButtons: yl,
+    deprecationAssert: yl,
+    getUserOS: Li,
+    getValidUrl: kl,
+    isBoolean: pl,
+    isClass: fl,
+    isEmpty: al,
+    isFunction: Ni,
+    isIosDevice: ll,
+    isNumber: gl,
+    isObject: Mt,
+    isPrintableKey: wl,
+    isPromise: ml,
+    isString: bl,
+    isUndefined: vl,
+    keyCodes: El,
+    mouseButtons: xl,
     notEmpty: Po,
-    throttle: wl,
+    throttle: Tl,
     typeOf: Pe
   }, Symbol.toStringTag, {
     value: "Module"
-  })), Do = fr(El);
+  })), Do = vr(Sl);
   Object.defineProperty(No, "__esModule", {
     value: true
   });
-  No.containsOnlyInlineElements = Tl;
-  var xl = Do, Cl = Bo;
-  function Tl(n) {
+  No.containsOnlyInlineElements = Ml;
+  var _l = Do, Bl = Bo;
+  function Ml(n) {
     var e;
-    (0, xl.isString)(n) ? (e = document.createElement("div"), e.innerHTML = n) : e = n;
+    (0, _l.isString)(n) ? (e = document.createElement("div"), e.innerHTML = n) : e = n;
     var t = function(o) {
-      return !(0, Cl.blockElements)().includes(o.tagName.toLowerCase()) && Array.from(o.children).every(t);
+      return !(0, Bl.blockElements)().includes(o.tagName.toLowerCase()) && Array.from(o.children).every(t);
     };
     return Array.from(e.children).every(t);
   }
@@ -7829,12 +7879,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     });
   })(Vt);
-  var Li = {}, Ro = {}, $t = {}, jo = {};
+  var Pi = {}, Ro = {}, $t = {}, jo = {};
   Object.defineProperty(jo, "__esModule", {
     value: true
   });
-  jo.make = Sl;
-  function Sl(n, e, t) {
+  jo.make = Ol;
+  function Ol(n, e, t) {
     var o;
     e === void 0 && (e = null), t === void 0 && (t = {});
     var i = document.createElement(n);
@@ -7862,10 +7912,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Ro, "__esModule", {
     value: true
   });
-  Ro.fragmentToString = Bl;
-  var _l = $t;
-  function Bl(n) {
-    var e = (0, _l.make)("div");
+  Ro.fragmentToString = Il;
+  var Al = $t;
+  function Il(n) {
+    var e = (0, Al.make)("div");
     return e.appendChild(n), e.innerHTML;
   }
   (function(n) {
@@ -7879,16 +7929,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.fragmentToString;
       }
     });
-  })(Li);
-  var Ni = {}, Ho = {};
+  })(Pi);
+  var Di = {}, Ho = {};
   Object.defineProperty(Ho, "__esModule", {
     value: true
   });
-  Ho.getContentLength = Ol;
-  var Ml = We;
-  function Ol(n) {
+  Ho.getContentLength = Nl;
+  var Ll = Xe;
+  function Nl(n) {
     var e, t;
-    return (0, Ml.isNativeInput)(n) ? n.value.length : n.nodeType === Node.TEXT_NODE ? n.length : (t = (e = n.textContent) === null || e === void 0 ? void 0 : e.length) !== null && t !== void 0 ? t : 0;
+    return (0, Ll.isNativeInput)(n) ? n.value.length : n.nodeType === Node.TEXT_NODE ? n.length : (t = (e = n.textContent) === null || e === void 0 ? void 0 : e.length) !== null && t !== void 0 ? t : 0;
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -7901,21 +7951,21 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.getContentLength;
       }
     });
-  })(Ni);
-  var Fo = {}, Vo = {}, On = pt && pt.__spreadArray || function(n, e, t) {
+  })(Di);
+  var Fo = {}, Vo = {}, On = ft && ft.__spreadArray || function(n, e, t) {
     if (t || arguments.length === 2) for (var o = 0, i = e.length, s; o < i; o++) (s || !(o in e)) && (s || (s = Array.prototype.slice.call(e, 0, o)), s[o] = e[o]);
     return n.concat(s || Array.prototype.slice.call(e));
   };
   Object.defineProperty(Vo, "__esModule", {
     value: true
   });
-  Vo.getDeepestBlockElements = Pi;
-  var Al = Vt;
-  function Pi(n) {
-    return (0, Al.containsOnlyInlineElements)(n) ? [
+  Vo.getDeepestBlockElements = Ri;
+  var Pl = Vt;
+  function Ri(n) {
+    return (0, Pl.containsOnlyInlineElements)(n) ? [
       n
     ] : Array.from(n.children).reduce(function(e, t) {
-      return On(On([], e, true), Pi(t), true);
+      return On(On([], e, true), Ri(t), true);
     }, []);
   }
   (function(n) {
@@ -7930,12 +7980,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     });
   })(Fo);
-  var Di = {}, $o = {}, Ut = {}, Uo = {};
+  var ji = {}, $o = {}, Ut = {}, Uo = {};
   Object.defineProperty(Uo, "__esModule", {
     value: true
   });
-  Uo.isLineBreakTag = Il;
-  function Il(n) {
+  Uo.isLineBreakTag = Dl;
+  function Dl(n) {
     return [
       "BR",
       "WBR"
@@ -7957,8 +8007,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(zo, "__esModule", {
     value: true
   });
-  zo.isSingleTag = Ll;
-  function Ll(n) {
+  zo.isSingleTag = Rl;
+  function Rl(n) {
     return [
       "AREA",
       "BASE",
@@ -7993,17 +8043,17 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty($o, "__esModule", {
     value: true
   });
-  $o.getDeepestNode = Ri;
-  var Nl = We, Pl = Ut, Dl = zt;
-  function Ri(n, e) {
+  $o.getDeepestNode = Hi;
+  var jl = Xe, Hl = Ut, Fl = zt;
+  function Hi(n, e) {
     e === void 0 && (e = false);
     var t = e ? "lastChild" : "firstChild", o = e ? "previousSibling" : "nextSibling";
     if (n.nodeType === Node.ELEMENT_NODE && n[t]) {
       var i = n[t];
-      if ((0, Dl.isSingleTag)(i) && !(0, Nl.isNativeInput)(i) && !(0, Pl.isLineBreakTag)(i)) if (i[o]) i = i[o];
+      if ((0, Fl.isSingleTag)(i) && !(0, jl.isNativeInput)(i) && !(0, Hl.isLineBreakTag)(i)) if (i[o]) i = i[o];
       else if (i.parentNode !== null && i.parentNode[o]) i = i.parentNode[o];
       else return i.parentNode;
-      return Ri(i, e);
+      return Hi(i, e);
     }
     return n;
   }
@@ -8018,21 +8068,21 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.getDeepestNode;
       }
     });
-  })(Di);
-  var ji = {}, qo = {}, Et = pt && pt.__spreadArray || function(n, e, t) {
+  })(ji);
+  var Fi = {}, qo = {}, xt = ft && ft.__spreadArray || function(n, e, t) {
     if (t || arguments.length === 2) for (var o = 0, i = e.length, s; o < i; o++) (s || !(o in e)) && (s || (s = Array.prototype.slice.call(e, 0, o)), s[o] = e[o]);
     return n.concat(s || Array.prototype.slice.call(e));
   };
   Object.defineProperty(qo, "__esModule", {
     value: true
   });
-  qo.findAllInputs = Vl;
-  var Rl = Vt, jl = Fo, Hl = Co, Fl = We;
-  function Vl(n) {
-    return Array.from(n.querySelectorAll((0, Hl.allInputsSelector)())).reduce(function(e, t) {
-      return (0, Fl.isNativeInput)(t) || (0, Rl.containsOnlyInlineElements)(t) ? Et(Et([], e, true), [
+  qo.findAllInputs = ql;
+  var Vl = Vt, $l = Fo, Ul = Co, zl = Xe;
+  function ql(n) {
+    return Array.from(n.querySelectorAll((0, Ul.allInputsSelector)())).reduce(function(e, t) {
+      return (0, zl.isNativeInput)(t) || (0, Vl.containsOnlyInlineElements)(t) ? xt(xt([], e, true), [
         t
-      ], false) : Et(Et([], e, true), (0, jl.getDeepestBlockElements)(t), true);
+      ], false) : xt(xt([], e, true), (0, $l.getDeepestBlockElements)(t), true);
     }, []);
   }
   (function(n) {
@@ -8046,13 +8096,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.findAllInputs;
       }
     });
-  })(ji);
-  var Hi = {}, Wo = {};
+  })(Fi);
+  var Vi = {}, Wo = {};
   Object.defineProperty(Wo, "__esModule", {
     value: true
   });
-  Wo.isCollapsedWhitespaces = $l;
-  function $l(n) {
+  Wo.isCollapsedWhitespaces = Wl;
+  function Wl(n) {
     return !/[^\t\n\r ]/.test(n);
   }
   (function(n) {
@@ -8066,15 +8116,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.isCollapsedWhitespaces;
       }
     });
-  })(Hi);
+  })(Vi);
   var Yo = {}, Xo = {};
   Object.defineProperty(Xo, "__esModule", {
     value: true
   });
-  Xo.isElement = zl;
-  var Ul = Do;
-  function zl(n) {
-    return (0, Ul.isNumber)(n) ? false : !!n && !!n.nodeType && n.nodeType === Node.ELEMENT_NODE;
+  Xo.isElement = Xl;
+  var Yl = Do;
+  function Xl(n) {
+    return (0, Yl.isNumber)(n) ? false : !!n && !!n.nodeType && n.nodeType === Node.ELEMENT_NODE;
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -8088,12 +8138,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     });
   })(Yo);
-  var Fi = {}, Ko = {}, Go = {}, Zo = {};
+  var $i = {}, Ko = {}, Go = {}, Zo = {};
   Object.defineProperty(Zo, "__esModule", {
     value: true
   });
-  Zo.isLeaf = ql;
-  function ql(n) {
+  Zo.isLeaf = Kl;
+  function Kl(n) {
     return n === null ? false : n.childNodes.length === 0;
   }
   (function(n) {
@@ -8112,11 +8162,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Jo, "__esModule", {
     value: true
   });
-  Jo.isNodeEmpty = Gl;
-  var Wl = Ut, Yl = Yo, Xl = We, Kl = zt;
-  function Gl(n, e) {
+  Jo.isNodeEmpty = ec;
+  var Gl = Ut, Zl = Yo, Ql = Xe, Jl = zt;
+  function ec(n, e) {
     var t = "";
-    return (0, Kl.isSingleTag)(n) && !(0, Wl.isLineBreakTag)(n) ? false : ((0, Yl.isElement)(n) && (0, Xl.isNativeInput)(n) ? t = n.value : n.textContent !== null && (t = n.textContent.replace("\u200B", "")), e !== void 0 && (t = t.replace(new RegExp(e, "g"), "")), t.trim().length === 0);
+    return (0, Jl.isSingleTag)(n) && !(0, Gl.isLineBreakTag)(n) ? false : ((0, Zl.isElement)(n) && (0, Ql.isNativeInput)(n) ? t = n.value : n.textContent !== null && (t = n.textContent.replace("\u200B", "")), e !== void 0 && (t = t.replace(new RegExp(e, "g"), "")), t.trim().length === 0);
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -8133,16 +8183,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Ko, "__esModule", {
     value: true
   });
-  Ko.isEmpty = Jl;
-  var Zl = Go, Ql = Qo;
-  function Jl(n, e) {
+  Ko.isEmpty = nc;
+  var tc = Go, oc = Qo;
+  function nc(n, e) {
     n.normalize();
     for (var t = [
       n
     ]; t.length > 0; ) {
       var o = t.shift();
       if (o) {
-        if (n = o, (0, Zl.isLeaf)(n) && !(0, Ql.isNodeEmpty)(n, e)) return false;
+        if (n = o, (0, tc.isLeaf)(n) && !(0, oc.isNodeEmpty)(n, e)) return false;
         t.push.apply(t, Array.from(n.childNodes));
       }
     }
@@ -8159,15 +8209,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.isEmpty;
       }
     });
-  })(Fi);
-  var Vi = {}, en = {};
+  })($i);
+  var Ui = {}, en = {};
   Object.defineProperty(en, "__esModule", {
     value: true
   });
-  en.isFragment = tc;
-  var ec = Do;
-  function tc(n) {
-    return (0, ec.isNumber)(n) ? false : !!n && !!n.nodeType && n.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
+  en.isFragment = sc;
+  var ic = Do;
+  function sc(n) {
+    return (0, ic.isNumber)(n) ? false : !!n && !!n.nodeType && n.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -8180,15 +8230,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.isFragment;
       }
     });
-  })(Vi);
-  var $i = {}, tn = {};
+  })(Ui);
+  var zi = {}, tn = {};
   Object.defineProperty(tn, "__esModule", {
     value: true
   });
-  tn.isHTMLString = nc;
-  var oc = $t;
-  function nc(n) {
-    var e = (0, oc.make)("div");
+  tn.isHTMLString = ac;
+  var rc = $t;
+  function ac(n) {
+    var e = (0, rc.make)("div");
     return e.innerHTML = n, e.childElementCount > 0;
   }
   (function(n) {
@@ -8202,13 +8252,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.isHTMLString;
       }
     });
-  })($i);
-  var Ui = {}, on = {};
+  })(zi);
+  var qi = {}, on = {};
   Object.defineProperty(on, "__esModule", {
     value: true
   });
-  on.offset = ic;
-  function ic(n) {
+  on.offset = lc;
+  function lc(n) {
     var e = n.getBoundingClientRect(), t = window.pageXOffset || document.documentElement.scrollLeft, o = window.pageYOffset || document.documentElement.scrollTop, i = e.top + o, s = e.left + t;
     return {
       top: i,
@@ -8228,13 +8278,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.offset;
       }
     });
-  })(Ui);
-  var zi = {}, nn = {};
+  })(qi);
+  var Wi = {}, nn = {};
   Object.defineProperty(nn, "__esModule", {
     value: true
   });
-  nn.prepend = sc;
-  function sc(n, e) {
+  nn.prepend = cc;
+  function cc(n, e) {
     Array.isArray(e) ? (e = e.reverse(), e.forEach(function(t) {
       return n.prepend(t);
     })) : n.prepend(e);
@@ -8250,7 +8300,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.prepend;
       }
     });
-  })(zi);
+  })(Wi);
   (function(n) {
     Object.defineProperty(n, "__esModule", {
       value: true
@@ -8262,14 +8312,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.allInputsSelector;
       }
     });
-    var t = We;
+    var t = Xe;
     Object.defineProperty(n, "isNativeInput", {
       enumerable: true,
       get: function() {
         return t.isNativeInput;
       }
     });
-    var o = Bi;
+    var o = Oi;
     Object.defineProperty(n, "append", {
       enumerable: true,
       get: function() {
@@ -8283,14 +8333,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return i.blockElements;
       }
     });
-    var s = Mi;
+    var s = Ai;
     Object.defineProperty(n, "calculateBaseline", {
       enumerable: true,
       get: function() {
         return s.calculateBaseline;
       }
     });
-    var r = Oi;
+    var r = Ii;
     Object.defineProperty(n, "canSetCaret", {
       enumerable: true,
       get: function() {
@@ -8304,14 +8354,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return l.containsOnlyInlineElements;
       }
     });
-    var d = Li;
+    var d = Pi;
     Object.defineProperty(n, "fragmentToString", {
       enumerable: true,
       get: function() {
         return d.fragmentToString;
       }
     });
-    var h = Ni;
+    var h = Di;
     Object.defineProperty(n, "getContentLength", {
       enumerable: true,
       get: function() {
@@ -8325,21 +8375,21 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return g.getDeepestBlockElements;
       }
     });
-    var v = Di;
+    var b = ji;
     Object.defineProperty(n, "getDeepestNode", {
       enumerable: true,
       get: function() {
-        return v.getDeepestNode;
+        return b.getDeepestNode;
       }
     });
-    var b = ji;
+    var v = Fi;
     Object.defineProperty(n, "findAllInputs", {
       enumerable: true,
       get: function() {
-        return b.findAllInputs;
+        return v.findAllInputs;
       }
     });
-    var w = Hi;
+    var w = Vi;
     Object.defineProperty(n, "isCollapsedWhitespaces", {
       enumerable: true,
       get: function() {
@@ -8360,32 +8410,32 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return T.isElement;
       }
     });
-    var W = Fi;
+    var W = $i;
     Object.defineProperty(n, "isEmpty", {
       enumerable: true,
       get: function() {
         return W.isEmpty;
       }
     });
-    var U = Vi;
+    var U = Ui;
     Object.defineProperty(n, "isFragment", {
       enumerable: true,
       get: function() {
         return U.isFragment;
       }
     });
-    var q = $i;
+    var q = zi;
     Object.defineProperty(n, "isHTMLString", {
       enumerable: true,
       get: function() {
         return q.isHTMLString;
       }
     });
-    var ae = Go;
+    var le = Go;
     Object.defineProperty(n, "isLeaf", {
       enumerable: true,
       get: function() {
-        return ae.isLeaf;
+        return le.isLeaf;
       }
     });
     var te = Qo;
@@ -8416,34 +8466,34 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return _e3.make;
       }
     });
-    var O = Ui;
+    var O = qi;
     Object.defineProperty(n, "offset", {
       enumerable: true,
       get: function() {
         return O.offset;
       }
     });
-    var S = zi;
+    var S = Wi;
     Object.defineProperty(n, "prepend", {
       enumerable: true,
       get: function() {
         return S.prepend;
       }
     });
-  })(qe);
+  })(Ye);
   var qt = {};
   Object.defineProperty(qt, "__esModule", {
     value: true
   });
-  qt.getContenteditableSlice = ac;
-  var rc = qe;
-  function ac(n, e, t, o, i) {
+  qt.getContenteditableSlice = uc;
+  var dc = Ye;
+  function uc(n, e, t, o, i) {
     var s;
     i === void 0 && (i = false);
     var r = document.createRange();
     if (o === "left" ? (r.setStart(n, 0), r.setEnd(e, t)) : (r.setStart(e, t), r.setEnd(n, n.childNodes.length)), i === true) {
       var l = r.extractContents();
-      return (0, rc.fragmentToString)(l);
+      return (0, dc.fragmentToString)(l);
     }
     var d = r.cloneContents(), h = document.createElement("div");
     h.appendChild(d);
@@ -8453,11 +8503,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Ft, "__esModule", {
     value: true
   });
-  Ft.checkContenteditableSliceForEmptiness = dc;
-  var lc = qe, cc = qt;
-  function dc(n, e, t, o) {
-    var i = (0, cc.getContenteditableSlice)(n, e, t, o);
-    return (0, lc.isCollapsedWhitespaces)(i);
+  Ft.checkContenteditableSliceForEmptiness = fc;
+  var hc = Ye, pc = qt;
+  function fc(n, e, t, o) {
+    var i = (0, pc.getContenteditableSlice)(n, e, t, o);
+    return (0, hc.isCollapsedWhitespaces)(i);
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -8471,7 +8521,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     });
   })(xo);
-  var qi = {};
+  var Yi = {};
   (function(n) {
     Object.defineProperty(n, "__esModule", {
       value: true
@@ -8483,32 +8533,32 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.getContenteditableSlice;
       }
     });
-  })(qi);
-  var Wi = {}, sn = {};
+  })(Yi);
+  var Xi = {}, sn = {};
   Object.defineProperty(sn, "__esModule", {
     value: true
   });
-  sn.focus = hc;
-  var uc = qe;
-  function hc(n, e) {
+  sn.focus = mc;
+  var gc = Ye;
+  function mc(n, e) {
     var t, o;
-    if (e === void 0 && (e = true), (0, uc.isNativeInput)(n)) {
+    if (e === void 0 && (e = true), (0, gc.isNativeInput)(n)) {
       n.focus();
       var i = e ? 0 : n.value.length;
       n.setSelectionRange(i, i);
     } else {
       var s = document.createRange(), r = window.getSelection();
       if (!r) return;
-      var l = function(b) {
+      var l = function(v) {
         var w = document.createTextNode("");
-        b.appendChild(w), s.setStart(w, 0), s.setEnd(w, 0);
-      }, d = function(b) {
-        return b != null;
+        v.appendChild(w), s.setStart(w, 0), s.setEnd(w, 0);
+      }, d = function(v) {
+        return v != null;
       }, h = n.childNodes, g = e ? h[0] : h[h.length - 1];
       if (d(g)) {
         for (; d(g) && g.nodeType !== Node.TEXT_NODE; ) g = e ? g.firstChild : g.lastChild;
         if (d(g) && g.nodeType === Node.TEXT_NODE) {
-          var v = (o = (t = g.textContent) === null || t === void 0 ? void 0 : t.length) !== null && o !== void 0 ? o : 0, i = e ? 0 : v;
+          var b = (o = (t = g.textContent) === null || t === void 0 ? void 0 : t.length) !== null && o !== void 0 ? o : 0, i = e ? 0 : b;
           s.setStart(g, i), s.setEnd(g, i);
         } else l(n);
       } else l(n);
@@ -8526,13 +8576,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.focus;
       }
     });
-  })(Wi);
+  })(Xi);
   var rn = {}, Wt = {};
   Object.defineProperty(Wt, "__esModule", {
     value: true
   });
-  Wt.getCaretNodeAndOffset = pc;
-  function pc() {
+  Wt.getCaretNodeAndOffset = bc;
+  function bc() {
     var n = window.getSelection();
     if (n === null) return [
       null,
@@ -8559,12 +8609,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     });
   })(rn);
-  var Yi = {}, Yt = {};
+  var Ki = {}, Yt = {};
   Object.defineProperty(Yt, "__esModule", {
     value: true
   });
-  Yt.getRange = fc;
-  function fc() {
+  Yt.getRange = vc;
+  function vc() {
     var n = window.getSelection();
     return n && n.rangeCount ? n.getRangeAt(0) : null;
   }
@@ -8579,19 +8629,19 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.getRange;
       }
     });
-  })(Yi);
-  var Xi = {}, an = {};
+  })(Ki);
+  var Gi = {}, an = {};
   Object.defineProperty(an, "__esModule", {
     value: true
   });
-  an.isCaretAtEndOfInput = vc;
-  var An = qe, gc = rn, mc = xo;
-  function vc(n) {
+  an.isCaretAtEndOfInput = wc;
+  var An = Ye, yc = rn, kc = xo;
+  function wc(n) {
     var e = (0, An.getDeepestNode)(n, true);
     if (e === null) return true;
     if ((0, An.isNativeInput)(e)) return e.selectionEnd === e.value.length;
-    var t = (0, gc.getCaretNodeAndOffset)(), o = t[0], i = t[1];
-    return o === null ? false : (0, mc.checkContenteditableSliceForEmptiness)(n, o, i, "right");
+    var t = (0, yc.getCaretNodeAndOffset)(), o = t[0], i = t[1];
+    return o === null ? false : (0, kc.checkContenteditableSliceForEmptiness)(n, o, i, "right");
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -8604,20 +8654,20 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.isCaretAtEndOfInput;
       }
     });
-  })(Xi);
-  var Ki = {}, ln = {};
+  })(Gi);
+  var Zi = {}, ln = {};
   Object.defineProperty(ln, "__esModule", {
     value: true
   });
-  ln.isCaretAtStartOfInput = kc;
-  var xt = qe, bc = Wt, yc = Ft;
-  function kc(n) {
-    var e = (0, xt.getDeepestNode)(n);
-    if (e === null || (0, xt.isEmpty)(n)) return true;
-    if ((0, xt.isNativeInput)(e)) return e.selectionEnd === 0;
-    if ((0, xt.isEmpty)(n)) return true;
-    var t = (0, bc.getCaretNodeAndOffset)(), o = t[0], i = t[1];
-    return o === null ? false : (0, yc.checkContenteditableSliceForEmptiness)(n, o, i, "left");
+  ln.isCaretAtStartOfInput = Cc;
+  var Ct = Ye, Ec = Wt, xc = Ft;
+  function Cc(n) {
+    var e = (0, Ct.getDeepestNode)(n);
+    if (e === null || (0, Ct.isEmpty)(n)) return true;
+    if ((0, Ct.isNativeInput)(e)) return e.selectionEnd === 0;
+    if ((0, Ct.isEmpty)(n)) return true;
+    var t = (0, Ec.getCaretNodeAndOffset)(), o = t[0], i = t[1];
+    return o === null ? false : (0, xc.checkContenteditableSliceForEmptiness)(n, o, i, "left");
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -8630,15 +8680,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.isCaretAtStartOfInput;
       }
     });
-  })(Ki);
-  var Gi = {}, cn = {};
+  })(Zi);
+  var Qi = {}, cn = {};
   Object.defineProperty(cn, "__esModule", {
     value: true
   });
-  cn.save = xc;
-  var wc = qe, Ec = Yt;
-  function xc() {
-    var n = (0, Ec.getRange)(), e = (0, wc.make)("span");
+  cn.save = _c;
+  var Tc = Ye, Sc = Yt;
+  function _c() {
+    var n = (0, Sc.getRange)(), e = (0, Tc.make)("span");
     if (e.id = "cursor", e.hidden = true, !!n) return n.insertNode(e), function() {
       var t = window.getSelection();
       t && (n.setStartAfter(e), n.setEndAfter(e), t.removeAllRanges(), t.addRange(n), setTimeout(function() {
@@ -8657,7 +8707,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.save;
       }
     });
-  })(Gi);
+  })(Qi);
   (function(n) {
     Object.defineProperty(n, "__esModule", {
       value: true
@@ -8669,14 +8719,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return e.checkContenteditableSliceForEmptiness;
       }
     });
-    var t = qi;
+    var t = Yi;
     Object.defineProperty(n, "getContenteditableSlice", {
       enumerable: true,
       get: function() {
         return t.getContenteditableSlice;
       }
     });
-    var o = Wi;
+    var o = Xi;
     Object.defineProperty(n, "focus", {
       enumerable: true,
       get: function() {
@@ -8690,36 +8740,36 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return i.getCaretNodeAndOffset;
       }
     });
-    var s = Yi;
+    var s = Ki;
     Object.defineProperty(n, "getRange", {
       enumerable: true,
       get: function() {
         return s.getRange;
       }
     });
-    var r = Xi;
+    var r = Gi;
     Object.defineProperty(n, "isCaretAtEndOfInput", {
       enumerable: true,
       get: function() {
         return r.isCaretAtEndOfInput;
       }
     });
-    var l = Ki;
+    var l = Zi;
     Object.defineProperty(n, "isCaretAtStartOfInput", {
       enumerable: true,
       get: function() {
         return l.isCaretAtStartOfInput;
       }
     });
-    var d = Gi;
+    var d = Qi;
     Object.defineProperty(n, "save", {
       enumerable: true,
       get: function() {
         return d.save;
       }
     });
-  })(_i);
-  class Cc extends j {
+  })(Mi);
+  class Bc extends j {
     keydown(e) {
       switch (this.beforeKeydownProcessing(e), e.keyCode) {
         case P.BACKSPACE:
@@ -8746,7 +8796,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       e.key === "/" && !e.ctrlKey && !e.metaKey && this.slashPressed(e), e.code === "Slash" && (e.ctrlKey || e.metaKey) && (e.preventDefault(), this.commandSlashPressed());
     }
     beforeKeydownProcessing(e) {
-      this.needToolbarClosing(e) && Gn(e.keyCode) && (this.Editor.Toolbar.close(), e.ctrlKey || e.metaKey || e.altKey || e.shiftKey || this.Editor.BlockSelection.clearSelection(e));
+      this.needToolbarClosing(e) && Qn(e.keyCode) && (this.Editor.Toolbar.close(), e.ctrlKey || e.metaKey || e.altKey || e.shiftKey || this.Editor.BlockSelection.clearSelection(e));
     }
     keyup(e) {
       e.shiftKey || this.Editor.UI.checkEmptiness();
@@ -8784,11 +8834,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       const { BlockManager: t, UI: o } = this.Editor, i = t.currentBlock;
       if (i === void 0 || i.tool.isLineBreaksEnabled || o.someToolbarOpened && o.someFlipperButtonFocused || e.shiftKey && !lo) return;
       let s = i;
-      i.currentInput !== void 0 && St(i.currentInput) && !i.hasMedia ? this.Editor.BlockManager.insertDefaultBlockAtIndex(this.Editor.BlockManager.currentBlockIndex) : i.currentInput && _t(i.currentInput) ? s = this.Editor.BlockManager.insertDefaultBlockAtIndex(this.Editor.BlockManager.currentBlockIndex + 1) : s = this.Editor.BlockManager.split(), this.Editor.Caret.setToBlock(s), this.Editor.Toolbar.moveAndOpen(s), e.preventDefault();
+      i.currentInput !== void 0 && _t(i.currentInput) && !i.hasMedia ? this.Editor.BlockManager.insertDefaultBlockAtIndex(this.Editor.BlockManager.currentBlockIndex) : i.currentInput && Bt(i.currentInput) ? s = this.Editor.BlockManager.insertDefaultBlockAtIndex(this.Editor.BlockManager.currentBlockIndex + 1) : s = this.Editor.BlockManager.split(), this.Editor.Caret.setToBlock(s), this.Editor.Toolbar.moveAndOpen(s), e.preventDefault();
     }
     backspace(e) {
       const { BlockManager: t, Caret: o } = this.Editor, { currentBlock: i, previousBlock: s } = t;
-      if (!(i === void 0 || !M.isCollapsed || !i.currentInput || !St(i.currentInput))) {
+      if (!(i === void 0 || !M.isCollapsed || !i.currentInput || !_t(i.currentInput))) {
         if (e.preventDefault(), this.Editor.Toolbar.close(), i.currentInput !== i.firstInput) {
           o.navigatePrevious();
           return;
@@ -8810,7 +8860,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     delete(e) {
       const { BlockManager: t, Caret: o } = this.Editor, { currentBlock: i, nextBlock: s } = t;
-      if (!(!M.isCollapsed || !_t(i.currentInput))) {
+      if (!(!M.isCollapsed || !Bt(i.currentInput))) {
         if (e.preventDefault(), this.Editor.Toolbar.close(), i.currentInput !== i.lastInput) {
           o.navigateNext();
           return;
@@ -8830,7 +8880,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     mergeBlocks(e, t) {
       const { BlockManager: o, Toolbar: i } = this.Editor;
-      e.lastInput !== void 0 && (_i.focus(e.lastInput, false), o.mergeBlocks(e, t).then(() => {
+      e.lastInput !== void 0 && (Mi.focus(e.lastInput, false), o.mergeBlocks(e, t).then(() => {
         i.close();
       }));
     }
@@ -8838,7 +8888,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       const t = ze.usedKeys.includes(e.keyCode) && (!e.shiftKey || e.keyCode === P.TAB);
       if (this.Editor.UI.someToolbarOpened && t) return;
       this.Editor.Toolbar.close();
-      const { currentBlock: o } = this.Editor.BlockManager, i = ((o == null ? void 0 : o.currentInput) !== void 0 ? _t(o.currentInput) : void 0) || this.Editor.BlockSelection.anyBlockSelected;
+      const { currentBlock: o } = this.Editor.BlockManager, i = ((o == null ? void 0 : o.currentInput) !== void 0 ? Bt(o.currentInput) : void 0) || this.Editor.BlockSelection.anyBlockSelected;
       if (e.shiftKey && e.keyCode === P.DOWN && i) {
         this.Editor.CrossBlockSelection.toggleBlockSelectedState();
         return;
@@ -8847,7 +8897,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         e.preventDefault();
         return;
       }
-      Mt(() => {
+      Ot(() => {
         this.Editor.BlockManager.currentBlock && this.Editor.BlockManager.currentBlock.updateCurrentInput();
       }, 20)(), this.Editor.BlockSelection.clearSelection(e);
     }
@@ -8857,7 +8907,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         this.Editor.UI.closeAllToolbars();
       }
       this.Editor.Toolbar.close();
-      const { currentBlock: t } = this.Editor.BlockManager, o = ((t == null ? void 0 : t.currentInput) !== void 0 ? St(t.currentInput) : void 0) || this.Editor.BlockSelection.anyBlockSelected;
+      const { currentBlock: t } = this.Editor.BlockManager, o = ((t == null ? void 0 : t.currentInput) !== void 0 ? _t(t.currentInput) : void 0) || this.Editor.BlockSelection.anyBlockSelected;
       if (e.shiftKey && e.keyCode === P.UP && o) {
         this.Editor.CrossBlockSelection.toggleBlockSelectedState(false);
         return;
@@ -8866,7 +8916,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         e.preventDefault();
         return;
       }
-      Mt(() => {
+      Ot(() => {
         this.Editor.BlockManager.currentBlock && this.Editor.BlockManager.currentBlock.updateCurrentInput();
       }, 20)(), this.Editor.BlockSelection.clearSelection(e);
     }
@@ -8892,7 +8942,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.blocks;
     }
     get nodes() {
-      return Zn(this.workingArea.children);
+      return Jn(this.workingArea.children);
     }
     static set(e, t, o) {
       return isNaN(Number(t)) ? (Reflect.set(e, t, o), true) : (e.insert(+t, o), true);
@@ -8972,8 +9022,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  const In = "block-removed", Ln = "block-added", Tc = "block-moved", Nn = "block-changed";
-  class Sc {
+  const In = "block-removed", Ln = "block-added", Mc = "block-moved", Nn = "block-changed";
+  class Oc {
     constructor() {
       this.completed = Promise.resolve();
     }
@@ -8983,7 +9033,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class _c extends j {
+  class Ac extends j {
     constructor() {
       super(...arguments), this._currentBlockIndex = -1, this._blocks = null;
     }
@@ -9034,7 +9084,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       e ? this.disableModuleBindings() : this.enableModuleBindings();
     }
     composeBlock({ tool: e, data: t = {}, id: o = void 0, tunes: i = {} }) {
-      const s = this.Editor.ReadOnly.isEnabled, r = this.Editor.Tools.blockTools.get(e), l = new ce({
+      const s = this.Editor.ReadOnly.isEnabled, r = this.Editor.Tools.blockTools.get(e), l = new de({
         id: o,
         data: t,
         tool: r,
@@ -9124,7 +9174,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           i
         ], e.tool.sanitizeConfig);
         o = s;
-      } else if (e.mergeable && At(t, "export") && At(e, "import")) {
+      } else if (e.mergeable && It(t, "export") && It(e, "import")) {
         const i = await t.exportDataAsString(), s = Te(i, e.tool.sanitizeConfig);
         o = Sn(s, e.tool.conversionConfig);
       }
@@ -9169,12 +9219,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     getBlock(e) {
       k.isElement(e) || (e = e.parentNode);
-      const t = this._blocks.nodes, o = e.closest(`.${ce.CSS.wrapper}`), i = t.indexOf(o);
+      const t = this._blocks.nodes, o = e.closest(`.${de.CSS.wrapper}`), i = t.indexOf(o);
       if (i >= 0) return this._blocks[i];
     }
     setCurrentBlockByChildNode(e) {
       k.isElement(e) || (e = e.parentNode);
-      const t = e.closest(`.${ce.CSS.wrapper}`);
+      const t = e.closest(`.${de.CSS.wrapper}`);
       if (!t) return;
       const o = t.closest(`.${this.Editor.UI.CSS.editorWrapper}`);
       if (o != null && o.isEqualNode(this.Editor.UI.nodes.wrapper)) return this.currentBlockIndex = this._blocks.nodes.indexOf(t), this.currentBlock.updateCurrentInput(), this.currentBlock;
@@ -9182,7 +9232,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     getBlockByChildNode(e) {
       if (!e || !(e instanceof Node)) return;
       k.isElement(e) || (e = e.parentNode);
-      const t = e.closest(`.${ce.CSS.wrapper}`);
+      const t = e.closest(`.${de.CSS.wrapper}`);
       return this.blocks.find((o) => o.holder === t);
     }
     swap(e, t) {
@@ -9197,7 +9247,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         z("Warning during 'move' call: indices cannot be lower than 0 or greater than the amount of blocks.", "warn");
         return;
       }
-      this._blocks.move(e, t), this.currentBlockIndex = e, this.blockDidMutated(Tc, this.currentBlock, {
+      this._blocks.move(e, t), this.currentBlockIndex = e, this.blockDidMutated(Mc, this.currentBlock, {
         fromIndex: t,
         toIndex: e
       });
@@ -9214,7 +9264,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.currentBlockIndex = -1;
     }
     async clear(e = false) {
-      const t = new Sc();
+      const t = new Oc();
       this.blocks.forEach((o) => {
         t.add(async () => {
           await this.removeBlock(o, false);
@@ -9256,12 +9306,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           ...o
         }
       });
-      return this.eventsDispatcher.emit(ni, {
+      return this.eventsDispatcher.emit(si, {
         event: i
       }), t;
     }
   }
-  class Bc extends j {
+  class Ic extends j {
     constructor() {
       super(...arguments), this.anyBlockSelectedCache = null, this.needToSelectAll = false, this.nativeInputSelected = false, this.readyToBlockSelection = false;
     }
@@ -9309,7 +9359,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.Editor.BlockManager.blocks.filter((e) => e.selected);
     }
     prepare() {
-      this.selection = new M(), et.add({
+      this.selection = new M(), ot.add({
         name: "CMD+A",
         handler: (e) => {
           const { BlockManager: t, ReadOnly: o } = this.Editor;
@@ -9333,10 +9383,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     clearSelection(e, t = false) {
       const { BlockManager: o, Caret: i, RectangleSelection: s } = this.Editor;
       this.needToSelectAll = false, this.nativeInputSelected = false, this.readyToBlockSelection = false;
-      const r = e && e instanceof KeyboardEvent, l = r && Gn(e.keyCode);
+      const r = e && e instanceof KeyboardEvent, l = r && Qn(e.keyCode);
       if (this.anyBlockSelected && r && l && !M.isSelectionExists) {
         const d = o.removeSelectedBlocks();
-        o.insertDefaultBlockAtIndex(d, true), i.setToBlock(o.currentBlock), Mt(() => {
+        o.insertDefaultBlockAtIndex(d, true), i.setToBlock(o.currentBlock), Ot(() => {
           const h = e.key;
           i.insertContentAtCaretPosition(h.length > 1 ? "" : h);
         }, 20)();
@@ -9378,7 +9428,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.anyBlockSelectedCache = null;
     }
     destroy() {
-      et.remove(this.Editor.UI.nodes.redactor, "CMD+A");
+      ot.remove(this.Editor.UI.nodes.redactor, "CMD+A");
     }
     handleCommandA(e) {
       if (this.Editor.RectangleSelection.clearSelection(), k.isNativeInput(e.target) && !this.readyToBlockSelection) {
@@ -9400,7 +9450,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.selection.save(), M.get().removeAllRanges(), this.allBlocksSelected = true, this.Editor.InlineToolbar.close();
     }
   }
-  class Dt extends j {
+  class Rt extends j {
     get positions() {
       return {
         START: "start",
@@ -9486,7 +9536,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     navigateNext(e = false) {
       const { BlockManager: t } = this.Editor, { currentBlock: o, nextBlock: i } = t;
       if (o === void 0) return false;
-      const { nextInput: s, currentInput: r } = o, l = r !== void 0 ? _t(r) : void 0;
+      const { nextInput: s, currentInput: r } = o, l = r !== void 0 ? Bt(r) : void 0;
       let d = i;
       const h = e || l || !o.focusable;
       if (s && h) return this.setToInput(s, this.positions.START), true;
@@ -9499,15 +9549,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     navigatePrevious(e = false) {
       const { currentBlock: t, previousBlock: o } = this.Editor.BlockManager;
       if (!t) return false;
-      const { previousInput: i, currentInput: s } = t, r = s !== void 0 ? St(s) : void 0, l = e || r || !t.focusable;
+      const { previousInput: i, currentInput: s } = t, r = s !== void 0 ? _t(s) : void 0, l = e || r || !t.focusable;
       return i && l ? (this.setToInput(i, this.positions.END), true) : o !== null && l ? (this.setToBlock(o, this.positions.END), true) : false;
     }
     createShadow(e) {
       const t = document.createElement("span");
-      t.classList.add(Dt.CSS.shadowCaret), e.insertAdjacentElement("beforeend", t);
+      t.classList.add(Rt.CSS.shadowCaret), e.insertAdjacentElement("beforeend", t);
     }
     restoreCaret(e) {
-      const t = e.querySelector(`.${Dt.CSS.shadowCaret}`);
+      const t = e.querySelector(`.${Rt.CSS.shadowCaret}`);
       if (!t) return;
       new M().expandToTag(t);
       const o = document.createRange();
@@ -9522,7 +9572,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       d !== null && d.textContent !== null && l.setStart(d, d.textContent.length), i.removeAllRanges(), i.addRange(l);
     }
   }
-  class Mc extends j {
+  class Lc extends j {
     constructor() {
       super(...arguments), this.onMouseUp = () => {
         this.listeners.off(document, "mouseover", this.onMouseOver), this.listeners.off(document, "mouseup", this.onMouseUp);
@@ -9549,7 +9599,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
     watchSelection(e) {
-      if (e.button !== mr.LEFT) return;
+      if (e.button !== kr.LEFT) return;
       const { BlockManager: t } = this.Editor;
       this.firstSelectedBlock = t.getBlock(e.target), this.lastSelectedBlock = this.firstSelectedBlock, this.listeners.on(document, "mouseover", this.onMouseOver), this.listeners.on(document, "mouseup", this.onMouseUp);
     }
@@ -9592,7 +9642,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     }
   }
-  class Oc extends j {
+  class Nc extends j {
     constructor() {
       super(...arguments), this.isStartedAtEditor = false;
     }
@@ -9632,19 +9682,19 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       e.preventDefault();
     }
   }
-  const Ac = 180, Ic = 400;
-  class Lc extends j {
+  const Pc = 180, Dc = 400;
+  class Rc extends j {
     constructor({ config: e, eventsDispatcher: t }) {
       super({
         config: e,
         eventsDispatcher: t
-      }), this.disabled = false, this.batchingTimeout = null, this.batchingOnChangeQueue = /* @__PURE__ */ new Map(), this.batchTime = Ic, this.mutationObserver = new MutationObserver((o) => {
+      }), this.disabled = false, this.batchingTimeout = null, this.batchingOnChangeQueue = /* @__PURE__ */ new Map(), this.batchTime = Dc, this.mutationObserver = new MutationObserver((o) => {
         this.redactorChanged(o);
-      }), this.eventsDispatcher.on(ni, (o) => {
+      }), this.eventsDispatcher.on(si, (o) => {
         this.particularBlockChanged(o.event);
-      }), this.eventsDispatcher.on(ii, () => {
+      }), this.eventsDispatcher.on(ri, () => {
         this.disable();
-      }), this.eventsDispatcher.on(si, () => {
+      }), this.eventsDispatcher.on(ai, () => {
         this.enable();
       });
     }
@@ -9671,7 +9721,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  const Zi = class Qi extends j {
+  const Ji = class es extends j {
     constructor() {
       super(...arguments), this.MIME_TYPE = "application/x-editor-js", this.toolsTags = {}, this.tagsByTool = {}, this.toolsPatterns = [], this.toolsFiles = {}, this.exceptionList = [], this.processTool = (e) => {
         try {
@@ -9710,7 +9760,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       } catch {
       }
       t && r.trim() && l.trim() && (l = "<p>" + (l.trim() ? l : r) + "</p>");
-      const d = Object.keys(this.toolsTags).reduce((v, b) => (v[b.toLowerCase()] = this.toolsTags[b].sanitizationConfig ?? {}, v), {}), h = Object.assign({}, d, o.getAllInlineToolsSanitizeConfig(), {
+      const d = Object.keys(this.toolsTags).reduce((b, v) => (b[v.toLowerCase()] = this.toolsTags[v].sanitizationConfig ?? {}, b), {}), h = Object.assign({}, d, o.getAllInlineToolsSanitizeConfig(), {
         br: {}
       }), g = Te(l, h);
       !g.trim() || g.trim() === r || !k.isHTMLString(g) ? await this.processText(r) : await this.processText(g, true);
@@ -9738,7 +9788,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     collectTagNames(e) {
       return Ie(e) ? [
         e
-      ] : de(e) ? Object.keys(e) : [];
+      ] : ue(e) ? Object.keys(e) : [];
     }
     getTagsConfig(e) {
       if (e.pasteConfig === false) return;
@@ -9750,7 +9800,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             z(`Paste handler for \xAB${e.name}\xBB Tool on \xAB${r}\xBB tag is skipped because it is already used by \xAB${this.toolsTags[r].tool.name}\xBB Tool.`, "warn");
             return;
           }
-          const l = de(i) ? i[r] : null;
+          const l = ue(i) ? i[r] : null;
           this.toolsTags[r.toUpperCase()] = {
             tool: e,
             sanitizationConfig: l
@@ -9762,7 +9812,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       if (e.pasteConfig === false) return;
       const { files: t = {} } = e.pasteConfig;
       let { extensions: o, mimeTypes: i } = t;
-      !o && !i || (o && !Array.isArray(o) && (z(`\xABextensions\xBB property of the onDrop config for \xAB${e.name}\xBB Tool should be an array`), o = []), i && !Array.isArray(i) && (z(`\xABmimeTypes\xBB property of the onDrop config for \xAB${e.name}\xBB Tool should be an array`), i = []), i && (i = i.filter((s) => wr(s) ? true : (z(`MIME type value \xAB${s}\xBB for the \xAB${e.name}\xBB Tool is not a valid MIME type`, "warn"), false))), this.toolsFiles[e.name] = {
+      !o && !i || (o && !Array.isArray(o) && (z(`\xABextensions\xBB property of the onDrop config for \xAB${e.name}\xBB Tool should be an array`), o = []), i && !Array.isArray(i) && (z(`\xABmimeTypes\xBB property of the onDrop config for \xAB${e.name}\xBB Tool should be an array`), i = []), i && (i = i.filter((s) => Tr(s) ? true : (z(`MIME type value \xAB${s}\xBB for the \xAB${e.name}\xBB Tool is not a valid MIME type`, "warn"), false))), this.toolsFiles[e.name] = {
         extensions: o || [],
         mimeTypes: i || []
       });
@@ -9789,12 +9839,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
     async processFile(e) {
-      const t = kr(e), o = Object.entries(this.toolsFiles).find(([s, { mimeTypes: r, extensions: l }]) => {
-        const [d, h] = e.type.split("/"), g = l.find((b) => b.toLowerCase() === t.toLowerCase()), v = r.find((b) => {
-          const [w, y] = b.split("/");
+      const t = Cr(e), o = Object.entries(this.toolsFiles).find(([s, { mimeTypes: r, extensions: l }]) => {
+        const [d, h] = e.type.split("/"), g = l.find((v) => v.toLowerCase() === t.toLowerCase()), b = r.find((v) => {
+          const [w, y] = v.split("/");
           return w === d && (y === h || y === "*");
         });
-        return !!g || !!v;
+        return !!g || !!b;
       });
       if (!o) return;
       const [i] = o;
@@ -9819,24 +9869,24 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         }
         const { tags: d } = r.pasteConfig || {
           tags: []
-        }, h = d.reduce((b, w) => (this.collectTagNames(w).forEach((y) => {
-          const T = de(w) ? w[y] : null;
-          b[y.toLowerCase()] = T || {};
-        }), b), {}), g = Object.assign({}, h, r.baseSanitizeConfig);
+        }, h = d.reduce((v, w) => (this.collectTagNames(w).forEach((y) => {
+          const T = ue(w) ? w[y] : null;
+          v[y.toLowerCase()] = T || {};
+        }), v), {}), g = Object.assign({}, h, r.baseSanitizeConfig);
         if (s.tagName.toLowerCase() === "table") {
-          const b = Te(s.outerHTML, g);
+          const v = Te(s.outerHTML, g);
           s = k.make("div", void 0, {
-            innerHTML: b
+            innerHTML: v
           }).firstChild;
         } else s.innerHTML = Te(s.innerHTML, g);
-        const v = this.composePasteEvent("tag", {
+        const b = this.composePasteEvent("tag", {
           data: s
         });
         return {
           content: s,
           isBlock: l,
           tool: r.name,
-          event: v
+          event: b
         };
       }).filter((i) => {
         const s = k.isEmpty(i.content), r = k.isSingleTag(i.content);
@@ -9871,7 +9921,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     async processInlinePaste(e) {
       const { BlockManager: t, Caret: o } = this.Editor, { content: i } = e;
-      if (t.currentBlock && t.currentBlock.tool.isDefault && i.textContent.length < Qi.PATTERN_PROCESSING_MAX_LENGTH) {
+      if (t.currentBlock && t.currentBlock.tool.isDefault && i.textContent.length < es.PATTERN_PROCESSING_MAX_LENGTH) {
         const s = await this.processPattern(i.textContent);
         if (s) {
           const r = t.currentBlock && t.currentBlock.tool.isDefault && t.currentBlock.isEmpty, l = t.paste(s.tool, s.event, r);
@@ -9920,12 +9970,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
     processElementNode(e, t, o) {
-      const i = Object.keys(this.toolsTags), s = e, { tool: r } = this.toolsTags[s.tagName] || {}, l = this.tagsByTool[r == null ? void 0 : r.name] || [], d = i.includes(s.tagName), h = k.blockElements.includes(s.tagName.toLowerCase()), g = Array.from(s.children).some(({ tagName: b }) => i.includes(b) && !l.includes(b)), v = Array.from(s.children).some(({ tagName: b }) => k.blockElements.includes(b.toLowerCase()));
+      const i = Object.keys(this.toolsTags), s = e, { tool: r } = this.toolsTags[s.tagName] || {}, l = this.tagsByTool[r == null ? void 0 : r.name] || [], d = i.includes(s.tagName), h = k.blockElements.includes(s.tagName.toLowerCase()), g = Array.from(s.children).some(({ tagName: v }) => i.includes(v) && !l.includes(v)), b = Array.from(s.children).some(({ tagName: v }) => k.blockElements.includes(v.toLowerCase()));
       if (!h && !d && !g) return o.appendChild(s), [
         ...t,
         o
       ];
-      if (d && !g || h && !v && !g) return [
+      if (d && !g || h && !b && !g) return [
         ...t,
         o,
         s
@@ -9966,9 +10016,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   };
-  Zi.PATTERN_PROCESSING_MAX_LENGTH = 450;
-  let Nc = Zi;
-  class Pc extends j {
+  Ji.PATTERN_PROCESSING_MAX_LENGTH = 450;
+  let jc = Ji;
+  class Hc extends j {
     constructor() {
       super(...arguments), this.toolsDontSupportReadOnly = [], this.readOnlyEnabled = false;
     }
@@ -9993,10 +10043,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return await this.Editor.BlockManager.clear(), await this.Editor.Renderer.render(i.blocks), this.Editor.ModificationsObserver.enable(), this.readOnlyEnabled;
     }
     throwCriticalError() {
-      throw new oi(`To enable read-only mode all connected tools should support it. Tools ${this.toolsDontSupportReadOnly.join(", ")} don't support read-only mode.`);
+      throw new ii(`To enable read-only mode all connected tools should support it. Tools ${this.toolsDontSupportReadOnly.join(", ")} don't support read-only mode.`);
     }
   }
-  class ut extends j {
+  class ht extends j {
     constructor() {
       super(...arguments), this.isRectSelectionActivated = false, this.SCROLL_SPEED = 3, this.HEIGHT_OF_SCROLL_ZONE = 40, this.BOTTOM_SCROLL_ZONE = 1, this.TOP_SCROLL_ZONE = 2, this.MAIN_MOUSE_BUTTON = 0, this.mousedown = false, this.isScrolling = false, this.inScrollZone = null, this.startX = 0, this.startY = 0, this.mouseX = 0, this.mouseY = 0, this.stackOfSelected = [], this.listenerIds = [];
     }
@@ -10016,7 +10066,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       const o = document.elementFromPoint(e - window.pageXOffset, t - window.pageYOffset);
       o.closest(`.${this.Editor.Toolbar.CSS.toolbar}`) || (this.Editor.BlockSelection.allBlocksSelected = false, this.clearSelection(), this.stackOfSelected = []);
       const i = [
-        `.${ce.CSS.content}`,
+        `.${de.CSS.content}`,
         `.${this.Editor.Toolbar.CSS.toolbar}`,
         `.${this.Editor.InlineToolbar.CSS.inlineToolbar}`
       ], s = o.closest("." + this.Editor.UI.CSS.editorWrapper), r = i.some((l) => !!o.closest(l));
@@ -10072,7 +10122,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.isScrolling || (this.scrollVertical(this.inScrollZone === this.TOP_SCROLL_ZONE ? -this.SCROLL_SPEED : this.SCROLL_SPEED), this.isScrolling = true);
     }
     genHTML() {
-      const { UI: e } = this.Editor, t = e.nodes.holder.querySelector("." + e.CSS.editorWrapper), o = k.make("div", ut.CSS.overlay, {}), i = k.make("div", ut.CSS.overlayContainer, {}), s = k.make("div", ut.CSS.rect, {});
+      const { UI: e } = this.Editor, t = e.nodes.holder.querySelector("." + e.CSS.editorWrapper), o = k.make("div", ht.CSS.overlay, {}), i = k.make("div", ht.CSS.overlayContainer, {}), s = k.make("div", ht.CSS.rect, {});
       return i.appendChild(s), o.appendChild(i), t.appendChild(o), this.overlayRectangle = s, {
         container: t,
         overlay: o
@@ -10106,7 +10156,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       const e = document.body.offsetWidth / 2, t = this.mouseY - window.pageYOffset, o = document.elementFromPoint(e, t), i = this.Editor.BlockManager.getBlockByChildNode(o);
       let s;
       i !== void 0 && (s = this.Editor.BlockManager.blocks.findIndex((g) => g.holder === i.holder));
-      const r = this.Editor.BlockManager.lastBlock.holder.querySelector("." + ce.CSS.content), l = Number.parseInt(window.getComputedStyle(r).width, 10) / 2, d = e - l, h = e + l;
+      const r = this.Editor.BlockManager.lastBlock.holder.querySelector("." + de.CSS.content), l = Number.parseInt(window.getComputedStyle(r).width, 10) / 2, d = e - l, h = e + l;
       return {
         index: s,
         leftPos: d,
@@ -10122,22 +10172,22 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       const l = this.stackOfSelected[o - 1] - this.stackOfSelected[o - 2] > 0;
       let d = r;
       o > 1 && (d = l ? i : s);
-      const h = e > this.stackOfSelected[o - 1] && d === i, g = e < this.stackOfSelected[o - 1] && d === s, v = !(h || g || d === r);
-      if (!v && (e > this.stackOfSelected[o - 1] || this.stackOfSelected[o - 1] === void 0)) {
+      const h = e > this.stackOfSelected[o - 1] && d === i, g = e < this.stackOfSelected[o - 1] && d === s, b = !(h || g || d === r);
+      if (!b && (e > this.stackOfSelected[o - 1] || this.stackOfSelected[o - 1] === void 0)) {
         let y = this.stackOfSelected[o - 1] + 1 || e;
         for (y; y <= e; y++) this.addBlockInSelection(y);
         return;
       }
-      if (!v && e < this.stackOfSelected[o - 1]) {
+      if (!b && e < this.stackOfSelected[o - 1]) {
         for (let y = this.stackOfSelected[o - 1] - 1; y >= e; y--) this.addBlockInSelection(y);
         return;
       }
-      if (!v) return;
-      let b = o - 1, w;
-      for (e > this.stackOfSelected[o - 1] ? w = () => e > this.stackOfSelected[b] : w = () => e < this.stackOfSelected[b]; w(); ) this.rectCrossesBlocks && this.Editor.BlockSelection.unSelectBlockByIndex(this.stackOfSelected[b]), this.stackOfSelected.pop(), b--;
+      if (!b) return;
+      let v = o - 1, w;
+      for (e > this.stackOfSelected[o - 1] ? w = () => e > this.stackOfSelected[v] : w = () => e < this.stackOfSelected[v]; w(); ) this.rectCrossesBlocks && this.Editor.BlockSelection.unSelectBlockByIndex(this.stackOfSelected[v]), this.stackOfSelected.pop(), v--;
     }
   }
-  class Dc extends j {
+  class Fc extends j {
     async render(e) {
       return new Promise((t) => {
         const { Tools: o, BlockManager: i } = this.Editor;
@@ -10153,10 +10203,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
                 data: l,
                 tunes: d
               });
-            } catch (v) {
+            } catch (b) {
               z(`Block \xAB${r}\xBB skipped because of plugins error`, "error", {
                 data: l,
-                error: v
+                error: b
               }), l = this.composeStubDataForTool(r, l, h), r = o.stubTool, g = i.composeBlock({
                 id: h,
                 tool: r,
@@ -10192,7 +10242,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
   }
-  class Rc extends j {
+  class Vc extends j {
     async save() {
       const { BlockManager: e, Tools: t } = this.Editor, o = e.blocks, i = [];
       try {
@@ -10249,8 +10299,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       console.error("vite-plugin-css-injected-by-js", e);
     }
   })();
-  const jc = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 9V7.2C8 7.08954 8.08954 7 8.2 7L12 7M16 9V7.2C16 7.08954 15.9105 7 15.8 7L12 7M12 7L12 17M12 17H10M12 17H14"/></svg>';
-  function Hc(n) {
+  const $c = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 9V7.2C8 7.08954 8.08954 7 8.2 7L12 7M16 9V7.2C16 7.08954 15.9105 7 15.8 7L12 7M12 7L12 17M12 17H10M12 17H14"/></svg>';
+  function Uc(n) {
     const e = document.createElement("div");
     e.innerHTML = n.trim();
     const t = document.createDocumentFragment();
@@ -10281,7 +10331,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     merge(e) {
       if (!this._element) return;
       this._data.text += e.text;
-      const t = Hc(e.text);
+      const t = Uc(e.text);
       this._element.appendChild(t), this._element.normalize();
     }
     validate(e) {
@@ -10325,7 +10375,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     static get toolbox() {
       return {
-        icon: jc,
+        icon: $c,
         title: "Text"
       };
     }
@@ -10341,7 +10391,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     render() {
       return {
-        icon: pa,
+        icon: ba,
         name: "bold",
         onActivate: () => {
           document.execCommand(this.commandName);
@@ -10371,7 +10421,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
     render() {
-      return this.nodes.button = document.createElement("button"), this.nodes.button.type = "button", this.nodes.button.classList.add(this.CSS.button, this.CSS.buttonModifier), this.nodes.button.innerHTML = ka, this.nodes.button;
+      return this.nodes.button = document.createElement("button"), this.nodes.button.type = "button", this.nodes.button.classList.add(this.CSS.button, this.CSS.buttonModifier), this.nodes.button.innerHTML = Ca, this.nodes.button;
     }
     surround() {
       document.execCommand(this.commandName);
@@ -10431,7 +10481,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     checkState() {
       const e = this.selection.findParentTag("A");
       if (e) {
-        this.nodes.button.innerHTML = Ca, this.nodes.button.classList.add(this.CSS.buttonUnlink), this.nodes.button.classList.add(this.CSS.buttonActive), this.openActions();
+        this.nodes.button.innerHTML = Ba, this.nodes.button.classList.add(this.CSS.buttonUnlink), this.nodes.button.classList.add(this.CSS.buttonActive), this.openActions();
         const t = e.getAttribute("href");
         this.nodes.input.value = t !== "null" ? t : "", this.selection.save();
       } else this.nodes.button.innerHTML = _n, this.nodes.button.classList.remove(this.CSS.buttonUnlink), this.nodes.button.classList.remove(this.CSS.buttonActive);
@@ -10492,30 +10542,30 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   }
   pn.isInline = true;
   pn.title = "Link";
-  class Ji {
+  class ts {
     constructor({ api: e }) {
       this.i18nAPI = e.i18n, this.blocksAPI = e.blocks, this.selectionAPI = e.selection, this.toolsAPI = e.tools, this.caretAPI = e.caret;
     }
     async render() {
       const e = M.get(), t = this.blocksAPI.getBlockByElement(e.anchorNode);
       if (t === void 0) return [];
-      const o = this.toolsAPI.getBlockTools(), i = await ai(t, o);
+      const o = this.toolsAPI.getBlockTools(), i = await ci(t, o);
       if (i.length === 0) return [];
       const s = i.reduce((h, g) => {
-        var v;
-        return (v = g.toolbox) == null || v.forEach((b) => {
+        var b;
+        return (b = g.toolbox) == null || b.forEach((v) => {
           h.push({
-            icon: b.icon,
-            title: ve.t(ke.toolNames, b.title),
+            icon: v.icon,
+            title: ve.t(ke.toolNames, v.title),
             name: g.name,
             closeOnActivate: true,
             onActivate: async () => {
-              const w = await this.blocksAPI.convert(t.id, g.name, b.data);
+              const w = await this.blocksAPI.convert(t.id, g.name, v.data);
               this.caretAPI.setToBlock(w, "end");
             }
           });
         }), h;
-      }, []), r = await t.getActiveToolboxEntry(), l = r !== void 0 ? r.icon : pi, d = !nt();
+      }, []), r = await t.getActiveToolboxEntry(), l = r !== void 0 ? r.icon : gi, d = !it();
       return {
         icon: l,
         name: "convert-to",
@@ -10535,8 +10585,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
   }
-  Ji.isInline = true;
-  class es {
+  ts.isInline = true;
+  class os {
     constructor({ data: e, api: t }) {
       this.CSS = {
         wrapper: "ce-stub",
@@ -10552,7 +10602,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.savedData;
     }
     make() {
-      const e = k.make("div", this.CSS.wrapper), t = Ta, o = k.make("div", this.CSS.info), i = k.make("div", this.CSS.title, {
+      const e = k.make("div", this.CSS.wrapper), t = Ma, o = k.make("div", this.CSS.info), i = k.make("div", this.CSS.title, {
         textContent: this.title
       }), s = k.make("div", this.CSS.subtitle, {
         textContent: this.subtitle
@@ -10560,13 +10610,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return e.innerHTML = t, o.appendChild(i), o.appendChild(s), e.appendChild(o), e;
     }
   }
-  es.isReadOnlySupported = true;
-  class Fc extends Eo {
+  os.isReadOnlySupported = true;
+  class zc extends Eo {
     constructor() {
       super(...arguments), this.type = $e.Inline;
     }
     get title() {
-      return this.constructable[Pt.Title];
+      return this.constructable[Dt.Title];
     }
     create() {
       return new this.constructable({
@@ -10575,10 +10625,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
     get isReadOnlySupported() {
-      return this.constructable[Pt.IsReadOnlySupported] ?? false;
+      return this.constructable[Dt.IsReadOnlySupported] ?? false;
     }
   }
-  class Vc extends Eo {
+  class qc extends Eo {
     constructor() {
       super(...arguments), this.type = $e.Tune;
     }
@@ -10591,35 +10641,35 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class pe extends Map {
+  class fe extends Map {
     get blockTools() {
       const e = Array.from(this.entries()).filter(([, t]) => t.isBlock());
-      return new pe(e);
+      return new fe(e);
     }
     get inlineTools() {
       const e = Array.from(this.entries()).filter(([, t]) => t.isInline());
-      return new pe(e);
+      return new fe(e);
     }
     get blockTunes() {
       const e = Array.from(this.entries()).filter(([, t]) => t.isTune());
-      return new pe(e);
+      return new fe(e);
     }
     get internalTools() {
       const e = Array.from(this.entries()).filter(([, t]) => t.isInternal);
-      return new pe(e);
+      return new fe(e);
     }
     get externalTools() {
       const e = Array.from(this.entries()).filter(([, t]) => !t.isInternal);
-      return new pe(e);
+      return new fe(e);
     }
   }
-  var $c = Object.defineProperty, Uc = Object.getOwnPropertyDescriptor, ts = (n, e, t, o) => {
-    for (var i = Uc(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
-    return i && $c(e, t, i), i;
+  var Wc = Object.defineProperty, Yc = Object.getOwnPropertyDescriptor, ns = (n, e, t, o) => {
+    for (var i = Yc(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
+    return i && Wc(e, t, i), i;
   };
   class fn extends Eo {
     constructor() {
-      super(...arguments), this.type = $e.Block, this.inlineTools = new pe(), this.tunes = new pe();
+      super(...arguments), this.type = $e.Block, this.inlineTools = new fe(), this.tunes = new fe();
     }
     create(e, t, o) {
       return new this.constructable({
@@ -10631,13 +10681,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
     get isReadOnlySupported() {
-      return this.constructable[Ze.IsReadOnlySupported] === true;
+      return this.constructable[Je.IsReadOnlySupported] === true;
     }
     get isLineBreaksEnabled() {
-      return this.constructable[Ze.IsEnabledLineBreaks];
+      return this.constructable[Je.IsEnabledLineBreaks];
     }
     get toolbox() {
-      const e = this.constructable[Ze.Toolbox], t = this.config[Tt.Toolbox];
+      const e = this.constructable[Je.Toolbox], t = this.config[St.Toolbox];
       if (!Ee(e) && t !== false) return t ? Array.isArray(e) ? Array.isArray(t) ? t.map((o, i) => {
         const s = e[i];
         return s ? {
@@ -10656,16 +10706,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       ];
     }
     get conversionConfig() {
-      return this.constructable[Ze.ConversionConfig];
+      return this.constructable[Je.ConversionConfig];
     }
     get enabledInlineTools() {
-      return this.config[Tt.EnabledInlineTools] || false;
+      return this.config[St.EnabledInlineTools] || false;
     }
     get enabledBlockTunes() {
-      return this.config[Tt.EnabledBlockTunes];
+      return this.config[St.EnabledBlockTunes];
     }
     get pasteConfig() {
-      return this.constructable[Ze.PasteConfig] ?? {};
+      return this.constructable[Je.PasteConfig] ?? {};
     }
     get sanitizeConfig() {
       const e = super.sanitizeConfig, t = this.baseSanitizeConfig;
@@ -10673,7 +10723,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       const o = {};
       for (const i in e) if (Object.prototype.hasOwnProperty.call(e, i)) {
         const s = e[i];
-        de(s) ? o[i] = Object.assign({}, t, s) : o[i] = s;
+        ue(s) ? o[i] = Object.assign({}, t, s) : o[i] = s;
       }
       return o;
     }
@@ -10682,13 +10732,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return Array.from(this.inlineTools.values()).forEach((t) => Object.assign(e, t.sanitizeConfig)), Array.from(this.tunes.values()).forEach((t) => Object.assign(e, t.sanitizeConfig)), e;
     }
   }
-  ts([
-    ot
+  ns([
+    nt
   ], fn.prototype, "sanitizeConfig");
-  ts([
-    ot
+  ns([
+    nt
   ], fn.prototype, "baseSanitizeConfig");
-  class zc {
+  class Xc {
     constructor(e, t, o) {
       this.api = o, this.config = e, this.editorConfig = t;
     }
@@ -10706,16 +10756,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     getConstructor(e) {
       switch (true) {
-        case e[Pt.IsInline]:
-          return Fc;
+        case e[Dt.IsInline]:
+          return zc;
         case e[ho.IsTune]:
-          return Vc;
+          return qc;
         default:
           return fn;
       }
     }
   }
-  class os {
+  class is {
     constructor({ api: e }) {
       this.CSS = {
         animation: "wobble"
@@ -10723,7 +10773,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     render() {
       return {
-        icon: fa,
+        icon: va,
         title: this.api.i18n.t("Move down"),
         onActivate: () => this.handleClick(),
         name: "move-down"
@@ -10737,14 +10787,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       i.top < window.innerHeight && (s = window.scrollY + o.offsetHeight), window.scrollTo(0, s), this.api.blocks.move(e + 1), this.api.toolbar.toggleBlockSettings(true);
     }
   }
-  os.isTune = true;
-  class ns {
+  is.isTune = true;
+  class ss {
     constructor({ api: e }) {
       this.api = e;
     }
     render() {
       return {
-        icon: ba,
+        icon: Ea,
         title: this.api.i18n.t("Delete"),
         name: "delete",
         confirmation: {
@@ -10757,8 +10807,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.api.blocks.delete();
     }
   }
-  ns.isTune = true;
-  class is {
+  ss.isTune = true;
+  class rs {
     constructor({ api: e }) {
       this.CSS = {
         animation: "wobble"
@@ -10766,7 +10816,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     render() {
       return {
-        icon: va,
+        icon: wa,
         title: this.api.i18n.t("Move up"),
         onActivate: () => this.handleClick(),
         name: "move-up"
@@ -10780,14 +10830,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       l.top > 0 ? d = Math.abs(r.top) - Math.abs(l.top) : d = Math.abs(r.top) + l.height, window.scrollBy(0, -1 * d), this.api.blocks.move(e - 1), this.api.toolbar.toggleBlockSettings(true);
     }
   }
-  is.isTune = true;
-  var qc = Object.defineProperty, Wc = Object.getOwnPropertyDescriptor, Yc = (n, e, t, o) => {
-    for (var i = Wc(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
-    return i && qc(e, t, i), i;
+  rs.isTune = true;
+  var Kc = Object.defineProperty, Gc = Object.getOwnPropertyDescriptor, Zc = (n, e, t, o) => {
+    for (var i = Gc(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
+    return i && Kc(e, t, i), i;
   };
-  class ss extends j {
+  class as extends j {
     constructor() {
-      super(...arguments), this.stubTool = "stub", this.toolsAvailable = new pe(), this.toolsUnavailable = new pe();
+      super(...arguments), this.stubTool = "stub", this.toolsAvailable = new fe(), this.toolsUnavailable = new fe();
     }
     get available() {
       return this.toolsAvailable;
@@ -10813,10 +10863,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     async prepare() {
       if (this.validateTools(), this.config.tools = ro({}, this.internalTools, this.config.tools), !Object.prototype.hasOwnProperty.call(this.config, "tools") || Object.keys(this.config.tools).length === 0) throw Error("Can't start without tools");
       const e = this.prepareConfig();
-      this.factory = new zc(e, this.config, this.Editor.API);
+      this.factory = new Xc(e, this.config, this.Editor.API);
       const t = this.getListOfPrepareFunctions(e);
       if (t.length === 0) return Promise.resolve();
-      await yr(t, (o) => {
+      await xr(t, (o) => {
         this.toolPrepareMethodSuccess(o);
       }, (o) => {
         this.toolPrepareMethodFallback(o);
@@ -10836,7 +10886,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     get internalTools() {
       return {
         convertTo: {
-          class: Ji,
+          class: ts,
           isInternal: true
         },
         link: {
@@ -10857,19 +10907,19 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           isInternal: true
         },
         stub: {
-          class: es,
+          class: os,
           isInternal: true
         },
         moveUp: {
-          class: is,
+          class: rs,
           isInternal: true
         },
         delete: {
-          class: ns,
+          class: ss,
           isInternal: true
         },
         moveDown: {
-          class: os,
+          class: is,
           isInternal: true
         }
       };
@@ -10911,13 +10961,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     assignInlineToolsToBlockTool(e) {
       if (this.config.inlineToolbar !== false) {
         if (e.enabledInlineTools === true) {
-          e.inlineTools = new pe(Array.isArray(this.config.inlineToolbar) ? this.config.inlineToolbar.map((t) => [
+          e.inlineTools = new fe(Array.isArray(this.config.inlineToolbar) ? this.config.inlineToolbar.map((t) => [
             t,
             this.inlineTools.get(t)
           ]) : Array.from(this.inlineTools.entries()));
           return;
         }
-        Array.isArray(e.enabledInlineTools) && (e.inlineTools = new pe([
+        Array.isArray(e.enabledInlineTools) && (e.inlineTools = new fe([
           "convertTo",
           ...e.enabledInlineTools
         ].map((t) => [
@@ -10929,22 +10979,22 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     assignBlockTunesToBlockTool(e) {
       if (e.enabledBlockTunes !== false) {
         if (Array.isArray(e.enabledBlockTunes)) {
-          const t = new pe(e.enabledBlockTunes.map((o) => [
+          const t = new fe(e.enabledBlockTunes.map((o) => [
             o,
             this.blockTunes.get(o)
           ]));
-          e.tunes = new pe([
+          e.tunes = new fe([
             ...t,
             ...this.blockTunes.internalTools
           ]);
           return;
         }
         if (Array.isArray(this.config.tunes)) {
-          const t = new pe(this.config.tunes.map((o) => [
+          const t = new fe(this.config.tunes.map((o) => [
             o,
             this.blockTunes.get(o)
           ]));
-          e.tunes = new pe([
+          e.tunes = new fe([
             ...t,
             ...this.blockTunes.internalTools
           ]);
@@ -10962,24 +11012,24 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     prepareConfig() {
       const e = {};
-      for (const t in this.config.tools) de(this.config.tools[t]) ? e[t] = this.config.tools[t] : e[t] = {
+      for (const t in this.config.tools) ue(this.config.tools[t]) ? e[t] = this.config.tools[t] : e[t] = {
         class: this.config.tools[t]
       };
       return e;
     }
   }
-  Yc([
-    ot
-  ], ss.prototype, "getAllInlineToolsSanitizeConfig");
-  const Xc = `:root{--selectionColor: #e1f2ff;--inlineSelectionColor: #d4ecff;--bg-light: #eff2f5;--grayText: #707684;--color-dark: #1D202B;--color-active-icon: #388AE5;--color-gray-border: rgba(201, 201, 204, .48);--content-width: 650px;--narrow-mode-right-padding: 50px;--toolbox-buttons-size: 26px;--toolbox-buttons-size--mobile: 36px;--icon-size: 20px;--icon-size--mobile: 28px;--block-padding-vertical: .4em;--color-line-gray: #EFF0F1 }.codex-editor{position:relative;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:1}.codex-editor .hide{display:none}.codex-editor__redactor [contenteditable]:empty:after{content:"\\feff"}@media (min-width: 651px){.codex-editor--narrow .codex-editor__redactor{margin-right:50px}}@media (min-width: 651px){.codex-editor--narrow.codex-editor--rtl .codex-editor__redactor{margin-left:50px;margin-right:0}}@media (min-width: 651px){.codex-editor--narrow .ce-toolbar__actions{right:-5px}}.codex-editor-copyable{position:absolute;height:1px;width:1px;top:-400%;opacity:.001}.codex-editor-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:999;pointer-events:none;overflow:hidden}.codex-editor-overlay__container{position:relative;pointer-events:auto;z-index:0}.codex-editor-overlay__rectangle{position:absolute;pointer-events:none;background-color:#2eaadc33;border:1px solid transparent}.codex-editor svg{max-height:100%}.codex-editor path{stroke:currentColor}.codex-editor ::-moz-selection{background-color:#d4ecff}.codex-editor ::selection{background-color:#d4ecff}.codex-editor--toolbox-opened [contentEditable=true][data-placeholder]:focus:before{opacity:0!important}.ce-scroll-locked{overflow:hidden}.ce-scroll-locked--hard{overflow:hidden;top:calc(-1 * var(--window-scroll-offset));position:fixed;width:100%}.ce-toolbar{position:absolute;left:0;right:0;top:0;-webkit-transition:opacity .1s ease;transition:opacity .1s ease;will-change:opacity,top;display:none}.ce-toolbar--opened{display:block}.ce-toolbar__content{max-width:650px;margin:0 auto;position:relative}.ce-toolbar__plus{color:#1d202b;cursor:pointer;width:26px;height:26px;border-radius:7px;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-ms-flex-negative:0;flex-shrink:0}@media (max-width: 650px){.ce-toolbar__plus{width:36px;height:36px}}@media (hover: hover){.ce-toolbar__plus:hover{background-color:#eff2f5}}.ce-toolbar__plus--active{background-color:#eff2f5;-webkit-animation:bounceIn .75s 1;animation:bounceIn .75s 1;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}.ce-toolbar__plus-shortcut{opacity:.6;word-spacing:-2px;margin-top:5px}@media (max-width: 650px){.ce-toolbar__plus{position:absolute;background-color:#fff;border:1px solid #E8E8EB;-webkit-box-shadow:0 3px 15px -3px rgba(13,20,33,.13);box-shadow:0 3px 15px -3px #0d142121;border-radius:6px;z-index:2;position:static}.ce-toolbar__plus--left-oriented:before{left:15px;margin-left:0}.ce-toolbar__plus--right-oriented:before{left:auto;right:15px;margin-left:0}}.ce-toolbar__actions{position:absolute;right:100%;opacity:0;display:-webkit-box;display:-ms-flexbox;display:flex;padding-right:5px}.ce-toolbar__actions--opened{opacity:1}@media (max-width: 650px){.ce-toolbar__actions{right:auto}}.ce-toolbar__settings-btn{color:#1d202b;width:26px;height:26px;border-radius:7px;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;margin-left:3px;cursor:pointer;user-select:none}@media (max-width: 650px){.ce-toolbar__settings-btn{width:36px;height:36px}}@media (hover: hover){.ce-toolbar__settings-btn:hover{background-color:#eff2f5}}.ce-toolbar__settings-btn--active{background-color:#eff2f5;-webkit-animation:bounceIn .75s 1;animation:bounceIn .75s 1;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}@media (min-width: 651px){.ce-toolbar__settings-btn{width:24px}}.ce-toolbar__settings-btn--hidden{display:none}@media (max-width: 650px){.ce-toolbar__settings-btn{position:absolute;background-color:#fff;border:1px solid #E8E8EB;-webkit-box-shadow:0 3px 15px -3px rgba(13,20,33,.13);box-shadow:0 3px 15px -3px #0d142121;border-radius:6px;z-index:2;position:static}.ce-toolbar__settings-btn--left-oriented:before{left:15px;margin-left:0}.ce-toolbar__settings-btn--right-oriented:before{left:auto;right:15px;margin-left:0}}.ce-toolbar__plus svg,.ce-toolbar__settings-btn svg{width:24px;height:24px}@media (min-width: 651px){.codex-editor--narrow .ce-toolbar__plus{left:5px}}@media (min-width: 651px){.codex-editor--narrow .ce-toolbox .ce-popover{right:0;left:auto;left:initial}}.ce-inline-toolbar{--y-offset: 8px;--color-background-icon-active: rgba(56, 138, 229, .1);--color-text-icon-active: #388AE5;--color-text-primary: black;position:absolute;visibility:hidden;-webkit-transition:opacity .25s ease;transition:opacity .25s ease;will-change:opacity,left,top;top:0;left:0;z-index:3;opacity:1;visibility:visible}.ce-inline-toolbar [hidden]{display:none!important}.ce-inline-toolbar__toggler-and-button-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%;padding:0 6px}.ce-inline-toolbar__buttons{display:-webkit-box;display:-ms-flexbox;display:flex}.ce-inline-toolbar__dropdown{display:-webkit-box;display:-ms-flexbox;display:flex;padding:6px;margin:0 6px 0 -6px;-webkit-box-align:center;-ms-flex-align:center;align-items:center;cursor:pointer;border-right:1px solid rgba(201,201,204,.48);-webkit-box-sizing:border-box;box-sizing:border-box}@media (hover: hover){.ce-inline-toolbar__dropdown:hover{background:#eff2f5}}.ce-inline-toolbar__dropdown--hidden{display:none}.ce-inline-toolbar__dropdown-content,.ce-inline-toolbar__dropdown-arrow{display:-webkit-box;display:-ms-flexbox;display:flex}.ce-inline-toolbar__dropdown-content svg,.ce-inline-toolbar__dropdown-arrow svg{width:20px;height:20px}.ce-inline-toolbar__shortcut{opacity:.6;word-spacing:-3px;margin-top:3px}.ce-inline-tool{color:var(--color-text-primary);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;border:0;border-radius:4px;line-height:normal;height:100%;padding:0;width:28px;background-color:transparent;cursor:pointer}@media (max-width: 650px){.ce-inline-tool{width:36px;height:36px}}@media (hover: hover){.ce-inline-tool:hover{background-color:#f8f8f8}}.ce-inline-tool svg{display:block;width:20px;height:20px}@media (max-width: 650px){.ce-inline-tool svg{width:28px;height:28px}}.ce-inline-tool--link .icon--unlink,.ce-inline-tool--unlink .icon--link{display:none}.ce-inline-tool--unlink .icon--unlink{display:inline-block;margin-bottom:-1px}.ce-inline-tool-input{background:#F8F8F8;border:1px solid rgba(226,226,229,.2);border-radius:6px;padding:4px 8px;font-size:14px;line-height:22px;outline:none;margin:0;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box;display:none;font-weight:500;-webkit-appearance:none;font-family:inherit}@media (max-width: 650px){.ce-inline-tool-input{font-size:15px;font-weight:500}}.ce-inline-tool-input::-webkit-input-placeholder{color:#707684}.ce-inline-tool-input::-moz-placeholder{color:#707684}.ce-inline-tool-input:-ms-input-placeholder{color:#707684}.ce-inline-tool-input::-ms-input-placeholder{color:#707684}.ce-inline-tool-input::placeholder{color:#707684}.ce-inline-tool-input--showed{display:block}.ce-inline-tool--active{background:var(--color-background-icon-active);color:var(--color-text-icon-active)}@-webkit-keyframes fade-in{0%{opacity:0}to{opacity:1}}@keyframes fade-in{0%{opacity:0}to{opacity:1}}.ce-block{-webkit-animation:fade-in .3s ease;animation:fade-in .3s ease;-webkit-animation-fill-mode:none;animation-fill-mode:none;-webkit-animation-fill-mode:initial;animation-fill-mode:initial}.ce-block:first-of-type{margin-top:0}.ce-block--selected .ce-block__content{background:#e1f2ff}.ce-block--selected .ce-block__content [contenteditable]{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ce-block--selected .ce-block__content img,.ce-block--selected .ce-block__content .ce-stub{opacity:.55}.ce-block--stretched .ce-block__content{max-width:none}.ce-block__content{position:relative;max-width:650px;margin:0 auto;-webkit-transition:background-color .15s ease;transition:background-color .15s ease}.ce-block--drop-target .ce-block__content:before{content:"";position:absolute;top:100%;left:-20px;margin-top:-1px;height:8px;width:8px;border:solid #388AE5;border-width:1px 1px 0 0;-webkit-transform-origin:right;transform-origin:right;-webkit-transform:rotate(45deg);transform:rotate(45deg)}.ce-block--drop-target .ce-block__content:after{content:"";position:absolute;top:100%;height:1px;width:100%;color:#388ae5;background:repeating-linear-gradient(90deg,#388AE5,#388AE5 1px,#fff 1px,#fff 6px)}.ce-block a{cursor:pointer;-webkit-text-decoration:underline;text-decoration:underline}.ce-block b{font-weight:700}.ce-block i{font-style:italic}@-webkit-keyframes bounceIn{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}20%{-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}60%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@keyframes bounceIn{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}20%{-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}60%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@-webkit-keyframes selectionBounce{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}50%{-webkit-transform:scale3d(1.01,1.01,1.01);transform:scale3d(1.01,1.01,1.01)}70%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@keyframes selectionBounce{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}50%{-webkit-transform:scale3d(1.01,1.01,1.01);transform:scale3d(1.01,1.01,1.01)}70%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@-webkit-keyframes buttonClicked{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.95,.95,.95);transform:scale3d(.95,.95,.95)}60%{-webkit-transform:scale3d(1.02,1.02,1.02);transform:scale3d(1.02,1.02,1.02)}80%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@keyframes buttonClicked{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.95,.95,.95);transform:scale3d(.95,.95,.95)}60%{-webkit-transform:scale3d(1.02,1.02,1.02);transform:scale3d(1.02,1.02,1.02)}80%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}.cdx-block{padding:.4em 0}.cdx-block::-webkit-input-placeholder{line-height:normal!important}.cdx-input{border:1px solid rgba(201,201,204,.48);-webkit-box-shadow:inset 0 1px 2px 0 rgba(35,44,72,.06);box-shadow:inset 0 1px 2px #232c480f;border-radius:3px;padding:10px 12px;outline:none;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box}.cdx-input[data-placeholder]:before{position:static!important}.cdx-input[data-placeholder]:before{display:inline-block;width:0;white-space:nowrap;pointer-events:none}.cdx-settings-button{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;border-radius:3px;cursor:pointer;border:0;outline:none;background-color:transparent;vertical-align:bottom;color:inherit;margin:0;min-width:26px;min-height:26px}.cdx-settings-button--focused{background:rgba(34,186,255,.08)!important}.cdx-settings-button--focused{-webkit-box-shadow:inset 0 0 0px 1px rgba(7,161,227,.08);box-shadow:inset 0 0 0 1px #07a1e314}.cdx-settings-button--focused-animated{-webkit-animation-name:buttonClicked;animation-name:buttonClicked;-webkit-animation-duration:.25s;animation-duration:.25s}.cdx-settings-button--active{color:#388ae5}.cdx-settings-button svg{width:auto;height:auto}@media (max-width: 650px){.cdx-settings-button svg{width:28px;height:28px}}@media (max-width: 650px){.cdx-settings-button{width:36px;height:36px;border-radius:8px}}@media (hover: hover){.cdx-settings-button:hover{background-color:#eff2f5}}.cdx-loader{position:relative;border:1px solid rgba(201,201,204,.48)}.cdx-loader:before{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-11px 0 0 -11px;border:2px solid rgba(201,201,204,.48);border-left-color:#388ae5;border-radius:50%;-webkit-animation:cdxRotation 1.2s infinite linear;animation:cdxRotation 1.2s infinite linear}@-webkit-keyframes cdxRotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0)}to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes cdxRotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0)}to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.cdx-button{padding:13px;border-radius:3px;border:1px solid rgba(201,201,204,.48);font-size:14.9px;background:#fff;-webkit-box-shadow:0 2px 2px 0 rgba(18,30,57,.04);box-shadow:0 2px 2px #121e390a;color:#707684;text-align:center;cursor:pointer}@media (hover: hover){.cdx-button:hover{background:#FBFCFE;-webkit-box-shadow:0 1px 3px 0 rgba(18,30,57,.08);box-shadow:0 1px 3px #121e3914}}.cdx-button svg{height:20px;margin-right:.2em;margin-top:-2px}.ce-stub{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:12px 18px;margin:10px 0;border-radius:10px;background:#eff2f5;border:1px solid #EFF0F1;color:#707684;font-size:14px}.ce-stub svg{width:20px;height:20px}.ce-stub__info{margin-left:14px}.ce-stub__title{font-weight:500;text-transform:capitalize}.codex-editor.codex-editor--rtl{direction:rtl}.codex-editor.codex-editor--rtl .cdx-list{padding-left:0;padding-right:40px}.codex-editor.codex-editor--rtl .ce-toolbar__plus{right:-26px;left:auto}.codex-editor.codex-editor--rtl .ce-toolbar__actions{right:auto;left:-26px}@media (max-width: 650px){.codex-editor.codex-editor--rtl .ce-toolbar__actions{margin-left:0;margin-right:auto;padding-right:0;padding-left:10px}}.codex-editor.codex-editor--rtl .ce-settings{left:5px;right:auto}.codex-editor.codex-editor--rtl .ce-settings:before{right:auto;left:25px}.codex-editor.codex-editor--rtl .ce-settings__button:not(:nth-child(3n+3)){margin-left:3px;margin-right:0}.codex-editor.codex-editor--rtl .ce-conversion-tool__icon{margin-right:0;margin-left:10px}.codex-editor.codex-editor--rtl .ce-inline-toolbar__dropdown{border-right:0px solid transparent;border-left:1px solid rgba(201,201,204,.48);margin:0 -6px 0 6px}.codex-editor.codex-editor--rtl .ce-inline-toolbar__dropdown .icon--toggler-down{margin-left:0;margin-right:4px}@media (min-width: 651px){.codex-editor--narrow.codex-editor--rtl .ce-toolbar__plus{left:0;right:5px}}@media (min-width: 651px){.codex-editor--narrow.codex-editor--rtl .ce-toolbar__actions{left:-5px}}.cdx-search-field{--icon-margin-right: 10px;background:#F8F8F8;border:1px solid rgba(226,226,229,.2);border-radius:6px;padding:2px;display:grid;grid-template-columns:auto auto 1fr;grid-template-rows:auto}.cdx-search-field__icon{width:26px;height:26px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;margin-right:var(--icon-margin-right)}.cdx-search-field__icon svg{width:20px;height:20px;color:#707684}.cdx-search-field__input{font-size:14px;outline:none;font-weight:500;font-family:inherit;border:0;background:transparent;margin:0;padding:0;line-height:22px;min-width:calc(100% - 26px - var(--icon-margin-right))}.cdx-search-field__input::-webkit-input-placeholder{color:#707684;font-weight:500}.cdx-search-field__input::-moz-placeholder{color:#707684;font-weight:500}.cdx-search-field__input:-ms-input-placeholder{color:#707684;font-weight:500}.cdx-search-field__input::-ms-input-placeholder{color:#707684;font-weight:500}.cdx-search-field__input::placeholder{color:#707684;font-weight:500}.ce-popover{--border-radius: 6px;--width: 200px;--max-height: 270px;--padding: 6px;--offset-from-target: 8px;--color-border: #EFF0F1;--color-shadow: rgba(13, 20, 33, .1);--color-background: white;--color-text-primary: black;--color-text-secondary: #707684;--color-border-icon: rgba(201, 201, 204, .48);--color-border-icon-disabled: #EFF0F1;--color-text-icon-active: #388AE5;--color-background-icon-active: rgba(56, 138, 229, .1);--color-background-item-focus: rgba(34, 186, 255, .08);--color-shadow-item-focus: rgba(7, 161, 227, .08);--color-background-item-hover: #F8F8F8;--color-background-item-confirm: #E24A4A;--color-background-item-confirm-hover: #CE4343;--popover-top: calc(100% + var(--offset-from-target));--popover-left: 0;--nested-popover-overlap: 4px;--icon-size: 20px;--item-padding: 3px;--item-height: calc(var(--icon-size) + 2 * var(--item-padding))}.ce-popover__container{min-width:var(--width);width:var(--width);max-height:var(--max-height);border-radius:var(--border-radius);overflow:hidden;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-box-shadow:0px 3px 15px -3px var(--color-shadow);box-shadow:0 3px 15px -3px var(--color-shadow);position:absolute;left:var(--popover-left);top:var(--popover-top);background:var(--color-background);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;z-index:4;opacity:0;max-height:0;pointer-events:none;padding:0;border:none}.ce-popover--opened>.ce-popover__container{opacity:1;padding:var(--padding);max-height:var(--max-height);pointer-events:auto;-webkit-animation:panelShowing .1s ease;animation:panelShowing .1s ease;border:1px solid var(--color-border)}@media (max-width: 650px){.ce-popover--opened>.ce-popover__container{-webkit-animation:panelShowingMobile .25s ease;animation:panelShowingMobile .25s ease}}.ce-popover--open-top .ce-popover__container{--popover-top: calc(-1 * (var(--offset-from-target) + var(--popover-height)))}.ce-popover--open-left .ce-popover__container{--popover-left: calc(-1 * var(--width) + 100%)}.ce-popover__items{overflow-y:auto;-ms-scroll-chaining:none;overscroll-behavior:contain}@media (max-width: 650px){.ce-popover__overlay{position:fixed;top:0;bottom:0;left:0;right:0;background:#1D202B;z-index:3;opacity:.5;-webkit-transition:opacity .12s ease-in;transition:opacity .12s ease-in;will-change:opacity;visibility:visible}}.ce-popover__overlay--hidden{display:none}@media (max-width: 650px){.ce-popover .ce-popover__container{--offset: 5px;position:fixed;max-width:none;min-width:calc(100% - var(--offset) * 2);left:var(--offset);right:var(--offset);bottom:calc(var(--offset) + env(safe-area-inset-bottom));top:auto;border-radius:10px}}.ce-popover__search{margin-bottom:5px}.ce-popover__nothing-found-message{color:#707684;display:none;cursor:default;padding:3px;font-size:14px;line-height:20px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ce-popover__nothing-found-message--displayed{display:block}.ce-popover--nested .ce-popover__container{--popover-left: calc(var(--nesting-level) * (var(--width) - var(--nested-popover-overlap)));top:calc(var(--trigger-item-top) - var(--nested-popover-overlap));position:absolute}.ce-popover--open-top.ce-popover--nested .ce-popover__container{top:calc(var(--trigger-item-top) - var(--popover-height) + var(--item-height) + var(--offset-from-target) + var(--nested-popover-overlap))}.ce-popover--open-left .ce-popover--nested .ce-popover__container{--popover-left: calc(-1 * (var(--nesting-level) + 1) * var(--width) + 100%)}.ce-popover-item-separator{padding:4px 3px}.ce-popover-item-separator--hidden{display:none}.ce-popover-item-separator__line{height:1px;background:var(--color-border);width:100%}.ce-popover-item-html--hidden{display:none}.ce-popover-item{--border-radius: 6px;border-radius:var(--border-radius);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:var(--item-padding);color:var(--color-text-primary);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;border:none;background:transparent}@media (max-width: 650px){.ce-popover-item{padding:4px}}.ce-popover-item:not(:last-of-type){margin-bottom:1px}.ce-popover-item__icon{width:26px;height:26px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.ce-popover-item__icon svg{width:20px;height:20px}@media (max-width: 650px){.ce-popover-item__icon{width:36px;height:36px;border-radius:8px}.ce-popover-item__icon svg{width:28px;height:28px}}.ce-popover-item__icon--tool{margin-right:4px}.ce-popover-item__title{font-size:14px;line-height:20px;font-weight:500;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-right:auto}@media (max-width: 650px){.ce-popover-item__title{font-size:16px}}.ce-popover-item__secondary-title{color:var(--color-text-secondary);font-size:12px;white-space:nowrap;letter-spacing:-.1em;padding-right:5px;opacity:.6}@media (max-width: 650px){.ce-popover-item__secondary-title{display:none}}.ce-popover-item--active{background:var(--color-background-icon-active);color:var(--color-text-icon-active)}.ce-popover-item--disabled{color:var(--color-text-secondary);cursor:default;pointer-events:none}.ce-popover-item--focused:not(.ce-popover-item--no-focus){background:var(--color-background-item-focus)!important}.ce-popover-item--hidden{display:none}@media (hover: hover){.ce-popover-item:hover{cursor:pointer}.ce-popover-item:hover:not(.ce-popover-item--no-hover){background-color:var(--color-background-item-hover)}}.ce-popover-item--confirmation{background:var(--color-background-item-confirm)}.ce-popover-item--confirmation .ce-popover-item__title,.ce-popover-item--confirmation .ce-popover-item__icon{color:#fff}@media (hover: hover){.ce-popover-item--confirmation:not(.ce-popover-item--no-hover):hover{background:var(--color-background-item-confirm-hover)}}.ce-popover-item--confirmation:not(.ce-popover-item--no-focus).ce-popover-item--focused{background:var(--color-background-item-confirm-hover)!important}@-webkit-keyframes panelShowing{0%{opacity:0;-webkit-transform:translateY(-8px) scale(.9);transform:translateY(-8px) scale(.9)}70%{opacity:1;-webkit-transform:translateY(2px);transform:translateY(2px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes panelShowing{0%{opacity:0;-webkit-transform:translateY(-8px) scale(.9);transform:translateY(-8px) scale(.9)}70%{opacity:1;-webkit-transform:translateY(2px);transform:translateY(2px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@-webkit-keyframes panelShowingMobile{0%{opacity:0;-webkit-transform:translateY(14px) scale(.98);transform:translateY(14px) scale(.98)}70%{opacity:1;-webkit-transform:translateY(-4px);transform:translateY(-4px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes panelShowingMobile{0%{opacity:0;-webkit-transform:translateY(14px) scale(.98);transform:translateY(14px) scale(.98)}70%{opacity:1;-webkit-transform:translateY(-4px);transform:translateY(-4px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}.wobble{-webkit-animation-name:wobble;animation-name:wobble;-webkit-animation-duration:.4s;animation-duration:.4s}@-webkit-keyframes wobble{0%{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}15%{-webkit-transform:translate3d(-9%,0,0);transform:translate3d(-9%,0,0)}30%{-webkit-transform:translate3d(9%,0,0);transform:translate3d(9%,0,0)}45%{-webkit-transform:translate3d(-4%,0,0);transform:translate3d(-4%,0,0)}60%{-webkit-transform:translate3d(4%,0,0);transform:translate3d(4%,0,0)}75%{-webkit-transform:translate3d(-1%,0,0);transform:translate3d(-1%,0,0)}to{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}}@keyframes wobble{0%{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}15%{-webkit-transform:translate3d(-9%,0,0);transform:translate3d(-9%,0,0)}30%{-webkit-transform:translate3d(9%,0,0);transform:translate3d(9%,0,0)}45%{-webkit-transform:translate3d(-4%,0,0);transform:translate3d(-4%,0,0)}60%{-webkit-transform:translate3d(4%,0,0);transform:translate3d(4%,0,0)}75%{-webkit-transform:translate3d(-1%,0,0);transform:translate3d(-1%,0,0)}to{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}}.ce-popover-header{margin-bottom:8px;margin-top:4px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.ce-popover-header__text{font-size:18px;font-weight:600}.ce-popover-header__back-button{border:0;background:transparent;width:36px;height:36px;color:var(--color-text-primary)}.ce-popover-header__back-button svg{display:block;width:28px;height:28px}.ce-popover--inline{--height: 38px;--height-mobile: 46px;--container-padding: 4px;position:relative}.ce-popover--inline .ce-popover__custom-content{margin-bottom:0}.ce-popover--inline .ce-popover__items{display:-webkit-box;display:-ms-flexbox;display:flex}.ce-popover--inline .ce-popover__container{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;padding:var(--container-padding);height:var(--height);top:0;min-width:-webkit-max-content;min-width:-moz-max-content;min-width:max-content;width:-webkit-max-content;width:-moz-max-content;width:max-content;-webkit-animation:none;animation:none}@media (max-width: 650px){.ce-popover--inline .ce-popover__container{height:var(--height-mobile);position:absolute}}.ce-popover--inline .ce-popover-item-separator{padding:0 4px}.ce-popover--inline .ce-popover-item-separator__line{height:100%;width:1px}.ce-popover--inline .ce-popover-item{border-radius:4px;padding:4px}.ce-popover--inline .ce-popover-item__icon--tool{-webkit-box-shadow:none;box-shadow:none;background:transparent;margin-right:0}.ce-popover--inline .ce-popover-item__icon{width:auto;width:initial;height:auto;height:initial}.ce-popover--inline .ce-popover-item__icon svg{width:20px;height:20px}@media (max-width: 650px){.ce-popover--inline .ce-popover-item__icon svg{width:28px;height:28px}}.ce-popover--inline .ce-popover-item:not(:last-of-type){margin-bottom:0;margin-bottom:initial}.ce-popover--inline .ce-popover-item-html{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.ce-popover--inline .ce-popover-item__icon--chevron-right{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.ce-popover--inline .ce-popover--nested-level-1 .ce-popover__container{--offset: 3px;left:0;top:calc(var(--height) + var(--offset))}@media (max-width: 650px){.ce-popover--inline .ce-popover--nested-level-1 .ce-popover__container{top:calc(var(--height-mobile) + var(--offset))}}.ce-popover--inline .ce-popover--nested .ce-popover__container{min-width:var(--width);width:var(--width);height:-webkit-fit-content;height:-moz-fit-content;height:fit-content;padding:6px;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.ce-popover--inline .ce-popover--nested .ce-popover__items{display:block;width:100%}.ce-popover--inline .ce-popover--nested .ce-popover-item{border-radius:6px;padding:3px}@media (max-width: 650px){.ce-popover--inline .ce-popover--nested .ce-popover-item{padding:4px}}.ce-popover--inline .ce-popover--nested .ce-popover-item__icon--tool{margin-right:4px}.ce-popover--inline .ce-popover--nested .ce-popover-item__icon{width:26px;height:26px}.ce-popover--inline .ce-popover--nested .ce-popover-item-separator{padding:4px 3px}.ce-popover--inline .ce-popover--nested .ce-popover-item-separator__line{width:100%;height:1px}.codex-editor [data-placeholder]:empty:before,.codex-editor [data-placeholder][data-empty=true]:before{pointer-events:none;color:#707684;cursor:text;content:attr(data-placeholder)}.codex-editor [data-placeholder-active]:empty:before,.codex-editor [data-placeholder-active][data-empty=true]:before{pointer-events:none;color:#707684;cursor:text}.codex-editor [data-placeholder-active]:empty:focus:before,.codex-editor [data-placeholder-active][data-empty=true]:focus:before{content:attr(data-placeholder-active)}
+  Zc([
+    nt
+  ], as.prototype, "getAllInlineToolsSanitizeConfig");
+  const Qc = `:root{--selectionColor: #e1f2ff;--inlineSelectionColor: #d4ecff;--bg-light: #eff2f5;--grayText: #707684;--color-dark: #1D202B;--color-active-icon: #388AE5;--color-gray-border: rgba(201, 201, 204, .48);--content-width: 650px;--narrow-mode-right-padding: 50px;--toolbox-buttons-size: 26px;--toolbox-buttons-size--mobile: 36px;--icon-size: 20px;--icon-size--mobile: 28px;--block-padding-vertical: .4em;--color-line-gray: #EFF0F1 }.codex-editor{position:relative;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:1}.codex-editor .hide{display:none}.codex-editor__redactor [contenteditable]:empty:after{content:"\\feff"}@media (min-width: 651px){.codex-editor--narrow .codex-editor__redactor{margin-right:50px}}@media (min-width: 651px){.codex-editor--narrow.codex-editor--rtl .codex-editor__redactor{margin-left:50px;margin-right:0}}@media (min-width: 651px){.codex-editor--narrow .ce-toolbar__actions{right:-5px}}.codex-editor-copyable{position:absolute;height:1px;width:1px;top:-400%;opacity:.001}.codex-editor-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:999;pointer-events:none;overflow:hidden}.codex-editor-overlay__container{position:relative;pointer-events:auto;z-index:0}.codex-editor-overlay__rectangle{position:absolute;pointer-events:none;background-color:#2eaadc33;border:1px solid transparent}.codex-editor svg{max-height:100%}.codex-editor path{stroke:currentColor}.codex-editor ::-moz-selection{background-color:#d4ecff}.codex-editor ::selection{background-color:#d4ecff}.codex-editor--toolbox-opened [contentEditable=true][data-placeholder]:focus:before{opacity:0!important}.ce-scroll-locked{overflow:hidden}.ce-scroll-locked--hard{overflow:hidden;top:calc(-1 * var(--window-scroll-offset));position:fixed;width:100%}.ce-toolbar{position:absolute;left:0;right:0;top:0;-webkit-transition:opacity .1s ease;transition:opacity .1s ease;will-change:opacity,top;display:none}.ce-toolbar--opened{display:block}.ce-toolbar__content{max-width:650px;margin:0 auto;position:relative}.ce-toolbar__plus{color:#1d202b;cursor:pointer;width:26px;height:26px;border-radius:7px;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-ms-flex-negative:0;flex-shrink:0}@media (max-width: 650px){.ce-toolbar__plus{width:36px;height:36px}}@media (hover: hover){.ce-toolbar__plus:hover{background-color:#eff2f5}}.ce-toolbar__plus--active{background-color:#eff2f5;-webkit-animation:bounceIn .75s 1;animation:bounceIn .75s 1;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}.ce-toolbar__plus-shortcut{opacity:.6;word-spacing:-2px;margin-top:5px}@media (max-width: 650px){.ce-toolbar__plus{position:absolute;background-color:#fff;border:1px solid #E8E8EB;-webkit-box-shadow:0 3px 15px -3px rgba(13,20,33,.13);box-shadow:0 3px 15px -3px #0d142121;border-radius:6px;z-index:2;position:static}.ce-toolbar__plus--left-oriented:before{left:15px;margin-left:0}.ce-toolbar__plus--right-oriented:before{left:auto;right:15px;margin-left:0}}.ce-toolbar__actions{position:absolute;right:100%;opacity:0;display:-webkit-box;display:-ms-flexbox;display:flex;padding-right:5px}.ce-toolbar__actions--opened{opacity:1}@media (max-width: 650px){.ce-toolbar__actions{right:auto}}.ce-toolbar__settings-btn{color:#1d202b;width:26px;height:26px;border-radius:7px;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;margin-left:3px;cursor:pointer;user-select:none}@media (max-width: 650px){.ce-toolbar__settings-btn{width:36px;height:36px}}@media (hover: hover){.ce-toolbar__settings-btn:hover{background-color:#eff2f5}}.ce-toolbar__settings-btn--active{background-color:#eff2f5;-webkit-animation:bounceIn .75s 1;animation:bounceIn .75s 1;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}@media (min-width: 651px){.ce-toolbar__settings-btn{width:24px}}.ce-toolbar__settings-btn--hidden{display:none}@media (max-width: 650px){.ce-toolbar__settings-btn{position:absolute;background-color:#fff;border:1px solid #E8E8EB;-webkit-box-shadow:0 3px 15px -3px rgba(13,20,33,.13);box-shadow:0 3px 15px -3px #0d142121;border-radius:6px;z-index:2;position:static}.ce-toolbar__settings-btn--left-oriented:before{left:15px;margin-left:0}.ce-toolbar__settings-btn--right-oriented:before{left:auto;right:15px;margin-left:0}}.ce-toolbar__plus svg,.ce-toolbar__settings-btn svg{width:24px;height:24px}@media (min-width: 651px){.codex-editor--narrow .ce-toolbar__plus{left:5px}}@media (min-width: 651px){.codex-editor--narrow .ce-toolbox .ce-popover{right:0;left:auto;left:initial}}.ce-inline-toolbar{--y-offset: 8px;--color-background-icon-active: rgba(56, 138, 229, .1);--color-text-icon-active: #388AE5;--color-text-primary: black;position:absolute;visibility:hidden;-webkit-transition:opacity .25s ease;transition:opacity .25s ease;will-change:opacity,left,top;top:0;left:0;z-index:3;opacity:1;visibility:visible}.ce-inline-toolbar [hidden]{display:none!important}.ce-inline-toolbar__toggler-and-button-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%;padding:0 6px}.ce-inline-toolbar__buttons{display:-webkit-box;display:-ms-flexbox;display:flex}.ce-inline-toolbar__dropdown{display:-webkit-box;display:-ms-flexbox;display:flex;padding:6px;margin:0 6px 0 -6px;-webkit-box-align:center;-ms-flex-align:center;align-items:center;cursor:pointer;border-right:1px solid rgba(201,201,204,.48);-webkit-box-sizing:border-box;box-sizing:border-box}@media (hover: hover){.ce-inline-toolbar__dropdown:hover{background:#eff2f5}}.ce-inline-toolbar__dropdown--hidden{display:none}.ce-inline-toolbar__dropdown-content,.ce-inline-toolbar__dropdown-arrow{display:-webkit-box;display:-ms-flexbox;display:flex}.ce-inline-toolbar__dropdown-content svg,.ce-inline-toolbar__dropdown-arrow svg{width:20px;height:20px}.ce-inline-toolbar__shortcut{opacity:.6;word-spacing:-3px;margin-top:3px}.ce-inline-tool{color:var(--color-text-primary);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;border:0;border-radius:4px;line-height:normal;height:100%;padding:0;width:28px;background-color:transparent;cursor:pointer}@media (max-width: 650px){.ce-inline-tool{width:36px;height:36px}}@media (hover: hover){.ce-inline-tool:hover{background-color:#f8f8f8}}.ce-inline-tool svg{display:block;width:20px;height:20px}@media (max-width: 650px){.ce-inline-tool svg{width:28px;height:28px}}.ce-inline-tool--link .icon--unlink,.ce-inline-tool--unlink .icon--link{display:none}.ce-inline-tool--unlink .icon--unlink{display:inline-block;margin-bottom:-1px}.ce-inline-tool-input{background:#F8F8F8;border:1px solid rgba(226,226,229,.2);border-radius:6px;padding:4px 8px;font-size:14px;line-height:22px;outline:none;margin:0;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box;display:none;font-weight:500;-webkit-appearance:none;font-family:inherit}@media (max-width: 650px){.ce-inline-tool-input{font-size:15px;font-weight:500}}.ce-inline-tool-input::-webkit-input-placeholder{color:#707684}.ce-inline-tool-input::-moz-placeholder{color:#707684}.ce-inline-tool-input:-ms-input-placeholder{color:#707684}.ce-inline-tool-input::-ms-input-placeholder{color:#707684}.ce-inline-tool-input::placeholder{color:#707684}.ce-inline-tool-input--showed{display:block}.ce-inline-tool--active{background:var(--color-background-icon-active);color:var(--color-text-icon-active)}@-webkit-keyframes fade-in{0%{opacity:0}to{opacity:1}}@keyframes fade-in{0%{opacity:0}to{opacity:1}}.ce-block{-webkit-animation:fade-in .3s ease;animation:fade-in .3s ease;-webkit-animation-fill-mode:none;animation-fill-mode:none;-webkit-animation-fill-mode:initial;animation-fill-mode:initial}.ce-block:first-of-type{margin-top:0}.ce-block--selected .ce-block__content{background:#e1f2ff}.ce-block--selected .ce-block__content [contenteditable]{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ce-block--selected .ce-block__content img,.ce-block--selected .ce-block__content .ce-stub{opacity:.55}.ce-block--stretched .ce-block__content{max-width:none}.ce-block__content{position:relative;max-width:650px;margin:0 auto;-webkit-transition:background-color .15s ease;transition:background-color .15s ease}.ce-block--drop-target .ce-block__content:before{content:"";position:absolute;top:100%;left:-20px;margin-top:-1px;height:8px;width:8px;border:solid #388AE5;border-width:1px 1px 0 0;-webkit-transform-origin:right;transform-origin:right;-webkit-transform:rotate(45deg);transform:rotate(45deg)}.ce-block--drop-target .ce-block__content:after{content:"";position:absolute;top:100%;height:1px;width:100%;color:#388ae5;background:repeating-linear-gradient(90deg,#388AE5,#388AE5 1px,#fff 1px,#fff 6px)}.ce-block a{cursor:pointer;-webkit-text-decoration:underline;text-decoration:underline}.ce-block b{font-weight:700}.ce-block i{font-style:italic}@-webkit-keyframes bounceIn{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}20%{-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}60%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@keyframes bounceIn{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}20%{-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}60%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@-webkit-keyframes selectionBounce{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}50%{-webkit-transform:scale3d(1.01,1.01,1.01);transform:scale3d(1.01,1.01,1.01)}70%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@keyframes selectionBounce{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}50%{-webkit-transform:scale3d(1.01,1.01,1.01);transform:scale3d(1.01,1.01,1.01)}70%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@-webkit-keyframes buttonClicked{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.95,.95,.95);transform:scale3d(.95,.95,.95)}60%{-webkit-transform:scale3d(1.02,1.02,1.02);transform:scale3d(1.02,1.02,1.02)}80%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@keyframes buttonClicked{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.95,.95,.95);transform:scale3d(.95,.95,.95)}60%{-webkit-transform:scale3d(1.02,1.02,1.02);transform:scale3d(1.02,1.02,1.02)}80%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}.cdx-block{padding:.4em 0}.cdx-block::-webkit-input-placeholder{line-height:normal!important}.cdx-input{border:1px solid rgba(201,201,204,.48);-webkit-box-shadow:inset 0 1px 2px 0 rgba(35,44,72,.06);box-shadow:inset 0 1px 2px #232c480f;border-radius:3px;padding:10px 12px;outline:none;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box}.cdx-input[data-placeholder]:before{position:static!important}.cdx-input[data-placeholder]:before{display:inline-block;width:0;white-space:nowrap;pointer-events:none}.cdx-settings-button{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;border-radius:3px;cursor:pointer;border:0;outline:none;background-color:transparent;vertical-align:bottom;color:inherit;margin:0;min-width:26px;min-height:26px}.cdx-settings-button--focused{background:rgba(34,186,255,.08)!important}.cdx-settings-button--focused{-webkit-box-shadow:inset 0 0 0px 1px rgba(7,161,227,.08);box-shadow:inset 0 0 0 1px #07a1e314}.cdx-settings-button--focused-animated{-webkit-animation-name:buttonClicked;animation-name:buttonClicked;-webkit-animation-duration:.25s;animation-duration:.25s}.cdx-settings-button--active{color:#388ae5}.cdx-settings-button svg{width:auto;height:auto}@media (max-width: 650px){.cdx-settings-button svg{width:28px;height:28px}}@media (max-width: 650px){.cdx-settings-button{width:36px;height:36px;border-radius:8px}}@media (hover: hover){.cdx-settings-button:hover{background-color:#eff2f5}}.cdx-loader{position:relative;border:1px solid rgba(201,201,204,.48)}.cdx-loader:before{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-11px 0 0 -11px;border:2px solid rgba(201,201,204,.48);border-left-color:#388ae5;border-radius:50%;-webkit-animation:cdxRotation 1.2s infinite linear;animation:cdxRotation 1.2s infinite linear}@-webkit-keyframes cdxRotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0)}to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes cdxRotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0)}to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.cdx-button{padding:13px;border-radius:3px;border:1px solid rgba(201,201,204,.48);font-size:14.9px;background:#fff;-webkit-box-shadow:0 2px 2px 0 rgba(18,30,57,.04);box-shadow:0 2px 2px #121e390a;color:#707684;text-align:center;cursor:pointer}@media (hover: hover){.cdx-button:hover{background:#FBFCFE;-webkit-box-shadow:0 1px 3px 0 rgba(18,30,57,.08);box-shadow:0 1px 3px #121e3914}}.cdx-button svg{height:20px;margin-right:.2em;margin-top:-2px}.ce-stub{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:12px 18px;margin:10px 0;border-radius:10px;background:#eff2f5;border:1px solid #EFF0F1;color:#707684;font-size:14px}.ce-stub svg{width:20px;height:20px}.ce-stub__info{margin-left:14px}.ce-stub__title{font-weight:500;text-transform:capitalize}.codex-editor.codex-editor--rtl{direction:rtl}.codex-editor.codex-editor--rtl .cdx-list{padding-left:0;padding-right:40px}.codex-editor.codex-editor--rtl .ce-toolbar__plus{right:-26px;left:auto}.codex-editor.codex-editor--rtl .ce-toolbar__actions{right:auto;left:-26px}@media (max-width: 650px){.codex-editor.codex-editor--rtl .ce-toolbar__actions{margin-left:0;margin-right:auto;padding-right:0;padding-left:10px}}.codex-editor.codex-editor--rtl .ce-settings{left:5px;right:auto}.codex-editor.codex-editor--rtl .ce-settings:before{right:auto;left:25px}.codex-editor.codex-editor--rtl .ce-settings__button:not(:nth-child(3n+3)){margin-left:3px;margin-right:0}.codex-editor.codex-editor--rtl .ce-conversion-tool__icon{margin-right:0;margin-left:10px}.codex-editor.codex-editor--rtl .ce-inline-toolbar__dropdown{border-right:0px solid transparent;border-left:1px solid rgba(201,201,204,.48);margin:0 -6px 0 6px}.codex-editor.codex-editor--rtl .ce-inline-toolbar__dropdown .icon--toggler-down{margin-left:0;margin-right:4px}@media (min-width: 651px){.codex-editor--narrow.codex-editor--rtl .ce-toolbar__plus{left:0;right:5px}}@media (min-width: 651px){.codex-editor--narrow.codex-editor--rtl .ce-toolbar__actions{left:-5px}}.cdx-search-field{--icon-margin-right: 10px;background:#F8F8F8;border:1px solid rgba(226,226,229,.2);border-radius:6px;padding:2px;display:grid;grid-template-columns:auto auto 1fr;grid-template-rows:auto}.cdx-search-field__icon{width:26px;height:26px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;margin-right:var(--icon-margin-right)}.cdx-search-field__icon svg{width:20px;height:20px;color:#707684}.cdx-search-field__input{font-size:14px;outline:none;font-weight:500;font-family:inherit;border:0;background:transparent;margin:0;padding:0;line-height:22px;min-width:calc(100% - 26px - var(--icon-margin-right))}.cdx-search-field__input::-webkit-input-placeholder{color:#707684;font-weight:500}.cdx-search-field__input::-moz-placeholder{color:#707684;font-weight:500}.cdx-search-field__input:-ms-input-placeholder{color:#707684;font-weight:500}.cdx-search-field__input::-ms-input-placeholder{color:#707684;font-weight:500}.cdx-search-field__input::placeholder{color:#707684;font-weight:500}.ce-popover{--border-radius: 6px;--width: 200px;--max-height: 270px;--padding: 6px;--offset-from-target: 8px;--color-border: #EFF0F1;--color-shadow: rgba(13, 20, 33, .1);--color-background: white;--color-text-primary: black;--color-text-secondary: #707684;--color-border-icon: rgba(201, 201, 204, .48);--color-border-icon-disabled: #EFF0F1;--color-text-icon-active: #388AE5;--color-background-icon-active: rgba(56, 138, 229, .1);--color-background-item-focus: rgba(34, 186, 255, .08);--color-shadow-item-focus: rgba(7, 161, 227, .08);--color-background-item-hover: #F8F8F8;--color-background-item-confirm: #E24A4A;--color-background-item-confirm-hover: #CE4343;--popover-top: calc(100% + var(--offset-from-target));--popover-left: 0;--nested-popover-overlap: 4px;--icon-size: 20px;--item-padding: 3px;--item-height: calc(var(--icon-size) + 2 * var(--item-padding))}.ce-popover__container{min-width:var(--width);width:var(--width);max-height:var(--max-height);border-radius:var(--border-radius);overflow:hidden;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-box-shadow:0px 3px 15px -3px var(--color-shadow);box-shadow:0 3px 15px -3px var(--color-shadow);position:absolute;left:var(--popover-left);top:var(--popover-top);background:var(--color-background);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;z-index:4;opacity:0;max-height:0;pointer-events:none;padding:0;border:none}.ce-popover--opened>.ce-popover__container{opacity:1;padding:var(--padding);max-height:var(--max-height);pointer-events:auto;-webkit-animation:panelShowing .1s ease;animation:panelShowing .1s ease;border:1px solid var(--color-border)}@media (max-width: 650px){.ce-popover--opened>.ce-popover__container{-webkit-animation:panelShowingMobile .25s ease;animation:panelShowingMobile .25s ease}}.ce-popover--open-top .ce-popover__container{--popover-top: calc(-1 * (var(--offset-from-target) + var(--popover-height)))}.ce-popover--open-left .ce-popover__container{--popover-left: calc(-1 * var(--width) + 100%)}.ce-popover__items{overflow-y:auto;-ms-scroll-chaining:none;overscroll-behavior:contain}@media (max-width: 650px){.ce-popover__overlay{position:fixed;top:0;bottom:0;left:0;right:0;background:#1D202B;z-index:3;opacity:.5;-webkit-transition:opacity .12s ease-in;transition:opacity .12s ease-in;will-change:opacity;visibility:visible}}.ce-popover__overlay--hidden{display:none}@media (max-width: 650px){.ce-popover .ce-popover__container{--offset: 5px;position:fixed;max-width:none;min-width:calc(100% - var(--offset) * 2);left:var(--offset);right:var(--offset);bottom:calc(var(--offset) + env(safe-area-inset-bottom));top:auto;border-radius:10px}}.ce-popover__search{margin-bottom:5px}.ce-popover__nothing-found-message{color:#707684;display:none;cursor:default;padding:3px;font-size:14px;line-height:20px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ce-popover__nothing-found-message--displayed{display:block}.ce-popover--nested .ce-popover__container{--popover-left: calc(var(--nesting-level) * (var(--width) - var(--nested-popover-overlap)));top:calc(var(--trigger-item-top) - var(--nested-popover-overlap));position:absolute}.ce-popover--open-top.ce-popover--nested .ce-popover__container{top:calc(var(--trigger-item-top) - var(--popover-height) + var(--item-height) + var(--offset-from-target) + var(--nested-popover-overlap))}.ce-popover--open-left .ce-popover--nested .ce-popover__container{--popover-left: calc(-1 * (var(--nesting-level) + 1) * var(--width) + 100%)}.ce-popover-item-separator{padding:4px 3px}.ce-popover-item-separator--hidden{display:none}.ce-popover-item-separator__line{height:1px;background:var(--color-border);width:100%}.ce-popover-item-html--hidden{display:none}.ce-popover-item{--border-radius: 6px;border-radius:var(--border-radius);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:var(--item-padding);color:var(--color-text-primary);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;border:none;background:transparent}@media (max-width: 650px){.ce-popover-item{padding:4px}}.ce-popover-item:not(:last-of-type){margin-bottom:1px}.ce-popover-item__icon{width:26px;height:26px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.ce-popover-item__icon svg{width:20px;height:20px}@media (max-width: 650px){.ce-popover-item__icon{width:36px;height:36px;border-radius:8px}.ce-popover-item__icon svg{width:28px;height:28px}}.ce-popover-item__icon--tool{margin-right:4px}.ce-popover-item__title{font-size:14px;line-height:20px;font-weight:500;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-right:auto}@media (max-width: 650px){.ce-popover-item__title{font-size:16px}}.ce-popover-item__secondary-title{color:var(--color-text-secondary);font-size:12px;white-space:nowrap;letter-spacing:-.1em;padding-right:5px;opacity:.6}@media (max-width: 650px){.ce-popover-item__secondary-title{display:none}}.ce-popover-item--active{background:var(--color-background-icon-active);color:var(--color-text-icon-active)}.ce-popover-item--disabled{color:var(--color-text-secondary);cursor:default;pointer-events:none}.ce-popover-item--focused:not(.ce-popover-item--no-focus){background:var(--color-background-item-focus)!important}.ce-popover-item--hidden{display:none}@media (hover: hover){.ce-popover-item:hover{cursor:pointer}.ce-popover-item:hover:not(.ce-popover-item--no-hover){background-color:var(--color-background-item-hover)}}.ce-popover-item--confirmation{background:var(--color-background-item-confirm)}.ce-popover-item--confirmation .ce-popover-item__title,.ce-popover-item--confirmation .ce-popover-item__icon{color:#fff}@media (hover: hover){.ce-popover-item--confirmation:not(.ce-popover-item--no-hover):hover{background:var(--color-background-item-confirm-hover)}}.ce-popover-item--confirmation:not(.ce-popover-item--no-focus).ce-popover-item--focused{background:var(--color-background-item-confirm-hover)!important}@-webkit-keyframes panelShowing{0%{opacity:0;-webkit-transform:translateY(-8px) scale(.9);transform:translateY(-8px) scale(.9)}70%{opacity:1;-webkit-transform:translateY(2px);transform:translateY(2px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes panelShowing{0%{opacity:0;-webkit-transform:translateY(-8px) scale(.9);transform:translateY(-8px) scale(.9)}70%{opacity:1;-webkit-transform:translateY(2px);transform:translateY(2px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@-webkit-keyframes panelShowingMobile{0%{opacity:0;-webkit-transform:translateY(14px) scale(.98);transform:translateY(14px) scale(.98)}70%{opacity:1;-webkit-transform:translateY(-4px);transform:translateY(-4px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes panelShowingMobile{0%{opacity:0;-webkit-transform:translateY(14px) scale(.98);transform:translateY(14px) scale(.98)}70%{opacity:1;-webkit-transform:translateY(-4px);transform:translateY(-4px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}.wobble{-webkit-animation-name:wobble;animation-name:wobble;-webkit-animation-duration:.4s;animation-duration:.4s}@-webkit-keyframes wobble{0%{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}15%{-webkit-transform:translate3d(-9%,0,0);transform:translate3d(-9%,0,0)}30%{-webkit-transform:translate3d(9%,0,0);transform:translate3d(9%,0,0)}45%{-webkit-transform:translate3d(-4%,0,0);transform:translate3d(-4%,0,0)}60%{-webkit-transform:translate3d(4%,0,0);transform:translate3d(4%,0,0)}75%{-webkit-transform:translate3d(-1%,0,0);transform:translate3d(-1%,0,0)}to{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}}@keyframes wobble{0%{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}15%{-webkit-transform:translate3d(-9%,0,0);transform:translate3d(-9%,0,0)}30%{-webkit-transform:translate3d(9%,0,0);transform:translate3d(9%,0,0)}45%{-webkit-transform:translate3d(-4%,0,0);transform:translate3d(-4%,0,0)}60%{-webkit-transform:translate3d(4%,0,0);transform:translate3d(4%,0,0)}75%{-webkit-transform:translate3d(-1%,0,0);transform:translate3d(-1%,0,0)}to{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}}.ce-popover-header{margin-bottom:8px;margin-top:4px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.ce-popover-header__text{font-size:18px;font-weight:600}.ce-popover-header__back-button{border:0;background:transparent;width:36px;height:36px;color:var(--color-text-primary)}.ce-popover-header__back-button svg{display:block;width:28px;height:28px}.ce-popover--inline{--height: 38px;--height-mobile: 46px;--container-padding: 4px;position:relative}.ce-popover--inline .ce-popover__custom-content{margin-bottom:0}.ce-popover--inline .ce-popover__items{display:-webkit-box;display:-ms-flexbox;display:flex}.ce-popover--inline .ce-popover__container{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;padding:var(--container-padding);height:var(--height);top:0;min-width:-webkit-max-content;min-width:-moz-max-content;min-width:max-content;width:-webkit-max-content;width:-moz-max-content;width:max-content;-webkit-animation:none;animation:none}@media (max-width: 650px){.ce-popover--inline .ce-popover__container{height:var(--height-mobile);position:absolute}}.ce-popover--inline .ce-popover-item-separator{padding:0 4px}.ce-popover--inline .ce-popover-item-separator__line{height:100%;width:1px}.ce-popover--inline .ce-popover-item{border-radius:4px;padding:4px}.ce-popover--inline .ce-popover-item__icon--tool{-webkit-box-shadow:none;box-shadow:none;background:transparent;margin-right:0}.ce-popover--inline .ce-popover-item__icon{width:auto;width:initial;height:auto;height:initial}.ce-popover--inline .ce-popover-item__icon svg{width:20px;height:20px}@media (max-width: 650px){.ce-popover--inline .ce-popover-item__icon svg{width:28px;height:28px}}.ce-popover--inline .ce-popover-item:not(:last-of-type){margin-bottom:0;margin-bottom:initial}.ce-popover--inline .ce-popover-item-html{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.ce-popover--inline .ce-popover-item__icon--chevron-right{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.ce-popover--inline .ce-popover--nested-level-1 .ce-popover__container{--offset: 3px;left:0;top:calc(var(--height) + var(--offset))}@media (max-width: 650px){.ce-popover--inline .ce-popover--nested-level-1 .ce-popover__container{top:calc(var(--height-mobile) + var(--offset))}}.ce-popover--inline .ce-popover--nested .ce-popover__container{min-width:var(--width);width:var(--width);height:-webkit-fit-content;height:-moz-fit-content;height:fit-content;padding:6px;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.ce-popover--inline .ce-popover--nested .ce-popover__items{display:block;width:100%}.ce-popover--inline .ce-popover--nested .ce-popover-item{border-radius:6px;padding:3px}@media (max-width: 650px){.ce-popover--inline .ce-popover--nested .ce-popover-item{padding:4px}}.ce-popover--inline .ce-popover--nested .ce-popover-item__icon--tool{margin-right:4px}.ce-popover--inline .ce-popover--nested .ce-popover-item__icon{width:26px;height:26px}.ce-popover--inline .ce-popover--nested .ce-popover-item-separator{padding:4px 3px}.ce-popover--inline .ce-popover--nested .ce-popover-item-separator__line{width:100%;height:1px}.codex-editor [data-placeholder]:empty:before,.codex-editor [data-placeholder][data-empty=true]:before{pointer-events:none;color:#707684;cursor:text;content:attr(data-placeholder)}.codex-editor [data-placeholder-active]:empty:before,.codex-editor [data-placeholder-active][data-empty=true]:before{pointer-events:none;color:#707684;cursor:text}.codex-editor [data-placeholder-active]:empty:focus:before,.codex-editor [data-placeholder-active][data-empty=true]:focus:before{content:attr(data-placeholder-active)}
 `;
-  class Kc extends j {
+  class Jc extends j {
     constructor() {
       super(...arguments), this.isMobile = false, this.contentRectCache = null, this.resizeDebouncer = Cn(() => {
         this.windowResize();
       }, 200), this.selectionChangeDebounced = Cn(() => {
         this.selectionChanged();
-      }, Ac), this.documentTouchedListener = (e) => {
+      }, Pc), this.documentTouchedListener = (e) => {
         this.documentTouched(e);
       };
     }
@@ -10995,7 +11045,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     get contentRect() {
       if (this.contentRectCache !== null) return this.contentRectCache;
-      const e = this.nodes.wrapper.querySelector(`.${ce.CSS.content}`);
+      const e = this.nodes.wrapper.querySelector(`.${de.CSS.content}`);
       return e ? (this.contentRectCache = e.getBoundingClientRect(), this.contentRectCache) : {
         width: 650,
         left: 0,
@@ -11031,8 +11081,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       t.close(), o.close(), e.toolbox.close();
     }
     setIsMobile() {
-      const e = window.innerWidth < Qn;
-      e !== this.isMobile && this.eventsDispatcher.emit(ft, {
+      const e = window.innerWidth < ei;
+      e !== this.isMobile && this.eventsDispatcher.emit(gt, {
         isEnabled: this.isMobile
       }), this.isMobile = e;
     }
@@ -11049,7 +11099,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       if (k.get(e)) return;
       const t = k.make("style", null, {
         id: e,
-        textContent: Xc.toString()
+        textContent: Qc.toString()
       });
       this.config.style && !Ee(this.config.style) && this.config.style.nonce && t.setAttribute("nonce", this.config.style.nonce), k.prepend(document.head, t);
     }
@@ -11080,7 +11130,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       let e;
       this.readOnlyMutableListeners.on(this.nodes.redactor, "mousemove", so((t) => {
         const o = t.target.closest(".ce-block");
-        this.Editor.BlockSelection.anyBlockSelected || o && e !== o && (e = o, this.eventsDispatcher.emit(xi, {
+        this.Editor.BlockSelection.anyBlockSelected || o && e !== o && (e = o, this.eventsDispatcher.emit(Ti, {
           block: this.Editor.BlockManager.getBlockByChildNode(o)
         }));
       }, 20), {
@@ -11173,8 +11223,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       const t = e.target, o = e.metaKey || e.ctrlKey;
       if (k.isAnchor(t) && o) {
         e.stopImmediatePropagation(), e.stopPropagation();
-        const i = t.getAttribute("href"), s = xr(i);
-        Tr(s);
+        const i = t.getAttribute("href"), s = _r(i);
+        Mr(s);
         return;
       }
       this.processBottomZoneClick(e);
@@ -11193,56 +11243,56 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         M.range || this.Editor.InlineToolbar.close();
         return;
       }
-      const i = o.closest(`.${ce.CSS.content}`);
+      const i = o.closest(`.${de.CSS.content}`);
       (i === null || i.closest(`.${M.CSS.editorWrapper}`) !== this.nodes.wrapper) && (this.Editor.InlineToolbar.containsNode(o) || this.Editor.InlineToolbar.close(), o.dataset.inlineToolbar !== "true") || (this.Editor.BlockManager.currentBlock || this.Editor.BlockManager.setCurrentBlockByChildNode(o), this.Editor.InlineToolbar.tryToShow(true));
     }
     enableInputsEmptyMark() {
       function e(t) {
         const o = t.target;
-        Jn(o);
+        ti(o);
       }
       this.readOnlyMutableListeners.on(this.nodes.wrapper, "input", e), this.readOnlyMutableListeners.on(this.nodes.wrapper, "focusin", e), this.readOnlyMutableListeners.on(this.nodes.wrapper, "focusout", e);
     }
   }
-  const Gc = {
-    BlocksAPI: Dr,
-    CaretAPI: jr,
-    EventsAPI: Hr,
+  const ed = {
+    BlocksAPI: Fr,
+    CaretAPI: $r,
+    EventsAPI: Ur,
     I18nAPI: go,
-    API: Fr,
-    InlineToolbarAPI: Vr,
-    ListenersAPI: $r,
-    NotifierAPI: Wr,
-    ReadOnlyAPI: Yr,
-    SanitizerAPI: ea,
-    SaverAPI: ta,
-    SelectionAPI: oa,
-    ToolsAPI: na,
-    StylesAPI: ia,
-    ToolbarAPI: sa,
-    TooltipAPI: da,
-    UiAPI: ua,
-    BlockSettings: Ra,
-    Toolbar: qa,
-    InlineToolbar: Wa,
-    BlockEvents: Cc,
-    BlockManager: _c,
-    BlockSelection: Bc,
-    Caret: Dt,
-    CrossBlockSelection: Mc,
-    DragNDrop: Oc,
-    ModificationsObserver: Lc,
-    Paste: Nc,
-    ReadOnly: Pc,
-    RectangleSelection: ut,
-    Renderer: Dc,
-    Saver: Rc,
-    Tools: ss,
-    UI: Kc
+    API: zr,
+    InlineToolbarAPI: qr,
+    ListenersAPI: Wr,
+    NotifierAPI: Gr,
+    ReadOnlyAPI: Zr,
+    SanitizerAPI: ia,
+    SaverAPI: sa,
+    SelectionAPI: ra,
+    ToolsAPI: aa,
+    StylesAPI: la,
+    ToolbarAPI: ca,
+    TooltipAPI: fa,
+    UiAPI: ga,
+    BlockSettings: Va,
+    Toolbar: Ka,
+    InlineToolbar: Ga,
+    BlockEvents: Bc,
+    BlockManager: Ac,
+    BlockSelection: Ic,
+    Caret: Rt,
+    CrossBlockSelection: Lc,
+    DragNDrop: Nc,
+    ModificationsObserver: Rc,
+    Paste: jc,
+    ReadOnly: Hc,
+    RectangleSelection: ht,
+    Renderer: Fc,
+    Saver: Vc,
+    Tools: as,
+    UI: Jc
   };
-  class Zc {
+  class td {
     constructor(e) {
-      this.moduleInstances = {}, this.eventsDispatcher = new bt();
+      this.moduleInstances = {}, this.eventsDispatcher = new yt();
       let t, o;
       this.isReady = new Promise((i, s) => {
         t = i, o = s;
@@ -11256,11 +11306,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     set configuration(e) {
       var t, o;
-      de(e) ? this.config = {
+      ue(e) ? this.config = {
         ...e
       } : this.config = {
         holder: e
-      }, ao(!!this.config.holderId, "config.holderId", "config.holder"), this.config.holderId && !this.config.holder && (this.config.holder = this.config.holderId, this.config.holderId = null), this.config.holder == null && (this.config.holder = "editorjs"), this.config.logLevel || (this.config.logLevel = Kn.VERBOSE), vr(this.config.logLevel), ao(!!this.config.initialBlock, "config.initialBlock", "config.defaultBlock"), this.config.defaultBlock = this.config.defaultBlock || this.config.initialBlock || "paragraph", this.config.minHeight = this.config.minHeight !== void 0 ? this.config.minHeight : 300;
+      }, ao(!!this.config.holderId, "config.holderId", "config.holder"), this.config.holderId && !this.config.holder && (this.config.holder = this.config.holderId, this.config.holderId = null), this.config.holder == null && (this.config.holder = "editorjs"), this.config.logLevel || (this.config.logLevel = Zn.VERBOSE), wr(this.config.logLevel), ao(!!this.config.initialBlock, "config.initialBlock", "config.defaultBlock"), this.config.defaultBlock = this.config.defaultBlock || this.config.initialBlock || "paragraph", this.config.minHeight = this.config.minHeight !== void 0 ? this.config.minHeight : 300;
       const i = {
         type: this.config.defaultBlock,
         data: {}
@@ -11286,7 +11336,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       const { holderId: e, holder: t } = this.config;
       if (e && t) throw Error("\xABholderId\xBB and \xABholder\xBB param can't assign at the same time.");
       if (Ie(t) && !k.get(t)) throw Error(`element with ID \xAB${t}\xBB is missing. Pass correct holder's ID.`);
-      if (t && de(t) && !k.isElement(t)) throw Error("\xABholder\xBB value must be an Element node");
+      if (t && ue(t) && !k.isElement(t)) throw Error("\xABholder\xBB value must be an Element node");
     }
     init() {
       this.constructModules(), this.configureModules();
@@ -11305,7 +11355,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         try {
           await this.moduleInstances[t].prepare();
         } catch (o) {
-          if (o instanceof oi) throw new Error(o.message);
+          if (o instanceof ii) throw new Error(o.message);
           z(`Module ${t} was skipped because of %o`, "warn", o);
         }
       }), Promise.resolve());
@@ -11314,7 +11364,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.moduleInstances.Renderer.render(this.config.data.blocks);
     }
     constructModules() {
-      Object.entries(Gc).forEach(([e, t]) => {
+      Object.entries(ed).forEach(([e, t]) => {
         try {
           this.moduleInstances[e] = new t({
             config: this.configuration,
@@ -11334,15 +11384,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return t;
     }
   }
-  class Qc {
+  class od {
     static get version() {
       return "2.31.0-rc.7";
     }
     constructor(e) {
       let t = () => {
       };
-      de(e) && Q(e.onReady) && (t = e.onReady);
-      const o = new Zc(e);
+      ue(e) && Q(e.onReady) && (t = e.onReady);
+      const o = new td(e);
       this.isReady = o.isReady.then(() => {
         this.exportAPI(o), t();
       });
@@ -11353,7 +11403,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       ], o = () => {
         Object.values(e.moduleInstances).forEach((i) => {
           Q(i.destroy) && i.destroy(), i.listeners.removeAll();
-        }), ca(), e = null;
+        }), pa(), e = null;
         for (const i in this) Object.prototype.hasOwnProperty.call(this, i) && delete this[i];
         Object.setPrototypeOf(this, null);
       };
@@ -11392,8 +11442,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       console.error("vite-plugin-css-injected-by-js", e);
     }
   })();
-  const Jc = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M19 17V10.2135C19 10.1287 18.9011 10.0824 18.836 10.1367L16 12.5"/></svg>', ed = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 11C16 10 19 9.5 19 12C19 13.9771 16.0684 13.9997 16.0012 16.8981C15.9999 16.9533 16.0448 17 16.1 17L19.3 17"/></svg>', td = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 11C16 10.5 16.8323 10 17.6 10C18.3677 10 19.5 10.311 19.5 11.5C19.5 12.5315 18.7474 12.9022 18.548 12.9823C18.5378 12.9864 18.5395 13.0047 18.5503 13.0063C18.8115 13.0456 20 13.3065 20 14.8C20 16 19.5 17 17.8 17C17.8 17 16 17 16 16.3"/></svg>', od = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M18 10L15.2834 14.8511C15.246 14.9178 15.294 15 15.3704 15C16.8489 15 18.7561 15 20.2 15M19 17C19 15.7187 19 14.8813 19 13.6"/></svg>', nd = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 15.9C16 15.9 16.3768 17 17.8 17C19.5 17 20 15.6199 20 14.7C20 12.7323 17.6745 12.0486 16.1635 12.9894C16.094 13.0327 16 12.9846 16 12.9027V10.1C16 10.0448 16.0448 10 16.1 10H19.8"/></svg>', id = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M19.5 10C16.5 10.5 16 13.3285 16 15M16 15V15C16 16.1046 16.8954 17 18 17H18.3246C19.3251 17 20.3191 16.3492 20.2522 15.3509C20.0612 12.4958 16 12.6611 16 15Z"/></svg>', sd = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9 7L9 12M9 17V12M9 12L15 12M15 7V12M15 17L15 12"/></svg>';
-  class rd {
+  const nd = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M19 17V10.2135C19 10.1287 18.9011 10.0824 18.836 10.1367L16 12.5"/></svg>', id = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 11C16 10 19 9.5 19 12C19 13.9771 16.0684 13.9997 16.0012 16.8981C15.9999 16.9533 16.0448 17 16.1 17L19.3 17"/></svg>', sd = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 11C16 10.5 16.8323 10 17.6 10C18.3677 10 19.5 10.311 19.5 11.5C19.5 12.5315 18.7474 12.9022 18.548 12.9823C18.5378 12.9864 18.5395 13.0047 18.5503 13.0063C18.8115 13.0456 20 13.3065 20 14.8C20 16 19.5 17 17.8 17C17.8 17 16 17 16 16.3"/></svg>', rd = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M18 10L15.2834 14.8511C15.246 14.9178 15.294 15 15.3704 15C16.8489 15 18.7561 15 20.2 15M19 17C19 15.7187 19 14.8813 19 13.6"/></svg>', ad = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 15.9C16 15.9 16.3768 17 17.8 17C19.5 17 20 15.6199 20 14.7C20 12.7323 17.6745 12.0486 16.1635 12.9894C16.094 13.0327 16 12.9846 16 12.9027V10.1C16 10.0448 16.0448 10 16.1 10H19.8"/></svg>', ld = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M19.5 10C16.5 10.5 16 13.3285 16 15M16 15V15C16 16.1046 16.8954 17 18 17H18.3246C19.3251 17 20.3191 16.3492 20.2522 15.3509C20.0612 12.4958 16 12.6611 16 15Z"/></svg>', cd = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9 7L9 12M9 17V12M9 12L15 12M15 7V12M15 17L15 12"/></svg>';
+  class dd {
     constructor({ data: e, config: t, api: o, readOnly: i }) {
       this.api = o, this.readOnly = i, this._settings = t, this._data = this.normalizeData(e), this._element = this.getTag();
     }
@@ -11490,32 +11540,32 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         {
           number: 1,
           tag: "H1",
-          svg: Jc
+          svg: nd
         },
         {
           number: 2,
           tag: "H2",
-          svg: ed
+          svg: id
         },
         {
           number: 3,
           tag: "H3",
-          svg: td
+          svg: sd
         },
         {
           number: 4,
           tag: "H4",
-          svg: od
+          svg: rd
         },
         {
           number: 5,
           tag: "H5",
-          svg: nd
+          svg: ad
         },
         {
           number: 6,
           tag: "H6",
-          svg: id
+          svg: ld
         }
       ];
       return this._settings.levels ? e.filter((t) => this._settings.levels.includes(t.number)) : e;
@@ -11565,12 +11615,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     static get toolbox() {
       return {
-        icon: sd,
+        icon: cd,
         title: "Heading"
       };
     }
   }
-  async function ad() {
+  async function ud() {
     return ne`
     <div class="offcanvas offcanvas-end w-75" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1" id="quickNotes" aria-labelledby="analysisConfigsLabel">
         <div class="offcanvas-header">
@@ -11590,8 +11640,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     </div> 
     `;
   }
-  async function ld(n, e, t) {
-    const o = await this.editor.save(), [i, s] = await jt.post({
+  async function hd(n, e, t) {
+    const o = await this.editor.save(), [i, s] = await bt.post({
       url: `${this.properties.apiUrl}/quicknotes`,
       data: o
     });
@@ -11600,24 +11650,24 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       status: "warning"
     });
   }
-  async function cd(n, e, t) {
+  async function pd(n, e, t) {
     n.blur(), this.offcanvasInstance.hide(), window.pywebview && (e.preventDefault(), await window.pywebview.api[t.next]());
   }
-  const dd = ue({
+  const fd = he({
     tagName: "quick-notes-offcanvas",
-    markup: ad,
+    markup: ud,
     methods: {
-      saveNotes: ld,
-      closeOffcanvas: cd
+      saveNotes: hd,
+      closeOffcanvas: pd
     },
     afterInit: {
       editorInit: function() {
-        this.editor = new Qc({
+        this.editor = new od({
           autofocus: true,
           holder: "quickNotesEditor",
           tools: {
             header: {
-              class: rd,
+              class: dd,
               inlineToolbar: [
                 "link"
               ]
@@ -11628,13 +11678,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     },
     define: {
-      editor: be(null),
+      editor: ae(null),
       data: {
         get() {
           return this.getData("quicknotes");
         }
       },
-      offcanvasEl: me("#quickNotes"),
+      offcanvasEl: be("#quickNotes"),
       offcanvasInstance: {
         get() {
           return bootstrap.Offcanvas.getInstance(this.offcanvasEl);
@@ -11642,7 +11692,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     }
   });
-  async function ud() {
+  async function gd() {
     return ne`
         <div class="row">
             <div class="col-12 mx-auto text-center">
@@ -11650,16 +11700,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             </div>
         </div>
         <div>
-            <p class="m-1">Version: ${this.about.version}</p>
-            <p class="m-1">Homepage: ${this.about.homepage}</p>
-            <p class="m-1">Author: ${this.about.author}</p>
-            <p class="mt-2 text-justify text-muted">${this.about.description}</p>
+            <small class="m-1 d-block">Version: ${this.about.version}</small>
+            <small class="m-1 d-block">Homepage: ${this.about.homepage}</small>
+            <small class="m-1 d-block">Authors: ${this.about.author}</small>
+            <small class="mt-2 d-block text-justify text-muted">${this.about.description}</small>
         </div>
     `;
   }
   async function Pn() {
     if (this.about) return;
-    let [n, e] = await jt.get({
+    let [n, e] = await bt.get({
       url: "/about"
     });
     if (n) return this.ext.messenger.setMessage({
@@ -11672,9 +11722,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     });
     this.about = e.data;
   }
-  const hd = ue({
+  const md = he({
     tagName: "about-info",
-    markup: ud,
+    markup: gd,
     methods: {
       getAboutInfo: Pn
     },
@@ -11682,10 +11732,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       getAboutInfo: Pn
     },
     define: {
-      about: be(null)
+      about: ae(null)
     }
   });
-  function pd(n) {
+  function bd(n) {
     fetch("/api/v1/roi/", {
       method: "POST",
       headers: {
@@ -11708,7 +11758,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     });
   }
-  async function fd(n) {
+  async function vd(n) {
     const e = n.data;
     try {
       this.drawTimeSeries(e);
@@ -11717,7 +11767,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     this.redrawCanvas();
   }
-  async function gd(n, e) {
+  async function yd(n, e) {
     switch (e.button) {
       case 0:
         if (this.isDPressed == true) {
@@ -11750,14 +11800,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         break;
     }
   }
-  function md(n, e) {
+  function kd(n, e) {
     if (this.isDrawing) {
       this.redrawCanvas();
       const t = n.getBoundingClientRect(), o = e.clientX - t.left, i = e.clientY - t.top;
       this.drawEllipse(this.startX, this.startY, o, i, false);
     }
   }
-  function vd(n, e) {
+  function wd(n, e) {
     switch (e.button) {
       case 0:
         break;
@@ -11775,101 +11825,102 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         break;
     }
   }
-  function bd(n, e, t, o, i = false, s = "orange", r = 3) {
+  function Ed(n, e, t, o, i = false, s = "orange", r = 3) {
     i && (this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height), this.imgCtx.clearRect(0, 0, this.imgCanvas.width, this.imgCanvas.height));
     for (const l of [
       this.ctx,
       this.imgCtx
     ]) l.strokeStyle = s, l.lineWidth = r, l.beginPath(), l.ellipse((n + t) / 2, (e + o) / 2, Math.abs(t - n) / 2, Math.abs(o - e) / 2, 0, 0, 2 * Math.PI), l.stroke();
   }
-  function yd() {
+  function xd() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height), this.imgCtx.clearRect(0, 0, this.imgCanvas.width, this.imgCanvas.height), this.selectedRois.forEach((n) => {
       const e = n.roi_schema.roi_data;
       this.drawEllipse(e.startX, e.startY, e.endX, e.endY);
     });
   }
-  async function kd(n, e, t) {
+  async function Cd(n, e, t) {
     const o = +n.value;
     this.video.playbackRate = o, e.target.labels[0].innerHTML = `Speed: ${o}x`;
   }
-  async function wd(n, e, t) {
+  async function Td(n, e, t) {
     const o = e.offsetX / n.offsetWidth;
     this.video.currentTime = o * video.duration;
   }
-  async function Ed() {
+  async function Sd() {
     const n = this.video.currentTime / this.video.duration * 100;
     this.seekbar.style.width = n + "%";
   }
-  async function xd(n, e) {
+  async function _d(n, e) {
     this.video.paused || this.video.ended ? (this.video.play(), this.playPauseButton.textContent = "Pause") : (this.video.pause(), this.playPauseButton.textContent = "Play"), n.blur();
   }
-  async function Cd(n) {
+  async function Bd(n) {
     (n.key === "D" || n.key === "d") && (this.isDPressed = true);
   }
-  async function Td(n) {
+  async function Md(n) {
     (n.key === "D" || n.key === "d") && (this.isDPressed = false);
   }
-  async function Sd() {
+  async function Od() {
     document.addEventListener("keydown", this.keyDownHandler), document.addEventListener("keyup", this.keyUpHandler);
   }
-  async function _d() {
+  async function Ad() {
     document.removeEventListener("keydown", this.keyDownHandler), document.removeEventListener("keyup", this.keyUpHandler);
   }
-  function Bd(n) {
+  function Id(n) {
     this.plot.drawTimeSeries(n), this.singlePlot.removeTrace(), this.singlePlot.drawTimeSeries(n);
   }
-  function Md() {
+  function Ld() {
     if (this.selectedRois.length < 1) return;
-    tt(), this.plot.purgeTraces(), this.plot.initPlot();
+    qe(), this.plot.purgeTraces(), this.plot.initPlot();
     for (const e of this.selectedRois) this.plot.drawTimeSeries(e);
     this.singlePlot.removeTrace();
     const n = this.selectedRois[this.selectedRois.length - 1];
-    this.singlePlot.drawTimeSeries(n), mt();
+    this.singlePlot.drawTimeSeries(n), We();
   }
-  function Od(n, e) {
+  function Nd(n, e) {
     return this.selectedRois.reduce((o, i, s) => {
       const r = (i.roi_schema.roi_data.startX + i.roi_schema.roi_data.endX) / 2, l = (i.roi_schema.roi_data.startY + i.roi_schema.roi_data.endY) / 2, d = Math.abs(i.roi_schema.roi_data.endX - i.roi_schema.roi_data.startX) / 2, h = Math.abs(i.roi_schema.roi_data.endY - i.roi_schema.roi_data.startY) / 2;
       return (n - r) ** 2 / d ** 2 + (e - l) ** 2 / h ** 2 <= 1 && o === null ? s : o;
     }, null);
   }
-  function Ad(n) {
+  function Pd(n) {
     this.plot.removeTrace(n), this.singlePlot.removeTrace();
     const e = this.selectedRois[this.selectedRois.length - 1];
     this.singlePlot.drawTimeSeries(e);
   }
-  async function Id(n, e, t) {
+  async function Dd(n, e, t) {
     window.pywebview && (e.preventDefault(), await window.pywebview.api[t.next]());
   }
-  const Ld = ue({
+  const Rd = he({
     tagName: "video-player",
     markup: async function() {
       return await this.getHTMLtemplate("/video");
     },
     methods: {
-      setPlaybackSpeed: kd,
-      seek: wd,
-      updateSeekBar: Ed,
-      playPauseVideo: xd,
-      canvasClick: gd,
-      canvasMouseMove: md,
-      canvasMouseUp: vd,
-      drawEllipse: bd,
-      keyDownHandler: Cd,
-      keyUpHandler: Td,
-      getRoiData: pd,
-      redrawCanvas: yd,
-      handleResponse: fd,
-      drawTimeSeries: Bd,
-      findClickedEllipseIndex: Od,
-      removeTrace: Ad,
-      redrawAllTS: Md,
-      tryNativeExport: Id
+      setPlaybackSpeed: Cd,
+      seek: Td,
+      updateSeekBar: Sd,
+      playPauseVideo: _d,
+      canvasClick: yd,
+      canvasMouseMove: kd,
+      canvasMouseUp: wd,
+      drawEllipse: Ed,
+      keyDownHandler: Bd,
+      keyUpHandler: Md,
+      getRoiData: bd,
+      redrawCanvas: xd,
+      handleResponse: vd,
+      drawTimeSeries: Id,
+      findClickedEllipseIndex: Nd,
+      removeTrace: Pd,
+      redrawAllTS: Ld,
+      tryNativeExport: Dd
     },
     beforeInit: {
+      startOverlaySpinner: qe,
       getInitialSampling: function() {
         this.initialSampling = parseFloat(this.sampling);
       },
-      addEventListeners: Sd,
+      addEventListeners: Od,
       preferencesChange: function() {
         this.app.addEventListener(Ne.CHANGE, (n) => {
           n.detail.field == "preferences" && this.initialSampling != parseFloat(this.sampling) && (this.initialSampling = parseFloat(this.sampling), this.redrawAllTS());
@@ -11879,17 +11930,18 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     afterInit: {
       drawRois: function() {
         this.selectedRois && this.redrawCanvas();
-      }
+      },
+      removeOverlaySpinner: We
     },
     afterDisconnect: {
-      removeEventListeners: _d
+      removeEventListeners: Ad
     },
     define: {
-      video: me("video"),
-      seekbar: me(".seekbar"),
-      playPauseButton: me("#play-pause"),
-      canvas: me("#video-canvas"),
-      imgCanvas: me("#img-canvas"),
+      video: be("video"),
+      seekbar: be(".seekbar"),
+      playPauseButton: be("#play-pause"),
+      canvas: be("#video-canvas"),
+      imgCanvas: be("#img-canvas"),
       ctx: {
         get() {
           return this.canvas.getContext("2d");
@@ -11900,7 +11952,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           return this.imgCanvas.getContext("2d");
         }
       },
-      time: be(null),
+      time: ae(null),
       sampling: {
         get() {
           return this.getData("preferences").sampling;
@@ -11911,10 +11963,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           return this.getData("rois");
         }
       },
-      isDrawing: be(false),
-      isDPressed: be(false),
-      startX: be(null),
-      startY: be(null),
+      isDrawing: ae(false),
+      isDPressed: ae(false),
+      startX: ae(null),
+      startY: ae(null),
       tsViewer: {
         get() {
           return this.app.querySelector("#ts-viewer");
@@ -11930,16 +11982,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           return this.app.querySelector("single-plot");
         }
       },
-      initialSampling: be(null)
+      initialSampling: ae(null)
     }
   });
-  async function Nd() {
+  async function jd() {
     return "";
   }
-  function Pd({ title: n, content: e, modalId: t }) {
+  function Hd({ title: n, content: e, modalId: t, modalOptions: o }) {
     return ne`
     <div class="modal" data-modal-id="${t}" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog ${(o == null ? void 0 : o.size) || ""}">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">${n}</h5>
@@ -11958,10 +12010,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     </div>
     `;
   }
-  function Dd({ title: n, content: e, modalId: t }) {
+  function Fd({ title: n, content: e, modalId: t, modalOptions: o }) {
     return ne`
     <div class="modal" data-modal-id="${t}" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog ${(o == null ? void 0 : o.size) || ""}">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">${n}</h5>
@@ -11981,7 +12033,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         </div>
     </div>`;
   }
-  async function Rd({ msg: n, status: e, msgId: t }) {
+  async function Vd({ msg: n, status: e, msgId: t }) {
     return ne`
         <div class="toast toast-${t} show bg-${e}" role="alert" aria-live="assertive"
             aria-atomic="true" data-bs-autohide="true">
@@ -11994,11 +12046,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         </div>
     `;
   }
-  async function jd(n, e, t) {
+  async function $d(n, e, t) {
     const o = this.querySelector(`.toast-${t.msgid}`);
     o && o.remove();
   }
-  async function Hd({ msg: n, status: e = "info" }) {
+  async function Ud({ msg: n, status: e = "info" }) {
     const t = this.app.generateHash(6), o = await this.msgMarkup({
       msg: n,
       status: e,
@@ -12010,28 +12062,30 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }, 6e3);
   }
-  async function Fd({ title: n, content: e, modalOptions: t }) {
+  async function zd({ title: n, content: e, modalOptions: t }) {
     const o = `modal-${this.app.generateHash(6)}`;
     return this.insertAdjacentHTML("beforeend", await this.infoModalMarkup({
       title: n,
       content: e,
-      modalId: o
+      modalId: o,
+      modalOptions: t
     })), await this.initModal(o, t);
   }
-  async function Vd({ title: n, content: e, callbackFunction: t, modalOptions: o }) {
+  async function qd({ title: n, content: e, callbackFunction: t, modalOptions: o }) {
     const i = `modal-${this.app.generateHash(6)}`;
     this.insertAdjacentHTML("beforeend", await this.confirmModalMarkup({
       title: n,
       content: e,
-      modalId: i
+      modalId: i,
+      modalOptions: o
     }));
     const s = await this.initModal(i, o);
     return this.querySelector(`.confirm-button-${i}`).addEventListener("click", async (l) => {
       await t(l, s), await this.closeModal(l.target);
     }), s;
   }
-  async function $d(n, e) {
-    const t = {
+  async function Wd(n, e) {
+    let t = {
       ...this.defaultOptions
     };
     e && (t = {
@@ -12041,36 +12095,36 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     const o = this.querySelector(`[data-modal-id="${n}"]`), i = new bootstrap.Modal(o, t);
     return this.modals.push(i), i.show(), i;
   }
-  async function Ud(n, e, t) {
+  async function Yd(n, e, t) {
     n.blur();
     const o = n.closest(".modal");
     if (!o) return;
     o.getAttribute("data-modal-id"), bootstrap.Modal.getInstance(o).hide(), o.remove();
   }
-  const zd = ue({
+  const Xd = he({
     tagName: "messenger-element",
-    markup: Nd,
+    markup: jd,
     methods: {
-      closeModal: Ud,
-      infoModal: Fd,
-      infoModalMarkup: Pd,
-      initModal: $d,
-      confirmModal: Vd,
-      confirmModalMarkup: Dd,
-      msgMarkup: Rd,
-      setMessage: Hd,
-      removeToast: jd
+      closeModal: Yd,
+      infoModal: zd,
+      infoModalMarkup: Hd,
+      initModal: Wd,
+      confirmModal: qd,
+      confirmModalMarkup: Fd,
+      msgMarkup: Vd,
+      setMessage: Ud,
+      removeToast: $d
     },
     define: {
-      defaultOptions: be({
+      defaultOptions: ae({
         backdrop: true,
         focus: true,
         keyboard: true
       }),
-      modals: be([])
+      modals: ae([])
     }
   });
-  class qd {
+  class Kd {
     constructor(e) {
       __publicField(this, "infoModal", async ({ title: e, content: t, modalOptions: o }) => await this.messengerElement.infoModal({
         title: e,
@@ -12093,12 +12147,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.app.querySelector("messenger-element");
     }
   }
-  async function Wd() {
+  async function Gd() {
     return ne`
       <div id="ts-plot-all"></div>
     `;
   }
-  function Yd(n) {
+  function Zd(n) {
     const e = [
       ...Array(n.data.length).keys()
     ].map((t) => (t + 1) / this.sampling);
@@ -12109,13 +12163,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     ]);
   }
-  function Xd(n) {
+  function Qd(n) {
     Plotly.deleteTraces(this.plotDiv, n);
   }
-  function Kd() {
+  function Jd() {
     Plotly.purge(this.plotDiv);
   }
-  function Rt() {
+  function jt() {
     this.plotDiv && (this.plot = Plotly.newPlot(this.plotDiv, [], {
       margin: {
         t: 0,
@@ -12155,24 +12209,24 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       responsive: true
     }));
   }
-  const Gd = ue({
+  const eu = he({
     tagName: "ts-plot-all",
-    markup: Wd,
+    markup: Gd,
     methods: {
-      drawTimeSeries: Yd,
-      removeTrace: Xd,
-      purgeTraces: Kd,
-      initPlot: Rt
+      drawTimeSeries: Zd,
+      removeTrace: Qd,
+      purgeTraces: Jd,
+      initPlot: jt
     },
     afterInit: {
-      initPlot: Rt,
+      initPlot: jt,
       drawTs: function() {
         if (this.rois) for (const n of this.rois) this.drawTimeSeries(n);
       }
     },
     define: {
-      plotDiv: me("#ts-plot-all"),
-      plot: be(null),
+      plotDiv: be("#ts-plot-all"),
+      plot: ae(null),
       sampling: {
         get() {
           return +this.getData("preferences").sampling;
@@ -12185,12 +12239,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     }
   });
-  async function Zd() {
+  async function tu() {
     return ne`
         <div id="ts-plot-single"></div>
     `;
   }
-  function Qd(n) {
+  function ou(n) {
     if (!n || !n.data) {
       this.removeTrace();
       return;
@@ -12205,25 +12259,25 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     ]);
   }
-  const Jd = ue({
+  const nu = he({
     tagName: "single-plot",
-    markup: Zd,
+    markup: tu,
     methods: {
-      drawTimeSeries: Qd,
+      drawTimeSeries: ou,
       removeTrace: function() {
         this.plotDiv.data.length > 0 && Plotly.deleteTraces(this.plotDiv, 0);
       },
-      initPlot: Rt
+      initPlot: jt
     },
     afterInit: {
-      initPlot: Rt,
+      initPlot: jt,
       drawTs: function() {
         this.roi && this.drawTimeSeries(this.roi);
       }
     },
     define: {
-      plotDiv: me("#ts-plot-single"),
-      plot: be(null),
+      plotDiv: be("#ts-plot-single"),
+      plot: ae(null),
       sampling: {
         get() {
           return +this.getData("preferences").sampling;
@@ -12235,10 +12289,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           return !n || n.length == 0 ? null : n[n.length - 1];
         }
       },
-      time: be(null)
+      time: ae(null)
     }
   });
-  async function eu() {
+  async function iu() {
     return ne`
     <div>
         <p class="lead">Copyright 2025 @ Marko Šterk</p>
@@ -12260,53 +12314,61 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     </div>
     `;
   }
-  const tu = ue({
+  const su = he({
     tagName: "license-tab",
-    markup: eu
+    markup: iu
   });
-  async function ou() {
+  async function ru() {
     return ne`
     <p>
         Šterk, M., & Gosak, M. (2025). Beta cell analysis: roi picker (Version 1.0.) [Computer software]. https://github.com/MarkoSterk/beta_cell_analysis_roi_picker
     </p>
     `;
   }
-  const nu = ue({
+  const au = he({
     tagName: "citation-tab",
-    markup: ou
+    markup: ru
   });
-  async function iu() {
+  async function lu() {
     return ne`
-        <div class="row">
-            <div class="col-2 fw-bold">Author</div>
-            <div class="col-10">Marko Šterk</div>
-        </div>
-        <div class="row">
-            <div class="col-2 fw-bold">Affiliations</div>
-            <div class="col-10">
-                <p>Institute of Information Science, Prešernova ulica 17, 2000 Maribor, Slovenia</p>
-                <p>Alma Mater Europaea University, Slovenska ulica 17, 2000 Maribor, Slovenia</p>
-                <p>University of Maribor, Faculty of Medicine, Institute of Physiology, Taborska ulica 8, 2000 Maribor, Slovenia</p>
+        <div>
+            <div class="border-bottom mb-2">
+                <p class="fw-bold">Marko Šterk
+                    <span class="ms-1">
+                        <a class="text-reset my-1" href="mailto:marko_sterk@hotmail.com" router-ignore="true" target="_blank"><i class="fa-solid fa-at"></i></a>
+                        <a class="text-reset my-1" router-ignore="true" href="https://github.com/MarkoSterk" target="_blank"><i class="fa-brands fa-github"></i></a>
+                        <a class="text-reset my-1" router-ignore="true" href="https://www.linkedin.com/in/marko-sterk/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                    </span>
+                <p>
+                <small class="d-block">Institute of Information Science, Prešernova ulica 17, 2000 Maribor, Slovenia</small>
+                <small class="d-block">Alma Mater Europaea University, Slovenska ulica 17, 2000 Maribor, Slovenia</small>
+                <small class="d-block">University of Maribor, Faculty of Medicine, Institute of Physiology, Taborska ulica 8, 2000 Maribor, Slovenia</small>
+                <div>
+                    
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-2 fw-bold">Contact</div>
-            <div class="col-10"><a href="mailto:marko_sterk@hotmail.com" router-ignore="true" target="_blank">marko_sterk@hotmail.com</a></div>
-        </div>
-        <div class="row">
-            <div class="col-2 fw-bold">Social media</div>
-            <div class="col-10">
-                <a class="text-reset d-block" router-ignore="true" href="https://github.com/MarkoSterk" target="_blank">GitHub</a>
-                <a class="text-reset d-block" router-ignore="true" href="https://www.linkedin.com/in/marko-sterk/" target="_blank">LinkedIn</a>
+
+            <div class="border-bottom mb-2">
+                <p class="fw-bold">Marko Gosak
+                    <span class="ms-1">
+                        <a class="text-reset my-1" href="mailto:marko.gosak@um.si" router-ignore="true" target="_blank"><i class="fa-solid fa-at"></i></a>
+                    </span>
+                <p>
+                <small class="d-block">University of Maribor, Faculty of Natural Sciences and Mathematics, Koroška cesta 160, 2000 Maribor, Slovenia</small>
+                <small class="d-block">University of Maribor, Faculty of Medicine, Institute of Physiology, Taborska ulica 8, 2000 Maribor, Slovenia</small>
+                <small class="d-block">Alma Mater Europaea University, Slovenska ulica 17, 2000 Maribor, Slovenia</small>
+                <div>
+                    
+                </div>
             </div>
         </div>
     `;
   }
-  const su = ue({
+  const cu = he({
     tagName: "contact-tab",
-    markup: iu
+    markup: lu
   });
-  async function ru() {
+  async function du() {
     return ne`
         <div>
             <div class="accordion" id="issuesAccordion">
@@ -12314,7 +12376,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
                     <h2 class="accordion-header">
                         <button class="accordion-button" style="background-color: #0078d7;" jolt-click="unfocusBtn" type="button" data-bs-toggle="collapse" 
                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Video playback speed on MacOS and Safari browser
+                        Video playback issues on MacOS' Safari Browser
                         </button>
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#issuesAccordion">
@@ -12327,9 +12389,25 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
                                 a viable solution.
                             </p>
                             <p>
-                                In the mean time, you can bypass the issue by starting the application but not using the application
-                                window. Instead, use Google Chrome browser to navigate to http://localhost:8080/app and work in the
-                                Chrome browser where video playback speed is not an issue.
+                                For the above reason the application on MacOS does not open a native app window but directs the user via the app
+                                console to open the app in Google Chrome by visiting http://localhost:8080/app
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" style="background-color: #0078d7;" jolt-click="unfocusBtn" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Frozen video/Still image
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#issuesAccordion">
+                        <div class="accordion-body">
+                            <p>
+                                Sometimes the video player seems frozen (only shows a still image). If no other errors were displayed
+                                we suggest you use the <strong><i class="fas fa-sync"></i></strong> button in the preferences tab to
+                                reload the application screen. Normally, the video playback starts working afterwards.
                             </p>
                         </div>
                     </div>
@@ -12341,17 +12419,17 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         <div>
     `;
   }
-  async function au(n, e, t) {
+  async function uu(n, e, t) {
     n.blur();
   }
-  const lu = ue({
+  const hu = he({
     tagName: "issues-tab",
-    markup: ru,
+    markup: du,
     methods: {
-      unfocusBtn: au
+      unfocusBtn: uu
     }
   });
-  async function cu() {
+  async function pu() {
     return ne`
     <ol>
         <li>
@@ -12379,7 +12457,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             <ul>
                 <li>Play or scrub the video to the frame you want.</li>
                 <li>Adjust playback speed as needed.</li>
-                <li>Right-click and drag on the video display to draw an ellipse for each ROI.</li>
+                <li>Right-click and drag on the video display (upper/left) or the mean frame (lower/right) panel to draw an ellipse for each ROI.</li>
                 <li>To remove a ROI, hold down <kbd>D</kbd> and left-click on that ROI.</li>
             </ul>
         </li>
@@ -12387,7 +12465,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             <strong>View Time Series</strong>
             <ul>
                 <li>As you create ROIs, the <strong>upper graph</strong> on the right updates to show the time series for all selected cells.</li>
-                <li>The <strong>lower graph</strong> shows only the time series for the most recently selected ROI.</li>
+                <li>The <strong>lower graph</strong> shows the time series for the most recently selected ROI or any other ROI you select by right-clicking on it</li>
             </ul>
         </li>
         <li>
@@ -12428,49 +12506,49 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     </ol>  
     `;
   }
-  const du = ue({
+  const fu = he({
     tagName: "basic-usage-tab",
-    markup: cu
-  }), uu = {
-    baseLayout: Rs,
-    menuElement: ar
-  }, hu = {
-    homePage: Yn,
-    documentationPage: Xn
-  }, pu = {
-    configurationsOffcanvas: pr,
-    quickNotesOffcanvas: dd,
-    aboutInfo: hd,
-    messengerElement: zd,
-    uploadDropZone: Ws,
-    videoPlayer: Ld,
-    tsPlotAll: Gd,
-    singlePlot: Jd,
-    licenseTab: tu,
-    citationTab: nu,
-    contactTab: su,
-    issuesTab: lu,
-    basicUsageTab: du
+    markup: pu
+  }), gu = {
+    baseLayout: Hs,
+    menuElement: ur
+  }, mu = {
+    homePage: Kn,
+    documentationPage: Gn
+  }, bu = {
+    configurationsOffcanvas: br,
+    quickNotesOffcanvas: fd,
+    aboutInfo: md,
+    messengerElement: Xd,
+    uploadDropZone: Gs,
+    videoPlayer: Rd,
+    tsPlotAll: eu,
+    singlePlot: nu,
+    licenseTab: su,
+    citationTab: au,
+    contactTab: cu,
+    issuesTab: hu,
+    basicUsageTab: fu
   }, Dn = {
-    ...uu,
-    ...hu,
-    ...pu
+    ...gu,
+    ...mu,
+    ...bu
   }, Rn = "#content";
-  function fu() {
+  function vu() {
     return [
       {
         path: "/",
-        handler: Yn,
+        handler: Kn,
         target: Rn
       },
       {
         path: "/documentation",
-        handler: Xn,
+        handler: Gn,
         target: Rn
       }
     ];
   }
-  const gu = {
+  const yu = {
     apiUrl: "/api/v1",
     baseUrl: "http://localhost:8080",
     filesApi: {
@@ -12479,7 +12557,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         "postForm"
       ]
     }
-  }, mu = new Ts({
+  }, ku = new _s({
     appName: "Beta cell analysis",
     dataStructure: {
       data: null,
@@ -12489,11 +12567,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       quicknotes: null
     },
     elements: Dn,
-    properties: gu,
+    properties: yu,
     router: function(n) {
-      return new cs({
+      return new us({
         baseUrl: "/app",
-        routes: fu,
+        routes: vu,
         baseLayout: Dn.baseLayout,
         defaultTarget: "#content",
         index: "/",
@@ -12502,11 +12580,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     },
     extensions: {
       messenger: function(n) {
-        return new qd(n);
+        return new Kd(n);
       }
     },
     beforeInit: {
-      startOverlaySpinner: tt,
+      startOverlaySpinner: qe,
       getState: async function() {
         let n = await fetch("/state");
         if (!(n == null ? void 0 : n.ok) && (n == null ? void 0 : n.status) != 200) throw new Error("Failed to fetch initial state");
@@ -12520,11 +12598,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     },
     afterInit: {
-      removeOverlaySpinner: mt
+      removeOverlaySpinner: We
     }
   });
-  async function vu() {
-    await mu.init("#app");
+  async function wu() {
+    await ku.init("#app");
   }
-  await vu();
+  await wu();
 })();

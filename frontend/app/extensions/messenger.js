@@ -10,12 +10,13 @@ async function messengerMarkup(){
  * @param {string} configs.title
  * @param {string} configs.content
  * @param {string} configs.modalId
+ * @param {Object<string, boolean|string>} configs.modalOptions
  * @returns {string}
  */
-function infoModalMarkup({ title, content, modalId }){
+function infoModalMarkup({ title, content, modalId, modalOptions }){
     return html`
     <div class="modal" data-modal-id="${modalId}" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog ${modalOptions?.size || ''}">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">${title}</h5>
@@ -35,10 +36,19 @@ function infoModalMarkup({ title, content, modalId }){
     `
 }
 
-function confirmModalMarkup({ title, content, modalId }){
+/**
+ * Creates confirm modal window
+ * @param {Object} configs
+ * @param {string} configs.title
+ * @param {string} configs.content
+ * @param {string} configs.modalId
+ * @param {Object<string, boolean|string>} configs.modalOptions
+ * @returns {string}
+ */
+function confirmModalMarkup({ title, content, modalId, modalOptions }){
     return html`
     <div class="modal" data-modal-id="${modalId}" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog ${modalOptions?.size || ''}">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">${title}</h5>
@@ -114,7 +124,7 @@ async function setMessage({ msg, status = "info"}){
  */
 async function infoModal({ title, content, modalOptions }){
     const modalId = `modal-${this.app.generateHash(6)}`;
-    this.insertAdjacentHTML("beforeend", await this.infoModalMarkup({title, content, modalId}));
+    this.insertAdjacentHTML("beforeend", await this.infoModalMarkup({title, content, modalId, modalOptions}));
     return await this.initModal(modalId, modalOptions);
 }
 
@@ -128,7 +138,7 @@ async function infoModal({ title, content, modalOptions }){
  */
 async function confirmModal({ title, content, callbackFunction, modalOptions }){
     const modalId = `modal-${this.app.generateHash(6)}`;
-    this.insertAdjacentHTML("beforeend", await this.confirmModalMarkup({title, content, modalId}));
+    this.insertAdjacentHTML("beforeend", await this.confirmModalMarkup({title, content, modalId, modalOptions}));
     const modal = await this.initModal(modalId, modalOptions);
     const confirmBtn = this.querySelector(`.confirm-button-${modalId}`);
     confirmBtn.addEventListener("click", async (event) => {
@@ -145,7 +155,7 @@ async function confirmModal({ title, content, callbackFunction, modalOptions }){
  * @returns {Promise<bootstrap.Modal>}
  */
 async function initModal(modalId, options){
-    const modalOptions = {...this.defaultOptions};
+    let modalOptions = {...this.defaultOptions};
     if(options){
         modalOptions = {...modalOptions, ...options}
     }
@@ -210,7 +220,7 @@ class MessengerExt{
      * @param {Object} configs
      * @param {string} configs.title
      * @param {string} configs.content
-     * @param {Object<string, boolean>} [configs.modalOptions]
+     * @param {Object<string, boolean|string>} [configs.modalOptions]
      * @returns {Promise<bootstrap.Modal>}
      */
     infoModal = async ({title, content, modalOptions}) => {
@@ -225,7 +235,7 @@ class MessengerExt{
      * @param {string} configs.title
      * @param {string} configs.content
      * @param {CallableFunction} configs.callbackFunction
-     * @param {Object<string, boolean>} [configs.modalOptions]
+     * @param {Object<string, boolean|string>} [configs.modalOptions]
      * @returns {Promise<bootstrap.Modal>}
      */
     confirmModal = async ({title, content, callbackFunction, modalOptions}) => {

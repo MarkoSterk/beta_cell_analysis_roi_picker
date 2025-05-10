@@ -8,7 +8,7 @@ async function issuesTabMarkup(){
                     <h2 class="accordion-header">
                         <button class="accordion-button" style="background-color: #0078d7;" jolt-click="unfocusBtn" type="button" data-bs-toggle="collapse" 
                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Video playback speed on MacOS and Safari browser
+                        Video playback issues on MacOS' Safari Browser
                         </button>
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#issuesAccordion">
@@ -21,9 +21,25 @@ async function issuesTabMarkup(){
                                 a viable solution.
                             </p>
                             <p>
-                                In the mean time, you can bypass the issue by starting the application but not using the application
-                                window. Instead, use Google Chrome browser to navigate to http://localhost:8080/app and work in the
-                                Chrome browser where video playback speed is not an issue.
+                                For the above reason the application on MacOS does not open a native app window but directs the user via the app
+                                console to open the app in Google Chrome by visiting http://localhost:8080/app
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" style="background-color: #0078d7;" jolt-click="unfocusBtn" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Frozen video/Still image
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#issuesAccordion">
+                        <div class="accordion-body">
+                            <p>
+                                Sometimes the video player seems frozen (only shows a still image). If no other errors were displayed
+                                we suggest you use the <strong><i class="fas fa-sync"></i></strong> button in the preferences tab to
+                                reload the application screen. Normally, the video playback starts working afterwards.
                             </p>
                         </div>
                     </div>

@@ -291,6 +291,7 @@ const videoPlayer = ElementFactory({
         tryNativeExport
     },
     beforeInit: {
+        startOverlaySpinner,
         getInitialSampling: function(){
             this.initialSampling = parseFloat(this.sampling);
         },
@@ -314,7 +315,8 @@ const videoPlayer = ElementFactory({
                 return;
             }
             this.redrawCanvas();
-        }
+        },
+        removeOverlaySpinner
     },
     afterDisconnect: {
         removeEventListeners

@@ -8,10 +8,10 @@ async function aboutInfoMarkup(){
             </div>
         </div>
         <div>
-            <p class="m-1">Version: ${this.about.version}</p>
-            <p class="m-1">Homepage: ${this.about.homepage}</p>
-            <p class="m-1">Author: ${this.about.author}</p>
-            <p class="mt-2 text-justify text-muted">${this.about.description}</p>
+            <small class="m-1 d-block">Version: ${this.about.version}</small>
+            <small class="m-1 d-block">Homepage: ${this.about.homepage}</small>
+            <small class="m-1 d-block">Authors: ${this.about.author}</small>
+            <small class="mt-2 d-block text-justify text-muted">${this.about.description}</small>
         </div>
     `
 }

@@ -54,6 +54,7 @@ class Islet:
         self.selected_rois: list[dict[str, torch.Tensor|dict]] = []
         self.raw_number_of_cells: int = 0
         self.raw_time_series: torch.Tensor = None
+        self.process_status: dict[str, float|bool|str] = {}
         if app is not None:
             self.init_app(app)
 
@@ -77,6 +78,7 @@ class Islet:
         delete_file(video_path)
         img_path: str = os.path.join(app_path, "static", self._app.get_conf("AVG_FRAME"))
         delete_file(img_path)
+        self.process_status = {}
 
     def get_preferences(self) -> dict:
         """
@@ -280,3 +282,22 @@ class Islet:
             logger.debug(f"Failed to get all coordinates: {str(err)}")
             return abort(msg="Failed to parse all coordinates.",
                          status_code=500, status="error")
+
+    def set_process_status(self, status: dict[str, float|bool|str]):
+        """
+        Sets new process status
+        """
+        self.process_status = status
+
+    def get_process_status(self) -> dict[str, float|bool|str]:
+        """
+        Gets current process status
+        """
+        return self.process_status
+
+    def change_process_status(self, changes: dict[str, float|bool|str]):
+        """
+        Changes provided key-value pairs
+        """
+        for key, value in changes.items():
+            self.process_status[key] = value
