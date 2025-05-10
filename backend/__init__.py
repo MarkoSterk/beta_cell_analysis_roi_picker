@@ -4,7 +4,6 @@ Entry point for app
 #supressess non-toplevel import warnings for blueprint imports
 #pylint: disable=C0415,W0611
 import os
-from loguru import logger
 from pyjolt import PyJolt
 from backend.configs import Config
 from backend.utilities.utils import delete_file
