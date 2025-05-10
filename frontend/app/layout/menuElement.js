@@ -9,7 +9,7 @@ async function menuElementMarkup(){
         <li class="dropdown">
             <a jolt-click="toggleDropdown" :menu="fileDropdown">File</a>
             <ul id="fileDropdown" class="dropdown-menu">
-                <li data-bind="video">
+                <li data-bind="app.video">
                   {{? this.video != null }}
                     <a role="button" jolt-click="newProject">New</a>
                   {{?}}

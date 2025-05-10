@@ -6,12 +6,13 @@ import os
 import gc
 
 #import cv2 #type: ignore
-from readlif.reader import LifFile
+from readlif.reader import LifFile, LifImage
 import torch
 import numpy as np
 from torchvision.transforms import PILToTensor
 import imageio as iio
 from pyjolt import abort
+from loguru import logger
 
 from backend.utilities.utils import get_device
 from backend.configs import Config
@@ -22,7 +23,15 @@ def create_frames_array(lif: LifFile) -> torch.Tensor:
     Creates a 3D/4D array from frames of video
     """
     try:
-        image_series = list(lif.get_iter_image())[2]
+        image_series: LifImage | None = None
+        for lif_img in lif.get_iter_image():
+            if lif_img.dims.t > 1:
+                image_series = lif_img
+                break
+        if image_series is None:
+            return abort(msg="Provided LIF file does not contain any time series data.",
+                         status_code=400, status="error")
+        #image_series = list(lif.get_iter_image())[2]
         meta_data = image_series.info['dims']
         width, height, frames = meta_data.x, meta_data.y, meta_data.t
         torch_array = torch.empty(frames, height, width, dtype=torch.uint8)
@@ -48,11 +57,13 @@ def frames_to_video(data: torch.Tensor):
     Creates .avi video from sequence of images from LIF file
     """
     fps: int = 24
-    frames, _, _ = data.size()
+    frames, height, width = data.size()
 
     app_path: str = getattr(Config, "APP_PATH")
     video_name: str = getattr(Config, "LIF_VIDEO")
+    avg_frame_name: str = getattr(Config, "AVG_FRAME")
     output_path: str = os.path.join(app_path, "static", video_name)
+    avg_frame_path: str = os.path.join(app_path, "static", avg_frame_name)
 
     # Ensure output folder exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -69,10 +80,10 @@ def frames_to_video(data: torch.Tensor):
             format='mp4',
             pixelformat='yuv420p'
         )
-
+        avg_frame: np.ndarray = np.zeros((height, width), float)
         for i in range(frames):
             frame = data[i].numpy()  # (height, width)
-
+            avg_frame+=frame
             if frame.ndim == 2:
                 # Expand grayscale frame to 3 channels (RGB)
                 frame = np.stack([frame]*3, axis=-1)  # shape (height, width, 3)
@@ -80,8 +91,14 @@ def frames_to_video(data: torch.Tensor):
             writer.append_data(frame)
 
         writer.close()
+        avg_frame = avg_frame / frames
+        avg_frame = np.rint(avg_frame)
+        avg_frame = np.clip(avg_frame, 0, 255)
+        avg_frame = avg_frame.astype(np.uint8)
+        iio.imsave(avg_frame_path, avg_frame)
     #pylint: disable-next=W0718
-    except Exception:
+    except Exception as e:
+        logger.debug(f"Failed to create avg frame and video: {e}")
         abort(
             msg="Unexpected error during video creation. Please check input data",
             status_code=500,
@@ -97,6 +114,17 @@ def get_lif_video_url():
     port = getattr(Config, "PORT")
     video: str = getattr(Config, "LIF_VIDEO")
     url = f"{protocol}://{host}:{port}/static/{video}"
+    return url
+
+def get_avg_frame_url():
+    """
+    Returns url for avg frame of video
+    """
+    protocol = getattr(Config, "PROTOCOL")
+    host = getattr(Config, "HOST")
+    port = getattr(Config, "PORT")
+    frame: str = getattr(Config, "AVG_FRAME")
+    url = f"{protocol}://{host}:{port}/static/{frame}"
     return url
 
 def clean_temp_files():

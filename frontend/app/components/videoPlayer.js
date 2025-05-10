@@ -15,7 +15,6 @@ function getRoiData(ellipseData){
     }).then(async (response) => {
         if(response.ok){
             response = await response.json();
-            //this.selectedRois.push(response.data);
             this.setData("rois", [...this.selectedRois, response.data])
             await this.handleResponse(response);
         }
@@ -41,7 +40,7 @@ async function canvasClick(elem, event){
     switch (event.button){
         case 0:
             if(this.isDPressed == true){
-                const rect = this.canvas.getBoundingClientRect();
+                const rect = elem.getBoundingClientRect();
                 let clickX = event.clientX - rect.left;
                 let clickY = event.clientY - rect.top;
                 const index = this.findClickedEllipseIndex(clickX, clickY);
@@ -60,10 +59,19 @@ async function canvasClick(elem, event){
                     })
                     return;
                 }
+            }else{
+                const rect = elem.getBoundingClientRect();
+                let clickX = event.clientX - rect.left;
+                let clickY = event.clientY - rect.top;
+                const index = this.findClickedEllipseIndex(clickX, clickY);
+                if(index != null){
+                    this.singlePlot.removeTrace();
+                    this.singlePlot.drawTimeSeries(this.selectedRois[index])
+                }
             }
             break;
         case 2:
-            const rect = this.canvas.getBoundingClientRect();
+            const rect = elem.getBoundingClientRect();
             this.startX = event.clientX - rect.left;
             this.startY = event.clientY - rect.top;
             this.isDrawing = true;
@@ -77,7 +85,7 @@ function canvasMouseMove(elem, event){
     if (this.isDrawing) {
         // Clear and redraw canvas with all ellipses
         this.redrawCanvas();
-        const rect = canvas.getBoundingClientRect();
+        const rect = elem.getBoundingClientRect();
         const endX = event.clientX - rect.left;
         const endY = event.clientY - rect.top;
         // Draw the current ellipse without saving
@@ -91,16 +99,20 @@ function canvasMouseUp(elem, event){
             break;
         case 2:
             if (this.isDrawing) {
-                const rect = this.canvas.getBoundingClientRect();
+                const rect = elem.getBoundingClientRect();
                 const endX = event.clientX - rect.left;
                 const endY = event.clientY - rect.top;
-                // Get time series of selected ellipse
-                this.getRoiData({
-                    startX: Math.round(this.startX),
-                    startY: Math.round(this.startY),
-                    endX: Math.round(endX), 
-                    endY: Math.round(endY)
-                });
+                if((Math.abs(endX - this.startX) > 3) || (Math.abs(endY - this.startY) > 3)){
+                    // Get time series of selected ellipse
+                    this.getRoiData({
+                        startX: Math.round(this.startX),
+                        startY: Math.round(this.startY),
+                        endX: Math.round(endX), 
+                        endY: Math.round(endY)
+                    });
+                }else{
+                    this.redrawCanvas();
+                }
                 
             }
             this.isDrawing = false;
@@ -114,24 +126,28 @@ function drawEllipse(x1, y1, x2, y2, clearCanvas = false, color = 'orange', line
     // Optionally clear the canvas if save is true
     if (clearCanvas) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.imgCtx.clearRect(0, 0, this.imgCanvas.width, this.imgCanvas.height);
     }
-    this.ctx.strokeStyle = color;
-    this.ctx.lineWidth = linewidth;
-    this.ctx.beginPath();
-    this.ctx.ellipse(
-        (x1 + x2) / 2,
-        (y1 + y2) / 2,
-        Math.abs(x2 - x1) / 2,
-        Math.abs(y2 - y1) / 2,
-        0,
-        0,
-        2 * Math.PI
-    );
-    this.ctx.stroke();
+    for(const ctx of [this.ctx, this.imgCtx]){
+        ctx.strokeStyle = color;
+        ctx.lineWidth = linewidth;
+        ctx.beginPath();
+        ctx.ellipse(
+            (x1 + x2) / 2,
+            (y1 + y2) / 2,
+            Math.abs(x2 - x1) / 2,
+            Math.abs(y2 - y1) / 2,
+            0,
+            0,
+            2 * Math.PI
+        );
+        ctx.stroke();
+    }
 }
 
 function redrawCanvas() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // Clear the canvas
+    this.imgCtx.clearRect(0, 0, this.imgCanvas.width, this.imgCanvas.height);
     // Redraw all saved ellipses
     this.selectedRois.forEach((ellipse) => {
         const data = ellipse.roi_schema.roi_data
@@ -307,10 +323,16 @@ const videoPlayer = ElementFactory({
         video: querySelector("video"),
         seekbar: querySelector(".seekbar"),
         playPauseButton: querySelector("#play-pause"),
-        canvas: querySelector('#canvas'),
+        canvas: querySelector('#video-canvas'),
+        imgCanvas: querySelector('#img-canvas'),
         ctx: {
             get(){
                 return this.canvas.getContext('2d');
+            }
+        },
+        imgCtx: {
+            get(){
+                return this.imgCanvas.getContext('2d');
             }
         },
         time: defineValue(null),

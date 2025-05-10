@@ -25,7 +25,7 @@ class Config:
     TEMP_FOLDER: str = "temp_files"
     APP_NAME: str = "Beta cell analysis"
     HOST: str = "localhost"
-    PORT: int = find_available_port()
+    PORT: int = 8080
     PROTOCOL: str = "http"
     INDEX_ROUTE: str = "/app"
     TEMPLATES_STRICT: bool = True
@@ -39,6 +39,7 @@ class Config:
     VIDEO_WIDTH: int = 500
     VIDEO_HEIGHT: int = 500
     LIF_VIDEO: str = "lif_video.mp4"
+    AVG_FRAME: str = "avg_frame.png"
     TEMP_LIF: str = "temp_lif.lif"
 
     ABOUT: dict[str, str] = {

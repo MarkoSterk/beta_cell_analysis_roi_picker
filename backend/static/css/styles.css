@@ -2,10 +2,16 @@ body {
     overflow-x:hidden;
 }
 
-#video-container {
+.video-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.avg-frame-container {
     position: relative;
 }
-#canvas {
+
+.canvas {
     position: absolute;
     top: 0;
     left: 0;

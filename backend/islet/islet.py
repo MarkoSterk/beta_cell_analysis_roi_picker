@@ -2,23 +2,25 @@
 Islet (of Langerhans) class which holds data and methods for
 the current project
 """
-from loguru import logger
+import os
 import gc
 import pickle
 
+from loguru import logger
 import torch
 import numpy as np
 from pyjolt import PyJolt, UploadedFile, abort
 
 from backend.api.preferences.schemas import PreferencesSchema
 from backend.utilities import singleton
-from backend.utilities.utils import get_device
+from backend.utilities.utils import get_device, delete_file
 from backend.configs import Config
 
 
 def get_ellipse_mask(roi_data: dict[str, int],
                      width: int, height: int,
-                     width_factor: float, height_factor: float) -> tuple[torch.Tensor, float, float]:
+                     width_factor: float,
+                     height_factor: float) -> tuple[torch.Tensor, float, float]:
     """
     Creates tensor mask for ellipse ROI
     """
@@ -70,6 +72,11 @@ class Islet:
         self.selected_rois: list[dict[str, torch.Tensor|dict]] = []
         self.raw_number_of_cells: int = 0
         self.raw_time_series: torch.Tensor = None
+        app_path: str = self._app.get_conf("APP_PATH")
+        video_path: str = os.path.join(app_path, "static", self._app.get_conf("LIF_VIDEO"))
+        delete_file(video_path)
+        img_path: str = os.path.join(app_path, "static", self._app.get_conf("AVG_FRAME"))
+        delete_file(img_path)
 
     def get_preferences(self) -> dict:
         """

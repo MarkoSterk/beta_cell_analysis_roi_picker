@@ -54,14 +54,16 @@ export async function handleFile(file) {
         method: "POST",
         body: payload,
     });
-    if(!response || !response.ok || response?.status != 200){
-        return this.ext.messenger.setMessage({
+    const status = response.status;
+    try{
+        response = await response.json();
+        this.setData("video", response.data);
+    }catch{
+        this.ext.messenger.setMessage({
             msg: "Failed to parse LIF file.",
             status: "warning"
         })
     }
-    response = await response.json();
-    this.setData("video", response.data);
     removeOverlaySpinner();
 }
 

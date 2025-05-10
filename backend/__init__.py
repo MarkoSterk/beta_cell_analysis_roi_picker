@@ -3,10 +3,11 @@ Entry point for app
 """
 #supressess non-toplevel import warnings for blueprint imports
 #pylint: disable=C0415,W0611
+import os
 from loguru import logger
 from pyjolt import PyJolt
 from backend.configs import Config
-
+from backend.utilities.utils import delete_file
 
 def create_app(config: object = Config) -> PyJolt:
     """
@@ -36,6 +37,18 @@ def create_app(config: object = Config) -> PyJolt:
     from backend.api.roi import roi_controller
     app.register_blueprint(roi_controller)
 
+    @app.on_shutdown
+    @app.on_startup
+    def on_startup_shutdown(app):
+        """
+        Runs on startup/shutdown
+        """
+        app_path: str = app.get_conf("APP_PATH")
+        video_path: str = os.path.join(app_path, "static", app.get_conf("LIF_VIDEO"))
+        delete_file(video_path)
+        img_path: str = os.path.join(app_path, "static", app.get_conf("AVG_FRAME"))
+        delete_file(img_path)
+
     app.build()
-    logger.info("PyJolt application built successfully.")
+    #logger.info("PyJolt application built successfully.")
     return app

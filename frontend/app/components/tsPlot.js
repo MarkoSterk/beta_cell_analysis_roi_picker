@@ -26,7 +26,7 @@ export function initPlot(){
     if(this.plotDiv){
         this.plot = Plotly.newPlot( this.plotDiv, [], 
             {
-                margin: { t: 0, b: 30, r: 0 },
+                margin: { t: 0, b: 45, r: 0 },
                 showlegend: false,
                 // width: this.attrs.width,
                 height: this.attrs.height,

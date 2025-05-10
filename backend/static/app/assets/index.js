@@ -157,7 +157,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function as(n = 1e4, e = 1) {
     return Math.floor(Math.random() * (n - e + 1)) + e;
   }
-  function ve(n) {
+  function be(n) {
     return function(t) {
       const o = window.structuredClone(n);
       return [
@@ -173,7 +173,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     };
   }
-  function be(n) {
+  function me(n) {
     if ([
       void 0,
       null,
@@ -2931,11 +2931,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       method: "POST",
       body: e
     });
-    if (!t || !t.ok || (t == null ? void 0 : t.status) != 200) return this.ext.messenger.setMessage({
-      msg: "Failed to parse LIF file.",
-      status: "warning"
-    });
-    t = await t.json(), this.setData("video", t.data), mt();
+    t.status;
+    try {
+      t = await t.json(), this.setData("video", t.data);
+    } catch {
+      this.ext.messenger.setMessage({
+        msg: "Failed to parse LIF file.",
+        status: "warning"
+      });
+    }
+    mt();
   }
   async function zs() {
     this.fileInput.click();
@@ -2959,8 +2964,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       removeOverlaySpinner: mt
     },
     define: {
-      dropzone: be(".dropzone"),
-      fileInput: be('input[type="file"]')
+      dropzone: me(".dropzone"),
+      fileInput: me('input[type="file"]')
     }
   });
   async function Ys() {
@@ -2970,7 +2975,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         <li class="dropdown">
             <a jolt-click="toggleDropdown" :menu="fileDropdown">File</a>
             <ul id="fileDropdown" class="dropdown-menu">
-                <li data-bind="video">
+                <li data-bind="app.video">
                   {{? this.video != null }}
                     <a role="button" jolt-click="newProject">New</a>
                   {{?}}
@@ -3164,8 +3169,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     },
     define: {
       dropdownMenus: ls(".dropdown-menu"),
-      fileUpload: be(".lif-upload"),
-      pklUpload: be(".pkl-upload"),
+      fileUpload: me(".lif-upload"),
+      pklUpload: me(".pkl-upload"),
       video: {
         get() {
           return this.getData("video");
@@ -3347,10 +3352,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       loadPreferences: wn
     },
     define: {
-      preferences: ve(null),
-      projectName: be("#project_name"),
-      sampling: be("#sampling"),
-      pxToUm: be("#px_to_um"),
+      preferences: be(null),
+      projectName: me("#project_name"),
+      sampling: me("#sampling"),
+      pxToUm: me("#px_to_um"),
       preferences: {
         get() {
           return this.getData("preferences");
@@ -3945,7 +3950,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
   };
   ti.currentDictionary = ei;
-  let me = ti;
+  let ve = ti;
   class oi extends Error {
   }
   class bt {
@@ -4750,7 +4755,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     getMethodsForTool(e, t) {
       return Object.assign(this.methods, {
-        t: (o) => me.t(go.getNamespace(e, t), o)
+        t: (o) => ve.t(go.getNamespace(e, t), o)
       });
     }
   }
@@ -6558,8 +6563,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         items: await this.getTunesItems(e, i, o),
         scopeElement: this.Editor.API.methods.ui.nodes.redactor,
         messages: {
-          nothingFound: me.ui(ke.ui.popover, "Nothing found"),
-          search: me.ui(ke.ui.popover, "Filter")
+          nothingFound: ve.ui(ke.ui.popover, "Nothing found"),
+          search: ve.ui(ke.ui.popover, "Filter")
         }
       }), this.popover.on(Se.Closed, this.onPopoverClose), (t = this.nodes.wrapper) == null || t.append(this.popover.getElement()), this.popover.show();
     }
@@ -6574,7 +6579,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       const s = Array.from(this.Editor.Tools.blockTools.values()), r = (await ai(e, s)).reduce((l, d) => (d.toolbox.forEach((h) => {
         l.push({
           icon: h.icon,
-          title: me.t(ke.toolNames, h.title),
+          title: ve.t(ke.toolNames, h.title),
           name: d.name,
           closeOnActivate: true,
           onActivate: async () => {
@@ -6586,7 +6591,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return r.length > 0 && (i.push({
         icon: pi,
         name: "convert-to",
-        title: me.ui(ke.ui.popover, "Convert to"),
+        title: ve.ui(ke.ui.popover, "Convert to"),
         children: {
           searchable: true,
           items: r
@@ -6893,7 +6898,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     get toolboxItemsToBeDisplayed() {
       const e = (t, o, i = true) => ({
         icon: t.icon,
-        title: me.t(ke.toolNames, t.title || Ot(o.name)),
+        title: ve.t(ke.toolNames, t.title || Ot(o.name)),
         name: o.name,
         onActivate: () => {
           this.toolButtonActivated(o.name, t.data);
@@ -7082,14 +7087,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         It(true), this.plusButtonClicked();
       }, false);
       const e = k.make("div");
-      e.appendChild(document.createTextNode(me.ui(ke.ui.toolbar.toolbox, "Add"))), e.appendChild(k.make("div", this.CSS.plusButtonShortcut, {
+      e.appendChild(document.createTextNode(ve.ui(ke.ui.toolbar.toolbox, "Add"))), e.appendChild(k.make("div", this.CSS.plusButtonShortcut, {
         textContent: "/"
       })), Lt(this.nodes.plusButton, e, {
         hidingDelay: 400
       }), this.nodes.settingsToggler = k.make("span", this.CSS.settingsToggler, {
         innerHTML: ka
       }), k.append(this.nodes.actions, this.nodes.settingsToggler);
-      const t = k.make("div"), o = k.text(me.ui(ke.ui.blockTunes.toggler, "Click to tune")), i = await Ua("Slash", "/");
+      const t = k.make("div"), o = k.text(ve.ui(ke.ui.blockTunes.toggler, "Click to tune")), i = await Ua("Slash", "/");
       t.appendChild(o), t.appendChild(k.make("div", this.CSS.plusButtonShortcut, {
         textContent: fo(`CMD + ${i}`)
       })), Lt(this.nodes.settingsToggler, t, {
@@ -7101,8 +7106,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         api: this.Editor.API.methods,
         tools: this.Editor.Tools.blockTools,
         i18nLabels: {
-          filter: me.ui(ke.ui.popover, "Filter"),
-          nothingFound: me.ui(ke.ui.popover, "Nothing found")
+          filter: ve.ui(ke.ui.popover, "Filter"),
+          nothingFound: ve.ui(ke.ui.popover, "Nothing found")
         }
       }), this.toolboxInstance.on(Ct.Opened, () => {
         this.Editor.UI.nodes.wrapper.classList.add(this.CSS.openedToolboxHolderModifier);
@@ -7224,8 +7229,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         items: t,
         scopeElement: this.Editor.API.methods.ui.nodes.redactor,
         messages: {
-          nothingFound: me.ui(ke.ui.popover, "Nothing found"),
-          search: me.ui(ke.ui.popover, "Filter")
+          nothingFound: ve.ui(ke.ui.popover, "Nothing found"),
+          search: ve.ui(ke.ui.popover, "Filter")
         }
       }), this.move(this.popover.size.width), (e = this.nodes.wrapper) == null || e.append(this.popover.getElement()), this.popover.show();
     }
@@ -7269,7 +7274,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           this.enableShortcuts(o.name, r);
         } catch {
         }
-        const l = r !== void 0 ? fo(r) : void 0, d = me.t(ke.toolNames, o.title || Ot(o.name));
+        const l = r !== void 0 ? fo(r) : void 0, d = ve.t(ke.toolNames, o.title || Ot(o.name));
         [
           s
         ].flat().forEach((h) => {
@@ -10494,7 +10499,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return (v = g.toolbox) == null || v.forEach((b) => {
           h.push({
             icon: b.icon,
-            title: me.t(ke.toolNames, b.title),
+            title: ve.t(ke.toolNames, b.title),
             name: g.name,
             closeOnActivate: true,
             onActivate: async () => {
@@ -11265,7 +11270,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         blocks: [
           i
         ]
-      }), this.config.readOnly = this.config.readOnly || false, (t = this.config.i18n) != null && t.messages && me.setDictionary(this.config.i18n.messages), this.config.i18n.direction = ((o = this.config.i18n) == null ? void 0 : o.direction) || "ltr";
+      }), this.config.readOnly = this.config.readOnly || false, (t = this.config.i18n) != null && t.messages && ve.setDictionary(this.config.i18n.messages), this.config.i18n.direction = ((o = this.config.i18n) == null ? void 0 : o.direction) || "ltr";
     }
     get configuration() {
       return this.config;
@@ -11616,13 +11621,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     },
     define: {
-      editor: ve(null),
+      editor: be(null),
       data: {
         get() {
           return this.getData("quicknotes");
         }
       },
-      offcanvasEl: be("#quickNotes"),
+      offcanvasEl: me("#quickNotes"),
       offcanvasInstance: {
         get() {
           return bootstrap.Offcanvas.getInstance(this.offcanvasEl);
@@ -11670,7 +11675,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       getAboutInfo: Pn
     },
     define: {
-      about: ve(null)
+      about: be(null)
     }
   });
   function hd(n) {
@@ -11709,7 +11714,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     switch (e.button) {
       case 0:
         if (this.isDPressed == true) {
-          const o = this.canvas.getBoundingClientRect();
+          const o = n.getBoundingClientRect();
           let i = e.clientX - o.left, s = e.clientY - o.top;
           const r = this.findClickedEllipseIndex(i, s);
           if (r != null) {
@@ -11725,10 +11730,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             });
             return;
           }
+        } else {
+          const o = n.getBoundingClientRect();
+          let i = e.clientX - o.left, s = e.clientY - o.top;
+          const r = this.findClickedEllipseIndex(i, s);
+          r != null && (this.singlePlot.removeTrace(), this.singlePlot.drawTimeSeries(this.selectedRois[r]));
         }
         break;
       case 2:
-        const t = this.canvas.getBoundingClientRect();
+        const t = n.getBoundingClientRect();
         this.startX = e.clientX - t.left, this.startY = e.clientY - t.top, this.isDrawing = true;
         break;
     }
@@ -11736,7 +11746,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function gd(n, e) {
     if (this.isDrawing) {
       this.redrawCanvas();
-      const t = canvas.getBoundingClientRect(), o = e.clientX - t.left, i = e.clientY - t.top;
+      const t = n.getBoundingClientRect(), o = e.clientX - t.left, i = e.clientY - t.top;
       this.drawEllipse(this.startX, this.startY, o, i, false);
     }
   }
@@ -11746,23 +11756,27 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         break;
       case 2:
         if (this.isDrawing) {
-          const t = this.canvas.getBoundingClientRect(), o = e.clientX - t.left, i = e.clientY - t.top;
-          this.getRoiData({
+          const t = n.getBoundingClientRect(), o = e.clientX - t.left, i = e.clientY - t.top;
+          Math.abs(o - this.startX) > 3 || Math.abs(i - this.startY) > 3 ? this.getRoiData({
             startX: Math.round(this.startX),
             startY: Math.round(this.startY),
             endX: Math.round(o),
             endY: Math.round(i)
-          });
+          }) : this.redrawCanvas();
         }
         this.isDrawing = false;
         break;
     }
   }
   function vd(n, e, t, o, i = false, s = "orange", r = 3) {
-    i && this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height), this.ctx.strokeStyle = s, this.ctx.lineWidth = r, this.ctx.beginPath(), this.ctx.ellipse((n + t) / 2, (e + o) / 2, Math.abs(t - n) / 2, Math.abs(o - e) / 2, 0, 0, 2 * Math.PI), this.ctx.stroke();
+    i && (this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height), this.imgCtx.clearRect(0, 0, this.imgCanvas.width, this.imgCanvas.height));
+    for (const l of [
+      this.ctx,
+      this.imgCtx
+    ]) l.strokeStyle = s, l.lineWidth = r, l.beginPath(), l.ellipse((n + t) / 2, (e + o) / 2, Math.abs(t - n) / 2, Math.abs(o - e) / 2, 0, 0, 2 * Math.PI), l.stroke();
   }
   function bd() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height), this.selectedRois.forEach((n) => {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height), this.imgCtx.clearRect(0, 0, this.imgCanvas.width, this.imgCanvas.height), this.selectedRois.forEach((n) => {
       const e = n.roi_schema.roi_data;
       this.drawEllipse(e.startX, e.startY, e.endX, e.endY);
     });
@@ -11864,16 +11878,22 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       removeEventListeners: Sd
     },
     define: {
-      video: be("video"),
-      seekbar: be(".seekbar"),
-      playPauseButton: be("#play-pause"),
-      canvas: be("#canvas"),
+      video: me("video"),
+      seekbar: me(".seekbar"),
+      playPauseButton: me("#play-pause"),
+      canvas: me("#video-canvas"),
+      imgCanvas: me("#img-canvas"),
       ctx: {
         get() {
           return this.canvas.getContext("2d");
         }
       },
-      time: ve(null),
+      imgCtx: {
+        get() {
+          return this.imgCanvas.getContext("2d");
+        }
+      },
+      time: be(null),
       sampling: {
         get() {
           return this.getData("preferences").sampling;
@@ -11884,10 +11904,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           return this.getData("rois");
         }
       },
-      isDrawing: ve(false),
-      isDPressed: ve(false),
-      startX: ve(null),
-      startY: ve(null),
+      isDrawing: be(false),
+      isDPressed: be(false),
+      startX: be(null),
+      startY: be(null),
       tsViewer: {
         get() {
           return this.app.querySelector("#ts-viewer");
@@ -11903,7 +11923,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           return this.app.querySelector("single-plot");
         }
       },
-      initialSampling: ve(null)
+      initialSampling: be(null)
     }
   });
   async function Ld() {
@@ -12035,12 +12055,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       removeToast: Rd
     },
     define: {
-      defaultOptions: ve({
+      defaultOptions: be({
         backdrop: true,
         focus: true,
         keyboard: true
       }),
-      modals: ve([])
+      modals: be([])
     }
   });
   class zd {
@@ -12092,7 +12112,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     this.plotDiv && (this.plot = Plotly.newPlot(this.plotDiv, [], {
       margin: {
         t: 0,
-        b: 30,
+        b: 45,
         r: 0
       },
       showlegend: false,
@@ -12144,8 +12164,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     },
     define: {
-      plotDiv: be("#ts-plot-all"),
-      plot: ve(null),
+      plotDiv: me("#ts-plot-all"),
+      plot: be(null),
       sampling: {
         get() {
           return +this.getData("preferences").sampling;
@@ -12195,8 +12215,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     },
     define: {
-      plotDiv: be("#ts-plot-single"),
-      plot: ve(null),
+      plotDiv: me("#ts-plot-single"),
+      plot: be(null),
       sampling: {
         get() {
           return +this.getData("preferences").sampling;
@@ -12208,7 +12228,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           return !n || n.length == 0 ? null : n[n.length - 1];
         }
       },
-      time: ve(null)
+      time: be(null)
     }
   });
   async function Jd() {

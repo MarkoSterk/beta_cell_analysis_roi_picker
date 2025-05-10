@@ -39,7 +39,7 @@ async def video_stream(req: Request, res: Response) -> Response:
     """
     Serves the video stream template
     """
-    return await res.html("video.html", {
+    context: dict = {
         "protocol": req.app.get_conf("PROTOCOL"),
         "host": req.app.get_conf("HOST"),
         "port": req.app.get_conf("PORT"),
@@ -47,7 +47,8 @@ async def video_stream(req: Request, res: Response) -> Response:
         "height": req.app.get_conf("VIDEO_HEIGHT"),
         "ts_width": req.app.get_conf("TS_VIEWER_WIDTH"),
         "ts_height": req.app.get_conf("TS_VIEWER_HEIGHT"),
-    })
+    }
+    return await res.html("video.html", context)
 
 @gui_controller.get("/shutdown")
 async def shutdown(req: Request, res: Response) -> Response:
@@ -56,8 +57,11 @@ async def shutdown(req: Request, res: Response) -> Response:
     """
     app_path: str = req.app.get_conf("APP_PATH")
     lif_video: str = req.app.get_conf("LIF_VIDEO")
+    avg_frame: str = req.app.get_conf("AVG_FRAME")
     video_path: str = os.path.join(app_path, "static", lif_video)
+    avg_frame_path: str = os.path.join(app_path, "static", avg_frame)
     delete_file(video_path)
+    delete_file(avg_frame_path)
     # Spawn a thread that will exit the process in 500ms
     loop = asyncio.get_running_loop()
     # Schedule os._exit(0) in 0.5 seconds
