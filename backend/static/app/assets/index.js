@@ -3268,9 +3268,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     <div class="offcanvas offcanvas-start w-75" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1" id="analysisConfigs" aria-labelledby="analysisConfigsLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="analysisConfigsLabel">Preferences</h5>
-            <button jolt-click="savePreferences" type="button" class="btn btn text-reset" title="Save and close" data-bs-dismiss="offcanvas" aria-label="Close">
-                <i class="fa-solid fa-check"></i>
-            </button>
+            <div class="d-flex gap-2 ms-auto">
+                <button jolt-click="savePreferences" type="button" class="btn text-reset" title="Save and close" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+                <button title="Refresh application" type="button" class="btn" jolt-click="refreshApp"><i class="fas fa-sync"></i></button>
+            </div>
         </div>
         <div class="offcanvas-body">
             <div>
@@ -3306,7 +3309,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     </div> 
     `;
   }
-  async function ur(n, e, t) {
+  function ur(n, e, t) {
+    location.reload();
+  }
+  async function hr(n, e, t) {
     n.blur();
     const o = {
       [this.projectName.id]: this.projectName.value,
@@ -3341,12 +3347,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     });
     this.setData("preferences", e.data);
   }
-  const hr = ue({
+  const pr = ue({
     tagName: "configurations-offcanvas",
     markup: dr,
     methods: {
-      savePreferences: ur,
-      loadPreferences: wn
+      savePreferences: hr,
+      loadPreferences: wn,
+      refreshApp: ur
     },
     beforeInit: {
       loadPreferences: wn
@@ -3377,7 +3384,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function Ht(n) {
     return n && n.__esModule && Object.prototype.hasOwnProperty.call(n, "default") ? n.default : n;
   }
-  function pr(n) {
+  function fr(n) {
     if (n.__esModule) return n;
     var e = n.default;
     if (typeof e == "function") {
@@ -3450,7 +3457,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   window.cancelIdleCallback = window.cancelIdleCallback || function(n) {
     clearTimeout(n);
   };
-  let fr = (n = 21) => crypto.getRandomValues(new Uint8Array(n)).reduce((e, t) => (t &= 63, t < 36 ? e += t.toString(36) : t < 62 ? e += (t - 26).toString(36).toUpperCase() : t > 62 ? e += "-" : e += "_", e), "");
+  let gr = (n = 21) => crypto.getRandomValues(new Uint8Array(n)).reduce((e, t) => (t &= 63, t < 36 ? e += t.toString(36) : t < 62 ? e += (t - 26).toString(36).toUpperCase() : t > 62 ? e += "-" : e += "_", e), "");
   var Kn = ((n) => (n.VERBOSE = "VERBOSE", n.INFO = "INFO", n.WARN = "WARN", n.ERROR = "ERROR", n))(Kn || {});
   const P = {
     BACKSPACE: 8,
@@ -3462,7 +3469,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     DOWN: 40,
     RIGHT: 39,
     DELETE: 46
-  }, gr = {
+  }, mr = {
     LEFT: 0
   };
   function vt(n, e, t = "log", o, i = "color: inherit") {
@@ -3505,7 +3512,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
   }
   vt.logLevel = "VERBOSE";
-  function mr(n) {
+  function vr(n) {
     vt.logLevel = n;
   }
   const z = vt.bind(window, false), we = vt.bind(window, true);
@@ -3521,7 +3528,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function Ie(n) {
     return Ue(n) === "string";
   }
-  function vr(n) {
+  function br(n) {
     return Ue(n) === "boolean";
   }
   function En(n) {
@@ -3536,7 +3543,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function Gn(n) {
     return n > 47 && n < 58 || n === 32 || n === 13 || n === 229 || n > 64 && n < 91 || n > 95 && n < 112 || n > 185 && n < 193 || n > 218 && n < 223;
   }
-  async function br(n, e = () => {
+  async function yr(n, e = () => {
   }, t = () => {
   }) {
     async function o(i, s, r) {
@@ -3557,10 +3564,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       window.setTimeout(() => n.apply(t, o), e);
     };
   }
-  function yr(n) {
+  function kr(n) {
     return n.name.split(".").pop();
   }
-  function kr(n) {
+  function wr(n) {
     return /^[-\w]+\/([-+\w]+|\*)$/.test(n);
   }
   function Cn(n, e, t) {
@@ -3585,7 +3592,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return o = this, i = arguments, g <= 0 || g > e ? (r && (clearTimeout(r), r = null), l = h, s = n.apply(o, i), r || (o = i = null)) : !r && t.trailing !== false && (r = setTimeout(d, g)), s;
     };
   }
-  function wr() {
+  function Er() {
     const n = {
       win: false,
       mac: false,
@@ -3608,23 +3615,23 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     return ro(n, ...e);
   }
   function fo(n) {
-    const e = wr();
+    const e = Er();
     return n = n.replace(/shift/gi, "\u21E7").replace(/backspace/gi, "\u232B").replace(/enter/gi, "\u23CE").replace(/up/gi, "\u2191").replace(/left/gi, "\u2192").replace(/down/gi, "\u2193").replace(/right/gi, "\u2190").replace(/escape/gi, "\u238B").replace(/insert/gi, "Ins").replace(/delete/gi, "\u2421").replace(/\+/gi, " + "), e.mac ? n = n.replace(/ctrl|cmd/gi, "\u2318").replace(/alt/gi, "\u2325") : n = n.replace(/cmd/gi, "Ctrl").replace(/windows/gi, "WIN"), n;
   }
-  function Er(n) {
+  function xr(n) {
     try {
       return new URL(n).href;
     } catch {
     }
     return n.substring(0, 2) === "//" ? window.location.protocol + n : window.location.origin + n;
   }
-  function xr() {
-    return fr(10);
+  function Cr() {
+    return gr(10);
   }
-  function Cr(n) {
+  function Tr(n) {
     window.open(n, "_blank");
   }
-  function Tr(n = "") {
+  function Sr(n = "") {
     return `${n}${Math.floor(Math.random() * 1e8).toString(16)}`;
   }
   function ao(n, e, t) {
@@ -3648,7 +3655,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     return window.matchMedia(`(max-width: ${Qn}px)`).matches;
   }
   const lo = typeof window < "u" && window.navigator && window.navigator.platform && (/iP(ad|hone|od)/.test(window.navigator.platform) || window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
-  function Sr(n, e) {
+  function _r(n, e) {
     const t = Array.isArray(n) || de(n), o = Array.isArray(e) || de(e);
     return t || o ? JSON.stringify(n) === JSON.stringify(e) : n === e;
   }
@@ -3871,17 +3878,17 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
   };
-  function _r(n) {
+  function Br(n) {
     return !/[^\t\n\r ]/.test(n);
   }
-  function Br(n) {
+  function Mr(n) {
     const e = window.getComputedStyle(n), t = parseFloat(e.fontSize), o = parseFloat(e.lineHeight) || t * 1.2, i = parseFloat(e.paddingTop), s = parseFloat(e.borderTopWidth), r = parseFloat(e.marginTop), l = t * 0.8, d = (o - t) / 2;
     return r + s + i + d + l;
   }
   function Jn(n) {
     n.dataset.empty = k.isEmpty(n) ? "true" : "false";
   }
-  const Mr = {
+  const Or = {
     blockTunes: {
       toggler: {
         "Click to tune": "",
@@ -3903,19 +3910,19 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       "Nothing found": "",
       "Convert to": ""
     }
-  }, Or = {
+  }, Ar = {
     Text: "",
     Link: "",
     Bold: "",
     Italic: ""
-  }, Ar = {
+  }, Ir = {
     link: {
       "Add a link": ""
     },
     stub: {
       "The block can not be displayed correctly.": ""
     }
-  }, Ir = {
+  }, Lr = {
     delete: {
       Delete: "",
       "Click to delete": ""
@@ -3927,10 +3934,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       "Move down": ""
     }
   }, ei = {
-    ui: Mr,
-    toolNames: Or,
-    tools: Ar,
-    blockTunes: Ir
+    ui: Or,
+    toolNames: Ar,
+    tools: Ir,
+    blockTunes: Lr
   }, ti = class Ge {
     static ui(e, t) {
       return Ge._t(e, t);
@@ -4039,7 +4046,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.allListeners = [];
     }
     on(e, t, o, i = false) {
-      const s = Tr("l"), r = {
+      const s = Sr("l"), r = {
         id: s,
         element: e,
         eventType: t,
@@ -4262,7 +4269,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       o.selectNodeContents(e), t.addRange(o);
     }
   }
-  function Lr(n, e) {
+  function Nr(n, e) {
     const { type: t, target: o, addedNodes: i, removedNodes: s } = n;
     return n.type === "attributes" && n.attributeName === "data-empty" ? false : !!(e.contains(o) || t === "childList" && (Array.from(i).some((r) => r === e) || Array.from(s).some((r) => r === e)));
   }
@@ -4276,7 +4283,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     return uo(n.tool, e);
   }
   function ri(n, e) {
-    return Object.entries(n).some(([t, o]) => e[t] && Sr(e[t], o));
+    return Object.entries(n).some(([t, o]) => e[t] && _r(e[t], o));
   }
   async function ai(n, e) {
     const t = (await n.save()).data, o = e.find((i) => i.name === n.name);
@@ -4298,7 +4305,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function Tn(n, e) {
     return n.mergeable ? n.name === e.name ? true : At(e, "export") && At(n, "import") : false;
   }
-  function Nr(n, e) {
+  function Pr(n, e) {
     const t = e == null ? void 0 : e.export;
     return Q(t) ? t(n) : Ie(t) ? n[t] : (t !== void 0 && z("Conversion \xABexport\xBB property must be a string or function. String means key of saved data object to export. Function should export processed string to export."), "");
   }
@@ -4310,7 +4317,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   }
   var G = ((n) => (n.Default = "default", n.Separator = "separator", n.Html = "html", n))(G || {}), Ae = ((n) => (n.APPEND_CALLBACK = "appendCallback", n.RENDERED = "rendered", n.MOVED = "moved", n.UPDATED = "updated", n.REMOVED = "removed", n.ON_PASTE = "onPaste", n))(Ae || {});
   class ce extends bt {
-    constructor({ id: e = xr(), data: t, tool: o, readOnly: i, tunesData: s }, r) {
+    constructor({ id: e = Cr(), data: t, tool: o, readOnly: i, tunesData: s }, r) {
       super(), this.cachedInputs = [], this.toolRenderedElement = null, this.tunesInstances = /* @__PURE__ */ new Map(), this.defaultTunesInstances = /* @__PURE__ */ new Map(), this.unavailableTunesData = {}, this.inputIndex = 0, this.editorEventBus = null, this.handleFocus = () => {
         this.dropInputsCache(), this.updateCurrentInput();
       }, this.didMutated = (l = void 0) => {
@@ -4493,7 +4500,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     async exportDataAsString() {
       const e = await this.data;
-      return Nr(e, this.tool.conversionConfig);
+      return Pr(e, this.tool.conversionConfig);
     }
     compose() {
       const e = k.make("div", ce.CSS.wrapper), t = k.make("div", ce.CSS.content), o = this.toolInstance.render();
@@ -4531,7 +4538,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       var e;
       this.redactorDomChangedCallback = (t) => {
         const { mutations: o } = t;
-        o.some((i) => Lr(i, this.toolRenderedElement)) && this.didMutated(o);
+        o.some((i) => Nr(i, this.toolRenderedElement)) && this.didMutated(o);
       }, (e = this.editorEventBus) == null || e.on(co, this.redactorDomChangedCallback);
     }
     unwatchBlockMutations() {
@@ -4553,7 +4560,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.inputs.forEach(Jn);
     }
   }
-  class Pr extends j {
+  class Dr extends j {
     constructor() {
       super(...arguments), this.insert = (e = this.config.defaultBlock, t = {}, o = {}, i, s, r, l) => {
         const d = this.Editor.BlockManager.insert({
@@ -4703,13 +4710,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       if (e === null) throw new Error("Index should be greater than or equal to 0");
     }
   }
-  function Dr(n, e) {
+  function Rr(n, e) {
     return typeof n == "number" ? e.BlockManager.getBlockByIndex(n) : typeof n == "string" ? e.BlockManager.getBlockById(n) : e.BlockManager.getBlockById(n.id);
   }
-  class Rr extends j {
+  class jr extends j {
     constructor() {
       super(...arguments), this.setToFirstBlock = (e = this.Editor.Caret.positions.DEFAULT, t = 0) => this.Editor.BlockManager.firstBlock ? (this.Editor.Caret.setToBlock(this.Editor.BlockManager.firstBlock, e, t), true) : false, this.setToLastBlock = (e = this.Editor.Caret.positions.DEFAULT, t = 0) => this.Editor.BlockManager.lastBlock ? (this.Editor.Caret.setToBlock(this.Editor.BlockManager.lastBlock, e, t), true) : false, this.setToPreviousBlock = (e = this.Editor.Caret.positions.DEFAULT, t = 0) => this.Editor.BlockManager.previousBlock ? (this.Editor.Caret.setToBlock(this.Editor.BlockManager.previousBlock, e, t), true) : false, this.setToNextBlock = (e = this.Editor.Caret.positions.DEFAULT, t = 0) => this.Editor.BlockManager.nextBlock ? (this.Editor.Caret.setToBlock(this.Editor.BlockManager.nextBlock, e, t), true) : false, this.setToBlock = (e, t = this.Editor.Caret.positions.DEFAULT, o = 0) => {
-        const i = Dr(e, this.Editor);
+        const i = Rr(e, this.Editor);
         return i === void 0 ? false : (this.Editor.Caret.setToBlock(i, t, o), true);
       }, this.focus = (e = false) => e ? this.setToLastBlock(this.Editor.Caret.positions.END) : this.setToFirstBlock(this.Editor.Caret.positions.START);
     }
@@ -4724,7 +4731,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
   }
-  class jr extends j {
+  class Hr extends j {
     get methods() {
       return {
         emit: (e, t) => this.emit(e, t),
@@ -4759,7 +4766,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class Hr extends j {
+  class Fr extends j {
     get methods() {
       return {
         blocks: this.Editor.BlocksAPI.methods,
@@ -4786,7 +4793,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class Fr extends j {
+  class Vr extends j {
     get methods() {
       return {
         close: () => this.close(),
@@ -4800,7 +4807,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.Editor.InlineToolbar.close();
     }
   }
-  class Vr extends j {
+  class $r extends j {
     get methods() {
       return {
         on: (e, t, o, i) => this.on(e, t, o, i),
@@ -5170,19 +5177,19 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       ]);
     });
   })(li);
-  var $r = li.exports;
-  const Ur = Ht($r);
-  class zr {
+  var Ur = li.exports;
+  const zr = Ht(Ur);
+  class qr {
     show(e) {
-      Ur.show(e);
+      zr.show(e);
     }
   }
-  class qr extends j {
+  class Wr extends j {
     constructor({ config: e, eventsDispatcher: t }) {
       super({
         config: e,
         eventsDispatcher: t
-      }), this.notifier = new zr();
+      }), this.notifier = new qr();
     }
     get methods() {
       return {
@@ -5193,7 +5200,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.notifier.show(e);
     }
   }
-  class Wr extends j {
+  class Yr extends j {
     get methods() {
       const e = () => this.isEnabled;
       return {
@@ -5302,8 +5309,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return t;
     });
   })(ci);
-  var Yr = ci.exports;
-  const Xr = Ht(Yr);
+  var Xr = ci.exports;
+  const Kr = Ht(Xr);
   function mo(n, e) {
     return n.map((t) => {
       const o = Q(e) ? e(t.tool) : e;
@@ -5314,30 +5321,30 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     const t = {
       tags: e
     };
-    return new Xr(t).clean(n);
+    return new Kr(t).clean(n);
   }
   function vo(n, e) {
-    return Array.isArray(n) ? Kr(n, e) : de(n) ? Gr(n, e) : Ie(n) ? Zr(n, e) : n;
-  }
-  function Kr(n, e) {
-    return n.map((t) => vo(t, e));
+    return Array.isArray(n) ? Gr(n, e) : de(n) ? Zr(n, e) : Ie(n) ? Qr(n, e) : n;
   }
   function Gr(n, e) {
+    return n.map((t) => vo(t, e));
+  }
+  function Zr(n, e) {
     const t = {};
     for (const o in n) {
       if (!Object.prototype.hasOwnProperty.call(n, o)) continue;
-      const i = n[o], s = Qr(e[o]) ? e[o] : e;
+      const i = n[o], s = Jr(e[o]) ? e[o] : e;
       t[o] = vo(i, s);
     }
     return t;
   }
-  function Zr(n, e) {
+  function Qr(n, e) {
     return de(e) ? Te(n, e) : e === false ? Te(n, {}) : n;
   }
-  function Qr(n) {
-    return de(n) || vr(n) || Q(n);
+  function Jr(n) {
+    return de(n) || br(n) || Q(n);
   }
-  class Jr extends j {
+  class ea extends j {
     get methods() {
       return {
         clean: (e, t) => this.clean(e, t)
@@ -5347,7 +5354,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return Te(e, t);
     }
   }
-  class ea extends j {
+  class ta extends j {
     get methods() {
       return {
         save: () => this.save()
@@ -5358,7 +5365,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.Editor.ReadOnly.isEnabled ? (we(e, "warn"), Promise.reject(new Error(e))) : this.Editor.Saver.save();
     }
   }
-  class ta extends j {
+  class oa extends j {
     constructor() {
       super(...arguments), this.selectionUtils = new M();
     }
@@ -5379,14 +5386,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.selectionUtils.expandToTag(e);
     }
   }
-  class oa extends j {
+  class na extends j {
     get methods() {
       return {
         getBlockTools: () => Array.from(this.Editor.Tools.blockTools.values())
       };
     }
   }
-  class na extends j {
+  class ia extends j {
     get classes() {
       return {
         block: "cdx-block",
@@ -5400,7 +5407,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
   }
-  class ia extends j {
+  class sa extends j {
     get methods() {
       return {
         close: () => this.close(),
@@ -5612,13 +5619,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       ]).default;
     });
   })(di);
-  var sa = di.exports;
-  const ra = Ht(sa);
+  var ra = di.exports;
+  const aa = Ht(ra);
   let Ce = null;
   function bo() {
-    Ce || (Ce = new ra());
+    Ce || (Ce = new aa());
   }
-  function aa(n, e, t) {
+  function la(n, e, t) {
     bo(), Ce == null ? void 0 : Ce.show(n, e, t);
   }
   function It(n = false) {
@@ -5627,10 +5634,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function Lt(n, e, t) {
     bo(), Ce == null ? void 0 : Ce.onHover(n, e, t);
   }
-  function la() {
+  function ca() {
     Ce == null ? void 0 : Ce.destroy(), Ce = null;
   }
-  class ca extends j {
+  class da extends j {
     constructor({ config: e, eventsDispatcher: t }) {
       super({
         config: e,
@@ -5645,7 +5652,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
     show(e, t, o) {
-      aa(e, t, o);
+      la(e, t, o);
     }
     hide() {
       It();
@@ -5654,7 +5661,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       Lt(e, t, o);
     }
   }
-  class da extends j {
+  class ua extends j {
     get methods() {
       return {
         nodes: this.editorNodes
@@ -5679,7 +5686,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }), t;
   }
   const ke = ui(ei);
-  function ua(n, e) {
+  function ha(n, e) {
     const t = {};
     return Object.keys(n).forEach((o) => {
       const i = e[o];
@@ -5800,15 +5807,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.iterator.currentItem && this.iterator.currentItem.scrollIntoViewIfNeeded(), this.flipCallbacks.forEach((e) => e());
     }
   }
-  const ha = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9 12L9 7.1C9 7.04477 9.04477 7 9.1 7H10.4C11.5 7 14 7.1 14 9.5C14 9.5 14 12 11 12M9 12V16.8C9 16.9105 9.08954 17 9.2 17H12.5C14 17 15 16 15 14.5C15 11.7046 11 12 11 12M9 12H11"/></svg>', pa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7 10L11.8586 14.8586C11.9367 14.9367 12.0633 14.9367 12.1414 14.8586L17 10"/></svg>', fa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M14.5 17.5L9.64142 12.6414C9.56331 12.5633 9.56331 12.4367 9.64142 12.3586L14.5 7.5"/></svg>', ga = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9.58284 17.5L14.4414 12.6414C14.5195 12.5633 14.5195 12.4367 14.4414 12.3586L9.58284 7.5"/></svg>', ma = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7 15L11.8586 10.1414C11.9367 10.0633 12.0633 10.0633 12.1414 10.1414L17 15"/></svg>', va = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 8L12 12M12 12L16 16M12 12L16 8M12 12L8 16"/></svg>', ba = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg>', ya = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M13.34 10C12.4223 12.7337 11 17 11 17"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M14.21 7H14.2"/></svg>', _n = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7.69998 12.6L7.67896 12.62C6.53993 13.7048 6.52012 15.5155 7.63516 16.625V16.625C8.72293 17.7073 10.4799 17.7102 11.5712 16.6314L13.0263 15.193C14.0703 14.1609 14.2141 12.525 13.3662 11.3266L13.22 11.12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16.22 11.12L16.3564 10.9805C17.2895 10.0265 17.3478 8.5207 16.4914 7.49733V7.49733C15.5691 6.39509 13.9269 6.25143 12.8271 7.17675L11.3901 8.38588C10.0935 9.47674 9.95706 11.4241 11.0888 12.6852L11.12 12.72"/></svg>', ka = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M9.40999 7.29999H9.4"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M14.6 7.29999H14.59"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M9.30999 12H9.3"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M14.6 12H14.59"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M9.40999 16.7H9.4"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M14.6 16.7H14.59"/></svg>', wa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 7V12M12 17V12M17 12H12M12 12H7"/></svg>', pi = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M11.5 17.5L5 11M5 11V15.5M5 11H9.5"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12.5 6.5L19 13M19 13V8.5M19 13H14.5"/></svg>', Ea = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="5.5" stroke="currentColor" stroke-width="2"/><line x1="15.4142" x2="19" y1="15" y2="18.5858" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>', xa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M15.7795 11.5C15.7795 11.5 16.053 11.1962 16.5497 10.6722C17.4442 9.72856 17.4701 8.2475 16.5781 7.30145V7.30145C15.6482 6.31522 14.0873 6.29227 13.1288 7.25073L11.8796 8.49999"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8.24517 12.3883C8.24517 12.3883 7.97171 12.6922 7.47504 13.2161C6.58051 14.1598 6.55467 15.6408 7.44666 16.5869V16.5869C8.37653 17.5731 9.93744 17.5961 10.8959 16.6376L12.1452 15.3883"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M17.7802 15.1032L16.597 14.9422C16.0109 14.8624 15.4841 15.3059 15.4627 15.8969L15.4199 17.0818"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6.39064 9.03238L7.58432 9.06668C8.17551 9.08366 8.6522 8.58665 8.61056 7.99669L8.5271 6.81397"/><line x1="12.1142" x2="11.7" y1="12.2" y2="11.7858" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>', Ca = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><rect width="14" height="14" x="5" y="5" stroke="currentColor" stroke-width="2" rx="4"/><line x1="12" x2="12" y1="9" y2="12" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 15.02V15.01"/></svg>', Ta = "__", Sa = "--";
+  const pa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9 12L9 7.1C9 7.04477 9.04477 7 9.1 7H10.4C11.5 7 14 7.1 14 9.5C14 9.5 14 12 11 12M9 12V16.8C9 16.9105 9.08954 17 9.2 17H12.5C14 17 15 16 15 14.5C15 11.7046 11 12 11 12M9 12H11"/></svg>', fa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7 10L11.8586 14.8586C11.9367 14.9367 12.0633 14.9367 12.1414 14.8586L17 10"/></svg>', ga = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M14.5 17.5L9.64142 12.6414C9.56331 12.5633 9.56331 12.4367 9.64142 12.3586L14.5 7.5"/></svg>', ma = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9.58284 17.5L14.4414 12.6414C14.5195 12.5633 14.5195 12.4367 14.4414 12.3586L9.58284 7.5"/></svg>', va = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7 15L11.8586 10.1414C11.9367 10.0633 12.0633 10.0633 12.1414 10.1414L17 15"/></svg>', ba = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 8L12 12M12 12L16 16M12 12L16 8M12 12L8 16"/></svg>', ya = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg>', ka = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M13.34 10C12.4223 12.7337 11 17 11 17"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M14.21 7H14.2"/></svg>', _n = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7.69998 12.6L7.67896 12.62C6.53993 13.7048 6.52012 15.5155 7.63516 16.625V16.625C8.72293 17.7073 10.4799 17.7102 11.5712 16.6314L13.0263 15.193C14.0703 14.1609 14.2141 12.525 13.3662 11.3266L13.22 11.12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16.22 11.12L16.3564 10.9805C17.2895 10.0265 17.3478 8.5207 16.4914 7.49733V7.49733C15.5691 6.39509 13.9269 6.25143 12.8271 7.17675L11.3901 8.38588C10.0935 9.47674 9.95706 11.4241 11.0888 12.6852L11.12 12.72"/></svg>', wa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M9.40999 7.29999H9.4"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M14.6 7.29999H14.59"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M9.30999 12H9.3"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M14.6 12H14.59"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M9.40999 16.7H9.4"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2.6" d="M14.6 16.7H14.59"/></svg>', Ea = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 7V12M12 17V12M17 12H12M12 12H7"/></svg>', pi = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M11.5 17.5L5 11M5 11V15.5M5 11H9.5"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12.5 6.5L19 13M19 13V8.5M19 13H14.5"/></svg>', xa = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="5.5" stroke="currentColor" stroke-width="2"/><line x1="15.4142" x2="19" y1="15" y2="18.5858" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>', Ca = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M15.7795 11.5C15.7795 11.5 16.053 11.1962 16.5497 10.6722C17.4442 9.72856 17.4701 8.2475 16.5781 7.30145V7.30145C15.6482 6.31522 14.0873 6.29227 13.1288 7.25073L11.8796 8.49999"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8.24517 12.3883C8.24517 12.3883 7.97171 12.6922 7.47504 13.2161C6.58051 14.1598 6.55467 15.6408 7.44666 16.5869V16.5869C8.37653 17.5731 9.93744 17.5961 10.8959 16.6376L12.1452 15.3883"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M17.7802 15.1032L16.597 14.9422C16.0109 14.8624 15.4841 15.3059 15.4627 15.8969L15.4199 17.0818"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6.39064 9.03238L7.58432 9.06668C8.17551 9.08366 8.6522 8.58665 8.61056 7.99669L8.5271 6.81397"/><line x1="12.1142" x2="11.7" y1="12.2" y2="11.7858" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>', Ta = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><rect width="14" height="14" x="5" y="5" stroke="currentColor" stroke-width="2" rx="4"/><line x1="12" x2="12" y1="9" y2="12" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 15.02V15.01"/></svg>', Sa = "__", _a = "--";
   function Re(n) {
     return (e, t) => [
       [
         n,
         e
-      ].filter((o) => !!o).join(Ta),
+      ].filter((o) => !!o).join(Sa),
       t
-    ].filter((o) => !!o).join(Sa);
+    ].filter((o) => !!o).join(_a);
   }
   const at = Re("ce-hint"), lt = {
     root: at(),
@@ -5817,7 +5824,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     title: at("title"),
     description: at("description")
   };
-  class _a {
+  class Ba {
     constructor(e) {
       this.nodes = {
         root: k.make("div", [
@@ -5858,7 +5865,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.params !== void 0 && "onActivate" in this.params && ((t = (e = this.params).onActivate) == null || t.call(e, this.params));
     }
     addHint(e, t) {
-      const o = new _a(t);
+      const o = new Ba(t);
       Lt(e, o.getElement(), {
         placement: t.position,
         hidingDelay: 100
@@ -5970,7 +5977,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         ee.icon,
         ee.iconTool
       ], {
-        innerHTML: e.icon || ba
+        innerHTML: e.icon || ya
       }), r.appendChild(this.nodes.icon), e.title !== void 0 && r.appendChild(k.make("div", ee.title, {
         innerHTML: e.title || ""
       })), e.secondaryLabel && r.appendChild(k.make("div", ee.secondaryTitle, {
@@ -5979,7 +5986,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         ee.icon,
         ee.iconChevronRight
       ], {
-        innerHTML: ga
+        innerHTML: ma
       })), this.isActive && r.classList.add(ee.active), e.isDisabled && r.classList.add(ee.disabled), e.hint !== void 0 && ((o = t == null ? void 0 : t.hint) == null ? void 0 : o.enabled) !== false && this.addHint(r, {
         ...e.hint,
         position: ((i = t == null ? void 0 : t.hint) == null ? void 0 : i.position) || "right"
@@ -6182,11 +6189,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     icon: eo("icon"),
     input: eo("input")
   };
-  class Ba extends bt {
+  class Ma extends bt {
     constructor({ items: e, placeholder: t }) {
       super(), this.listeners = new yt(), this.items = e, this.wrapper = k.make("div", to.wrapper);
       const o = k.make("div", to.icon, {
-        innerHTML: Ea
+        innerHTML: xa
       });
       this.input = k.make("input", to.input, {
         placeholder: t,
@@ -6222,9 +6229,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return s !== void 0 ? i.includes(s) : false;
     }
   }
-  var Ma = Object.defineProperty, Oa = Object.getOwnPropertyDescriptor, Aa = (n, e, t, o) => {
-    for (var i = Oa(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
-    return i && Ma(e, t, i), i;
+  var Oa = Object.defineProperty, Aa = Object.getOwnPropertyDescriptor, Ia = (n, e, t, o) => {
+    for (var i = Aa(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
+    return i && Oa(e, t, i), i;
   };
   const mi = class vi extends gi {
     constructor(e, t) {
@@ -6326,7 +6333,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }).flat().filter((e) => e != null);
     }
     addSearch() {
-      this.search = new Ba({
+      this.search = new Ma({
         items: this.itemsDefault,
         placeholder: this.messages.search
       }), this.search.on(Nt.Search, this.onSearch);
@@ -6337,11 +6344,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.nodes.nothingFoundMessage.classList.toggle(oe.nothingFoundMessageDisplayed, e);
     }
   };
-  Aa([
+  Ia([
     ot
   ], mi.prototype, "size");
   let ko = mi;
-  class Ia extends ko {
+  class La extends ko {
     constructor(e) {
       const t = !nt();
       super({
@@ -6416,13 +6423,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     scrollLocked: "ce-scroll-locked",
     scrollLockedHard: "ce-scroll-locked--hard"
   };
-  let La = bi;
+  let Na = bi;
   const oo = Re("ce-popover-header"), no = {
     root: oo(),
     text: oo("text"),
     backButton: oo("back-button")
   };
-  class Na {
+  class Pa {
     constructor({ text: e, onBackButtonClick: t }) {
       this.listeners = new yt(), this.text = e, this.onBackButtonClick = t, this.nodes = {
         root: k.make("div", [
@@ -6434,7 +6441,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         text: k.make("div", [
           no.text
         ])
-      }, this.nodes.backButton.innerHTML = fa, this.nodes.root.appendChild(this.nodes.backButton), this.listeners.on(this.nodes.backButton, "click", this.onBackButtonClick), this.nodes.text.innerText = this.text, this.nodes.root.appendChild(this.nodes.text);
+      }, this.nodes.backButton.innerHTML = ga, this.nodes.root.appendChild(this.nodes.backButton), this.listeners.on(this.nodes.backButton, "click", this.onBackButtonClick), this.nodes.text.innerText = this.text, this.nodes.root.appendChild(this.nodes.text);
     }
     getElement() {
       return this.nodes.root;
@@ -6443,7 +6450,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.nodes.root.remove(), this.listeners.destroy();
     }
   }
-  class Pa {
+  class Da {
     constructor() {
       this.history = [];
     }
@@ -6476,7 +6483,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             enabled: false
           }
         }
-      }), this.scrollLocker = new La(), this.history = new Pa(), this.isHidden = true, this.nodes.overlay = k.make("div", [
+      }), this.scrollLocker = new Na(), this.history = new Da(), this.isHidden = true, this.nodes.overlay = k.make("div", [
         oe.overlay,
         oe.overlayHidden
       ]), this.nodes.popover.insertBefore(this.nodes.overlay, this.nodes.popover.firstChild), this.listeners.on(this.nodes.overlay, "click", () => {
@@ -6502,7 +6509,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     updateItemsAndHeader(e, t) {
       if (this.header !== null && this.header !== void 0 && (this.header.destroy(), this.header = null), t !== void 0) {
-        this.header = new Na({
+        this.header = new Pa({
           text: t,
           onBackButtonClick: () => {
             this.history.pop(), this.updateItemsAndHeader(this.history.currentItems, this.history.currentTitle);
@@ -6521,7 +6528,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class Da extends j {
+  class Ra extends j {
     constructor() {
       super(...arguments), this.opened = false, this.selection = new M(), this.popover = null, this.close = () => {
         this.opened && (this.opened = false, M.isAtEditor || this.selection.restore(), this.selection.clearSaved(), !this.Editor.CrossBlockSelection.isCrossBlockSelectionStarted && this.Editor.BlockManager.currentBlock && this.Editor.BlockSelection.unselectBlock(this.Editor.BlockManager.currentBlock), this.eventsDispatcher.emit(this.events.closed), this.popover && (this.popover.off(Se.Closed, this.onPopoverClose), this.popover.destroy(), this.popover.getElement().remove(), this.popover = null));
@@ -6602,7 +6609,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     resolveTuneAliases(e) {
       if (e.type === G.Separator || e.type === G.Html) return e;
-      const t = ua(e, {
+      const t = ha(e, {
         label: "title"
       });
       return e.confirmation && (t.confirmation = this.resolveTuneAliases(e.confirmation)), t;
@@ -6797,15 +6804,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       ]).default;
     });
   })(ki);
-  var Ra = ki.exports;
-  const ja = Ht(Ra);
-  class Ha {
+  var ja = ki.exports;
+  const Ha = Ht(ja);
+  class Fa {
     constructor() {
       this.registeredShortcuts = /* @__PURE__ */ new Map();
     }
     add(e) {
       if (this.findShortcut(e.on, e.name)) throw Error(`Shortcut ${e.name} is already registered for ${e.on}. Please remove it before add a new handler.`);
-      const t = new ja({
+      const t = new Ha({
         name: e.name,
         on: e.on,
         callback: e.handler
@@ -6826,10 +6833,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return (this.registeredShortcuts.get(e) || []).find(({ name: o }) => o === t);
     }
   }
-  const et = new Ha();
-  var Fa = Object.defineProperty, Va = Object.getOwnPropertyDescriptor, wi = (n, e, t, o) => {
-    for (var i = Va(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
-    return i && Fa(e, t, i), i;
+  const et = new Fa();
+  var Va = Object.defineProperty, $a = Object.getOwnPropertyDescriptor, wi = (n, e, t, o) => {
+    for (var i = $a(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
+    return i && Va(e, t, i), i;
   }, Ct = ((n) => (n.Opened = "toolbox-opened", n.Closed = "toolbox-closed", n.BlockAdded = "toolbox-block-added", n))(Ct || {});
   const wo = class Ei extends bt {
     constructor({ api: e, tools: t, i18nLabels: o }) {
@@ -6959,9 +6966,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   wi([
     ot
   ], wo.prototype, "toolboxItemsToBeDisplayed");
-  let $a = wo;
+  let Ua = wo;
   const xi = "block hovered";
-  async function Ua(n, e) {
+  async function za(n, e) {
     const t = navigator.keyboard;
     if (!t) return e;
     try {
@@ -6970,7 +6977,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return console.error(o), e;
     }
   }
-  class za extends j {
+  class qa extends j {
     constructor({ config: e, eventsDispatcher: t }) {
       super({
         config: e,
@@ -7060,7 +7067,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         const v = parseInt(window.getComputedStyle(e.pluginsContent).paddingTop);
         i = t.offsetTop + v;
       } else {
-        const v = Br(r), b = parseInt(window.getComputedStyle(this.nodes.plusButton).height, 10);
+        const v = Mr(r), b = parseInt(window.getComputedStyle(this.nodes.plusButton).height, 10);
         i = t.offsetTop + v - b + 8 + h;
       }
       this.nodes.wrapper.style.top = `${Math.floor(i)}px`, this.Editor.BlockManager.blocks.length === 1 && e.isEmpty ? this.blockTunesToggler.hide() : this.blockTunesToggler.show(), this.open();
@@ -7082,7 +7089,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       ].forEach((s) => {
         this.nodes[s] = k.make("div", this.CSS[s]);
       }), k.append(this.nodes.wrapper, this.nodes.content), k.append(this.nodes.content, this.nodes.actions), this.nodes.plusButton = k.make("div", this.CSS.plusButton, {
-        innerHTML: wa
+        innerHTML: Ea
       }), k.append(this.nodes.actions, this.nodes.plusButton), this.readOnlyMutableListeners.on(this.nodes.plusButton, "click", () => {
         It(true), this.plusButtonClicked();
       }, false);
@@ -7092,9 +7099,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       })), Lt(this.nodes.plusButton, e, {
         hidingDelay: 400
       }), this.nodes.settingsToggler = k.make("span", this.CSS.settingsToggler, {
-        innerHTML: ka
+        innerHTML: wa
       }), k.append(this.nodes.actions, this.nodes.settingsToggler);
-      const t = k.make("div"), o = k.text(ve.ui(ke.ui.blockTunes.toggler, "Click to tune")), i = await Ua("Slash", "/");
+      const t = k.make("div"), o = k.text(ve.ui(ke.ui.blockTunes.toggler, "Click to tune")), i = await za("Slash", "/");
       t.appendChild(o), t.appendChild(k.make("div", this.CSS.plusButtonShortcut, {
         textContent: fo(`CMD + ${i}`)
       })), Lt(this.nodes.settingsToggler, t, {
@@ -7102,7 +7109,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }), k.append(this.nodes.actions, this.makeToolbox()), k.append(this.nodes.actions, this.Editor.BlockSettings.getElement()), k.append(this.Editor.UI.nodes.wrapper, this.nodes.wrapper);
     }
     makeToolbox() {
-      return this.toolboxInstance = new $a({
+      return this.toolboxInstance = new Ua({
         api: this.Editor.API.methods,
         tools: this.Editor.Tools.blockTools,
         i18nLabels: {
@@ -7179,7 +7186,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.type === $e.Tune;
     }
   }
-  class qa extends j {
+  class Wa extends j {
     constructor({ config: e, eventsDispatcher: t }) {
       super({
         config: e,
@@ -7225,7 +7232,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       if (this.opened) return;
       this.opened = true, this.popover !== null && this.popover.destroy(), this.createToolsInstances();
       const t = await this.getPopoverItems();
-      this.popover = new Ia({
+      this.popover = new La({
         items: t,
         scopeElement: this.Editor.API.methods.ui.nodes.redactor,
         messages: {
@@ -7388,7 +7395,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     const s = i.cloneContents(), r = document.createElement("div");
     r.appendChild(s);
     const l = r.textContent || "";
-    return _r(l);
+    return Br(l);
   }
   function St(n) {
     const e = k.getDeepestNode(n);
@@ -7409,8 +7416,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(To, "__esModule", {
     value: true
   });
-  To.allInputsSelector = Wa;
-  function Wa() {
+  To.allInputsSelector = Ya;
+  function Ya() {
     var n = [
       "text",
       "password",
@@ -7440,8 +7447,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(So, "__esModule", {
     value: true
   });
-  So.isNativeInput = Ya;
-  function Ya(n) {
+  So.isNativeInput = Xa;
+  function Xa(n) {
     var e = [
       "INPUT",
       "TEXTAREA"
@@ -7464,8 +7471,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(_o, "__esModule", {
     value: true
   });
-  _o.append = Xa;
-  function Xa(n, e) {
+  _o.append = Ka;
+  function Ka(n, e) {
     Array.isArray(e) ? e.forEach(function(t) {
       n.appendChild(t);
     }) : n.appendChild(e);
@@ -7486,8 +7493,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Mo, "__esModule", {
     value: true
   });
-  Mo.blockElements = Ka;
-  function Ka() {
+  Mo.blockElements = Ga;
+  function Ga() {
     return [
       "address",
       "article",
@@ -7546,8 +7553,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Oo, "__esModule", {
     value: true
   });
-  Oo.calculateBaseline = Ga;
-  function Ga(n) {
+  Oo.calculateBaseline = Za;
+  function Za(n) {
     var e = window.getComputedStyle(n), t = parseFloat(e.fontSize), o = parseFloat(e.lineHeight) || t * 1.2, i = parseFloat(e.paddingTop), s = parseFloat(e.borderTopWidth), r = parseFloat(e.marginTop), l = t * 0.8, d = (o - t) / 2, h = r + s + i + d + l;
     return h;
   }
@@ -7567,8 +7574,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Lo, "__esModule", {
     value: true
   });
-  Lo.isContentEditable = Za;
-  function Za(n) {
+  Lo.isContentEditable = Qa;
+  function Qa(n) {
     return n.contentEditable === "true";
   }
   (function(n) {
@@ -7586,11 +7593,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Ao, "__esModule", {
     value: true
   });
-  Ao.canSetCaret = el;
-  var Qa = We, Ja = Io;
-  function el(n) {
+  Ao.canSetCaret = tl;
+  var Ja = We, el = Io;
+  function tl(n) {
     var e = true;
-    if ((0, Qa.isNativeInput)(n)) switch (n.type) {
+    if ((0, Ja.isNativeInput)(n)) switch (n.type) {
       case "file":
       case "checkbox":
       case "radio":
@@ -7602,7 +7609,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         e = false;
         break;
     }
-    else e = (0, Ja.isContentEditable)(n);
+    else e = (0, el.isContentEditable)(n);
     return e;
   }
   (function(n) {
@@ -7618,7 +7625,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     });
   })(Oi);
   var Vt = {}, No = {};
-  function tl(n, e, t) {
+  function ol(n, e, t) {
     const o = t.value !== void 0 ? "value" : "get", i = t[o], s = `#${e}Cache`;
     if (t[o] = function(...r) {
       return this[s] === void 0 && (this[s] = i.apply(this, r)), this[s];
@@ -7642,25 +7649,25 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function Po(n) {
     return n != null && n !== "" && (typeof n != "object" || Object.keys(n).length > 0);
   }
-  function ol(n) {
+  function nl(n) {
     return !Po(n);
   }
-  const nl = () => typeof window < "u" && window.navigator !== null && Po(window.navigator.platform) && (/iP(ad|hone|od)/.test(window.navigator.platform) || window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
-  function il(n) {
+  const il = () => typeof window < "u" && window.navigator !== null && Po(window.navigator.platform) && (/iP(ad|hone|od)/.test(window.navigator.platform) || window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
+  function sl(n) {
     const e = Ai();
     return n = n.replace(/shift/gi, "\u21E7").replace(/backspace/gi, "\u232B").replace(/enter/gi, "\u23CE").replace(/up/gi, "\u2191").replace(/left/gi, "\u2192").replace(/down/gi, "\u2193").replace(/right/gi, "\u2190").replace(/escape/gi, "\u238B").replace(/insert/gi, "Ins").replace(/delete/gi, "\u2421").replace(/\+/gi, "+"), e.mac ? n = n.replace(/ctrl|cmd/gi, "\u2318").replace(/alt/gi, "\u2325") : n = n.replace(/cmd/gi, "Ctrl").replace(/windows/gi, "WIN"), n;
   }
-  function sl(n) {
+  function rl(n) {
     return n[0].toUpperCase() + n.slice(1);
   }
-  function rl(n) {
+  function al(n) {
     const e = document.createElement("div");
     e.style.position = "absolute", e.style.left = "-999px", e.style.bottom = "-999px", e.innerHTML = n, document.body.appendChild(e);
     const t = window.getSelection(), o = document.createRange();
     if (o.selectNode(e), t === null) throw new Error("Cannot copy text to clipboard");
     t.removeAllRanges(), t.addRange(o), document.execCommand("copy"), document.body.removeChild(e);
   }
-  function al(n, e, t) {
+  function ll(n, e, t) {
     let o;
     return (...i) => {
       const s = this, r = () => {
@@ -7672,28 +7679,28 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function Pe(n) {
     return Object.prototype.toString.call(n).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
   }
-  function ll(n) {
+  function cl(n) {
     return Pe(n) === "boolean";
   }
   function Ii(n) {
     return Pe(n) === "function" || Pe(n) === "asyncfunction";
   }
-  function cl(n) {
+  function dl(n) {
     return Ii(n) && /^\s*class\s+/.test(n.toString());
   }
-  function dl(n) {
+  function ul(n) {
     return Pe(n) === "number";
   }
   function Bt(n) {
     return Pe(n) === "object";
   }
-  function ul(n) {
+  function hl(n) {
     return Promise.resolve(n) === n;
   }
-  function hl(n) {
+  function pl(n) {
     return Pe(n) === "string";
   }
-  function pl(n) {
+  function fl(n) {
     return Pe(n) === "undefined";
   }
   function po(n, ...e) {
@@ -7706,21 +7713,21 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     });
     return po(n, ...e);
   }
-  function fl(n, e, t) {
+  function gl(n, e, t) {
     const o = `\xAB${e}\xBB is deprecated and will be removed in the next major release. Please use the \xAB${t}\xBB instead.`;
     n && console.warn(o);
   }
-  function gl(n) {
+  function ml(n) {
     try {
       return new URL(n).href;
     } catch {
     }
     return n.substring(0, 2) === "//" ? window.location.protocol + n : window.location.origin + n;
   }
-  function ml(n) {
+  function vl(n) {
     return n > 47 && n < 58 || n === 32 || n === 13 || n === 229 || n > 64 && n < 91 || n > 95 && n < 112 || n > 185 && n < 193 || n > 218 && n < 223;
   }
-  const vl = {
+  const bl = {
     BACKSPACE: 8,
     TAB: 9,
     ENTER: 13,
@@ -7736,14 +7743,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     DELETE: 46,
     META: 91,
     SLASH: 191
-  }, bl = {
+  }, yl = {
     LEFT: 0,
     WHEEL: 1,
     RIGHT: 2,
     BACKWARD: 3,
     FORWARD: 4
   };
-  let yl = class {
+  let kl = class {
     constructor() {
       this.completed = Promise.resolve();
     }
@@ -7753,7 +7760,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   };
-  function kl(n, e, t = void 0) {
+  function wl(n, e, t = void 0) {
     let o, i, s, r = null, l = 0;
     t || (t = {});
     const d = function() {
@@ -7766,47 +7773,47 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return o = this, i = arguments, g <= 0 || g > e ? (r && (clearTimeout(r), r = null), l = h, s = n.apply(o, i), r === null && (o = i = null)) : !r && t.trailing !== false && (r = setTimeout(d, g)), s;
     };
   }
-  const wl = Object.freeze(Object.defineProperty({
+  const El = Object.freeze(Object.defineProperty({
     __proto__: null,
-    PromiseQueue: yl,
-    beautifyShortcut: il,
-    cacheable: tl,
-    capitalize: sl,
-    copyTextToClipboard: rl,
-    debounce: al,
+    PromiseQueue: kl,
+    beautifyShortcut: sl,
+    cacheable: ol,
+    capitalize: rl,
+    copyTextToClipboard: al,
+    debounce: ll,
     deepMerge: po,
-    deprecationAssert: fl,
+    deprecationAssert: gl,
     getUserOS: Ai,
-    getValidUrl: gl,
-    isBoolean: ll,
-    isClass: cl,
-    isEmpty: ol,
+    getValidUrl: ml,
+    isBoolean: cl,
+    isClass: dl,
+    isEmpty: nl,
     isFunction: Ii,
-    isIosDevice: nl,
-    isNumber: dl,
+    isIosDevice: il,
+    isNumber: ul,
     isObject: Bt,
-    isPrintableKey: ml,
-    isPromise: ul,
-    isString: hl,
-    isUndefined: pl,
-    keyCodes: vl,
-    mouseButtons: bl,
+    isPrintableKey: vl,
+    isPromise: hl,
+    isString: pl,
+    isUndefined: fl,
+    keyCodes: bl,
+    mouseButtons: yl,
     notEmpty: Po,
-    throttle: kl,
+    throttle: wl,
     typeOf: Pe
   }, Symbol.toStringTag, {
     value: "Module"
-  })), Do = pr(wl);
+  })), Do = fr(El);
   Object.defineProperty(No, "__esModule", {
     value: true
   });
-  No.containsOnlyInlineElements = Cl;
-  var El = Do, xl = Bo;
-  function Cl(n) {
+  No.containsOnlyInlineElements = Tl;
+  var xl = Do, Cl = Bo;
+  function Tl(n) {
     var e;
-    (0, El.isString)(n) ? (e = document.createElement("div"), e.innerHTML = n) : e = n;
+    (0, xl.isString)(n) ? (e = document.createElement("div"), e.innerHTML = n) : e = n;
     var t = function(o) {
-      return !(0, xl.blockElements)().includes(o.tagName.toLowerCase()) && Array.from(o.children).every(t);
+      return !(0, Cl.blockElements)().includes(o.tagName.toLowerCase()) && Array.from(o.children).every(t);
     };
     return Array.from(e.children).every(t);
   }
@@ -7826,8 +7833,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(jo, "__esModule", {
     value: true
   });
-  jo.make = Tl;
-  function Tl(n, e, t) {
+  jo.make = Sl;
+  function Sl(n, e, t) {
     var o;
     e === void 0 && (e = null), t === void 0 && (t = {});
     var i = document.createElement(n);
@@ -7855,10 +7862,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Ro, "__esModule", {
     value: true
   });
-  Ro.fragmentToString = _l;
-  var Sl = $t;
-  function _l(n) {
-    var e = (0, Sl.make)("div");
+  Ro.fragmentToString = Bl;
+  var _l = $t;
+  function Bl(n) {
+    var e = (0, _l.make)("div");
     return e.appendChild(n), e.innerHTML;
   }
   (function(n) {
@@ -7877,11 +7884,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Ho, "__esModule", {
     value: true
   });
-  Ho.getContentLength = Ml;
-  var Bl = We;
-  function Ml(n) {
+  Ho.getContentLength = Ol;
+  var Ml = We;
+  function Ol(n) {
     var e, t;
-    return (0, Bl.isNativeInput)(n) ? n.value.length : n.nodeType === Node.TEXT_NODE ? n.length : (t = (e = n.textContent) === null || e === void 0 ? void 0 : e.length) !== null && t !== void 0 ? t : 0;
+    return (0, Ml.isNativeInput)(n) ? n.value.length : n.nodeType === Node.TEXT_NODE ? n.length : (t = (e = n.textContent) === null || e === void 0 ? void 0 : e.length) !== null && t !== void 0 ? t : 0;
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -7903,9 +7910,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     value: true
   });
   Vo.getDeepestBlockElements = Pi;
-  var Ol = Vt;
+  var Al = Vt;
   function Pi(n) {
-    return (0, Ol.containsOnlyInlineElements)(n) ? [
+    return (0, Al.containsOnlyInlineElements)(n) ? [
       n
     ] : Array.from(n.children).reduce(function(e, t) {
       return On(On([], e, true), Pi(t), true);
@@ -7927,8 +7934,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Uo, "__esModule", {
     value: true
   });
-  Uo.isLineBreakTag = Al;
-  function Al(n) {
+  Uo.isLineBreakTag = Il;
+  function Il(n) {
     return [
       "BR",
       "WBR"
@@ -7950,8 +7957,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(zo, "__esModule", {
     value: true
   });
-  zo.isSingleTag = Il;
-  function Il(n) {
+  zo.isSingleTag = Ll;
+  function Ll(n) {
     return [
       "AREA",
       "BASE",
@@ -7987,13 +7994,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     value: true
   });
   $o.getDeepestNode = Ri;
-  var Ll = We, Nl = Ut, Pl = zt;
+  var Nl = We, Pl = Ut, Dl = zt;
   function Ri(n, e) {
     e === void 0 && (e = false);
     var t = e ? "lastChild" : "firstChild", o = e ? "previousSibling" : "nextSibling";
     if (n.nodeType === Node.ELEMENT_NODE && n[t]) {
       var i = n[t];
-      if ((0, Pl.isSingleTag)(i) && !(0, Ll.isNativeInput)(i) && !(0, Nl.isLineBreakTag)(i)) if (i[o]) i = i[o];
+      if ((0, Dl.isSingleTag)(i) && !(0, Nl.isNativeInput)(i) && !(0, Pl.isLineBreakTag)(i)) if (i[o]) i = i[o];
       else if (i.parentNode !== null && i.parentNode[o]) i = i.parentNode[o];
       else return i.parentNode;
       return Ri(i, e);
@@ -8019,13 +8026,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(qo, "__esModule", {
     value: true
   });
-  qo.findAllInputs = Fl;
-  var Dl = Vt, Rl = Fo, jl = Co, Hl = We;
-  function Fl(n) {
-    return Array.from(n.querySelectorAll((0, jl.allInputsSelector)())).reduce(function(e, t) {
-      return (0, Hl.isNativeInput)(t) || (0, Dl.containsOnlyInlineElements)(t) ? Et(Et([], e, true), [
+  qo.findAllInputs = Vl;
+  var Rl = Vt, jl = Fo, Hl = Co, Fl = We;
+  function Vl(n) {
+    return Array.from(n.querySelectorAll((0, Hl.allInputsSelector)())).reduce(function(e, t) {
+      return (0, Fl.isNativeInput)(t) || (0, Rl.containsOnlyInlineElements)(t) ? Et(Et([], e, true), [
         t
-      ], false) : Et(Et([], e, true), (0, Rl.getDeepestBlockElements)(t), true);
+      ], false) : Et(Et([], e, true), (0, jl.getDeepestBlockElements)(t), true);
     }, []);
   }
   (function(n) {
@@ -8044,8 +8051,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Wo, "__esModule", {
     value: true
   });
-  Wo.isCollapsedWhitespaces = Vl;
-  function Vl(n) {
+  Wo.isCollapsedWhitespaces = $l;
+  function $l(n) {
     return !/[^\t\n\r ]/.test(n);
   }
   (function(n) {
@@ -8064,10 +8071,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Xo, "__esModule", {
     value: true
   });
-  Xo.isElement = Ul;
-  var $l = Do;
-  function Ul(n) {
-    return (0, $l.isNumber)(n) ? false : !!n && !!n.nodeType && n.nodeType === Node.ELEMENT_NODE;
+  Xo.isElement = zl;
+  var Ul = Do;
+  function zl(n) {
+    return (0, Ul.isNumber)(n) ? false : !!n && !!n.nodeType && n.nodeType === Node.ELEMENT_NODE;
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -8085,8 +8092,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Zo, "__esModule", {
     value: true
   });
-  Zo.isLeaf = zl;
-  function zl(n) {
+  Zo.isLeaf = ql;
+  function ql(n) {
     return n === null ? false : n.childNodes.length === 0;
   }
   (function(n) {
@@ -8105,11 +8112,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Jo, "__esModule", {
     value: true
   });
-  Jo.isNodeEmpty = Kl;
-  var ql = Ut, Wl = Yo, Yl = We, Xl = zt;
-  function Kl(n, e) {
+  Jo.isNodeEmpty = Gl;
+  var Wl = Ut, Yl = Yo, Xl = We, Kl = zt;
+  function Gl(n, e) {
     var t = "";
-    return (0, Xl.isSingleTag)(n) && !(0, ql.isLineBreakTag)(n) ? false : ((0, Wl.isElement)(n) && (0, Yl.isNativeInput)(n) ? t = n.value : n.textContent !== null && (t = n.textContent.replace("\u200B", "")), e !== void 0 && (t = t.replace(new RegExp(e, "g"), "")), t.trim().length === 0);
+    return (0, Kl.isSingleTag)(n) && !(0, Wl.isLineBreakTag)(n) ? false : ((0, Yl.isElement)(n) && (0, Xl.isNativeInput)(n) ? t = n.value : n.textContent !== null && (t = n.textContent.replace("\u200B", "")), e !== void 0 && (t = t.replace(new RegExp(e, "g"), "")), t.trim().length === 0);
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -8126,16 +8133,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Ko, "__esModule", {
     value: true
   });
-  Ko.isEmpty = Ql;
-  var Gl = Go, Zl = Qo;
-  function Ql(n, e) {
+  Ko.isEmpty = Jl;
+  var Zl = Go, Ql = Qo;
+  function Jl(n, e) {
     n.normalize();
     for (var t = [
       n
     ]; t.length > 0; ) {
       var o = t.shift();
       if (o) {
-        if (n = o, (0, Gl.isLeaf)(n) && !(0, Zl.isNodeEmpty)(n, e)) return false;
+        if (n = o, (0, Zl.isLeaf)(n) && !(0, Ql.isNodeEmpty)(n, e)) return false;
         t.push.apply(t, Array.from(n.childNodes));
       }
     }
@@ -8157,10 +8164,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(en, "__esModule", {
     value: true
   });
-  en.isFragment = ec;
-  var Jl = Do;
-  function ec(n) {
-    return (0, Jl.isNumber)(n) ? false : !!n && !!n.nodeType && n.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
+  en.isFragment = tc;
+  var ec = Do;
+  function tc(n) {
+    return (0, ec.isNumber)(n) ? false : !!n && !!n.nodeType && n.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -8178,10 +8185,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(tn, "__esModule", {
     value: true
   });
-  tn.isHTMLString = oc;
-  var tc = $t;
-  function oc(n) {
-    var e = (0, tc.make)("div");
+  tn.isHTMLString = nc;
+  var oc = $t;
+  function nc(n) {
+    var e = (0, oc.make)("div");
     return e.innerHTML = n, e.childElementCount > 0;
   }
   (function(n) {
@@ -8200,8 +8207,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(on, "__esModule", {
     value: true
   });
-  on.offset = nc;
-  function nc(n) {
+  on.offset = ic;
+  function ic(n) {
     var e = n.getBoundingClientRect(), t = window.pageXOffset || document.documentElement.scrollLeft, o = window.pageYOffset || document.documentElement.scrollTop, i = e.top + o, s = e.left + t;
     return {
       top: i,
@@ -8226,8 +8233,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(nn, "__esModule", {
     value: true
   });
-  nn.prepend = ic;
-  function ic(n, e) {
+  nn.prepend = sc;
+  function sc(n, e) {
     Array.isArray(e) ? (e = e.reverse(), e.forEach(function(t) {
       return n.prepend(t);
     })) : n.prepend(e);
@@ -8428,15 +8435,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(qt, "__esModule", {
     value: true
   });
-  qt.getContenteditableSlice = rc;
-  var sc = qe;
-  function rc(n, e, t, o, i) {
+  qt.getContenteditableSlice = ac;
+  var rc = qe;
+  function ac(n, e, t, o, i) {
     var s;
     i === void 0 && (i = false);
     var r = document.createRange();
     if (o === "left" ? (r.setStart(n, 0), r.setEnd(e, t)) : (r.setStart(e, t), r.setEnd(n, n.childNodes.length)), i === true) {
       var l = r.extractContents();
-      return (0, sc.fragmentToString)(l);
+      return (0, rc.fragmentToString)(l);
     }
     var d = r.cloneContents(), h = document.createElement("div");
     h.appendChild(d);
@@ -8446,11 +8453,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Ft, "__esModule", {
     value: true
   });
-  Ft.checkContenteditableSliceForEmptiness = cc;
-  var ac = qe, lc = qt;
-  function cc(n, e, t, o) {
-    var i = (0, lc.getContenteditableSlice)(n, e, t, o);
-    return (0, ac.isCollapsedWhitespaces)(i);
+  Ft.checkContenteditableSliceForEmptiness = dc;
+  var lc = qe, cc = qt;
+  function dc(n, e, t, o) {
+    var i = (0, cc.getContenteditableSlice)(n, e, t, o);
+    return (0, lc.isCollapsedWhitespaces)(i);
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -8481,11 +8488,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(sn, "__esModule", {
     value: true
   });
-  sn.focus = uc;
-  var dc = qe;
-  function uc(n, e) {
+  sn.focus = hc;
+  var uc = qe;
+  function hc(n, e) {
     var t, o;
-    if (e === void 0 && (e = true), (0, dc.isNativeInput)(n)) {
+    if (e === void 0 && (e = true), (0, uc.isNativeInput)(n)) {
       n.focus();
       var i = e ? 0 : n.value.length;
       n.setSelectionRange(i, i);
@@ -8524,8 +8531,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Wt, "__esModule", {
     value: true
   });
-  Wt.getCaretNodeAndOffset = hc;
-  function hc() {
+  Wt.getCaretNodeAndOffset = pc;
+  function pc() {
     var n = window.getSelection();
     if (n === null) return [
       null,
@@ -8556,8 +8563,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(Yt, "__esModule", {
     value: true
   });
-  Yt.getRange = pc;
-  function pc() {
+  Yt.getRange = fc;
+  function fc() {
     var n = window.getSelection();
     return n && n.rangeCount ? n.getRangeAt(0) : null;
   }
@@ -8577,14 +8584,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(an, "__esModule", {
     value: true
   });
-  an.isCaretAtEndOfInput = mc;
-  var An = qe, fc = rn, gc = xo;
-  function mc(n) {
+  an.isCaretAtEndOfInput = vc;
+  var An = qe, gc = rn, mc = xo;
+  function vc(n) {
     var e = (0, An.getDeepestNode)(n, true);
     if (e === null) return true;
     if ((0, An.isNativeInput)(e)) return e.selectionEnd === e.value.length;
-    var t = (0, fc.getCaretNodeAndOffset)(), o = t[0], i = t[1];
-    return o === null ? false : (0, gc.checkContenteditableSliceForEmptiness)(n, o, i, "right");
+    var t = (0, gc.getCaretNodeAndOffset)(), o = t[0], i = t[1];
+    return o === null ? false : (0, mc.checkContenteditableSliceForEmptiness)(n, o, i, "right");
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -8602,15 +8609,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(ln, "__esModule", {
     value: true
   });
-  ln.isCaretAtStartOfInput = yc;
-  var xt = qe, vc = Wt, bc = Ft;
-  function yc(n) {
+  ln.isCaretAtStartOfInput = kc;
+  var xt = qe, bc = Wt, yc = Ft;
+  function kc(n) {
     var e = (0, xt.getDeepestNode)(n);
     if (e === null || (0, xt.isEmpty)(n)) return true;
     if ((0, xt.isNativeInput)(e)) return e.selectionEnd === 0;
     if ((0, xt.isEmpty)(n)) return true;
-    var t = (0, vc.getCaretNodeAndOffset)(), o = t[0], i = t[1];
-    return o === null ? false : (0, bc.checkContenteditableSliceForEmptiness)(n, o, i, "left");
+    var t = (0, bc.getCaretNodeAndOffset)(), o = t[0], i = t[1];
+    return o === null ? false : (0, yc.checkContenteditableSliceForEmptiness)(n, o, i, "left");
   }
   (function(n) {
     Object.defineProperty(n, "__esModule", {
@@ -8628,10 +8635,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   Object.defineProperty(cn, "__esModule", {
     value: true
   });
-  cn.save = Ec;
-  var kc = qe, wc = Yt;
-  function Ec() {
-    var n = (0, wc.getRange)(), e = (0, kc.make)("span");
+  cn.save = xc;
+  var wc = qe, Ec = Yt;
+  function xc() {
+    var n = (0, Ec.getRange)(), e = (0, wc.make)("span");
     if (e.id = "cursor", e.hidden = true, !!n) return n.insertNode(e), function() {
       var t = window.getSelection();
       t && (n.setStartAfter(e), n.setEndAfter(e), t.removeAllRanges(), t.addRange(n), setTimeout(function() {
@@ -8712,7 +8719,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     });
   })(_i);
-  class xc extends j {
+  class Cc extends j {
     keydown(e) {
       switch (this.beforeKeydownProcessing(e), e.keyCode) {
         case P.BACKSPACE:
@@ -8965,8 +8972,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  const In = "block-removed", Ln = "block-added", Cc = "block-moved", Nn = "block-changed";
-  class Tc {
+  const In = "block-removed", Ln = "block-added", Tc = "block-moved", Nn = "block-changed";
+  class Sc {
     constructor() {
       this.completed = Promise.resolve();
     }
@@ -8976,7 +8983,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
   }
-  class Sc extends j {
+  class _c extends j {
     constructor() {
       super(...arguments), this._currentBlockIndex = -1, this._blocks = null;
     }
@@ -9190,7 +9197,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         z("Warning during 'move' call: indices cannot be lower than 0 or greater than the amount of blocks.", "warn");
         return;
       }
-      this._blocks.move(e, t), this.currentBlockIndex = e, this.blockDidMutated(Cc, this.currentBlock, {
+      this._blocks.move(e, t), this.currentBlockIndex = e, this.blockDidMutated(Tc, this.currentBlock, {
         fromIndex: t,
         toIndex: e
       });
@@ -9207,7 +9214,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.currentBlockIndex = -1;
     }
     async clear(e = false) {
-      const t = new Tc();
+      const t = new Sc();
       this.blocks.forEach((o) => {
         t.add(async () => {
           await this.removeBlock(o, false);
@@ -9254,7 +9261,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }), t;
     }
   }
-  class _c extends j {
+  class Bc extends j {
     constructor() {
       super(...arguments), this.anyBlockSelectedCache = null, this.needToSelectAll = false, this.nativeInputSelected = false, this.readyToBlockSelection = false;
     }
@@ -9515,7 +9522,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       d !== null && d.textContent !== null && l.setStart(d, d.textContent.length), i.removeAllRanges(), i.addRange(l);
     }
   }
-  class Bc extends j {
+  class Mc extends j {
     constructor() {
       super(...arguments), this.onMouseUp = () => {
         this.listeners.off(document, "mouseover", this.onMouseOver), this.listeners.off(document, "mouseup", this.onMouseUp);
@@ -9542,7 +9549,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
     watchSelection(e) {
-      if (e.button !== gr.LEFT) return;
+      if (e.button !== mr.LEFT) return;
       const { BlockManager: t } = this.Editor;
       this.firstSelectedBlock = t.getBlock(e.target), this.lastSelectedBlock = this.firstSelectedBlock, this.listeners.on(document, "mouseover", this.onMouseOver), this.listeners.on(document, "mouseup", this.onMouseUp);
     }
@@ -9585,7 +9592,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     }
   }
-  class Mc extends j {
+  class Oc extends j {
     constructor() {
       super(...arguments), this.isStartedAtEditor = false;
     }
@@ -9625,13 +9632,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       e.preventDefault();
     }
   }
-  const Oc = 180, Ac = 400;
-  class Ic extends j {
+  const Ac = 180, Ic = 400;
+  class Lc extends j {
     constructor({ config: e, eventsDispatcher: t }) {
       super({
         config: e,
         eventsDispatcher: t
-      }), this.disabled = false, this.batchingTimeout = null, this.batchingOnChangeQueue = /* @__PURE__ */ new Map(), this.batchTime = Ac, this.mutationObserver = new MutationObserver((o) => {
+      }), this.disabled = false, this.batchingTimeout = null, this.batchingOnChangeQueue = /* @__PURE__ */ new Map(), this.batchTime = Ic, this.mutationObserver = new MutationObserver((o) => {
         this.redactorChanged(o);
       }), this.eventsDispatcher.on(ni, (o) => {
         this.particularBlockChanged(o.event);
@@ -9755,7 +9762,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       if (e.pasteConfig === false) return;
       const { files: t = {} } = e.pasteConfig;
       let { extensions: o, mimeTypes: i } = t;
-      !o && !i || (o && !Array.isArray(o) && (z(`\xABextensions\xBB property of the onDrop config for \xAB${e.name}\xBB Tool should be an array`), o = []), i && !Array.isArray(i) && (z(`\xABmimeTypes\xBB property of the onDrop config for \xAB${e.name}\xBB Tool should be an array`), i = []), i && (i = i.filter((s) => kr(s) ? true : (z(`MIME type value \xAB${s}\xBB for the \xAB${e.name}\xBB Tool is not a valid MIME type`, "warn"), false))), this.toolsFiles[e.name] = {
+      !o && !i || (o && !Array.isArray(o) && (z(`\xABextensions\xBB property of the onDrop config for \xAB${e.name}\xBB Tool should be an array`), o = []), i && !Array.isArray(i) && (z(`\xABmimeTypes\xBB property of the onDrop config for \xAB${e.name}\xBB Tool should be an array`), i = []), i && (i = i.filter((s) => wr(s) ? true : (z(`MIME type value \xAB${s}\xBB for the \xAB${e.name}\xBB Tool is not a valid MIME type`, "warn"), false))), this.toolsFiles[e.name] = {
         extensions: o || [],
         mimeTypes: i || []
       });
@@ -9782,7 +9789,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }
     async processFile(e) {
-      const t = yr(e), o = Object.entries(this.toolsFiles).find(([s, { mimeTypes: r, extensions: l }]) => {
+      const t = kr(e), o = Object.entries(this.toolsFiles).find(([s, { mimeTypes: r, extensions: l }]) => {
         const [d, h] = e.type.split("/"), g = l.find((b) => b.toLowerCase() === t.toLowerCase()), v = r.find((b) => {
           const [w, y] = b.split("/");
           return w === d && (y === h || y === "*");
@@ -9960,8 +9967,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
   };
   Zi.PATTERN_PROCESSING_MAX_LENGTH = 450;
-  let Lc = Zi;
-  class Nc extends j {
+  let Nc = Zi;
+  class Pc extends j {
     constructor() {
       super(...arguments), this.toolsDontSupportReadOnly = [], this.readOnlyEnabled = false;
     }
@@ -10130,7 +10137,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       for (e > this.stackOfSelected[o - 1] ? w = () => e > this.stackOfSelected[b] : w = () => e < this.stackOfSelected[b]; w(); ) this.rectCrossesBlocks && this.Editor.BlockSelection.unSelectBlockByIndex(this.stackOfSelected[b]), this.stackOfSelected.pop(), b--;
     }
   }
-  class Pc extends j {
+  class Dc extends j {
     async render(e) {
       return new Promise((t) => {
         const { Tools: o, BlockManager: i } = this.Editor;
@@ -10185,7 +10192,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
   }
-  class Dc extends j {
+  class Rc extends j {
     async save() {
       const { BlockManager: e, Tools: t } = this.Editor, o = e.blocks, i = [];
       try {
@@ -10242,8 +10249,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       console.error("vite-plugin-css-injected-by-js", e);
     }
   })();
-  const Rc = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 9V7.2C8 7.08954 8.08954 7 8.2 7L12 7M16 9V7.2C16 7.08954 15.9105 7 15.8 7L12 7M12 7L12 17M12 17H10M12 17H14"/></svg>';
-  function jc(n) {
+  const jc = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 9V7.2C8 7.08954 8.08954 7 8.2 7L12 7M16 9V7.2C16 7.08954 15.9105 7 15.8 7L12 7M12 7L12 17M12 17H10M12 17H14"/></svg>';
+  function Hc(n) {
     const e = document.createElement("div");
     e.innerHTML = n.trim();
     const t = document.createDocumentFragment();
@@ -10274,7 +10281,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     merge(e) {
       if (!this._element) return;
       this._data.text += e.text;
-      const t = jc(e.text);
+      const t = Hc(e.text);
       this._element.appendChild(t), this._element.normalize();
     }
     validate(e) {
@@ -10318,7 +10325,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     static get toolbox() {
       return {
-        icon: Rc,
+        icon: jc,
         title: "Text"
       };
     }
@@ -10334,7 +10341,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     render() {
       return {
-        icon: ha,
+        icon: pa,
         name: "bold",
         onActivate: () => {
           document.execCommand(this.commandName);
@@ -10364,7 +10371,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       };
     }
     render() {
-      return this.nodes.button = document.createElement("button"), this.nodes.button.type = "button", this.nodes.button.classList.add(this.CSS.button, this.CSS.buttonModifier), this.nodes.button.innerHTML = ya, this.nodes.button;
+      return this.nodes.button = document.createElement("button"), this.nodes.button.type = "button", this.nodes.button.classList.add(this.CSS.button, this.CSS.buttonModifier), this.nodes.button.innerHTML = ka, this.nodes.button;
     }
     surround() {
       document.execCommand(this.commandName);
@@ -10424,7 +10431,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     checkState() {
       const e = this.selection.findParentTag("A");
       if (e) {
-        this.nodes.button.innerHTML = xa, this.nodes.button.classList.add(this.CSS.buttonUnlink), this.nodes.button.classList.add(this.CSS.buttonActive), this.openActions();
+        this.nodes.button.innerHTML = Ca, this.nodes.button.classList.add(this.CSS.buttonUnlink), this.nodes.button.classList.add(this.CSS.buttonActive), this.openActions();
         const t = e.getAttribute("href");
         this.nodes.input.value = t !== "null" ? t : "", this.selection.save();
       } else this.nodes.button.innerHTML = _n, this.nodes.button.classList.remove(this.CSS.buttonUnlink), this.nodes.button.classList.remove(this.CSS.buttonActive);
@@ -10545,7 +10552,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.savedData;
     }
     make() {
-      const e = k.make("div", this.CSS.wrapper), t = Ca, o = k.make("div", this.CSS.info), i = k.make("div", this.CSS.title, {
+      const e = k.make("div", this.CSS.wrapper), t = Ta, o = k.make("div", this.CSS.info), i = k.make("div", this.CSS.title, {
         textContent: this.title
       }), s = k.make("div", this.CSS.subtitle, {
         textContent: this.subtitle
@@ -10554,7 +10561,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
   }
   es.isReadOnlySupported = true;
-  class Hc extends Eo {
+  class Fc extends Eo {
     constructor() {
       super(...arguments), this.type = $e.Inline;
     }
@@ -10571,7 +10578,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.constructable[Pt.IsReadOnlySupported] ?? false;
     }
   }
-  class Fc extends Eo {
+  class Vc extends Eo {
     constructor() {
       super(...arguments), this.type = $e.Tune;
     }
@@ -10606,9 +10613,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return new pe(e);
     }
   }
-  var Vc = Object.defineProperty, $c = Object.getOwnPropertyDescriptor, ts = (n, e, t, o) => {
-    for (var i = $c(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
-    return i && Vc(e, t, i), i;
+  var $c = Object.defineProperty, Uc = Object.getOwnPropertyDescriptor, ts = (n, e, t, o) => {
+    for (var i = Uc(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
+    return i && $c(e, t, i), i;
   };
   class fn extends Eo {
     constructor() {
@@ -10681,7 +10688,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   ts([
     ot
   ], fn.prototype, "baseSanitizeConfig");
-  class Uc {
+  class zc {
     constructor(e, t, o) {
       this.api = o, this.config = e, this.editorConfig = t;
     }
@@ -10700,9 +10707,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     getConstructor(e) {
       switch (true) {
         case e[Pt.IsInline]:
-          return Hc;
-        case e[ho.IsTune]:
           return Fc;
+        case e[ho.IsTune]:
+          return Vc;
         default:
           return fn;
       }
@@ -10716,7 +10723,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     render() {
       return {
-        icon: pa,
+        icon: fa,
         title: this.api.i18n.t("Move down"),
         onActivate: () => this.handleClick(),
         name: "move-down"
@@ -10737,7 +10744,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     render() {
       return {
-        icon: va,
+        icon: ba,
         title: this.api.i18n.t("Delete"),
         name: "delete",
         confirmation: {
@@ -10759,7 +10766,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     render() {
       return {
-        icon: ma,
+        icon: va,
         title: this.api.i18n.t("Move up"),
         onActivate: () => this.handleClick(),
         name: "move-up"
@@ -10774,9 +10781,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
   }
   is.isTune = true;
-  var zc = Object.defineProperty, qc = Object.getOwnPropertyDescriptor, Wc = (n, e, t, o) => {
-    for (var i = qc(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
-    return i && zc(e, t, i), i;
+  var qc = Object.defineProperty, Wc = Object.getOwnPropertyDescriptor, Yc = (n, e, t, o) => {
+    for (var i = Wc(e, t), s = n.length - 1, r; s >= 0; s--) (r = n[s]) && (i = r(e, t, i) || i);
+    return i && qc(e, t, i), i;
   };
   class ss extends j {
     constructor() {
@@ -10806,10 +10813,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     async prepare() {
       if (this.validateTools(), this.config.tools = ro({}, this.internalTools, this.config.tools), !Object.prototype.hasOwnProperty.call(this.config, "tools") || Object.keys(this.config.tools).length === 0) throw Error("Can't start without tools");
       const e = this.prepareConfig();
-      this.factory = new Uc(e, this.config, this.Editor.API);
+      this.factory = new zc(e, this.config, this.Editor.API);
       const t = this.getListOfPrepareFunctions(e);
       if (t.length === 0) return Promise.resolve();
-      await br(t, (o) => {
+      await yr(t, (o) => {
         this.toolPrepareMethodSuccess(o);
       }, (o) => {
         this.toolPrepareMethodFallback(o);
@@ -10961,18 +10968,18 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return e;
     }
   }
-  Wc([
+  Yc([
     ot
   ], ss.prototype, "getAllInlineToolsSanitizeConfig");
-  const Yc = `:root{--selectionColor: #e1f2ff;--inlineSelectionColor: #d4ecff;--bg-light: #eff2f5;--grayText: #707684;--color-dark: #1D202B;--color-active-icon: #388AE5;--color-gray-border: rgba(201, 201, 204, .48);--content-width: 650px;--narrow-mode-right-padding: 50px;--toolbox-buttons-size: 26px;--toolbox-buttons-size--mobile: 36px;--icon-size: 20px;--icon-size--mobile: 28px;--block-padding-vertical: .4em;--color-line-gray: #EFF0F1 }.codex-editor{position:relative;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:1}.codex-editor .hide{display:none}.codex-editor__redactor [contenteditable]:empty:after{content:"\\feff"}@media (min-width: 651px){.codex-editor--narrow .codex-editor__redactor{margin-right:50px}}@media (min-width: 651px){.codex-editor--narrow.codex-editor--rtl .codex-editor__redactor{margin-left:50px;margin-right:0}}@media (min-width: 651px){.codex-editor--narrow .ce-toolbar__actions{right:-5px}}.codex-editor-copyable{position:absolute;height:1px;width:1px;top:-400%;opacity:.001}.codex-editor-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:999;pointer-events:none;overflow:hidden}.codex-editor-overlay__container{position:relative;pointer-events:auto;z-index:0}.codex-editor-overlay__rectangle{position:absolute;pointer-events:none;background-color:#2eaadc33;border:1px solid transparent}.codex-editor svg{max-height:100%}.codex-editor path{stroke:currentColor}.codex-editor ::-moz-selection{background-color:#d4ecff}.codex-editor ::selection{background-color:#d4ecff}.codex-editor--toolbox-opened [contentEditable=true][data-placeholder]:focus:before{opacity:0!important}.ce-scroll-locked{overflow:hidden}.ce-scroll-locked--hard{overflow:hidden;top:calc(-1 * var(--window-scroll-offset));position:fixed;width:100%}.ce-toolbar{position:absolute;left:0;right:0;top:0;-webkit-transition:opacity .1s ease;transition:opacity .1s ease;will-change:opacity,top;display:none}.ce-toolbar--opened{display:block}.ce-toolbar__content{max-width:650px;margin:0 auto;position:relative}.ce-toolbar__plus{color:#1d202b;cursor:pointer;width:26px;height:26px;border-radius:7px;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-ms-flex-negative:0;flex-shrink:0}@media (max-width: 650px){.ce-toolbar__plus{width:36px;height:36px}}@media (hover: hover){.ce-toolbar__plus:hover{background-color:#eff2f5}}.ce-toolbar__plus--active{background-color:#eff2f5;-webkit-animation:bounceIn .75s 1;animation:bounceIn .75s 1;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}.ce-toolbar__plus-shortcut{opacity:.6;word-spacing:-2px;margin-top:5px}@media (max-width: 650px){.ce-toolbar__plus{position:absolute;background-color:#fff;border:1px solid #E8E8EB;-webkit-box-shadow:0 3px 15px -3px rgba(13,20,33,.13);box-shadow:0 3px 15px -3px #0d142121;border-radius:6px;z-index:2;position:static}.ce-toolbar__plus--left-oriented:before{left:15px;margin-left:0}.ce-toolbar__plus--right-oriented:before{left:auto;right:15px;margin-left:0}}.ce-toolbar__actions{position:absolute;right:100%;opacity:0;display:-webkit-box;display:-ms-flexbox;display:flex;padding-right:5px}.ce-toolbar__actions--opened{opacity:1}@media (max-width: 650px){.ce-toolbar__actions{right:auto}}.ce-toolbar__settings-btn{color:#1d202b;width:26px;height:26px;border-radius:7px;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;margin-left:3px;cursor:pointer;user-select:none}@media (max-width: 650px){.ce-toolbar__settings-btn{width:36px;height:36px}}@media (hover: hover){.ce-toolbar__settings-btn:hover{background-color:#eff2f5}}.ce-toolbar__settings-btn--active{background-color:#eff2f5;-webkit-animation:bounceIn .75s 1;animation:bounceIn .75s 1;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}@media (min-width: 651px){.ce-toolbar__settings-btn{width:24px}}.ce-toolbar__settings-btn--hidden{display:none}@media (max-width: 650px){.ce-toolbar__settings-btn{position:absolute;background-color:#fff;border:1px solid #E8E8EB;-webkit-box-shadow:0 3px 15px -3px rgba(13,20,33,.13);box-shadow:0 3px 15px -3px #0d142121;border-radius:6px;z-index:2;position:static}.ce-toolbar__settings-btn--left-oriented:before{left:15px;margin-left:0}.ce-toolbar__settings-btn--right-oriented:before{left:auto;right:15px;margin-left:0}}.ce-toolbar__plus svg,.ce-toolbar__settings-btn svg{width:24px;height:24px}@media (min-width: 651px){.codex-editor--narrow .ce-toolbar__plus{left:5px}}@media (min-width: 651px){.codex-editor--narrow .ce-toolbox .ce-popover{right:0;left:auto;left:initial}}.ce-inline-toolbar{--y-offset: 8px;--color-background-icon-active: rgba(56, 138, 229, .1);--color-text-icon-active: #388AE5;--color-text-primary: black;position:absolute;visibility:hidden;-webkit-transition:opacity .25s ease;transition:opacity .25s ease;will-change:opacity,left,top;top:0;left:0;z-index:3;opacity:1;visibility:visible}.ce-inline-toolbar [hidden]{display:none!important}.ce-inline-toolbar__toggler-and-button-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%;padding:0 6px}.ce-inline-toolbar__buttons{display:-webkit-box;display:-ms-flexbox;display:flex}.ce-inline-toolbar__dropdown{display:-webkit-box;display:-ms-flexbox;display:flex;padding:6px;margin:0 6px 0 -6px;-webkit-box-align:center;-ms-flex-align:center;align-items:center;cursor:pointer;border-right:1px solid rgba(201,201,204,.48);-webkit-box-sizing:border-box;box-sizing:border-box}@media (hover: hover){.ce-inline-toolbar__dropdown:hover{background:#eff2f5}}.ce-inline-toolbar__dropdown--hidden{display:none}.ce-inline-toolbar__dropdown-content,.ce-inline-toolbar__dropdown-arrow{display:-webkit-box;display:-ms-flexbox;display:flex}.ce-inline-toolbar__dropdown-content svg,.ce-inline-toolbar__dropdown-arrow svg{width:20px;height:20px}.ce-inline-toolbar__shortcut{opacity:.6;word-spacing:-3px;margin-top:3px}.ce-inline-tool{color:var(--color-text-primary);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;border:0;border-radius:4px;line-height:normal;height:100%;padding:0;width:28px;background-color:transparent;cursor:pointer}@media (max-width: 650px){.ce-inline-tool{width:36px;height:36px}}@media (hover: hover){.ce-inline-tool:hover{background-color:#f8f8f8}}.ce-inline-tool svg{display:block;width:20px;height:20px}@media (max-width: 650px){.ce-inline-tool svg{width:28px;height:28px}}.ce-inline-tool--link .icon--unlink,.ce-inline-tool--unlink .icon--link{display:none}.ce-inline-tool--unlink .icon--unlink{display:inline-block;margin-bottom:-1px}.ce-inline-tool-input{background:#F8F8F8;border:1px solid rgba(226,226,229,.2);border-radius:6px;padding:4px 8px;font-size:14px;line-height:22px;outline:none;margin:0;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box;display:none;font-weight:500;-webkit-appearance:none;font-family:inherit}@media (max-width: 650px){.ce-inline-tool-input{font-size:15px;font-weight:500}}.ce-inline-tool-input::-webkit-input-placeholder{color:#707684}.ce-inline-tool-input::-moz-placeholder{color:#707684}.ce-inline-tool-input:-ms-input-placeholder{color:#707684}.ce-inline-tool-input::-ms-input-placeholder{color:#707684}.ce-inline-tool-input::placeholder{color:#707684}.ce-inline-tool-input--showed{display:block}.ce-inline-tool--active{background:var(--color-background-icon-active);color:var(--color-text-icon-active)}@-webkit-keyframes fade-in{0%{opacity:0}to{opacity:1}}@keyframes fade-in{0%{opacity:0}to{opacity:1}}.ce-block{-webkit-animation:fade-in .3s ease;animation:fade-in .3s ease;-webkit-animation-fill-mode:none;animation-fill-mode:none;-webkit-animation-fill-mode:initial;animation-fill-mode:initial}.ce-block:first-of-type{margin-top:0}.ce-block--selected .ce-block__content{background:#e1f2ff}.ce-block--selected .ce-block__content [contenteditable]{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ce-block--selected .ce-block__content img,.ce-block--selected .ce-block__content .ce-stub{opacity:.55}.ce-block--stretched .ce-block__content{max-width:none}.ce-block__content{position:relative;max-width:650px;margin:0 auto;-webkit-transition:background-color .15s ease;transition:background-color .15s ease}.ce-block--drop-target .ce-block__content:before{content:"";position:absolute;top:100%;left:-20px;margin-top:-1px;height:8px;width:8px;border:solid #388AE5;border-width:1px 1px 0 0;-webkit-transform-origin:right;transform-origin:right;-webkit-transform:rotate(45deg);transform:rotate(45deg)}.ce-block--drop-target .ce-block__content:after{content:"";position:absolute;top:100%;height:1px;width:100%;color:#388ae5;background:repeating-linear-gradient(90deg,#388AE5,#388AE5 1px,#fff 1px,#fff 6px)}.ce-block a{cursor:pointer;-webkit-text-decoration:underline;text-decoration:underline}.ce-block b{font-weight:700}.ce-block i{font-style:italic}@-webkit-keyframes bounceIn{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}20%{-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}60%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@keyframes bounceIn{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}20%{-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}60%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@-webkit-keyframes selectionBounce{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}50%{-webkit-transform:scale3d(1.01,1.01,1.01);transform:scale3d(1.01,1.01,1.01)}70%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@keyframes selectionBounce{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}50%{-webkit-transform:scale3d(1.01,1.01,1.01);transform:scale3d(1.01,1.01,1.01)}70%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@-webkit-keyframes buttonClicked{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.95,.95,.95);transform:scale3d(.95,.95,.95)}60%{-webkit-transform:scale3d(1.02,1.02,1.02);transform:scale3d(1.02,1.02,1.02)}80%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@keyframes buttonClicked{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.95,.95,.95);transform:scale3d(.95,.95,.95)}60%{-webkit-transform:scale3d(1.02,1.02,1.02);transform:scale3d(1.02,1.02,1.02)}80%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}.cdx-block{padding:.4em 0}.cdx-block::-webkit-input-placeholder{line-height:normal!important}.cdx-input{border:1px solid rgba(201,201,204,.48);-webkit-box-shadow:inset 0 1px 2px 0 rgba(35,44,72,.06);box-shadow:inset 0 1px 2px #232c480f;border-radius:3px;padding:10px 12px;outline:none;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box}.cdx-input[data-placeholder]:before{position:static!important}.cdx-input[data-placeholder]:before{display:inline-block;width:0;white-space:nowrap;pointer-events:none}.cdx-settings-button{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;border-radius:3px;cursor:pointer;border:0;outline:none;background-color:transparent;vertical-align:bottom;color:inherit;margin:0;min-width:26px;min-height:26px}.cdx-settings-button--focused{background:rgba(34,186,255,.08)!important}.cdx-settings-button--focused{-webkit-box-shadow:inset 0 0 0px 1px rgba(7,161,227,.08);box-shadow:inset 0 0 0 1px #07a1e314}.cdx-settings-button--focused-animated{-webkit-animation-name:buttonClicked;animation-name:buttonClicked;-webkit-animation-duration:.25s;animation-duration:.25s}.cdx-settings-button--active{color:#388ae5}.cdx-settings-button svg{width:auto;height:auto}@media (max-width: 650px){.cdx-settings-button svg{width:28px;height:28px}}@media (max-width: 650px){.cdx-settings-button{width:36px;height:36px;border-radius:8px}}@media (hover: hover){.cdx-settings-button:hover{background-color:#eff2f5}}.cdx-loader{position:relative;border:1px solid rgba(201,201,204,.48)}.cdx-loader:before{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-11px 0 0 -11px;border:2px solid rgba(201,201,204,.48);border-left-color:#388ae5;border-radius:50%;-webkit-animation:cdxRotation 1.2s infinite linear;animation:cdxRotation 1.2s infinite linear}@-webkit-keyframes cdxRotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0)}to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes cdxRotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0)}to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.cdx-button{padding:13px;border-radius:3px;border:1px solid rgba(201,201,204,.48);font-size:14.9px;background:#fff;-webkit-box-shadow:0 2px 2px 0 rgba(18,30,57,.04);box-shadow:0 2px 2px #121e390a;color:#707684;text-align:center;cursor:pointer}@media (hover: hover){.cdx-button:hover{background:#FBFCFE;-webkit-box-shadow:0 1px 3px 0 rgba(18,30,57,.08);box-shadow:0 1px 3px #121e3914}}.cdx-button svg{height:20px;margin-right:.2em;margin-top:-2px}.ce-stub{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:12px 18px;margin:10px 0;border-radius:10px;background:#eff2f5;border:1px solid #EFF0F1;color:#707684;font-size:14px}.ce-stub svg{width:20px;height:20px}.ce-stub__info{margin-left:14px}.ce-stub__title{font-weight:500;text-transform:capitalize}.codex-editor.codex-editor--rtl{direction:rtl}.codex-editor.codex-editor--rtl .cdx-list{padding-left:0;padding-right:40px}.codex-editor.codex-editor--rtl .ce-toolbar__plus{right:-26px;left:auto}.codex-editor.codex-editor--rtl .ce-toolbar__actions{right:auto;left:-26px}@media (max-width: 650px){.codex-editor.codex-editor--rtl .ce-toolbar__actions{margin-left:0;margin-right:auto;padding-right:0;padding-left:10px}}.codex-editor.codex-editor--rtl .ce-settings{left:5px;right:auto}.codex-editor.codex-editor--rtl .ce-settings:before{right:auto;left:25px}.codex-editor.codex-editor--rtl .ce-settings__button:not(:nth-child(3n+3)){margin-left:3px;margin-right:0}.codex-editor.codex-editor--rtl .ce-conversion-tool__icon{margin-right:0;margin-left:10px}.codex-editor.codex-editor--rtl .ce-inline-toolbar__dropdown{border-right:0px solid transparent;border-left:1px solid rgba(201,201,204,.48);margin:0 -6px 0 6px}.codex-editor.codex-editor--rtl .ce-inline-toolbar__dropdown .icon--toggler-down{margin-left:0;margin-right:4px}@media (min-width: 651px){.codex-editor--narrow.codex-editor--rtl .ce-toolbar__plus{left:0;right:5px}}@media (min-width: 651px){.codex-editor--narrow.codex-editor--rtl .ce-toolbar__actions{left:-5px}}.cdx-search-field{--icon-margin-right: 10px;background:#F8F8F8;border:1px solid rgba(226,226,229,.2);border-radius:6px;padding:2px;display:grid;grid-template-columns:auto auto 1fr;grid-template-rows:auto}.cdx-search-field__icon{width:26px;height:26px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;margin-right:var(--icon-margin-right)}.cdx-search-field__icon svg{width:20px;height:20px;color:#707684}.cdx-search-field__input{font-size:14px;outline:none;font-weight:500;font-family:inherit;border:0;background:transparent;margin:0;padding:0;line-height:22px;min-width:calc(100% - 26px - var(--icon-margin-right))}.cdx-search-field__input::-webkit-input-placeholder{color:#707684;font-weight:500}.cdx-search-field__input::-moz-placeholder{color:#707684;font-weight:500}.cdx-search-field__input:-ms-input-placeholder{color:#707684;font-weight:500}.cdx-search-field__input::-ms-input-placeholder{color:#707684;font-weight:500}.cdx-search-field__input::placeholder{color:#707684;font-weight:500}.ce-popover{--border-radius: 6px;--width: 200px;--max-height: 270px;--padding: 6px;--offset-from-target: 8px;--color-border: #EFF0F1;--color-shadow: rgba(13, 20, 33, .1);--color-background: white;--color-text-primary: black;--color-text-secondary: #707684;--color-border-icon: rgba(201, 201, 204, .48);--color-border-icon-disabled: #EFF0F1;--color-text-icon-active: #388AE5;--color-background-icon-active: rgba(56, 138, 229, .1);--color-background-item-focus: rgba(34, 186, 255, .08);--color-shadow-item-focus: rgba(7, 161, 227, .08);--color-background-item-hover: #F8F8F8;--color-background-item-confirm: #E24A4A;--color-background-item-confirm-hover: #CE4343;--popover-top: calc(100% + var(--offset-from-target));--popover-left: 0;--nested-popover-overlap: 4px;--icon-size: 20px;--item-padding: 3px;--item-height: calc(var(--icon-size) + 2 * var(--item-padding))}.ce-popover__container{min-width:var(--width);width:var(--width);max-height:var(--max-height);border-radius:var(--border-radius);overflow:hidden;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-box-shadow:0px 3px 15px -3px var(--color-shadow);box-shadow:0 3px 15px -3px var(--color-shadow);position:absolute;left:var(--popover-left);top:var(--popover-top);background:var(--color-background);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;z-index:4;opacity:0;max-height:0;pointer-events:none;padding:0;border:none}.ce-popover--opened>.ce-popover__container{opacity:1;padding:var(--padding);max-height:var(--max-height);pointer-events:auto;-webkit-animation:panelShowing .1s ease;animation:panelShowing .1s ease;border:1px solid var(--color-border)}@media (max-width: 650px){.ce-popover--opened>.ce-popover__container{-webkit-animation:panelShowingMobile .25s ease;animation:panelShowingMobile .25s ease}}.ce-popover--open-top .ce-popover__container{--popover-top: calc(-1 * (var(--offset-from-target) + var(--popover-height)))}.ce-popover--open-left .ce-popover__container{--popover-left: calc(-1 * var(--width) + 100%)}.ce-popover__items{overflow-y:auto;-ms-scroll-chaining:none;overscroll-behavior:contain}@media (max-width: 650px){.ce-popover__overlay{position:fixed;top:0;bottom:0;left:0;right:0;background:#1D202B;z-index:3;opacity:.5;-webkit-transition:opacity .12s ease-in;transition:opacity .12s ease-in;will-change:opacity;visibility:visible}}.ce-popover__overlay--hidden{display:none}@media (max-width: 650px){.ce-popover .ce-popover__container{--offset: 5px;position:fixed;max-width:none;min-width:calc(100% - var(--offset) * 2);left:var(--offset);right:var(--offset);bottom:calc(var(--offset) + env(safe-area-inset-bottom));top:auto;border-radius:10px}}.ce-popover__search{margin-bottom:5px}.ce-popover__nothing-found-message{color:#707684;display:none;cursor:default;padding:3px;font-size:14px;line-height:20px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ce-popover__nothing-found-message--displayed{display:block}.ce-popover--nested .ce-popover__container{--popover-left: calc(var(--nesting-level) * (var(--width) - var(--nested-popover-overlap)));top:calc(var(--trigger-item-top) - var(--nested-popover-overlap));position:absolute}.ce-popover--open-top.ce-popover--nested .ce-popover__container{top:calc(var(--trigger-item-top) - var(--popover-height) + var(--item-height) + var(--offset-from-target) + var(--nested-popover-overlap))}.ce-popover--open-left .ce-popover--nested .ce-popover__container{--popover-left: calc(-1 * (var(--nesting-level) + 1) * var(--width) + 100%)}.ce-popover-item-separator{padding:4px 3px}.ce-popover-item-separator--hidden{display:none}.ce-popover-item-separator__line{height:1px;background:var(--color-border);width:100%}.ce-popover-item-html--hidden{display:none}.ce-popover-item{--border-radius: 6px;border-radius:var(--border-radius);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:var(--item-padding);color:var(--color-text-primary);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;border:none;background:transparent}@media (max-width: 650px){.ce-popover-item{padding:4px}}.ce-popover-item:not(:last-of-type){margin-bottom:1px}.ce-popover-item__icon{width:26px;height:26px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.ce-popover-item__icon svg{width:20px;height:20px}@media (max-width: 650px){.ce-popover-item__icon{width:36px;height:36px;border-radius:8px}.ce-popover-item__icon svg{width:28px;height:28px}}.ce-popover-item__icon--tool{margin-right:4px}.ce-popover-item__title{font-size:14px;line-height:20px;font-weight:500;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-right:auto}@media (max-width: 650px){.ce-popover-item__title{font-size:16px}}.ce-popover-item__secondary-title{color:var(--color-text-secondary);font-size:12px;white-space:nowrap;letter-spacing:-.1em;padding-right:5px;opacity:.6}@media (max-width: 650px){.ce-popover-item__secondary-title{display:none}}.ce-popover-item--active{background:var(--color-background-icon-active);color:var(--color-text-icon-active)}.ce-popover-item--disabled{color:var(--color-text-secondary);cursor:default;pointer-events:none}.ce-popover-item--focused:not(.ce-popover-item--no-focus){background:var(--color-background-item-focus)!important}.ce-popover-item--hidden{display:none}@media (hover: hover){.ce-popover-item:hover{cursor:pointer}.ce-popover-item:hover:not(.ce-popover-item--no-hover){background-color:var(--color-background-item-hover)}}.ce-popover-item--confirmation{background:var(--color-background-item-confirm)}.ce-popover-item--confirmation .ce-popover-item__title,.ce-popover-item--confirmation .ce-popover-item__icon{color:#fff}@media (hover: hover){.ce-popover-item--confirmation:not(.ce-popover-item--no-hover):hover{background:var(--color-background-item-confirm-hover)}}.ce-popover-item--confirmation:not(.ce-popover-item--no-focus).ce-popover-item--focused{background:var(--color-background-item-confirm-hover)!important}@-webkit-keyframes panelShowing{0%{opacity:0;-webkit-transform:translateY(-8px) scale(.9);transform:translateY(-8px) scale(.9)}70%{opacity:1;-webkit-transform:translateY(2px);transform:translateY(2px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes panelShowing{0%{opacity:0;-webkit-transform:translateY(-8px) scale(.9);transform:translateY(-8px) scale(.9)}70%{opacity:1;-webkit-transform:translateY(2px);transform:translateY(2px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@-webkit-keyframes panelShowingMobile{0%{opacity:0;-webkit-transform:translateY(14px) scale(.98);transform:translateY(14px) scale(.98)}70%{opacity:1;-webkit-transform:translateY(-4px);transform:translateY(-4px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes panelShowingMobile{0%{opacity:0;-webkit-transform:translateY(14px) scale(.98);transform:translateY(14px) scale(.98)}70%{opacity:1;-webkit-transform:translateY(-4px);transform:translateY(-4px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}.wobble{-webkit-animation-name:wobble;animation-name:wobble;-webkit-animation-duration:.4s;animation-duration:.4s}@-webkit-keyframes wobble{0%{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}15%{-webkit-transform:translate3d(-9%,0,0);transform:translate3d(-9%,0,0)}30%{-webkit-transform:translate3d(9%,0,0);transform:translate3d(9%,0,0)}45%{-webkit-transform:translate3d(-4%,0,0);transform:translate3d(-4%,0,0)}60%{-webkit-transform:translate3d(4%,0,0);transform:translate3d(4%,0,0)}75%{-webkit-transform:translate3d(-1%,0,0);transform:translate3d(-1%,0,0)}to{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}}@keyframes wobble{0%{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}15%{-webkit-transform:translate3d(-9%,0,0);transform:translate3d(-9%,0,0)}30%{-webkit-transform:translate3d(9%,0,0);transform:translate3d(9%,0,0)}45%{-webkit-transform:translate3d(-4%,0,0);transform:translate3d(-4%,0,0)}60%{-webkit-transform:translate3d(4%,0,0);transform:translate3d(4%,0,0)}75%{-webkit-transform:translate3d(-1%,0,0);transform:translate3d(-1%,0,0)}to{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}}.ce-popover-header{margin-bottom:8px;margin-top:4px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.ce-popover-header__text{font-size:18px;font-weight:600}.ce-popover-header__back-button{border:0;background:transparent;width:36px;height:36px;color:var(--color-text-primary)}.ce-popover-header__back-button svg{display:block;width:28px;height:28px}.ce-popover--inline{--height: 38px;--height-mobile: 46px;--container-padding: 4px;position:relative}.ce-popover--inline .ce-popover__custom-content{margin-bottom:0}.ce-popover--inline .ce-popover__items{display:-webkit-box;display:-ms-flexbox;display:flex}.ce-popover--inline .ce-popover__container{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;padding:var(--container-padding);height:var(--height);top:0;min-width:-webkit-max-content;min-width:-moz-max-content;min-width:max-content;width:-webkit-max-content;width:-moz-max-content;width:max-content;-webkit-animation:none;animation:none}@media (max-width: 650px){.ce-popover--inline .ce-popover__container{height:var(--height-mobile);position:absolute}}.ce-popover--inline .ce-popover-item-separator{padding:0 4px}.ce-popover--inline .ce-popover-item-separator__line{height:100%;width:1px}.ce-popover--inline .ce-popover-item{border-radius:4px;padding:4px}.ce-popover--inline .ce-popover-item__icon--tool{-webkit-box-shadow:none;box-shadow:none;background:transparent;margin-right:0}.ce-popover--inline .ce-popover-item__icon{width:auto;width:initial;height:auto;height:initial}.ce-popover--inline .ce-popover-item__icon svg{width:20px;height:20px}@media (max-width: 650px){.ce-popover--inline .ce-popover-item__icon svg{width:28px;height:28px}}.ce-popover--inline .ce-popover-item:not(:last-of-type){margin-bottom:0;margin-bottom:initial}.ce-popover--inline .ce-popover-item-html{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.ce-popover--inline .ce-popover-item__icon--chevron-right{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.ce-popover--inline .ce-popover--nested-level-1 .ce-popover__container{--offset: 3px;left:0;top:calc(var(--height) + var(--offset))}@media (max-width: 650px){.ce-popover--inline .ce-popover--nested-level-1 .ce-popover__container{top:calc(var(--height-mobile) + var(--offset))}}.ce-popover--inline .ce-popover--nested .ce-popover__container{min-width:var(--width);width:var(--width);height:-webkit-fit-content;height:-moz-fit-content;height:fit-content;padding:6px;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.ce-popover--inline .ce-popover--nested .ce-popover__items{display:block;width:100%}.ce-popover--inline .ce-popover--nested .ce-popover-item{border-radius:6px;padding:3px}@media (max-width: 650px){.ce-popover--inline .ce-popover--nested .ce-popover-item{padding:4px}}.ce-popover--inline .ce-popover--nested .ce-popover-item__icon--tool{margin-right:4px}.ce-popover--inline .ce-popover--nested .ce-popover-item__icon{width:26px;height:26px}.ce-popover--inline .ce-popover--nested .ce-popover-item-separator{padding:4px 3px}.ce-popover--inline .ce-popover--nested .ce-popover-item-separator__line{width:100%;height:1px}.codex-editor [data-placeholder]:empty:before,.codex-editor [data-placeholder][data-empty=true]:before{pointer-events:none;color:#707684;cursor:text;content:attr(data-placeholder)}.codex-editor [data-placeholder-active]:empty:before,.codex-editor [data-placeholder-active][data-empty=true]:before{pointer-events:none;color:#707684;cursor:text}.codex-editor [data-placeholder-active]:empty:focus:before,.codex-editor [data-placeholder-active][data-empty=true]:focus:before{content:attr(data-placeholder-active)}
+  const Xc = `:root{--selectionColor: #e1f2ff;--inlineSelectionColor: #d4ecff;--bg-light: #eff2f5;--grayText: #707684;--color-dark: #1D202B;--color-active-icon: #388AE5;--color-gray-border: rgba(201, 201, 204, .48);--content-width: 650px;--narrow-mode-right-padding: 50px;--toolbox-buttons-size: 26px;--toolbox-buttons-size--mobile: 36px;--icon-size: 20px;--icon-size--mobile: 28px;--block-padding-vertical: .4em;--color-line-gray: #EFF0F1 }.codex-editor{position:relative;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:1}.codex-editor .hide{display:none}.codex-editor__redactor [contenteditable]:empty:after{content:"\\feff"}@media (min-width: 651px){.codex-editor--narrow .codex-editor__redactor{margin-right:50px}}@media (min-width: 651px){.codex-editor--narrow.codex-editor--rtl .codex-editor__redactor{margin-left:50px;margin-right:0}}@media (min-width: 651px){.codex-editor--narrow .ce-toolbar__actions{right:-5px}}.codex-editor-copyable{position:absolute;height:1px;width:1px;top:-400%;opacity:.001}.codex-editor-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:999;pointer-events:none;overflow:hidden}.codex-editor-overlay__container{position:relative;pointer-events:auto;z-index:0}.codex-editor-overlay__rectangle{position:absolute;pointer-events:none;background-color:#2eaadc33;border:1px solid transparent}.codex-editor svg{max-height:100%}.codex-editor path{stroke:currentColor}.codex-editor ::-moz-selection{background-color:#d4ecff}.codex-editor ::selection{background-color:#d4ecff}.codex-editor--toolbox-opened [contentEditable=true][data-placeholder]:focus:before{opacity:0!important}.ce-scroll-locked{overflow:hidden}.ce-scroll-locked--hard{overflow:hidden;top:calc(-1 * var(--window-scroll-offset));position:fixed;width:100%}.ce-toolbar{position:absolute;left:0;right:0;top:0;-webkit-transition:opacity .1s ease;transition:opacity .1s ease;will-change:opacity,top;display:none}.ce-toolbar--opened{display:block}.ce-toolbar__content{max-width:650px;margin:0 auto;position:relative}.ce-toolbar__plus{color:#1d202b;cursor:pointer;width:26px;height:26px;border-radius:7px;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-ms-flex-negative:0;flex-shrink:0}@media (max-width: 650px){.ce-toolbar__plus{width:36px;height:36px}}@media (hover: hover){.ce-toolbar__plus:hover{background-color:#eff2f5}}.ce-toolbar__plus--active{background-color:#eff2f5;-webkit-animation:bounceIn .75s 1;animation:bounceIn .75s 1;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}.ce-toolbar__plus-shortcut{opacity:.6;word-spacing:-2px;margin-top:5px}@media (max-width: 650px){.ce-toolbar__plus{position:absolute;background-color:#fff;border:1px solid #E8E8EB;-webkit-box-shadow:0 3px 15px -3px rgba(13,20,33,.13);box-shadow:0 3px 15px -3px #0d142121;border-radius:6px;z-index:2;position:static}.ce-toolbar__plus--left-oriented:before{left:15px;margin-left:0}.ce-toolbar__plus--right-oriented:before{left:auto;right:15px;margin-left:0}}.ce-toolbar__actions{position:absolute;right:100%;opacity:0;display:-webkit-box;display:-ms-flexbox;display:flex;padding-right:5px}.ce-toolbar__actions--opened{opacity:1}@media (max-width: 650px){.ce-toolbar__actions{right:auto}}.ce-toolbar__settings-btn{color:#1d202b;width:26px;height:26px;border-radius:7px;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;margin-left:3px;cursor:pointer;user-select:none}@media (max-width: 650px){.ce-toolbar__settings-btn{width:36px;height:36px}}@media (hover: hover){.ce-toolbar__settings-btn:hover{background-color:#eff2f5}}.ce-toolbar__settings-btn--active{background-color:#eff2f5;-webkit-animation:bounceIn .75s 1;animation:bounceIn .75s 1;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}@media (min-width: 651px){.ce-toolbar__settings-btn{width:24px}}.ce-toolbar__settings-btn--hidden{display:none}@media (max-width: 650px){.ce-toolbar__settings-btn{position:absolute;background-color:#fff;border:1px solid #E8E8EB;-webkit-box-shadow:0 3px 15px -3px rgba(13,20,33,.13);box-shadow:0 3px 15px -3px #0d142121;border-radius:6px;z-index:2;position:static}.ce-toolbar__settings-btn--left-oriented:before{left:15px;margin-left:0}.ce-toolbar__settings-btn--right-oriented:before{left:auto;right:15px;margin-left:0}}.ce-toolbar__plus svg,.ce-toolbar__settings-btn svg{width:24px;height:24px}@media (min-width: 651px){.codex-editor--narrow .ce-toolbar__plus{left:5px}}@media (min-width: 651px){.codex-editor--narrow .ce-toolbox .ce-popover{right:0;left:auto;left:initial}}.ce-inline-toolbar{--y-offset: 8px;--color-background-icon-active: rgba(56, 138, 229, .1);--color-text-icon-active: #388AE5;--color-text-primary: black;position:absolute;visibility:hidden;-webkit-transition:opacity .25s ease;transition:opacity .25s ease;will-change:opacity,left,top;top:0;left:0;z-index:3;opacity:1;visibility:visible}.ce-inline-toolbar [hidden]{display:none!important}.ce-inline-toolbar__toggler-and-button-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%;padding:0 6px}.ce-inline-toolbar__buttons{display:-webkit-box;display:-ms-flexbox;display:flex}.ce-inline-toolbar__dropdown{display:-webkit-box;display:-ms-flexbox;display:flex;padding:6px;margin:0 6px 0 -6px;-webkit-box-align:center;-ms-flex-align:center;align-items:center;cursor:pointer;border-right:1px solid rgba(201,201,204,.48);-webkit-box-sizing:border-box;box-sizing:border-box}@media (hover: hover){.ce-inline-toolbar__dropdown:hover{background:#eff2f5}}.ce-inline-toolbar__dropdown--hidden{display:none}.ce-inline-toolbar__dropdown-content,.ce-inline-toolbar__dropdown-arrow{display:-webkit-box;display:-ms-flexbox;display:flex}.ce-inline-toolbar__dropdown-content svg,.ce-inline-toolbar__dropdown-arrow svg{width:20px;height:20px}.ce-inline-toolbar__shortcut{opacity:.6;word-spacing:-3px;margin-top:3px}.ce-inline-tool{color:var(--color-text-primary);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;border:0;border-radius:4px;line-height:normal;height:100%;padding:0;width:28px;background-color:transparent;cursor:pointer}@media (max-width: 650px){.ce-inline-tool{width:36px;height:36px}}@media (hover: hover){.ce-inline-tool:hover{background-color:#f8f8f8}}.ce-inline-tool svg{display:block;width:20px;height:20px}@media (max-width: 650px){.ce-inline-tool svg{width:28px;height:28px}}.ce-inline-tool--link .icon--unlink,.ce-inline-tool--unlink .icon--link{display:none}.ce-inline-tool--unlink .icon--unlink{display:inline-block;margin-bottom:-1px}.ce-inline-tool-input{background:#F8F8F8;border:1px solid rgba(226,226,229,.2);border-radius:6px;padding:4px 8px;font-size:14px;line-height:22px;outline:none;margin:0;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box;display:none;font-weight:500;-webkit-appearance:none;font-family:inherit}@media (max-width: 650px){.ce-inline-tool-input{font-size:15px;font-weight:500}}.ce-inline-tool-input::-webkit-input-placeholder{color:#707684}.ce-inline-tool-input::-moz-placeholder{color:#707684}.ce-inline-tool-input:-ms-input-placeholder{color:#707684}.ce-inline-tool-input::-ms-input-placeholder{color:#707684}.ce-inline-tool-input::placeholder{color:#707684}.ce-inline-tool-input--showed{display:block}.ce-inline-tool--active{background:var(--color-background-icon-active);color:var(--color-text-icon-active)}@-webkit-keyframes fade-in{0%{opacity:0}to{opacity:1}}@keyframes fade-in{0%{opacity:0}to{opacity:1}}.ce-block{-webkit-animation:fade-in .3s ease;animation:fade-in .3s ease;-webkit-animation-fill-mode:none;animation-fill-mode:none;-webkit-animation-fill-mode:initial;animation-fill-mode:initial}.ce-block:first-of-type{margin-top:0}.ce-block--selected .ce-block__content{background:#e1f2ff}.ce-block--selected .ce-block__content [contenteditable]{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ce-block--selected .ce-block__content img,.ce-block--selected .ce-block__content .ce-stub{opacity:.55}.ce-block--stretched .ce-block__content{max-width:none}.ce-block__content{position:relative;max-width:650px;margin:0 auto;-webkit-transition:background-color .15s ease;transition:background-color .15s ease}.ce-block--drop-target .ce-block__content:before{content:"";position:absolute;top:100%;left:-20px;margin-top:-1px;height:8px;width:8px;border:solid #388AE5;border-width:1px 1px 0 0;-webkit-transform-origin:right;transform-origin:right;-webkit-transform:rotate(45deg);transform:rotate(45deg)}.ce-block--drop-target .ce-block__content:after{content:"";position:absolute;top:100%;height:1px;width:100%;color:#388ae5;background:repeating-linear-gradient(90deg,#388AE5,#388AE5 1px,#fff 1px,#fff 6px)}.ce-block a{cursor:pointer;-webkit-text-decoration:underline;text-decoration:underline}.ce-block b{font-weight:700}.ce-block i{font-style:italic}@-webkit-keyframes bounceIn{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}20%{-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}60%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@keyframes bounceIn{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}20%{-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}60%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@-webkit-keyframes selectionBounce{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}50%{-webkit-transform:scale3d(1.01,1.01,1.01);transform:scale3d(1.01,1.01,1.01)}70%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@keyframes selectionBounce{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}50%{-webkit-transform:scale3d(1.01,1.01,1.01);transform:scale3d(1.01,1.01,1.01)}70%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@-webkit-keyframes buttonClicked{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.95,.95,.95);transform:scale3d(.95,.95,.95)}60%{-webkit-transform:scale3d(1.02,1.02,1.02);transform:scale3d(1.02,1.02,1.02)}80%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}@keyframes buttonClicked{0%,20%,40%,60%,80%,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{-webkit-transform:scale3d(.95,.95,.95);transform:scale3d(.95,.95,.95)}60%{-webkit-transform:scale3d(1.02,1.02,1.02);transform:scale3d(1.02,1.02,1.02)}80%{-webkit-transform:scale3d(1,1,1);transform:scaleZ(1)}}.cdx-block{padding:.4em 0}.cdx-block::-webkit-input-placeholder{line-height:normal!important}.cdx-input{border:1px solid rgba(201,201,204,.48);-webkit-box-shadow:inset 0 1px 2px 0 rgba(35,44,72,.06);box-shadow:inset 0 1px 2px #232c480f;border-radius:3px;padding:10px 12px;outline:none;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box}.cdx-input[data-placeholder]:before{position:static!important}.cdx-input[data-placeholder]:before{display:inline-block;width:0;white-space:nowrap;pointer-events:none}.cdx-settings-button{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;border-radius:3px;cursor:pointer;border:0;outline:none;background-color:transparent;vertical-align:bottom;color:inherit;margin:0;min-width:26px;min-height:26px}.cdx-settings-button--focused{background:rgba(34,186,255,.08)!important}.cdx-settings-button--focused{-webkit-box-shadow:inset 0 0 0px 1px rgba(7,161,227,.08);box-shadow:inset 0 0 0 1px #07a1e314}.cdx-settings-button--focused-animated{-webkit-animation-name:buttonClicked;animation-name:buttonClicked;-webkit-animation-duration:.25s;animation-duration:.25s}.cdx-settings-button--active{color:#388ae5}.cdx-settings-button svg{width:auto;height:auto}@media (max-width: 650px){.cdx-settings-button svg{width:28px;height:28px}}@media (max-width: 650px){.cdx-settings-button{width:36px;height:36px;border-radius:8px}}@media (hover: hover){.cdx-settings-button:hover{background-color:#eff2f5}}.cdx-loader{position:relative;border:1px solid rgba(201,201,204,.48)}.cdx-loader:before{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-11px 0 0 -11px;border:2px solid rgba(201,201,204,.48);border-left-color:#388ae5;border-radius:50%;-webkit-animation:cdxRotation 1.2s infinite linear;animation:cdxRotation 1.2s infinite linear}@-webkit-keyframes cdxRotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0)}to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes cdxRotation{0%{-webkit-transform:rotate(0deg);transform:rotate(0)}to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.cdx-button{padding:13px;border-radius:3px;border:1px solid rgba(201,201,204,.48);font-size:14.9px;background:#fff;-webkit-box-shadow:0 2px 2px 0 rgba(18,30,57,.04);box-shadow:0 2px 2px #121e390a;color:#707684;text-align:center;cursor:pointer}@media (hover: hover){.cdx-button:hover{background:#FBFCFE;-webkit-box-shadow:0 1px 3px 0 rgba(18,30,57,.08);box-shadow:0 1px 3px #121e3914}}.cdx-button svg{height:20px;margin-right:.2em;margin-top:-2px}.ce-stub{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:12px 18px;margin:10px 0;border-radius:10px;background:#eff2f5;border:1px solid #EFF0F1;color:#707684;font-size:14px}.ce-stub svg{width:20px;height:20px}.ce-stub__info{margin-left:14px}.ce-stub__title{font-weight:500;text-transform:capitalize}.codex-editor.codex-editor--rtl{direction:rtl}.codex-editor.codex-editor--rtl .cdx-list{padding-left:0;padding-right:40px}.codex-editor.codex-editor--rtl .ce-toolbar__plus{right:-26px;left:auto}.codex-editor.codex-editor--rtl .ce-toolbar__actions{right:auto;left:-26px}@media (max-width: 650px){.codex-editor.codex-editor--rtl .ce-toolbar__actions{margin-left:0;margin-right:auto;padding-right:0;padding-left:10px}}.codex-editor.codex-editor--rtl .ce-settings{left:5px;right:auto}.codex-editor.codex-editor--rtl .ce-settings:before{right:auto;left:25px}.codex-editor.codex-editor--rtl .ce-settings__button:not(:nth-child(3n+3)){margin-left:3px;margin-right:0}.codex-editor.codex-editor--rtl .ce-conversion-tool__icon{margin-right:0;margin-left:10px}.codex-editor.codex-editor--rtl .ce-inline-toolbar__dropdown{border-right:0px solid transparent;border-left:1px solid rgba(201,201,204,.48);margin:0 -6px 0 6px}.codex-editor.codex-editor--rtl .ce-inline-toolbar__dropdown .icon--toggler-down{margin-left:0;margin-right:4px}@media (min-width: 651px){.codex-editor--narrow.codex-editor--rtl .ce-toolbar__plus{left:0;right:5px}}@media (min-width: 651px){.codex-editor--narrow.codex-editor--rtl .ce-toolbar__actions{left:-5px}}.cdx-search-field{--icon-margin-right: 10px;background:#F8F8F8;border:1px solid rgba(226,226,229,.2);border-radius:6px;padding:2px;display:grid;grid-template-columns:auto auto 1fr;grid-template-rows:auto}.cdx-search-field__icon{width:26px;height:26px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;margin-right:var(--icon-margin-right)}.cdx-search-field__icon svg{width:20px;height:20px;color:#707684}.cdx-search-field__input{font-size:14px;outline:none;font-weight:500;font-family:inherit;border:0;background:transparent;margin:0;padding:0;line-height:22px;min-width:calc(100% - 26px - var(--icon-margin-right))}.cdx-search-field__input::-webkit-input-placeholder{color:#707684;font-weight:500}.cdx-search-field__input::-moz-placeholder{color:#707684;font-weight:500}.cdx-search-field__input:-ms-input-placeholder{color:#707684;font-weight:500}.cdx-search-field__input::-ms-input-placeholder{color:#707684;font-weight:500}.cdx-search-field__input::placeholder{color:#707684;font-weight:500}.ce-popover{--border-radius: 6px;--width: 200px;--max-height: 270px;--padding: 6px;--offset-from-target: 8px;--color-border: #EFF0F1;--color-shadow: rgba(13, 20, 33, .1);--color-background: white;--color-text-primary: black;--color-text-secondary: #707684;--color-border-icon: rgba(201, 201, 204, .48);--color-border-icon-disabled: #EFF0F1;--color-text-icon-active: #388AE5;--color-background-icon-active: rgba(56, 138, 229, .1);--color-background-item-focus: rgba(34, 186, 255, .08);--color-shadow-item-focus: rgba(7, 161, 227, .08);--color-background-item-hover: #F8F8F8;--color-background-item-confirm: #E24A4A;--color-background-item-confirm-hover: #CE4343;--popover-top: calc(100% + var(--offset-from-target));--popover-left: 0;--nested-popover-overlap: 4px;--icon-size: 20px;--item-padding: 3px;--item-height: calc(var(--icon-size) + 2 * var(--item-padding))}.ce-popover__container{min-width:var(--width);width:var(--width);max-height:var(--max-height);border-radius:var(--border-radius);overflow:hidden;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-box-shadow:0px 3px 15px -3px var(--color-shadow);box-shadow:0 3px 15px -3px var(--color-shadow);position:absolute;left:var(--popover-left);top:var(--popover-top);background:var(--color-background);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;z-index:4;opacity:0;max-height:0;pointer-events:none;padding:0;border:none}.ce-popover--opened>.ce-popover__container{opacity:1;padding:var(--padding);max-height:var(--max-height);pointer-events:auto;-webkit-animation:panelShowing .1s ease;animation:panelShowing .1s ease;border:1px solid var(--color-border)}@media (max-width: 650px){.ce-popover--opened>.ce-popover__container{-webkit-animation:panelShowingMobile .25s ease;animation:panelShowingMobile .25s ease}}.ce-popover--open-top .ce-popover__container{--popover-top: calc(-1 * (var(--offset-from-target) + var(--popover-height)))}.ce-popover--open-left .ce-popover__container{--popover-left: calc(-1 * var(--width) + 100%)}.ce-popover__items{overflow-y:auto;-ms-scroll-chaining:none;overscroll-behavior:contain}@media (max-width: 650px){.ce-popover__overlay{position:fixed;top:0;bottom:0;left:0;right:0;background:#1D202B;z-index:3;opacity:.5;-webkit-transition:opacity .12s ease-in;transition:opacity .12s ease-in;will-change:opacity;visibility:visible}}.ce-popover__overlay--hidden{display:none}@media (max-width: 650px){.ce-popover .ce-popover__container{--offset: 5px;position:fixed;max-width:none;min-width:calc(100% - var(--offset) * 2);left:var(--offset);right:var(--offset);bottom:calc(var(--offset) + env(safe-area-inset-bottom));top:auto;border-radius:10px}}.ce-popover__search{margin-bottom:5px}.ce-popover__nothing-found-message{color:#707684;display:none;cursor:default;padding:3px;font-size:14px;line-height:20px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ce-popover__nothing-found-message--displayed{display:block}.ce-popover--nested .ce-popover__container{--popover-left: calc(var(--nesting-level) * (var(--width) - var(--nested-popover-overlap)));top:calc(var(--trigger-item-top) - var(--nested-popover-overlap));position:absolute}.ce-popover--open-top.ce-popover--nested .ce-popover__container{top:calc(var(--trigger-item-top) - var(--popover-height) + var(--item-height) + var(--offset-from-target) + var(--nested-popover-overlap))}.ce-popover--open-left .ce-popover--nested .ce-popover__container{--popover-left: calc(-1 * (var(--nesting-level) + 1) * var(--width) + 100%)}.ce-popover-item-separator{padding:4px 3px}.ce-popover-item-separator--hidden{display:none}.ce-popover-item-separator__line{height:1px;background:var(--color-border);width:100%}.ce-popover-item-html--hidden{display:none}.ce-popover-item{--border-radius: 6px;border-radius:var(--border-radius);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:var(--item-padding);color:var(--color-text-primary);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;border:none;background:transparent}@media (max-width: 650px){.ce-popover-item{padding:4px}}.ce-popover-item:not(:last-of-type){margin-bottom:1px}.ce-popover-item__icon{width:26px;height:26px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.ce-popover-item__icon svg{width:20px;height:20px}@media (max-width: 650px){.ce-popover-item__icon{width:36px;height:36px;border-radius:8px}.ce-popover-item__icon svg{width:28px;height:28px}}.ce-popover-item__icon--tool{margin-right:4px}.ce-popover-item__title{font-size:14px;line-height:20px;font-weight:500;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-right:auto}@media (max-width: 650px){.ce-popover-item__title{font-size:16px}}.ce-popover-item__secondary-title{color:var(--color-text-secondary);font-size:12px;white-space:nowrap;letter-spacing:-.1em;padding-right:5px;opacity:.6}@media (max-width: 650px){.ce-popover-item__secondary-title{display:none}}.ce-popover-item--active{background:var(--color-background-icon-active);color:var(--color-text-icon-active)}.ce-popover-item--disabled{color:var(--color-text-secondary);cursor:default;pointer-events:none}.ce-popover-item--focused:not(.ce-popover-item--no-focus){background:var(--color-background-item-focus)!important}.ce-popover-item--hidden{display:none}@media (hover: hover){.ce-popover-item:hover{cursor:pointer}.ce-popover-item:hover:not(.ce-popover-item--no-hover){background-color:var(--color-background-item-hover)}}.ce-popover-item--confirmation{background:var(--color-background-item-confirm)}.ce-popover-item--confirmation .ce-popover-item__title,.ce-popover-item--confirmation .ce-popover-item__icon{color:#fff}@media (hover: hover){.ce-popover-item--confirmation:not(.ce-popover-item--no-hover):hover{background:var(--color-background-item-confirm-hover)}}.ce-popover-item--confirmation:not(.ce-popover-item--no-focus).ce-popover-item--focused{background:var(--color-background-item-confirm-hover)!important}@-webkit-keyframes panelShowing{0%{opacity:0;-webkit-transform:translateY(-8px) scale(.9);transform:translateY(-8px) scale(.9)}70%{opacity:1;-webkit-transform:translateY(2px);transform:translateY(2px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes panelShowing{0%{opacity:0;-webkit-transform:translateY(-8px) scale(.9);transform:translateY(-8px) scale(.9)}70%{opacity:1;-webkit-transform:translateY(2px);transform:translateY(2px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@-webkit-keyframes panelShowingMobile{0%{opacity:0;-webkit-transform:translateY(14px) scale(.98);transform:translateY(14px) scale(.98)}70%{opacity:1;-webkit-transform:translateY(-4px);transform:translateY(-4px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes panelShowingMobile{0%{opacity:0;-webkit-transform:translateY(14px) scale(.98);transform:translateY(14px) scale(.98)}70%{opacity:1;-webkit-transform:translateY(-4px);transform:translateY(-4px)}to{-webkit-transform:translateY(0);transform:translateY(0)}}.wobble{-webkit-animation-name:wobble;animation-name:wobble;-webkit-animation-duration:.4s;animation-duration:.4s}@-webkit-keyframes wobble{0%{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}15%{-webkit-transform:translate3d(-9%,0,0);transform:translate3d(-9%,0,0)}30%{-webkit-transform:translate3d(9%,0,0);transform:translate3d(9%,0,0)}45%{-webkit-transform:translate3d(-4%,0,0);transform:translate3d(-4%,0,0)}60%{-webkit-transform:translate3d(4%,0,0);transform:translate3d(4%,0,0)}75%{-webkit-transform:translate3d(-1%,0,0);transform:translate3d(-1%,0,0)}to{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}}@keyframes wobble{0%{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}15%{-webkit-transform:translate3d(-9%,0,0);transform:translate3d(-9%,0,0)}30%{-webkit-transform:translate3d(9%,0,0);transform:translate3d(9%,0,0)}45%{-webkit-transform:translate3d(-4%,0,0);transform:translate3d(-4%,0,0)}60%{-webkit-transform:translate3d(4%,0,0);transform:translate3d(4%,0,0)}75%{-webkit-transform:translate3d(-1%,0,0);transform:translate3d(-1%,0,0)}to{-webkit-transform:translate3d(0,0,0);transform:translateZ(0)}}.ce-popover-header{margin-bottom:8px;margin-top:4px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.ce-popover-header__text{font-size:18px;font-weight:600}.ce-popover-header__back-button{border:0;background:transparent;width:36px;height:36px;color:var(--color-text-primary)}.ce-popover-header__back-button svg{display:block;width:28px;height:28px}.ce-popover--inline{--height: 38px;--height-mobile: 46px;--container-padding: 4px;position:relative}.ce-popover--inline .ce-popover__custom-content{margin-bottom:0}.ce-popover--inline .ce-popover__items{display:-webkit-box;display:-ms-flexbox;display:flex}.ce-popover--inline .ce-popover__container{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;padding:var(--container-padding);height:var(--height);top:0;min-width:-webkit-max-content;min-width:-moz-max-content;min-width:max-content;width:-webkit-max-content;width:-moz-max-content;width:max-content;-webkit-animation:none;animation:none}@media (max-width: 650px){.ce-popover--inline .ce-popover__container{height:var(--height-mobile);position:absolute}}.ce-popover--inline .ce-popover-item-separator{padding:0 4px}.ce-popover--inline .ce-popover-item-separator__line{height:100%;width:1px}.ce-popover--inline .ce-popover-item{border-radius:4px;padding:4px}.ce-popover--inline .ce-popover-item__icon--tool{-webkit-box-shadow:none;box-shadow:none;background:transparent;margin-right:0}.ce-popover--inline .ce-popover-item__icon{width:auto;width:initial;height:auto;height:initial}.ce-popover--inline .ce-popover-item__icon svg{width:20px;height:20px}@media (max-width: 650px){.ce-popover--inline .ce-popover-item__icon svg{width:28px;height:28px}}.ce-popover--inline .ce-popover-item:not(:last-of-type){margin-bottom:0;margin-bottom:initial}.ce-popover--inline .ce-popover-item-html{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.ce-popover--inline .ce-popover-item__icon--chevron-right{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.ce-popover--inline .ce-popover--nested-level-1 .ce-popover__container{--offset: 3px;left:0;top:calc(var(--height) + var(--offset))}@media (max-width: 650px){.ce-popover--inline .ce-popover--nested-level-1 .ce-popover__container{top:calc(var(--height-mobile) + var(--offset))}}.ce-popover--inline .ce-popover--nested .ce-popover__container{min-width:var(--width);width:var(--width);height:-webkit-fit-content;height:-moz-fit-content;height:fit-content;padding:6px;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.ce-popover--inline .ce-popover--nested .ce-popover__items{display:block;width:100%}.ce-popover--inline .ce-popover--nested .ce-popover-item{border-radius:6px;padding:3px}@media (max-width: 650px){.ce-popover--inline .ce-popover--nested .ce-popover-item{padding:4px}}.ce-popover--inline .ce-popover--nested .ce-popover-item__icon--tool{margin-right:4px}.ce-popover--inline .ce-popover--nested .ce-popover-item__icon{width:26px;height:26px}.ce-popover--inline .ce-popover--nested .ce-popover-item-separator{padding:4px 3px}.ce-popover--inline .ce-popover--nested .ce-popover-item-separator__line{width:100%;height:1px}.codex-editor [data-placeholder]:empty:before,.codex-editor [data-placeholder][data-empty=true]:before{pointer-events:none;color:#707684;cursor:text;content:attr(data-placeholder)}.codex-editor [data-placeholder-active]:empty:before,.codex-editor [data-placeholder-active][data-empty=true]:before{pointer-events:none;color:#707684;cursor:text}.codex-editor [data-placeholder-active]:empty:focus:before,.codex-editor [data-placeholder-active][data-empty=true]:focus:before{content:attr(data-placeholder-active)}
 `;
-  class Xc extends j {
+  class Kc extends j {
     constructor() {
       super(...arguments), this.isMobile = false, this.contentRectCache = null, this.resizeDebouncer = Cn(() => {
         this.windowResize();
       }, 200), this.selectionChangeDebounced = Cn(() => {
         this.selectionChanged();
-      }, Oc), this.documentTouchedListener = (e) => {
+      }, Ac), this.documentTouchedListener = (e) => {
         this.documentTouched(e);
       };
     }
@@ -11042,7 +11049,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       if (k.get(e)) return;
       const t = k.make("style", null, {
         id: e,
-        textContent: Yc.toString()
+        textContent: Xc.toString()
       });
       this.config.style && !Ee(this.config.style) && this.config.style.nonce && t.setAttribute("nonce", this.config.style.nonce), k.prepend(document.head, t);
     }
@@ -11166,8 +11173,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       const t = e.target, o = e.metaKey || e.ctrlKey;
       if (k.isAnchor(t) && o) {
         e.stopImmediatePropagation(), e.stopPropagation();
-        const i = t.getAttribute("href"), s = Er(i);
-        Cr(s);
+        const i = t.getAttribute("href"), s = xr(i);
+        Tr(s);
         return;
       }
       this.processBottomZoneClick(e);
@@ -11197,43 +11204,43 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.readOnlyMutableListeners.on(this.nodes.wrapper, "input", e), this.readOnlyMutableListeners.on(this.nodes.wrapper, "focusin", e), this.readOnlyMutableListeners.on(this.nodes.wrapper, "focusout", e);
     }
   }
-  const Kc = {
-    BlocksAPI: Pr,
-    CaretAPI: Rr,
-    EventsAPI: jr,
+  const Gc = {
+    BlocksAPI: Dr,
+    CaretAPI: jr,
+    EventsAPI: Hr,
     I18nAPI: go,
-    API: Hr,
-    InlineToolbarAPI: Fr,
-    ListenersAPI: Vr,
-    NotifierAPI: qr,
-    ReadOnlyAPI: Wr,
-    SanitizerAPI: Jr,
-    SaverAPI: ea,
-    SelectionAPI: ta,
-    ToolsAPI: oa,
-    StylesAPI: na,
-    ToolbarAPI: ia,
-    TooltipAPI: ca,
-    UiAPI: da,
-    BlockSettings: Da,
-    Toolbar: za,
-    InlineToolbar: qa,
-    BlockEvents: xc,
-    BlockManager: Sc,
-    BlockSelection: _c,
+    API: Fr,
+    InlineToolbarAPI: Vr,
+    ListenersAPI: $r,
+    NotifierAPI: Wr,
+    ReadOnlyAPI: Yr,
+    SanitizerAPI: ea,
+    SaverAPI: ta,
+    SelectionAPI: oa,
+    ToolsAPI: na,
+    StylesAPI: ia,
+    ToolbarAPI: sa,
+    TooltipAPI: da,
+    UiAPI: ua,
+    BlockSettings: Ra,
+    Toolbar: qa,
+    InlineToolbar: Wa,
+    BlockEvents: Cc,
+    BlockManager: _c,
+    BlockSelection: Bc,
     Caret: Dt,
-    CrossBlockSelection: Bc,
-    DragNDrop: Mc,
-    ModificationsObserver: Ic,
-    Paste: Lc,
-    ReadOnly: Nc,
+    CrossBlockSelection: Mc,
+    DragNDrop: Oc,
+    ModificationsObserver: Lc,
+    Paste: Nc,
+    ReadOnly: Pc,
     RectangleSelection: ut,
-    Renderer: Pc,
-    Saver: Dc,
+    Renderer: Dc,
+    Saver: Rc,
     Tools: ss,
-    UI: Xc
+    UI: Kc
   };
-  class Gc {
+  class Zc {
     constructor(e) {
       this.moduleInstances = {}, this.eventsDispatcher = new bt();
       let t, o;
@@ -11253,7 +11260,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         ...e
       } : this.config = {
         holder: e
-      }, ao(!!this.config.holderId, "config.holderId", "config.holder"), this.config.holderId && !this.config.holder && (this.config.holder = this.config.holderId, this.config.holderId = null), this.config.holder == null && (this.config.holder = "editorjs"), this.config.logLevel || (this.config.logLevel = Kn.VERBOSE), mr(this.config.logLevel), ao(!!this.config.initialBlock, "config.initialBlock", "config.defaultBlock"), this.config.defaultBlock = this.config.defaultBlock || this.config.initialBlock || "paragraph", this.config.minHeight = this.config.minHeight !== void 0 ? this.config.minHeight : 300;
+      }, ao(!!this.config.holderId, "config.holderId", "config.holder"), this.config.holderId && !this.config.holder && (this.config.holder = this.config.holderId, this.config.holderId = null), this.config.holder == null && (this.config.holder = "editorjs"), this.config.logLevel || (this.config.logLevel = Kn.VERBOSE), vr(this.config.logLevel), ao(!!this.config.initialBlock, "config.initialBlock", "config.defaultBlock"), this.config.defaultBlock = this.config.defaultBlock || this.config.initialBlock || "paragraph", this.config.minHeight = this.config.minHeight !== void 0 ? this.config.minHeight : 300;
       const i = {
         type: this.config.defaultBlock,
         data: {}
@@ -11307,7 +11314,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.moduleInstances.Renderer.render(this.config.data.blocks);
     }
     constructModules() {
-      Object.entries(Kc).forEach(([e, t]) => {
+      Object.entries(Gc).forEach(([e, t]) => {
         try {
           this.moduleInstances[e] = new t({
             config: this.configuration,
@@ -11327,7 +11334,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return t;
     }
   }
-  class Zc {
+  class Qc {
     static get version() {
       return "2.31.0-rc.7";
     }
@@ -11335,7 +11342,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       let t = () => {
       };
       de(e) && Q(e.onReady) && (t = e.onReady);
-      const o = new Gc(e);
+      const o = new Zc(e);
       this.isReady = o.isReady.then(() => {
         this.exportAPI(o), t();
       });
@@ -11346,7 +11353,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       ], o = () => {
         Object.values(e.moduleInstances).forEach((i) => {
           Q(i.destroy) && i.destroy(), i.listeners.removeAll();
-        }), la(), e = null;
+        }), ca(), e = null;
         for (const i in this) Object.prototype.hasOwnProperty.call(this, i) && delete this[i];
         Object.setPrototypeOf(this, null);
       };
@@ -11385,8 +11392,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       console.error("vite-plugin-css-injected-by-js", e);
     }
   })();
-  const Qc = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M19 17V10.2135C19 10.1287 18.9011 10.0824 18.836 10.1367L16 12.5"/></svg>', Jc = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 11C16 10 19 9.5 19 12C19 13.9771 16.0684 13.9997 16.0012 16.8981C15.9999 16.9533 16.0448 17 16.1 17L19.3 17"/></svg>', ed = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 11C16 10.5 16.8323 10 17.6 10C18.3677 10 19.5 10.311 19.5 11.5C19.5 12.5315 18.7474 12.9022 18.548 12.9823C18.5378 12.9864 18.5395 13.0047 18.5503 13.0063C18.8115 13.0456 20 13.3065 20 14.8C20 16 19.5 17 17.8 17C17.8 17 16 17 16 16.3"/></svg>', td = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M18 10L15.2834 14.8511C15.246 14.9178 15.294 15 15.3704 15C16.8489 15 18.7561 15 20.2 15M19 17C19 15.7187 19 14.8813 19 13.6"/></svg>', od = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 15.9C16 15.9 16.3768 17 17.8 17C19.5 17 20 15.6199 20 14.7C20 12.7323 17.6745 12.0486 16.1635 12.9894C16.094 13.0327 16 12.9846 16 12.9027V10.1C16 10.0448 16.0448 10 16.1 10H19.8"/></svg>', nd = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M19.5 10C16.5 10.5 16 13.3285 16 15M16 15V15C16 16.1046 16.8954 17 18 17H18.3246C19.3251 17 20.3191 16.3492 20.2522 15.3509C20.0612 12.4958 16 12.6611 16 15Z"/></svg>', id = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9 7L9 12M9 17V12M9 12L15 12M15 7V12M15 17L15 12"/></svg>';
-  class sd {
+  const Jc = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M19 17V10.2135C19 10.1287 18.9011 10.0824 18.836 10.1367L16 12.5"/></svg>', ed = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 11C16 10 19 9.5 19 12C19 13.9771 16.0684 13.9997 16.0012 16.8981C15.9999 16.9533 16.0448 17 16.1 17L19.3 17"/></svg>', td = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 11C16 10.5 16.8323 10 17.6 10C18.3677 10 19.5 10.311 19.5 11.5C19.5 12.5315 18.7474 12.9022 18.548 12.9823C18.5378 12.9864 18.5395 13.0047 18.5503 13.0063C18.8115 13.0456 20 13.3065 20 14.8C20 16 19.5 17 17.8 17C17.8 17 16 17 16 16.3"/></svg>', od = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M18 10L15.2834 14.8511C15.246 14.9178 15.294 15 15.3704 15C16.8489 15 18.7561 15 20.2 15M19 17C19 15.7187 19 14.8813 19 13.6"/></svg>', nd = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 15.9C16 15.9 16.3768 17 17.8 17C19.5 17 20 15.6199 20 14.7C20 12.7323 17.6745 12.0486 16.1635 12.9894C16.094 13.0327 16 12.9846 16 12.9027V10.1C16 10.0448 16.0448 10 16.1 10H19.8"/></svg>', id = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M19.5 10C16.5 10.5 16 13.3285 16 15M16 15V15C16 16.1046 16.8954 17 18 17H18.3246C19.3251 17 20.3191 16.3492 20.2522 15.3509C20.0612 12.4958 16 12.6611 16 15Z"/></svg>', sd = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9 7L9 12M9 17V12M9 12L15 12M15 7V12M15 17L15 12"/></svg>';
+  class rd {
     constructor({ data: e, config: t, api: o, readOnly: i }) {
       this.api = o, this.readOnly = i, this._settings = t, this._data = this.normalizeData(e), this._element = this.getTag();
     }
@@ -11483,32 +11490,32 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         {
           number: 1,
           tag: "H1",
-          svg: Qc
+          svg: Jc
         },
         {
           number: 2,
           tag: "H2",
-          svg: Jc
+          svg: ed
         },
         {
           number: 3,
           tag: "H3",
-          svg: ed
+          svg: td
         },
         {
           number: 4,
           tag: "H4",
-          svg: td
+          svg: od
         },
         {
           number: 5,
           tag: "H5",
-          svg: od
+          svg: nd
         },
         {
           number: 6,
           tag: "H6",
-          svg: nd
+          svg: id
         }
       ];
       return this._settings.levels ? e.filter((t) => this._settings.levels.includes(t.number)) : e;
@@ -11558,12 +11565,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     static get toolbox() {
       return {
-        icon: id,
+        icon: sd,
         title: "Heading"
       };
     }
   }
-  async function rd() {
+  async function ad() {
     return ne`
     <div class="offcanvas offcanvas-end w-75" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1" id="quickNotes" aria-labelledby="analysisConfigsLabel">
         <div class="offcanvas-header">
@@ -11583,7 +11590,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     </div> 
     `;
   }
-  async function ad(n, e, t) {
+  async function ld(n, e, t) {
     const o = await this.editor.save(), [i, s] = await jt.post({
       url: `${this.properties.apiUrl}/quicknotes`,
       data: o
@@ -11593,24 +11600,24 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       status: "warning"
     });
   }
-  async function ld(n, e, t) {
+  async function cd(n, e, t) {
     n.blur(), this.offcanvasInstance.hide(), window.pywebview && (e.preventDefault(), await window.pywebview.api[t.next]());
   }
-  const cd = ue({
+  const dd = ue({
     tagName: "quick-notes-offcanvas",
-    markup: rd,
+    markup: ad,
     methods: {
-      saveNotes: ad,
-      closeOffcanvas: ld
+      saveNotes: ld,
+      closeOffcanvas: cd
     },
     afterInit: {
       editorInit: function() {
-        this.editor = new Zc({
+        this.editor = new Qc({
           autofocus: true,
           holder: "quickNotesEditor",
           tools: {
             header: {
-              class: sd,
+              class: rd,
               inlineToolbar: [
                 "link"
               ]
@@ -11635,7 +11642,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     }
   });
-  async function dd() {
+  async function ud() {
     return ne`
         <div class="row">
             <div class="col-12 mx-auto text-center">
@@ -11665,9 +11672,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     });
     this.about = e.data;
   }
-  const ud = ue({
+  const hd = ue({
     tagName: "about-info",
-    markup: dd,
+    markup: ud,
     methods: {
       getAboutInfo: Pn
     },
@@ -11678,7 +11685,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       about: be(null)
     }
   });
-  function hd(n) {
+  function pd(n) {
     fetch("/api/v1/roi/", {
       method: "POST",
       headers: {
@@ -11701,7 +11708,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     });
   }
-  async function pd(n) {
+  async function fd(n) {
     const e = n.data;
     try {
       this.drawTimeSeries(e);
@@ -11710,7 +11717,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     this.redrawCanvas();
   }
-  async function fd(n, e) {
+  async function gd(n, e) {
     switch (e.button) {
       case 0:
         if (this.isDPressed == true) {
@@ -11743,14 +11750,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         break;
     }
   }
-  function gd(n, e) {
+  function md(n, e) {
     if (this.isDrawing) {
       this.redrawCanvas();
       const t = n.getBoundingClientRect(), o = e.clientX - t.left, i = e.clientY - t.top;
       this.drawEllipse(this.startX, this.startY, o, i, false);
     }
   }
-  function md(n, e) {
+  function vd(n, e) {
     switch (e.button) {
       case 0:
         break;
@@ -11768,50 +11775,50 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         break;
     }
   }
-  function vd(n, e, t, o, i = false, s = "orange", r = 3) {
+  function bd(n, e, t, o, i = false, s = "orange", r = 3) {
     i && (this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height), this.imgCtx.clearRect(0, 0, this.imgCanvas.width, this.imgCanvas.height));
     for (const l of [
       this.ctx,
       this.imgCtx
     ]) l.strokeStyle = s, l.lineWidth = r, l.beginPath(), l.ellipse((n + t) / 2, (e + o) / 2, Math.abs(t - n) / 2, Math.abs(o - e) / 2, 0, 0, 2 * Math.PI), l.stroke();
   }
-  function bd() {
+  function yd() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height), this.imgCtx.clearRect(0, 0, this.imgCanvas.width, this.imgCanvas.height), this.selectedRois.forEach((n) => {
       const e = n.roi_schema.roi_data;
       this.drawEllipse(e.startX, e.startY, e.endX, e.endY);
     });
   }
-  async function yd(n, e, t) {
+  async function kd(n, e, t) {
     const o = +n.value;
     this.video.playbackRate = o, e.target.labels[0].innerHTML = `Speed: ${o}x`;
   }
-  async function kd(n, e, t) {
+  async function wd(n, e, t) {
     const o = e.offsetX / n.offsetWidth;
     this.video.currentTime = o * video.duration;
   }
-  async function wd() {
+  async function Ed() {
     const n = this.video.currentTime / this.video.duration * 100;
     this.seekbar.style.width = n + "%";
   }
-  async function Ed(n, e) {
+  async function xd(n, e) {
     this.video.paused || this.video.ended ? (this.video.play(), this.playPauseButton.textContent = "Pause") : (this.video.pause(), this.playPauseButton.textContent = "Play"), n.blur();
   }
-  async function xd(n) {
+  async function Cd(n) {
     (n.key === "D" || n.key === "d") && (this.isDPressed = true);
   }
-  async function Cd(n) {
+  async function Td(n) {
     (n.key === "D" || n.key === "d") && (this.isDPressed = false);
   }
-  async function Td() {
+  async function Sd() {
     document.addEventListener("keydown", this.keyDownHandler), document.addEventListener("keyup", this.keyUpHandler);
   }
-  async function Sd() {
+  async function _d() {
     document.removeEventListener("keydown", this.keyDownHandler), document.removeEventListener("keyup", this.keyUpHandler);
   }
-  function _d(n) {
+  function Bd(n) {
     this.plot.drawTimeSeries(n), this.singlePlot.removeTrace(), this.singlePlot.drawTimeSeries(n);
   }
-  function Bd() {
+  function Md() {
     if (this.selectedRois.length < 1) return;
     tt(), this.plot.purgeTraces(), this.plot.initPlot();
     for (const e of this.selectedRois) this.plot.drawTimeSeries(e);
@@ -11819,50 +11826,50 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     const n = this.selectedRois[this.selectedRois.length - 1];
     this.singlePlot.drawTimeSeries(n), mt();
   }
-  function Md(n, e) {
+  function Od(n, e) {
     return this.selectedRois.reduce((o, i, s) => {
       const r = (i.roi_schema.roi_data.startX + i.roi_schema.roi_data.endX) / 2, l = (i.roi_schema.roi_data.startY + i.roi_schema.roi_data.endY) / 2, d = Math.abs(i.roi_schema.roi_data.endX - i.roi_schema.roi_data.startX) / 2, h = Math.abs(i.roi_schema.roi_data.endY - i.roi_schema.roi_data.startY) / 2;
       return (n - r) ** 2 / d ** 2 + (e - l) ** 2 / h ** 2 <= 1 && o === null ? s : o;
     }, null);
   }
-  function Od(n) {
+  function Ad(n) {
     this.plot.removeTrace(n), this.singlePlot.removeTrace();
     const e = this.selectedRois[this.selectedRois.length - 1];
     this.singlePlot.drawTimeSeries(e);
   }
-  async function Ad(n, e, t) {
+  async function Id(n, e, t) {
     window.pywebview && (e.preventDefault(), await window.pywebview.api[t.next]());
   }
-  const Id = ue({
+  const Ld = ue({
     tagName: "video-player",
     markup: async function() {
       return await this.getHTMLtemplate("/video");
     },
     methods: {
-      setPlaybackSpeed: yd,
-      seek: kd,
-      updateSeekBar: wd,
-      playPauseVideo: Ed,
-      canvasClick: fd,
-      canvasMouseMove: gd,
-      canvasMouseUp: md,
-      drawEllipse: vd,
-      keyDownHandler: xd,
-      keyUpHandler: Cd,
-      getRoiData: hd,
-      redrawCanvas: bd,
-      handleResponse: pd,
-      drawTimeSeries: _d,
-      findClickedEllipseIndex: Md,
-      removeTrace: Od,
-      redrawAllTS: Bd,
-      tryNativeExport: Ad
+      setPlaybackSpeed: kd,
+      seek: wd,
+      updateSeekBar: Ed,
+      playPauseVideo: xd,
+      canvasClick: gd,
+      canvasMouseMove: md,
+      canvasMouseUp: vd,
+      drawEllipse: bd,
+      keyDownHandler: Cd,
+      keyUpHandler: Td,
+      getRoiData: pd,
+      redrawCanvas: yd,
+      handleResponse: fd,
+      drawTimeSeries: Bd,
+      findClickedEllipseIndex: Od,
+      removeTrace: Ad,
+      redrawAllTS: Md,
+      tryNativeExport: Id
     },
     beforeInit: {
       getInitialSampling: function() {
         this.initialSampling = parseFloat(this.sampling);
       },
-      addEventListeners: Td,
+      addEventListeners: Sd,
       preferencesChange: function() {
         this.app.addEventListener(Ne.CHANGE, (n) => {
           n.detail.field == "preferences" && this.initialSampling != parseFloat(this.sampling) && (this.initialSampling = parseFloat(this.sampling), this.redrawAllTS());
@@ -11875,7 +11882,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     },
     afterDisconnect: {
-      removeEventListeners: Sd
+      removeEventListeners: _d
     },
     define: {
       video: me("video"),
@@ -11926,10 +11933,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       initialSampling: be(null)
     }
   });
-  async function Ld() {
+  async function Nd() {
     return "";
   }
-  function Nd({ title: n, content: e, modalId: t }) {
+  function Pd({ title: n, content: e, modalId: t }) {
     return ne`
     <div class="modal" data-modal-id="${t}" tabindex="-1">
         <div class="modal-dialog">
@@ -11951,7 +11958,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     </div>
     `;
   }
-  function Pd({ title: n, content: e, modalId: t }) {
+  function Dd({ title: n, content: e, modalId: t }) {
     return ne`
     <div class="modal" data-modal-id="${t}" tabindex="-1">
         <div class="modal-dialog">
@@ -11974,7 +11981,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         </div>
     </div>`;
   }
-  async function Dd({ msg: n, status: e, msgId: t }) {
+  async function Rd({ msg: n, status: e, msgId: t }) {
     return ne`
         <div class="toast toast-${t} show bg-${e}" role="alert" aria-live="assertive"
             aria-atomic="true" data-bs-autohide="true">
@@ -11987,11 +11994,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         </div>
     `;
   }
-  async function Rd(n, e, t) {
+  async function jd(n, e, t) {
     const o = this.querySelector(`.toast-${t.msgid}`);
     o && o.remove();
   }
-  async function jd({ msg: n, status: e = "info" }) {
+  async function Hd({ msg: n, status: e = "info" }) {
     const t = this.app.generateHash(6), o = await this.msgMarkup({
       msg: n,
       status: e,
@@ -12003,7 +12010,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
     }, 6e3);
   }
-  async function Hd({ title: n, content: e, modalOptions: t }) {
+  async function Fd({ title: n, content: e, modalOptions: t }) {
     const o = `modal-${this.app.generateHash(6)}`;
     return this.insertAdjacentHTML("beforeend", await this.infoModalMarkup({
       title: n,
@@ -12011,7 +12018,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       modalId: o
     })), await this.initModal(o, t);
   }
-  async function Fd({ title: n, content: e, callbackFunction: t, modalOptions: o }) {
+  async function Vd({ title: n, content: e, callbackFunction: t, modalOptions: o }) {
     const i = `modal-${this.app.generateHash(6)}`;
     this.insertAdjacentHTML("beforeend", await this.confirmModalMarkup({
       title: n,
@@ -12023,7 +12030,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       await t(l, s), await this.closeModal(l.target);
     }), s;
   }
-  async function Vd(n, e) {
+  async function $d(n, e) {
     const t = {
       ...this.defaultOptions
     };
@@ -12034,25 +12041,25 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     const o = this.querySelector(`[data-modal-id="${n}"]`), i = new bootstrap.Modal(o, t);
     return this.modals.push(i), i.show(), i;
   }
-  async function $d(n, e, t) {
+  async function Ud(n, e, t) {
     n.blur();
     const o = n.closest(".modal");
     if (!o) return;
     o.getAttribute("data-modal-id"), bootstrap.Modal.getInstance(o).hide(), o.remove();
   }
-  const Ud = ue({
+  const zd = ue({
     tagName: "messenger-element",
-    markup: Ld,
+    markup: Nd,
     methods: {
-      closeModal: $d,
-      infoModal: Hd,
-      infoModalMarkup: Nd,
-      initModal: Vd,
-      confirmModal: Fd,
-      confirmModalMarkup: Pd,
-      msgMarkup: Dd,
-      setMessage: jd,
-      removeToast: Rd
+      closeModal: Ud,
+      infoModal: Fd,
+      infoModalMarkup: Pd,
+      initModal: $d,
+      confirmModal: Vd,
+      confirmModalMarkup: Dd,
+      msgMarkup: Rd,
+      setMessage: Hd,
+      removeToast: jd
     },
     define: {
       defaultOptions: be({
@@ -12063,7 +12070,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       modals: be([])
     }
   });
-  class zd {
+  class qd {
     constructor(e) {
       __publicField(this, "infoModal", async ({ title: e, content: t, modalOptions: o }) => await this.messengerElement.infoModal({
         title: e,
@@ -12086,12 +12093,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.app.querySelector("messenger-element");
     }
   }
-  async function qd() {
+  async function Wd() {
     return ne`
       <div id="ts-plot-all"></div>
     `;
   }
-  function Wd(n) {
+  function Yd(n) {
     const e = [
       ...Array(n.data.length).keys()
     ].map((t) => (t + 1) / this.sampling);
@@ -12102,10 +12109,10 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     ]);
   }
-  function Yd(n) {
+  function Xd(n) {
     Plotly.deleteTraces(this.plotDiv, n);
   }
-  function Xd() {
+  function Kd() {
     Plotly.purge(this.plotDiv);
   }
   function Rt() {
@@ -12148,13 +12155,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       responsive: true
     }));
   }
-  const Kd = ue({
+  const Gd = ue({
     tagName: "ts-plot-all",
-    markup: qd,
+    markup: Wd,
     methods: {
-      drawTimeSeries: Wd,
-      removeTrace: Yd,
-      purgeTraces: Xd,
+      drawTimeSeries: Yd,
+      removeTrace: Xd,
+      purgeTraces: Kd,
       initPlot: Rt
     },
     afterInit: {
@@ -12178,12 +12185,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     }
   });
-  async function Gd() {
+  async function Zd() {
     return ne`
         <div id="ts-plot-single"></div>
     `;
   }
-  function Zd(n) {
+  function Qd(n) {
     if (!n || !n.data) {
       this.removeTrace();
       return;
@@ -12198,11 +12205,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     ]);
   }
-  const Qd = ue({
+  const Jd = ue({
     tagName: "single-plot",
-    markup: Gd,
+    markup: Zd,
     methods: {
-      drawTimeSeries: Zd,
+      drawTimeSeries: Qd,
       removeTrace: function() {
         this.plotDiv.data.length > 0 && Plotly.deleteTraces(this.plotDiv, 0);
       },
@@ -12231,7 +12238,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       time: be(null)
     }
   });
-  async function Jd() {
+  async function eu() {
     return ne`
     <div>
         <p class="lead">Copyright 2025 @ Marko Šterk</p>
@@ -12253,22 +12260,22 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     </div>
     `;
   }
-  const eu = ue({
+  const tu = ue({
     tagName: "license-tab",
-    markup: Jd
+    markup: eu
   });
-  async function tu() {
+  async function ou() {
     return ne`
     <p>
         Šterk, M., & Gosak, M. (2025). Beta cell analysis: roi picker (Version 1.0.) [Computer software]. https://github.com/MarkoSterk/beta_cell_analysis_roi_picker
     </p>
     `;
   }
-  const ou = ue({
+  const nu = ue({
     tagName: "citation-tab",
-    markup: tu
+    markup: ou
   });
-  async function nu() {
+  async function iu() {
     return ne`
         <div class="row">
             <div class="col-2 fw-bold">Author</div>
@@ -12295,11 +12302,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         </div>
     `;
   }
-  const iu = ue({
+  const su = ue({
     tagName: "contact-tab",
-    markup: nu
+    markup: iu
   });
-  async function su() {
+  async function ru() {
     return ne`
         <div>
             <div class="accordion" id="issuesAccordion">
@@ -12334,17 +12341,17 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         <div>
     `;
   }
-  async function ru(n, e, t) {
+  async function au(n, e, t) {
     n.blur();
   }
-  const au = ue({
+  const lu = ue({
     tagName: "issues-tab",
-    markup: su,
+    markup: ru,
     methods: {
-      unfocusBtn: ru
+      unfocusBtn: au
     }
   });
-  async function lu() {
+  async function cu() {
     return ne`
     <ol>
         <li>
@@ -12421,35 +12428,35 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     </ol>  
     `;
   }
-  const cu = ue({
+  const du = ue({
     tagName: "basic-usage-tab",
-    markup: lu
-  }), du = {
+    markup: cu
+  }), uu = {
     baseLayout: Rs,
     menuElement: ar
-  }, uu = {
+  }, hu = {
     homePage: Yn,
     documentationPage: Xn
-  }, hu = {
-    configurationsOffcanvas: hr,
-    quickNotesOffcanvas: cd,
-    aboutInfo: ud,
-    messengerElement: Ud,
+  }, pu = {
+    configurationsOffcanvas: pr,
+    quickNotesOffcanvas: dd,
+    aboutInfo: hd,
+    messengerElement: zd,
     uploadDropZone: Ws,
-    videoPlayer: Id,
-    tsPlotAll: Kd,
-    singlePlot: Qd,
-    licenseTab: eu,
-    citationTab: ou,
-    contactTab: iu,
-    issuesTab: au,
-    basicUsageTab: cu
+    videoPlayer: Ld,
+    tsPlotAll: Gd,
+    singlePlot: Jd,
+    licenseTab: tu,
+    citationTab: nu,
+    contactTab: su,
+    issuesTab: lu,
+    basicUsageTab: du
   }, Dn = {
-    ...du,
     ...uu,
-    ...hu
+    ...hu,
+    ...pu
   }, Rn = "#content";
-  function pu() {
+  function fu() {
     return [
       {
         path: "/",
@@ -12463,7 +12470,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     ];
   }
-  const fu = {
+  const gu = {
     apiUrl: "/api/v1",
     baseUrl: "http://localhost:8080",
     filesApi: {
@@ -12472,7 +12479,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         "postForm"
       ]
     }
-  }, gu = new Ts({
+  }, mu = new Ts({
     appName: "Beta cell analysis",
     dataStructure: {
       data: null,
@@ -12482,11 +12489,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       quicknotes: null
     },
     elements: Dn,
-    properties: fu,
+    properties: gu,
     router: function(n) {
       return new cs({
         baseUrl: "/app",
-        routes: pu,
+        routes: fu,
         baseLayout: Dn.baseLayout,
         defaultTarget: "#content",
         index: "/",
@@ -12495,7 +12502,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     },
     extensions: {
       messenger: function(n) {
-        return new zd(n);
+        return new qd(n);
       }
     },
     beforeInit: {
@@ -12516,8 +12523,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       removeOverlaySpinner: mt
     }
   });
-  async function mu() {
-    await gu.init("#app");
+  async function vu() {
+    await mu.init("#app");
   }
-  await mu();
+  await vu();
 })();

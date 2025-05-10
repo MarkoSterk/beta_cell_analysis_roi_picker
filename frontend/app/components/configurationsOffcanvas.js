@@ -5,9 +5,12 @@ async function configurationsOffcanvasMarkup(){
     <div class="offcanvas offcanvas-start w-75" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1" id="analysisConfigs" aria-labelledby="analysisConfigsLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="analysisConfigsLabel">Preferences</h5>
-            <button jolt-click="savePreferences" type="button" class="btn btn text-reset" title="Save and close" data-bs-dismiss="offcanvas" aria-label="Close">
-                <i class="fa-solid fa-check"></i>
-            </button>
+            <div class="d-flex gap-2 ms-auto">
+                <button jolt-click="savePreferences" type="button" class="btn text-reset" title="Save and close" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+                <button title="Refresh application" type="button" class="btn" jolt-click="refreshApp"><i class="fas fa-sync"></i></button>
+            </div>
         </div>
         <div class="offcanvas-body">
             <div>
@@ -42,6 +45,10 @@ async function configurationsOffcanvasMarkup(){
         </div>
     </div> 
     `
+}
+
+function refreshApp(elem, event, args){
+    location.reload();
 }
 
 async function savePreferences(elem, event, args){
@@ -96,7 +103,8 @@ const configurationsOffcanvas = ElementFactory({
     markup: configurationsOffcanvasMarkup,
     methods: {
         savePreferences,
-        loadPreferences
+        loadPreferences,
+        refreshApp
     },
     beforeInit: {
         loadPreferences
