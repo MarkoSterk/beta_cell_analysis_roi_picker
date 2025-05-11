@@ -5,6 +5,7 @@ the current project
 import os
 import gc
 import pickle
+import uuid
 
 from loguru import logger
 import torch
@@ -55,6 +56,7 @@ class Islet:
         self.raw_number_of_cells: int = 0
         self.raw_time_series: torch.Tensor = None
         self.process_status: dict[str, float|bool|str] = {}
+        self.video_hash: str = None
         if app is not None:
             self.init_app(app)
 
@@ -66,19 +68,49 @@ class Islet:
 
     def reset_islet(self):
         """Resets islet to initial defaults"""
+        self.delete_video_and_avg_frame()
         self.liff_array: torch.Tensor = None
         self.quick_notes: dict = None
         self.preferences: dict = PreferencesSchema().model_dump()
         self.video_url: str = None
+        self.video_hash: str = None
         self.selected_rois: list[dict[str, torch.Tensor|dict]] = []
         self.raw_number_of_cells: int = 0
         self.raw_time_series: torch.Tensor = None
+        self.process_status = {}
+
+    def get_lif_video_url(self):
+        """
+        Return url for lif video
+        """
+        protocol = self._app.get_conf("PROTOCOL")
+        host = self._app.get_conf("HOST")
+        port = self._app.get_conf("PORT")
+        video: str = self._app.get_conf("LIF_VIDEO")
+        video = video.replace("%", self.video_hash)
+        url = f"{protocol}://{host}:{port}/static/{video}"
+        return url
+
+    def set_video_hash(self, hash_str: str):
+        """Sets the video hash"""
+        self.video_hash = hash_str
+
+    def create_video_hash(self) -> str:
+        """Creates video hash"""
+        return str(uuid.uuid4())
+
+    def delete_video_and_avg_frame(self):
+        """
+        Deletes video and average frame
+        """
         app_path: str = self._app.get_conf("APP_PATH")
-        video_path: str = os.path.join(app_path, "static", self._app.get_conf("LIF_VIDEO"))
+        video_name: str = self._app.get_conf("LIF_VIDEO")
+        if self.video_hash is not None:
+            video_name = video_name.replace("%", self.video_hash)
+        video_path: str = os.path.join(app_path, "static", video_name)
         delete_file(video_path)
         img_path: str = os.path.join(app_path, "static", self._app.get_conf("AVG_FRAME"))
         delete_file(img_path)
-        self.process_status = {}
 
     def get_preferences(self) -> dict:
         """

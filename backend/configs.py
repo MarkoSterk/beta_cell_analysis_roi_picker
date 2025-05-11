@@ -38,7 +38,7 @@ class Config:
     TS_VIEWER_HEIGHT: int = 350
     VIDEO_WIDTH: int = 500
     VIDEO_HEIGHT: int = 500
-    LIF_VIDEO: str = "lif_video.mp4"
+    LIF_VIDEO: str = "lif_video_%.mp4"
     AVG_FRAME: str = "avg_frame.png"
     TEMP_LIF: str = "temp_lif.lif"
 

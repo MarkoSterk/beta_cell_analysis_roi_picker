@@ -43,6 +43,7 @@ async def video_stream(req: Request, res: Response) -> Response:
         "protocol": req.app.get_conf("PROTOCOL"),
         "host": req.app.get_conf("HOST"),
         "port": req.app.get_conf("PORT"),
+        "video_url": islet.get_lif_video_url(),
         "width": req.app.get_conf("VIDEO_WIDTH"),
         "height": req.app.get_conf("VIDEO_HEIGHT"),
         "ts_width": req.app.get_conf("TS_VIEWER_WIDTH"),

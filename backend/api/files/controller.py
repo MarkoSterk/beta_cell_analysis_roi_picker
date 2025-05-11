@@ -15,7 +15,7 @@ from loguru import logger
 
 from backend.extensions import islet, desktop
 from backend.utilities.utils import delete_file
-from .lif_handlers import create_frames_array, frames_to_video, get_lif_video_url
+from .lif_handlers import create_frames_array, frames_to_video
 
 executor = ThreadPoolExecutor(max_workers=4)
 
@@ -41,7 +41,7 @@ def process_lif_upload(temp_file: str):
         frames_to_video(torch_array, islet)
         delete_file(temp_file)
 
-        islet.video_url = get_lif_video_url()
+        islet.video_url = islet.get_lif_video_url()
         return islet.set_process_status({
             "perc": 100.0,
             "status": "finished",

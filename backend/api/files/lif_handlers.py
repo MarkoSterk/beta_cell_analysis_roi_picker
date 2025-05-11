@@ -56,11 +56,15 @@ def frames_to_video(data: torch.Tensor, islet):
     """
     Creates .avi video from sequence of images from LIF file
     """
+    islet.delete_video_and_avg_frame()
     fps: int = 24
     frames, height, width = data.size()
 
     app_path: str = getattr(Config, "APP_PATH")
     video_name: str = getattr(Config, "LIF_VIDEO")
+    video_hash: str = islet.create_video_hash()
+    islet.set_video_hash(video_hash)
+    video_name = video_name.replace("%", video_hash)
     avg_frame_name: str = getattr(Config, "AVG_FRAME")
     output_path: str = os.path.join(app_path, "static", video_name)
     avg_frame_path: str = os.path.join(app_path, "static", avg_frame_name)
@@ -101,17 +105,6 @@ def frames_to_video(data: torch.Tensor, islet):
     avg_frame = np.clip(avg_frame, 0, 255)
     avg_frame = avg_frame.astype(np.uint8)
     iio.imsave(avg_frame_path, avg_frame)
-
-def get_lif_video_url():
-    """
-    Return url for lif video
-    """
-    protocol = getattr(Config, "PROTOCOL")
-    host = getattr(Config, "HOST")
-    port = getattr(Config, "PORT")
-    video: str = getattr(Config, "LIF_VIDEO")
-    url = f"{protocol}://{host}:{port}/static/{video}"
-    return url
 
 def get_avg_frame_url():
     """

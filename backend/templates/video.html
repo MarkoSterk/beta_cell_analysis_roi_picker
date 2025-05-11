@@ -51,7 +51,7 @@
                    height="{{ height }}"
                    jolt-timeupdate="updateSeekBar"
                    preload="auto">
-              <source src="{{ protocol }}://{{ host }}:{{ port }}{{ url_for('static', path='lif_video.mp4') }}"
+              <source src="{{ video_url }}"
                       type="video/mp4">
             </video>
             <canvas id="video-canvas"

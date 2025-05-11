@@ -42,11 +42,7 @@ def create_app(config: object = Config) -> PyJolt:
         """
         Runs on startup/shutdown
         """
-        app_path: str = app.get_conf("APP_PATH")
-        video_path: str = os.path.join(app_path, "static", app.get_conf("LIF_VIDEO"))
-        delete_file(video_path)
-        img_path: str = os.path.join(app_path, "static", app.get_conf("AVG_FRAME"))
-        delete_file(img_path)
+        islet.delete_video_and_avg_frame()
 
     app.build()
     #logger.info("PyJolt application built successfully.")
