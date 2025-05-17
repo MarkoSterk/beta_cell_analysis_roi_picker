@@ -258,9 +258,6 @@ function removeTrace(index){
 }
 
 async function tryNativeExport(elem, event, args){
-    if(!window.pywebview){
-        return;
-    }
     event.preventDefault();
     await window.pywebview.api[args.next]();
 }

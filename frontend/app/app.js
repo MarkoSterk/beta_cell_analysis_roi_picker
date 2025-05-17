@@ -33,9 +33,19 @@ const app = new App({
     },
     beforeInit: {
         startOverlaySpinner,
+        getSystemProperties: async function(){
+            let response = await fetch("/system")
+            if(!response?.ok || response?.status != 200 ){
+                throw new Error("Failed to start app.");
+            }
+            response = await response.json();
+            for(const [key, value] of Object.entries(response.data)){
+                this.properties[key] = value;
+            }
+        },
         getState: async function(){
             let response = await fetch("/state");
-            if(!response?.ok && response?.status != 200){
+            if(!response?.ok || response?.status != 200){
                 throw new Error("Failed to fetch initial state");
             }
             response = await response.json();

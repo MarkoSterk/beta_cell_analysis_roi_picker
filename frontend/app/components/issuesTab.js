@@ -15,14 +15,13 @@ async function issuesTabMarkup(){
                         <div class="accordion-body">
                             <p>
                                 The application uses the OS' native browser engine for the application window. This means that on MacOS
-                                the same engine is used as is used by the Safari browser. This means that there will be issues with video playback
-                                when playback speed is increased beyond 2x. As of now the reason for this issue is unknown, however, we
-                                are researching possible solutions and will provide an updated version of the application as soon as we find
-                                a viable solution.
+                                the same engine is used as is used by the Safari browser. For reasons yet unknown, video playback failes
+                                if playback speed is increased beyond 2x on MacOS. For this reason, the playback speed is limited to 2x
+                                on MacOS machines.
                             </p>
                             <p>
-                                For the above reason the application on MacOS does not open a native app window but directs the user via the app
-                                console to open the app in Google Chrome by visiting http://localhost:8080/app
+                                We are working on a solution to this problem and will issue a new app release once a stable solution has
+                                been found.
                             </p>
                         </div>
                     </div>

@@ -37,9 +37,6 @@ async function saveNotes(elem, event, args){
 async function closeOffcanvas(elem, event, args){
     elem.blur();
     this.offcanvasInstance.hide();
-    if(!window.pywebview){
-        return;
-    }
     event.preventDefault();
     await window.pywebview.api[args.next]()
 }

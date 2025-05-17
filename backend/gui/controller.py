@@ -2,11 +2,10 @@
 GUI controller of the app. Serves the templates of the app
 """
 import os
-import asyncio
+import platform
 from pyjolt import Blueprint, Response, Request
-from backend.extensions import islet
+from backend.extensions import islet, desktop
 from backend.api.roi.schemas import ReturnTimeSeriesSchema
-from backend.utilities.utils import delete_file
 
 gui_controller: Blueprint = Blueprint(__name__, "gui")
 
@@ -48,41 +47,43 @@ async def video_stream(req: Request, res: Response) -> Response:
         "height": req.app.get_conf("VIDEO_HEIGHT"),
         "ts_width": req.app.get_conf("TS_VIEWER_WIDTH"),
         "ts_height": req.app.get_conf("TS_VIEWER_HEIGHT"),
+        "system": platform.system()
     }
     return await res.html("video.html", context)
 
-@gui_controller.get("/shutdown")
-async def shutdown(req: Request, res: Response) -> Response:
+@desktop.expose
+def shutdown():
     """
     Shuts down the server
     """
-    app_path: str = req.app.get_conf("APP_PATH")
-    lif_video: str = req.app.get_conf("LIF_VIDEO")
-    avg_frame: str = req.app.get_conf("AVG_FRAME")
-    video_path: str = os.path.join(app_path, "static", lif_video)
-    avg_frame_path: str = os.path.join(app_path, "static", avg_frame)
-    delete_file(video_path)
-    delete_file(avg_frame_path)
+    islet.reset_islet()
     # Spawn a thread that will exit the process in 500ms
-    loop = asyncio.get_running_loop()
     # Schedule os._exit(0) in 0.5 seconds
-    loop.call_later(0.5, lambda: os._exit(0))
+    os._exit(0)
 
-    return res.json({
-        "message": "Shutdown successful.",
-        "status": "success",
-        "data": None
-    }).status(200)
-
-@gui_controller.get("/new-project")
-async def new_project(_: Request, res: Response) -> Response:
+@desktop.expose
+def new_project():
     """Resets the state to initial"""
 
     islet.reset_islet()
-    return res.json({
+    return {
         "message": "New project started successfully.",
         "status": "success",
-        "data": None
+        "data": None,
+        "ok": True
+    }
+
+@gui_controller.get("/system")
+async def get_system_props(_: Request, res: Response) -> Response:
+    """
+    Gets system properties
+    """
+    return res.json({
+        "message": "System properties fetched successfully.",
+        "status": "success",
+        "data": {
+            "system": platform.system()
+        }
     }).status(200)
 
 @gui_controller.get("/state")
