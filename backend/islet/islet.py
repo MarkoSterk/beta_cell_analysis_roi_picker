@@ -2,6 +2,7 @@
 Islet (of Langerhans) class which holds data and methods for
 the current project
 """
+from io import BufferedReader, FileIO
 import os
 import gc
 import pickle
@@ -268,7 +269,7 @@ class Islet:
             logger.debug(f"Failed save data to pickle: {str(err)}")
             return abort(msg="Failed to save data as pickle.", status_code=500, status="error")
 
-    def load_from_pickle(self, pickle_data: UploadedFile):
+    def load_from_pickle(self, pickle_data: BufferedReader):
         """Reads data from pickle object"""
         try:
             data: dict = pickle.loads(pickle_data.read())

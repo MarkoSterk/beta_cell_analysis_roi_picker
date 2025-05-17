@@ -16,12 +16,10 @@ async function menuElementMarkup(){
                 </li>
                 <li data-bind="app.video">
                   {{? this.video == null }}
-                    <a role="button" jolt-click="importLif">Import LIF</a>
+                    <a role="button" jolt-click="handleFileClick">Import LIF</a>
                   {{?}}
                 </li>
-                <input class="lif-upload" type="file" accept=".lif" jolt-change="uploadFile" hidden>
-                <li><a role="button" jolt-click="openProject">Open project</a></li>
-                <input class="pkl-upload" type="file" accept=".pkl" jolt-change="uploadPkl" hidden>
+                <li><a role="button" jolt-click="openProject" role="button">Open project</a></li>
                 <li><a href="/api/v1/files/save-project" jolt-click="saveProject" :next="native_save_project" target="_blank" router-ignore="true">Save project</a></li>
                 <hr class="p-0 m-0" />
                 <li><a role="button" jolt-click="shutdownApp">Exit</a></li>
@@ -56,14 +54,21 @@ async function menuElementMarkup(){
     `
 }
 
-async function shutdownApp(elem, event, args){
+async function shutdownConfirmed(){
   startOverlaySpinner();
-  let response = await fetch("/shutdown");
-  if(!response.ok || response?.status != 200){
+  let response = await window.pywebview.api.shutdown()
+  if(!response.ok){
     removeOverlaySpinner();
     return this.ext.messenger.setMessage({msg: "Something went wrong. Failed to shutdown.", status: "danger"})
   }
-  window.close()
+}
+
+async function shutdownApp(elem, event, args){
+  this.ext.messenger.confirmModal({
+    title: "Please confirm",
+    content: "Are you sure you wish to exit the app? All unsaved data will be lost.",
+    callbackFunction: shutdownConfirmed
+  })
 }
 
 async function menuElementStyle(){
@@ -119,30 +124,14 @@ async function menuElementStyle(){
 }
 
 async function openProject(elem, event, args){
-  elem.blur();
-  this.pklUpload.click();
+  this.closeMenus();
+  startOverlaySpinner();
+  const response = await window.pywebview.api.native_open_pkl();
+  if(response.ok && response.status == "success"){
+    location.reload();
+  }
 }
 
-async function uploadPkl(elem){
-  if(!elem?.files || !elem.files[0]){
-    return;
-  }
-  const payload = new FormData();
-  payload.append("file", elem.files[0])
-  startOverlaySpinner()
-  let response = await fetch("/api/v1/files/open-project", {
-    method: "POST",
-    body: payload,
-  });
-  if(!response || !response.ok || response?.status != 200){
-    return this.ext.messenger.setMessage({
-      msg: "Failed to parse LIF file.",
-      status: "warning"
-  })
-  }
-  response = await response.json();
-  location.reload();
-}
 
 function toggleDropdown(elem, event, args) {
   // Hide any other open dropdowns
@@ -171,26 +160,13 @@ function closeMenus(){
 
 async function saveProject(elem, event, args){
   elem.blur();
-  this.closeMenus();
-  if(!window.pywebview){
-    return;
-  }
   event.preventDefault();
   await window.pywebview.api[args.next]();
 }
 
-async function importLif(elem, event, args){
-  elem.blur();
-  if(args?.disabled){
-    return;
-  }
+async function handleFileClick(elem, event, args){
   this.closeMenus();
-  this.fileUpload.click();
-}
-
-async function uploadFile(elem, event, args){
-  const file = elem.files[0];
-  await this.handleFile(file)
+  this.handleFile();
 }
 
 async function openAboutModal(elem, event, args){
@@ -215,12 +191,12 @@ async function newProject(elem, event, args){
 }
 
 async function startNewProject(){
-  let response = await fetch("/new-project");
-  if(!response || !response?.ok || response?.status != 200){
+  let response = await window.pywebview.api.new_project();
+  if(!response?.ok){
     this.ext.messenger.setMessage({
-      msg: "Failed to start new project. Check application.",
-      status: "warning"
-  })
+        msg: "Failed to start new project. Check application.",
+        status: "warning"
+    })
   }
   location.reload();
 }
@@ -235,19 +211,18 @@ const menuElement = ElementFactory({
     methods: {
       toggleDropdown,
       closeOnMissclick,
-      importLif,
       openAboutModal,
       closeMenus,
       handleFile,
-      uploadFile,
+      handleFileClick,
       shutdownApp,
       saveProject,
       openProject,
-      uploadPkl,
       newProject,
       startNewProject,
       handleFailedProgressCheck,
-      checkProgress
+      checkProgress,
+      shutdownConfirmed
     },
     define: {
       dropdownMenus: querySelectorAll(".dropdown-menu"),

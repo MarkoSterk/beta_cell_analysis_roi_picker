@@ -29,7 +29,7 @@ class Config:
     PROTOCOL: str = "http"
     INDEX_ROUTE: str = "/app"
     TEMPLATES_STRICT: bool = True
-    DEBUG: bool = False
+    DEBUG: bool = True
 
     #ANALYSIS CONFIGURATIONS
 

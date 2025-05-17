@@ -1,10 +1,8 @@
 """
 Files controller 
 """
-import io
-import os
 from concurrent.futures import ThreadPoolExecutor
-from pyjolt import Blueprint, Request, Response, UploadedFile, abort
+from pyjolt import Blueprint, Request, Response, UploadedFile
 import torch
 import numpy as np
 import webview
@@ -14,7 +12,6 @@ from xhtml2pdf import pisa
 from loguru import logger
 
 from backend.extensions import islet, desktop
-from backend.utilities.utils import delete_file
 from .lif_handlers import create_frames_array, frames_to_video
 
 executor = ThreadPoolExecutor(max_workers=4)
@@ -39,7 +36,7 @@ def process_lif_upload(temp_file: str):
             })
         islet.save_torch_array(torch_array)
         frames_to_video(torch_array, islet)
-        delete_file(temp_file)
+        #delete_file(temp_file)
 
         islet.video_url = islet.get_lif_video_url()
         return islet.set_process_status({
@@ -73,20 +70,22 @@ async def check_lif_progress(_: Request, res: Response) -> Response:
         "data": islet.get_process_status()
     })
 
-@files_controller.post("/")
-async def upload_lif_file(req: Request, res: Response) -> Response:
-    """
-    For lif file uploading
-    """
-    data: dict[str, UploadedFile] = await req.get_data("form_and_files")
-    app_path: str = req.app.get_conf("APP_PATH")
-    temp_folder: str = req.app.get_conf("TEMP_FOLDER")
-    temp_lif: str = req.app.get_conf("TEMP_LIF")
-    temp_file: str = os.path.join(app_path, "static", temp_folder, temp_lif)
-    data["file"].save(temp_file)
+@desktop.expose
+def native_upload_lif_file():
+    """Native LIF file upload"""
 
-    executor.submit(process_lif_upload, temp_file)
+    result = webview.windows[0].create_file_dialog(
+        webview.OPEN_DIALOG,
+        file_types=['Lif file (*.lif)']
+    )
 
+    if result is None:
+        return {
+            "message": "Upload aborted",
+            "status": "aborted",
+            "data": None,
+            "ok": True
+        }
     islet.set_process_status({
         "perc": 0,
         "status": "processing",
@@ -94,23 +93,38 @@ async def upload_lif_file(req: Request, res: Response) -> Response:
         "finished": False,
         "message": "Processing LIF file."
     })
+    executor.submit(process_lif_upload, result[0])
 
-    return res.json({
+    return {
         "message": "Process started",
         "status": "success",
-        "data": req.app.url_for('files.check_lif_progress')
-    }).status(200)
+        "data": "http://localhost:8080/api/v1/files/progress-check",
+        "ok": True
+    }
 
-@files_controller.get("/save-project")
-async def save_project(_: Request, res: Response) -> Response:
-    """Saves entire project as pickle file"""
-    pickle_data: bytes = islet.save_as_pickle()
-    project_name: str = islet.project_name()
-    return res.send_file(pickle_data, headers={
-        "Content-Type": "application/octet-stream",
-        "Content-Disposition": f'attachment; filename="{project_name}.pkl"',
-        "Content-Length": str(len(pickle_data)),
-    }).status(200)
+@desktop.expose
+def native_open_pkl():
+    """Opens pkl file natively"""
+    result = desktop.window.create_file_dialog(
+            webview.OPEN_DIALOG,
+            file_types=['Pickle file (*.pkl)']
+    )
+    if not result:
+        return {
+            "status": "aborted",
+            "ok": True
+        }
+    with open(result[0], "rb") as file:
+        islet.load_from_pickle(file)
+        frames_to_video(islet.get_torch_array(), islet)
+        islet.video_url = islet.get_lif_video_url()
+    return {
+        "message": "Project opened successfully.",
+        "status": "success",
+        "data": islet.video_url,
+        "ok": True
+    }
+
 
 @files_controller.post("/open-project")
 async def open_project(req: Request, res: Response) -> Response:
@@ -119,63 +133,12 @@ async def open_project(req: Request, res: Response) -> Response:
     data: dict[str, UploadedFile] = await req.get_data("form_and_files")
     islet.load_from_pickle(data["file"])
     frames_to_video(islet.get_torch_array(), islet)
-    islet.video_url = get_lif_video_url()
+    islet.video_url = islet.get_lif_video_url()
     return res.json({
         "message": "Project opened successfully.",
         "status": "success",
         "data": islet.video_url
     }).status(200)
-
-@files_controller.get("/export-timeseries")
-async def export_time_series(_: Request, res: Response) -> Response:
-    """Saves time series data as txt file"""
-    arr = islet.get_all_time_series()
-    project_name: str = islet.project_name()
-    filename: str = f"time_series_{project_name}.txt"
-    buff: io.StringIO = io.StringIO()
-    np.savetxt(buff, arr, fmt="%.6lf", delimiter=" ")
-    buff.seek(0)
-    return res.send_file(buff.getvalue().encode("utf-8"), headers={
-        "Content-Type": "text/csv",
-        "Content-Disposition": f'attachment; filename="{filename}"'
-    })
-
-@files_controller.get("/export-coordinates")
-async def export_coordinates(_: Request, res: Response) -> Response:
-    """Saves time series data as txt file"""
-    arr = islet.get_all_coordinates()
-    project_name: str = islet.project_name()
-    filename: str = f"coordinates_{project_name}.txt"
-    buff: io.StringIO = io.StringIO()
-    np.savetxt(buff, arr, fmt="%.2lf", delimiter=" ")
-    buff.seek(0)
-    return res.send_file(buff.getvalue().encode("utf-8"), headers={
-        "Content-Type": "text/csv",
-        "Content-Disposition": f'attachment; filename="{filename}"'
-    })
-
-@files_controller.get("/export-quicknotes")
-async def export_quicknotes(_: Request, res: Response) -> Response:
-    """Exports quicknotes as pdf"""
-
-    quicknotes: dict = islet.get_quick_notes()
-    parser = EditorJsParser(quicknotes)
-    html = parser.html(sanitize=True)
-    project_name: str = islet.project_name()
-    full_html: str = create_pdf_markup(html, project_name)
-
-    pdf_buffer = io.BytesIO()
-    pisa_status = pisa.CreatePDF(src=full_html, dest=pdf_buffer, default_css=None, encoding="utf-8")
-    if pisa_status.err:
-        logger.debug(f"Failed to generate PDF: {pisa_status.err}")
-        abort(msg="Failed to export PDF.", status_code=500, status="error")
-
-    pdf_bytes = pdf_buffer.getvalue()
-    return res.send_file(pdf_bytes, headers={
-        "Content-Type": "application/pdf",
-        "Content-Disposition": f'attachment; filename="quicknotes_{project_name}.pdf"',
-        "Content-Length": str(len(pdf_bytes))
-    })
 
 def create_pdf_markup(html: str, project_name: str) -> str:
     """
@@ -256,7 +219,7 @@ def native_export_timeseries():
             "ok": True
         }
     arr = islet.get_all_time_series()
-    np.savetxt(result, arr, fmt="%.5lf")
+    np.savetxt(result[0], arr, fmt="%.5lf")
     return {
         "status": "success",
         "ok": True
