@@ -142,6 +142,7 @@ async function confirmModal({ title, content, callbackFunction, modalOptions }){
     const modal = await this.initModal(modalId, modalOptions);
     const confirmBtn = this.querySelector(`.confirm-button-${modalId}`);
     confirmBtn.addEventListener("click", async (event) => {
+        modal.hide();
         await callbackFunction(event, modal);
         await this.closeModal(event.target);
     })

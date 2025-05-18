@@ -1,22 +1,4 @@
 <div class="row">
-    {% raw %}
-    <div data-bind="app.rois" class="text-end">
-        {{? this.selectedRois.length != 0 }}
-            <span class="float-right">
-                <a role="button" jolt-click="tryNativeExport" :next="native_export_timeseries" class="btn btn-sm btn-secondary my-1" href="/api/v1/files/export-timeseries" router-ignore="true" target="_blank">
-                    Export time series
-                </a>
-            </span>
-            <span class="float-right">
-                <a role="button" jolt-click="tryNativeExport" :next="native_export_coordinates" class="btn btn-sm btn-secondary my-1" href="/api/v1/files/export-coordinates" router-ignore="true" target="_blank">
-                    Export coordinates
-                </a>
-            </span>
-        {{?}}
-    </div>
-    {% endraw %}
-</div>
-<div class="row">
     <!-- LEFT PANEL -->
     <div class="col-12 col-xl-5 mx-auto m-1">
       <!-- your play/pause controls -->

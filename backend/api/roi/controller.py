@@ -2,8 +2,10 @@
 Analysis api
 """
 from pyjolt import Blueprint, Request, Response
+import torch
 
 from backend.extensions import islet
+from backend.islet.types import ResponseDict
 from .schemas import RoiInSchema, ReturnTimeSeriesSchema
 
 roi_controller: Blueprint = Blueprint(__name__,
@@ -11,15 +13,22 @@ roi_controller: Blueprint = Blueprint(__name__,
                                     url_prefix="/api/v1/roi")
 
 @roi_controller.post("/")
-def get_roi_ts(_: Request, res: Response, json_data: RoiInSchema):
+async def get_roi_ts(_: Request, res: Response, json_data: RoiInSchema) -> Response:
     """
     Gets time series for ROI based on provided
     ellipse coordinates: startX, startY, endX, endY
     """
-    roi_time_series, pos = islet.get_roi_time_series(
+    roi_response: ResponseDict[tuple[torch.Tensor, list[float]]] = islet.get_roi_time_series(
         json_data.roi_type,
         json_data.roi_data
     )
+    if roi_response["data"] is None:
+        return res.json({
+            "data": None,
+            "message": "Failed to get ROI data",
+            "status": "error"
+        }).status(400)
+    roi_time_series, pos = roi_response["data"]
 
     islet.add_selected_roi_data({
         "data": roi_time_series,
@@ -35,7 +44,7 @@ def get_roi_ts(_: Request, res: Response, json_data: RoiInSchema):
     }).status(200)
 
 @roi_controller.delete("/<int:index>")
-def remove_selected_roi(_: Request, res: Response, index: int):
+async def remove_selected_roi(_: Request, res: Response, index: int):
     """
     Removes selected ROI data
     """
@@ -47,7 +56,7 @@ def remove_selected_roi(_: Request, res: Response, index: int):
     }).status(200)
 
 @roi_controller.get("/<int:index>")
-def get_selected_roi(_: Request, res: Response, index: int):
+async def get_selected_roi(_: Request, res: Response, index: int):
     """
     Returns selected TS based on index
     """

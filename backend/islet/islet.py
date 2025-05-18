@@ -2,7 +2,7 @@
 Islet (of Langerhans) class which holds data and methods for
 the current project
 """
-from io import BufferedReader, FileIO
+from io import BufferedReader
 import os
 import gc
 import pickle
@@ -11,13 +11,13 @@ import uuid
 from loguru import logger
 import torch
 import numpy as np
-from pyjolt import PyJolt, UploadedFile, abort
+from pyjolt import PyJolt
 
 from backend.api.preferences.schemas import PreferencesSchema
 from backend.utilities import singleton
 from backend.utilities.utils import get_device, delete_file
 from backend.configs import Config
-
+from .types import ResponseDict
 
 def get_ellipse_mask(roi_data: dict[str, int],
                      width: int, height: int,
@@ -44,20 +44,20 @@ class Islet:
     Islet class
     """
 
-    def __init__(self, app: PyJolt = None):
+    def __init__(self, app: PyJolt|None = None):
         """
         Initilizer for Islet class
         """
-        self._app: PyJolt = None
-        self.liff_array: torch.Tensor = None
-        self.quick_notes: dict = None
+        self._app: PyJolt
+        self.liff_array: torch.Tensor|None = None
+        self.quick_notes: dict[str, str] = {}
         self.preferences: dict = PreferencesSchema().model_dump()
-        self.video_url: str = None
+        self.video_url: str|None = None
         self.selected_rois: list[dict[str, torch.Tensor|dict]] = []
         self.raw_number_of_cells: int = 0
-        self.raw_time_series: torch.Tensor = None
+        self.raw_time_series: torch.Tensor|None = None
         self.process_status: dict[str, float|bool|str] = {}
-        self.video_hash: str = None
+        self.video_hash: str|None = None
         if app is not None:
             self.init_app(app)
 
@@ -65,19 +65,19 @@ class Islet:
         """
         Initilizer method for factory pattern
         """
-        self._app: PyJolt = app
+        self._app = app
 
     def reset_islet(self):
         """Resets islet to initial defaults"""
         self.delete_video_and_avg_frame()
-        self.liff_array: torch.Tensor = None
-        self.quick_notes: dict = None
-        self.preferences: dict = PreferencesSchema().model_dump()
-        self.video_url: str = None
-        self.video_hash: str = None
-        self.selected_rois: list[dict[str, torch.Tensor|dict]] = []
+        self.liff_array = None
+        self.quick_notes = {}
+        self.preferences = PreferencesSchema().model_dump()
+        self.video_url= None
+        self.video_hash = None
+        self.selected_rois = []
         self.raw_number_of_cells: int = 0
-        self.raw_time_series: torch.Tensor = None
+        self.raw_time_series = None
         self.process_status = {}
 
     def get_lif_video_url(self):
@@ -113,7 +113,7 @@ class Islet:
         img_path: str = os.path.join(app_path, "static", self._app.get_conf("AVG_FRAME"))
         delete_file(img_path)
 
-    def get_preferences(self) -> dict:
+    def get_preferences(self) -> dict[str, str]:
         """
         Returns preferences
         """
@@ -129,13 +129,13 @@ class Islet:
         """Returns current project name"""
         return self.preferences["project_name"]
 
-    def save_quick_notes(self, notes: dict):
+    def save_quick_notes(self, notes: dict[str, str]):
         """
         Saves quick notes
         """
         self.quick_notes = notes
 
-    def get_quick_notes(self) -> dict:
+    def get_quick_notes(self) -> dict[str, str]:
         """
         Returns quick notes
         """
@@ -147,7 +147,7 @@ class Islet:
         """
         self.liff_array = torch_array
 
-    def get_torch_array(self) -> torch.Tensor:
+    def get_torch_array(self) -> torch.Tensor|None:
         """
         Returns torch array
         """
@@ -171,10 +171,16 @@ class Islet:
         }
 
     def get_roi_time_series(self, roi_type: str,
-                            roi_data: dict[str, int]) -> tuple[torch.Tensor, list[float]]:
+                            roi_data: dict[str, int]) -> ResponseDict[tuple[torch.Tensor, list[float]]]:
         """
         Gets ROI time series based on roi coordinates
         """
+        if self.liff_array is None:
+            return {
+                "data": None,
+                "message": "Failed to get ROI time series",
+                "ok": False
+            }
         mask_methods = {
             "ellipse": get_ellipse_mask
         }
@@ -197,12 +203,19 @@ class Islet:
                 batch_frames_array = self.liff_array[batch_start:batch_end,:,:]
                 roi_means.append(batch_frames_array.float()[:,mask].mean(dim=1))
             gc.collect()
-            return torch.cat(roi_means, dim=0), [pos_x, pos_y]
+            return {
+                    "data": (torch.cat(roi_means, dim=0), [pos_x, pos_y]),
+                    "message": "Fetched ROI time series",
+                    "ok": True
+                }
         #pylint: disable-next=W0718
         except Exception as err:
             logger.debug(f"Failed to get ROI time series: {str(err)}")
-            return abort(msg="Unexpected error during parsing of ROI time series",
-                         status_code=500, status="error")
+            return {
+                    "data": None,
+                    "message": "Failed to get ROI time series",
+                    "ok": False
+                }
 
     def add_selected_roi_data(self, data: dict) -> None:
         """
@@ -210,15 +223,22 @@ class Islet:
         """
         self.selected_rois.append(data)
         self.raw_number_of_cells+=1
-        self.raw_time_series = self.get_all_selected_roi_traces()
+        traces: ResponseDict[torch.Tensor] = self.get_all_selected_roi_traces()
+        if traces["ok"] is False:
+            return
+        self.raw_time_series = traces["data"]
 
-    def get_all_selected_roi_traces(self) -> torch.Tensor:
+    def get_all_selected_roi_traces(self) -> ResponseDict[torch.Tensor]:
         """
         Gets all selected time series
         """
         if len(self.selected_rois) == 0:
             logger.debug("No ROIs were selected.")
-            return None
+            return {
+                "data": None,
+                "message": "No ROIs were selected.",
+                "ok": False
+            }
         try:
             traces: torch.Tensor = torch.zeros((len(self.selected_rois[0]["data"]),
                                                 len(self.selected_rois)),
@@ -227,12 +247,19 @@ class Islet:
                 if isinstance(roi["data"], list):
                     roi["data"] = torch.Tensor(roi["data"])
                 traces[:,i] = roi["data"]
-            return traces
+            return {
+                "data": traces,
+                "message": "ROI data fetched successfully.",
+                "ok": True
+            }
         #pylint: disable-next=W0718
         except Exception as err:
             logger.debug(f"Failed to get ALL ROI time series: {str(err)}")
-            return abort(msg="Failed to get all ROI time series.",
-                         status_code=500, status="error")
+            return {
+                "data": None,
+                "message": "Failed to get ALL ROI time series.",
+                "ok": False
+            }
 
     def remove_selected_roi_data(self, index: int) -> None:
         """
@@ -243,15 +270,15 @@ class Islet:
             self.raw_number_of_cells-=1
             self.raw_time_series = self.get_all_selected_roi_traces()
     
-    def get_selected_roi_data(self, index: int) -> dict[str, torch.Tensor|dict]:
+    def get_selected_roi_data(self, index: int) -> dict[str, torch.Tensor|dict] | None:
         """
         Returns selected roi data based on index
         """
-        if(index<len(self.selected_rois)):
+        if 0<index<len(self.selected_rois):
             return self.selected_rois[index]
         return None
 
-    def save_as_pickle(self, protocol: int = pickle.HIGHEST_PROTOCOL) -> bytes:
+    def save_as_pickle(self, protocol: int = pickle.HIGHEST_PROTOCOL) -> ResponseDict[bytes]:
         """saves project as pickle"""
         pickle_data: dict = {
             "liff_array": self.liff_array,
@@ -263,13 +290,21 @@ class Islet:
             "raw_time_series": self.raw_time_series
         }
         try:
-            return pickle.dumps(pickle_data, protocol=protocol)
+            return {
+                "data": pickle.dumps(pickle_data, protocol=protocol),
+                "message": "Data saved successfully.",
+                "ok": True
+            }
         #pylint: disable-next=W0718
         except Exception as err:
-            logger.debug(f"Failed save data to pickle: {str(err)}")
-            return abort(msg="Failed to save data as pickle.", status_code=500, status="error")
+            logger.debug(f"Failed to save data to pickle: {str(err)}")
+            return {
+                "data": None,
+                "message": "Failed to save data.",
+                "ok": False
+            }
 
-    def load_from_pickle(self, pickle_data: BufferedReader):
+    def load_from_pickle(self, pickle_data: BufferedReader) -> ResponseDict|None:
         """Reads data from pickle object"""
         try:
             data: dict = pickle.loads(pickle_data.read())
@@ -279,27 +314,43 @@ class Islet:
         except Exception as err:
             logger.debug(f"Failed to load data from pickle: {str(err)}")
             self.reset_islet()
-            abort(msg="Failed to load data from pickle. State was reset.",
-                  status_code=500, status="error")
+            return {
+                "data": None,
+                "message": "Failed to load data from pickle file.",
+                "ok": False,
+            }
 
-    def get_all_time_series(self) -> np.ndarray:
+    def get_all_time_series(self) -> ResponseDict[np.ndarray]:
         """
         Returns 2D numpy array with all time series
         """
+        if self.liff_array is None:
+            return {
+                "data": None,
+                "message": "Coordinates don't exist.",
+                "ok": False
+            }
         try:
             frames, _, _ = self.liff_array.size()
             cell_num: int = len(self.selected_rois)
             time_series: np.ndarray = np.zeros((frames, cell_num), dtype=np.float16)
             for i, roi in enumerate(self.selected_rois):
                 time_series[:,i] = roi["data"].cpu().numpy()
-            return time_series
+            return {
+                "data": time_series,
+                "message": "Time series exported successfully.",
+                "ok": True,
+            }
         #pylint: disable-next=W0718
         except Exception as err:
             logger.debug(f"Failed to get ALL ROI time series: {str(err)}")
-            return abort(msg="Failed to parse all time series data.",
-                         status_code=500, status="error")
+            return {
+                "data": time_series,
+                "message": "Failed to export time series.",
+                "ok": False,
+            }
 
-    def get_all_coordinates(self) -> np.ndarray:
+    def get_all_coordinates(self) -> ResponseDict[np.ndarray]:
         """
         Returns 2D numpy array with coordinates
         """
@@ -309,13 +360,19 @@ class Islet:
             for i, roi in enumerate(self.selected_rois):
                 pos[i,0] = roi["pos"][0] * self.preferences["px_to_um"]
                 pos[i,1] = roi["pos"][1] * self.preferences["px_to_um"]
-            return pos
+            return {
+                "data": pos,
+                "message": "Coordinates exported successfully.",
+                "ok": True,
+            }
         #pylint: disable-next=W0718
         except Exception as err:
             logger.debug(f"Failed to get all coordinates: {str(err)}")
-            return abort(msg="Failed to parse all coordinates.",
-                         status_code=500, status="error")
-
+            return {
+                "data": None,
+                "message": "Failed to export coordinates",
+                "ok": False,
+            }
     def set_process_status(self, status: dict[str, float|bool|str]):
         """
         Sets new process status

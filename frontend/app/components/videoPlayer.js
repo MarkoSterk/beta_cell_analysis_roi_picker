@@ -184,6 +184,7 @@ export async function playPauseVideo(elem, event){
 
 async function keyDownHandler(e){
     if(e.key === 'D' || e.key === 'd'){
+        e.preventDefault();
         this.isDPressed = true;
     }
 }
@@ -257,9 +258,16 @@ function removeTrace(index){
     this.singlePlot.drawTimeSeries(last)
 }
 
-async function tryNativeExport(elem, event, args){
+export async function tryNativeExport(elem, event, args){
     event.preventDefault();
-    await window.pywebview.api[args.next]();
+    const response = await window.pywebview.api[args.next]();
+    if(response.status == "aborted"){
+        return;
+    }
+    this.ext.messenger.setMessage({
+        msg: response.message,
+        status: response.status
+    })
 }
 
 const videoPlayer = ElementFactory({

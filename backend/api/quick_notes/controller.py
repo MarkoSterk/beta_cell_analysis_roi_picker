@@ -15,7 +15,7 @@ async def save_notes(req: Request, res: Response):
     """
     Saves notes
     """
-    notes = await req.json()
+    notes: dict[str, str] = await req.json() # type: ignore
     islet.save_quick_notes(notes)
     return res.json({
         "message": "Notes saved successfully",

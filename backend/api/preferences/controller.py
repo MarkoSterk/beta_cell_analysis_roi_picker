@@ -25,7 +25,6 @@ async def get_preferences(_: Request, res: Response):
     }).status(200)
 
 @preferences_controller.post("/")
-@preferences_controller.output(PreferencesSchema)
 async def save_preferences(_: Request, res: Response, data: PreferencesSchema):
     """
     Saves incoming preferences

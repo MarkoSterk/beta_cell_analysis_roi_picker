@@ -6,6 +6,8 @@ import platform
 from pyjolt import Blueprint, Response, Request
 from backend.extensions import islet, desktop
 from backend.api.roi.schemas import ReturnTimeSeriesSchema
+from backend.utilities.types import StatusResponse
+from backend.utilities.utils import success
 
 gui_controller: Blueprint = Blueprint(__name__, "gui")
 
@@ -62,16 +64,11 @@ def shutdown():
     os._exit(0)
 
 @desktop.expose
-def new_project():
+def new_project() -> StatusResponse:
     """Resets the state to initial"""
 
     islet.reset_islet()
-    return {
-        "message": "New project started successfully.",
-        "status": "success",
-        "data": None,
-        "ok": True
-    }
+    return success("New project started successfully.")
 
 @gui_controller.get("/system")
 async def get_system_props(_: Request, res: Response) -> Response:

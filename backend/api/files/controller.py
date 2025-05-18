@@ -2,7 +2,8 @@
 Files controller 
 """
 from concurrent.futures import ThreadPoolExecutor
-from pyjolt import Blueprint, Request, Response, UploadedFile
+from typing import Sequence
+from pyjolt import Blueprint, Request, Response
 import torch
 import numpy as np
 import webview
@@ -12,6 +13,9 @@ from xhtml2pdf import pisa
 from loguru import logger
 
 from backend.extensions import islet, desktop
+from backend.islet.types import ResponseDict
+from backend.utilities.types import StatusResponse
+from backend.utilities.utils import abort, success
 from .lif_handlers import create_frames_array, frames_to_video
 
 executor = ThreadPoolExecutor(max_workers=4)
@@ -71,7 +75,7 @@ async def check_lif_progress(_: Request, res: Response) -> Response:
     })
 
 @desktop.expose
-def native_upload_lif_file():
+def native_upload_lif_file() -> StatusResponse:
     """Native LIF file upload"""
 
     result = webview.windows[0].create_file_dialog(
@@ -80,12 +84,8 @@ def native_upload_lif_file():
     )
 
     if result is None:
-        return {
-            "message": "Upload aborted",
-            "status": "aborted",
-            "data": None,
-            "ok": True
-        }
+        return abort("Action aborted by user", "aborted", True)
+
     islet.set_process_status({
         "perc": 0,
         "status": "processing",
@@ -95,50 +95,25 @@ def native_upload_lif_file():
     })
     executor.submit(process_lif_upload, result[0])
 
-    return {
-        "message": "Process started",
-        "status": "success",
-        "data": "http://localhost:8080/api/v1/files/progress-check",
-        "ok": True
-    }
+    return success("Process started", data="http://localhost:8080/api/v1/files/progress-check")
 
 @desktop.expose
-def native_open_pkl():
+def native_open_pkl() -> StatusResponse:
     """Opens pkl file natively"""
-    result = desktop.window.create_file_dialog(
+    result: Sequence[str]|None = desktop.window.create_file_dialog(
             webview.OPEN_DIALOG,
             file_types=['Pickle file (*.pkl)']
     )
-    if not result:
-        return {
-            "status": "aborted",
-            "ok": True
-        }
+    if result is None:
+        return abort("Action aborted by user", "aborted", True)
     with open(result[0], "rb") as file:
         islet.load_from_pickle(file)
-        frames_to_video(islet.get_torch_array(), islet)
+        torch_array: torch.Tensor|None =  islet.get_torch_array()
+        if torch_array is None:
+            return abort("Failed to open project from pkl file.")
+        frames_to_video(torch_array, islet)
         islet.video_url = islet.get_lif_video_url()
-    return {
-        "message": "Project opened successfully.",
-        "status": "success",
-        "data": islet.video_url,
-        "ok": True
-    }
-
-
-@files_controller.post("/open-project")
-async def open_project(req: Request, res: Response) -> Response:
-    """Opens project from pickle file"""
-    islet.reset_islet()
-    data: dict[str, UploadedFile] = await req.get_data("form_and_files")
-    islet.load_from_pickle(data["file"])
-    frames_to_video(islet.get_torch_array(), islet)
-    islet.video_url = islet.get_lif_video_url()
-    return res.json({
-        "message": "Project opened successfully.",
-        "status": "success",
-        "data": islet.video_url
-    }).status(200)
+    return success("Project opened successfully.", data=islet.video_url)
 
 def create_pdf_markup(html: str, project_name: str) -> str:
     """
@@ -188,45 +163,43 @@ def create_pdf_markup(html: str, project_name: str) -> str:
     return full_html
 
 @desktop.expose
-def native_export_coordinates():
+def native_export_coordinates() -> StatusResponse:
     """Export of coordinates with native file dialog"""
     project_name: str = islet.project_name()
     filename: str = f"coordinates_{project_name}.txt"
-    result = desktop.window.create_file_dialog(
+    result: Sequence[str]|None = desktop.window.create_file_dialog(
             webview.SAVE_DIALOG,
             save_filename=filename,
             file_types=['Text file (*.txt)']
     )
-    if not result:
-        return False
+    if result is None:
+        return abort("Action aborted by user", "aborted", True)
     arr = islet.get_all_coordinates()
-    np.savetxt(result, arr, fmt="%.2lf")
-    return True
+    if arr["data"] is None:
+        return abort(arr["message"])
+    np.savetxt(str(result), arr["data"], fmt="%.2lf")
+    return success("Coordinates saved.")
 
 @desktop.expose
-def native_export_timeseries():
+def native_export_timeseries() -> StatusResponse:
     """Export of coordinates with native file dialog"""
     project_name: str = islet.project_name()
     filename: str = f"time_series_{project_name}.txt"
-    result = desktop.window.create_file_dialog(
+    result: Sequence[str]|None = desktop.window.create_file_dialog(
             webview.SAVE_DIALOG,
             save_filename=filename,
             file_types=['Text file (*.txt)']
     )
-    if not result:
-        return {
-            "status": "aborted",
-            "ok": True
-        }
-    arr = islet.get_all_time_series()
-    np.savetxt(result[0], arr, fmt="%.5lf")
-    return {
-        "status": "success",
-        "ok": True
-    }
+    if result is None:
+        return abort("Action aborted by user", "aborted", True)
+    arr: ResponseDict[np.ndarray] = islet.get_all_time_series()
+    if arr["data"] is not None:
+        np.savetxt(str(result), arr["data"], fmt="%.5lf")
+        return success("Timeseries saved.")
+    return abort(arr["message"])
 
 @desktop.expose
-def native_export_quicknotes():
+def native_export_quicknotes() -> StatusResponse:
     """Exports quicknotes as PDF using a native file dialog"""
 
     quicknotes: dict = islet.get_quick_notes()
@@ -236,22 +209,17 @@ def native_export_quicknotes():
     full_html: str = create_pdf_markup(html, project_name)
 
     # Open native save dialog
-    result = webview.windows[0].create_file_dialog(
+    result: Sequence[str]|None = webview.windows[0].create_file_dialog(
         webview.SAVE_DIALOG,
         save_filename=f"quicknotes_{project_name}.pdf",
         file_types=['PDF file (*.pdf)']
     )
 
-    if not result:
-        return {
-            "status": "aborted",
-            "ok": True
-        }
-
-    filepath = result[0] if isinstance(result, list) else result
+    if result is None:
+        return abort("Action aborted by user", "aborted", True)
 
     # Generate and save the PDF
-    with open(filepath, "wb") as pdf_file:
+    with open(str(result), "wb") as pdf_file:
         pisa_status = pisa.CreatePDF(
             src=full_html,
             dest=pdf_file,
@@ -259,48 +227,32 @@ def native_export_quicknotes():
         )
 
     if pisa_status.err:
-        return {
-            "status": "failed",
-            "ok": False
-        }
+        return abort("PDF writer failed.")
 
-    return {
-        "status": "success",
-        "ok": True
-    }
+    return success("Quicknotes saved to PDF.")
 
 @desktop.expose
-def native_save_project():
+def native_save_project() -> StatusResponse:
     """Saves entire project as a pickle file via native file dialog"""
-    pickle_data: bytes = islet.save_as_pickle()
     project_name: str = islet.project_name()
 
     # Ask user where to save the file
-    result = webview.windows[0].create_file_dialog(
+    result: Sequence[str]|None = webview.windows[0].create_file_dialog(
         webview.SAVE_DIALOG,
         save_filename=f"{project_name}.pkl",
         file_types=['Pickle file (*.pkl)']
     )
 
-    if not result:
-        return {
-            "status": "aborted",
-            "ok": True
-        }
-
-    filepath = result[0] if isinstance(result, list) else result
-
+    if result is None:
+        return abort("Action aborted by user", "aborted", True)
     try:
-        with open(filepath, "wb") as f:
-            f.write(pickle_data)
+        pickle_data: ResponseDict[bytes] = islet.save_as_pickle()
+        if pickle_data["ok"] is False:
+            return abort(pickle_data["message"], "error", pickle_data["ok"])
+        with open(str(result), "wb") as f:
+            f.write(pickle_data["data"])
+        return success("Project saved.")
     #pylint: disable-next=W0718
     except Exception:
-        return {
-            "status": "failed",
-            "ok": False
-        }
+        return abort("Something went wrong")
 
-    return {
-        "status": "aborted",
-        "ok": True
-    }

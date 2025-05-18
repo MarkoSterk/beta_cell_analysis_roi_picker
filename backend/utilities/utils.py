@@ -2,8 +2,11 @@
 Utility function
 """
 import os
+from typing import Any
 
 import torch
+
+from backend.utilities.types import StatusResponse
 
 def get_device() -> str:
     """
@@ -23,3 +26,23 @@ def delete_file(path: str) -> bool:
         return False
     os.remove(path)
     return True
+
+def success(msg: str, status: str = "success",
+            ok: bool = True, data: Any = None) -> StatusResponse[Any]:
+    """Success response"""
+    return {
+        "message": msg,
+        "status": status,
+        "ok": ok,
+        "data": data
+    }
+
+def abort(msg: str, status: str = "error",
+          ok: bool = False, data: Any = None) -> StatusResponse[Any]:
+    """Aborts native methods"""
+    return {
+        "message": msg,
+        "status": status,
+        "ok": ok,
+        "data": data
+    }

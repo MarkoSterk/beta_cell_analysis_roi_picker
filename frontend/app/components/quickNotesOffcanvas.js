@@ -8,7 +8,7 @@ async function quickNotesOffcanvasMarkup(){
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="quickNotesLabel">Quick notes</h5>
             <div class="d-flex gap-2 ms-auto">
-                <a href="/api/v1/files/export-quicknotes" jolt-click="closeOffcanvas" :next="native_export_quicknotes" title="Export pdf" class="btn text-reset" target="_blank" router-ignore="true"><i class="fas fa-save"></i></a>
+                <a role="button" jolt-click="closeOffcanvas" :next="native_export_quicknotes" title="Export pdf" class="btn text-reset"><i class="fas fa-save"></i></a>
                 <button jolt-click="saveNotes" type="button" class="btn text-reset" title="Save and close" data-bs-dismiss="offcanvas" aria-label="Close">
                     <i class="fa-solid fa-check"></i>
                 </button>
@@ -38,7 +38,14 @@ async function closeOffcanvas(elem, event, args){
     elem.blur();
     this.offcanvasInstance.hide();
     event.preventDefault();
-    await window.pywebview.api[args.next]()
+    const response = await window.pywebview.api[args.next]();
+    if(response.status == "aborted"){
+        return;
+    }
+    this.ext.messenger.setMessage({
+        msg: response.message,
+        status: response.status
+    })
 }
 
 const quickNotesOffcanvas = ElementFactory({

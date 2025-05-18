@@ -42,8 +42,8 @@ async function basicUsageTabMarkup(){
         <li>
             <strong>Export Cell Data</strong>
             <ul>
-                <li>When you’ve selected all your ROIs, click <em>Export Time Series</em> (below the video) to save time series of all ROIs as <code>.txt</code> file.</li>
-                <li>Click <em>Export Coordinates</em> to save the x,y positions of each ROI as a separate <code>.txt</code> file.</li>
+                <li>When you’ve selected all your ROIs, click <em>File > Export > Time Series</em> to save time series of all ROIs as <code>.txt</code> file.</li>
+                <li>Click <em>File > Export > Coordinates</em> to save the x,y positions of each ROI as a separate <code>.txt</code> file.</li>
             </ul>
         </li>
         <li>

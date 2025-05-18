@@ -1,56 +1,88 @@
 import { ElementFactory, html, css, querySelectorAll, querySelector, defineValue } from "jolt-ui";
 import { handleFile, checkProgress, handleFailedProgressCheck } from "../components/uploadDropZone";
 import { startOverlaySpinner, removeOverlaySpinner } from "../utilities/spinner";
+import { tryNativeExport } from "../components/videoPlayer";
 
 async function menuElementMarkup(){
     return html`
-    <ul class="menu-bar" class="m-0 p-0">
-        <!-- File Menu -->
-        <li class="dropdown">
-            <a jolt-click="toggleDropdown" :menu="fileDropdown">File</a>
-            <ul id="fileDropdown" class="dropdown-menu">
-                <li data-bind="app.video">
-                  {{? this.video != null }}
-                    <a role="button" jolt-click="newProject">New</a>
-                  {{?}}
-                </li>
-                <li data-bind="app.video">
-                  {{? this.video == null }}
-                    <a role="button" jolt-click="handleFileClick">Import LIF</a>
-                  {{?}}
-                </li>
-                <li><a role="button" jolt-click="openProject" role="button">Open project</a></li>
-                <li><a href="/api/v1/files/save-project" jolt-click="saveProject" :next="native_save_project" target="_blank" router-ignore="true">Save project</a></li>
-                <hr class="p-0 m-0" />
-                <li><a role="button" jolt-click="shutdownApp">Exit</a></li>
-            </ul>
-        </li>
-        <li class="dropdown">
-          <a role="button" data-bs-toggle="offcanvas" 
-              data-bs-target="#analysisConfigs" aria-controls="analysisConfigs">
-                Preferences
-            </a>
-        </li>
-        <!-- Edit Menu -->
-        <!-- Help Menu -->
-        <li class="dropdown">
-            <a jolt-click="toggleDropdown" :menu="helpDropdown">Help</a>
-            <ul id="helpDropdown" class="dropdown-menu">
-                <li><a href="/app/documentation" jolt-click="closeMenus">Documentation</a></li>
-                <li><a role="button" jolt-click="openAboutModal">About</a></li>
-            </ul>
-        </li>
-        <li class="w-100" data-bind="app.video">
-          {{? this.video != null }}
-            <span class="float-end" data-bind="app.project">
-              <a role="button" data-bs-toggle="offcanvas" data-bs-target="#quickNotes" 
-                aria-controls="quickNotes" title="Quick notes">
-                <i class="far fa-sticky-note fa-lg"></i>
-              </a>
-            </span>
-          {{?}}
-        </li>
+    <ul class="menu-bar m-0 p-0">
+      <!-- File Menu -->
+      <li class="dropdown">
+        <a jolt-click="toggleDropdown" :menu="fileDropdown">File</a>
+        <ul id="fileDropdown" class="dropdown-menu">
+          <li data-bind="app.video">
+            {{? this.video != null }}
+            <a role="button" jolt-click="newProject">New</a>
+            {{?}}
+          </li>
+          <li data-bind="app.video">
+            {{? this.video == null }}
+            <a role="button" jolt-click="handleFileClick">Import LIF</a>
+            {{?}}
+          </li>
+          <li><a role="button" jolt-click="openProject">Open project</a></li>
+          <li data-bind="app.video">
+            {{? this.video != null }}
+              <a
+                role="button"
+                jolt-click="saveProject"
+                :next="native_save_project"
+              >Save project</a>
+            {{?}}
+          </li>
+
+          <li class="dropdown-submenu" data-bind="app.rois">
+            {{? this.selectedRois.length != 0 }}
+              <a href="#">Export <i class="fas fa-chevron-right"></i></a>
+              <ul class="dropdown-menu">
+                <li><a role="button" jolt-click="nativeExport" :next="native_export_timeseries">Time series</a></li>
+                <li><a role="button" jolt-click="nativeExport" :next="native_export_coordinates">Coordinates</a></li>
+              </ul>
+            {{?}}
+          </li>
+
+          <hr class="p-0 m-0" />
+          <li><a role="button" jolt-click="shutdownApp">Exit</a></li>
+        </ul>
+      </li>
+
+      <!-- Preferences -->
+      <li class="dropdown">
+        <a
+          role="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#analysisConfigs"
+          aria-controls="analysisConfigs"
+        >Preferences</a>
+      </li>
+
+      <!-- Help Menu -->
+      <li class="dropdown">
+        <a jolt-click="toggleDropdown" :menu="helpDropdown">Help</a>
+        <ul id="helpDropdown" class="dropdown-menu">
+          <li><a href="/app/documentation" jolt-click="closeMenus">Documentation</a></li>
+          <li><a role="button" jolt-click="openAboutModal">About</a></li>
+        </ul>
+      </li>
+
+      <!-- Quick Notes toggle -->
+      <li class="w-100" data-bind="app.video">
+        {{? this.video != null }}
+        <span class="float-end" data-bind="app.project">
+          <a
+            role="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#quickNotes"
+            aria-controls="quickNotes"
+            title="Quick notes"
+          >
+            <i class="far fa-sticky-note fa-lg"></i>
+          </a>
+        </span>
+        {{?}}
+      </li>
     </ul>
+
     `
 }
 
@@ -64,6 +96,7 @@ async function shutdownConfirmed(){
 }
 
 async function shutdownApp(elem, event, args){
+  this.closeMenus();
   this.ext.messenger.confirmModal({
     title: "Please confirm",
     content: "Are you sure you wish to exit the app? All unsaved data will be lost.",
@@ -94,6 +127,7 @@ async function menuElementStyle(){
     .menu-bar a:hover {
       background-color: #005a9e;
     }
+
     /* Dropdown styles */
     .dropdown-menu {
       position: absolute;
@@ -120,16 +154,49 @@ async function menuElementStyle(){
     .show {
       display: block;
     }
+
+    /* ====== Second-level submenu ====== */
+    .dropdown-submenu {
+      position: relative;
+    }
+    .dropdown-submenu > .dropdown-menu {
+      top: 0;
+      left: 100%;
+      margin-top: -1px; /* align borders */
+      display: none;
+    }
+    /* show on hover of the parent li */
+    .dropdown-submenu:hover > .dropdown-menu {
+      display: block;
+    }
+
     `
+}
+
+async function openProjectConfirm(){
+  startOverlaySpinner();
+  const response = await window.pywebview.api.native_open_pkl();
+  if(response?.status == "success"){
+    location.reload();
+    return;
+  }
+  removeOverlaySpinner();
+  this.ext.messenger.setMessage({
+    msg: response.message,
+    status: response.status
+  })
 }
 
 async function openProject(elem, event, args){
   this.closeMenus();
-  startOverlaySpinner();
-  const response = await window.pywebview.api.native_open_pkl();
-  if(response.ok && response.status == "success"){
-    location.reload();
+  if(this.video != null){
+    return this.ext.messenger.confirmModal({
+      title: "Confirm",
+      content: "Opening a project will remove any unsaved data. Are you sure you wish to continue?",
+      callbackFunction: openProjectConfirm
+    })
   }
+  return this.openProjectConfirm();
 }
 
 
@@ -161,7 +228,15 @@ function closeMenus(){
 async function saveProject(elem, event, args){
   elem.blur();
   event.preventDefault();
-  await window.pywebview.api[args.next]();
+  this.closeMenus();
+  const response = await window.pywebview.api[args.next]();
+  if(response?.status == "aborted"){
+    return;
+  }
+  this.ext.messenger.setMessage({
+    msg: response.message,
+    status: response.status
+  })
 }
 
 async function handleFileClick(elem, event, args){
@@ -193,12 +268,18 @@ async function newProject(elem, event, args){
 async function startNewProject(){
   let response = await window.pywebview.api.new_project();
   if(!response?.ok){
-    this.ext.messenger.setMessage({
+    return this.ext.messenger.setMessage({
         msg: "Failed to start new project. Check application.",
         status: "warning"
     })
   }
   location.reload();
+}
+
+async function nativeExport(elem, event, args){
+  elem.blur();
+  this.closeMenus();
+  await this.tryNativeExport(elem, event, args);
 }
 
 const menuElement = ElementFactory({
@@ -218,13 +299,21 @@ const menuElement = ElementFactory({
       shutdownApp,
       saveProject,
       openProject,
+      openProjectConfirm,
       newProject,
       startNewProject,
       handleFailedProgressCheck,
       checkProgress,
-      shutdownConfirmed
+      shutdownConfirmed,
+      nativeExport,
+      tryNativeExport
     },
     define: {
+      homePage: {
+        get(){
+          return this.app.querySelector("home-page");
+        }
+      },
       dropdownMenus: querySelectorAll(".dropdown-menu"),
       fileUpload: querySelector('.lif-upload'),
       pklUpload: querySelector('.pkl-upload'),
@@ -234,7 +323,12 @@ const menuElement = ElementFactory({
         get(){
           return this.getData("video");
         }
-      }
+      },
+      selectedRois: {
+            get(){
+                return this.getData("rois");
+            }
+        }
     },
     afterInit: {
       addClickListener: function(){
