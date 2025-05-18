@@ -15,7 +15,7 @@ async function issuesTabMarkup(){
                         <div class="accordion-body">
                             <p>
                                 The application uses the OS' native browser engine for the application window. This means that on MacOS
-                                the same engine is used as is used by the Safari browser. For reasons yet unknown, video playback failes
+                                the same engine is used as is used by the Safari browser. For reasons yet unknown, video playback fails
                                 if playback speed is increased beyond 2x on MacOS. For this reason, the playback speed is limited to 2x
                                 on MacOS machines.
                             </p>
@@ -46,7 +46,7 @@ async function issuesTabMarkup(){
             </div>
         </div>
         <div class="row mt-3">
-            <p class="fw-bold">If you find any other issues please feel free to contact me or open an issue ticket on the GitHub repository.</p>
+            <p class="fw-bold">If you find any other issues please feel free to contact us or open an issue ticket on the GitHub repository (https://github.com/MarkoSterk/beta_cell_analysis_roi_picker).</p>
         <div>
     `
 }
