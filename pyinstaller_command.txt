@@ -24,6 +24,7 @@ uv run pyinstaller \
   --add-data "backend/logs;backend/logs" \
   --add-data "backend/templates;backend/templates" \
   --add-data "backend/static/temp_files;backend/static/temp_files" \
+  --add-data "dist/RoiPicker_win.exe.config" \
   --collect-submodules reportlab.graphics.barcode \
   --noconfirm \
   run_prod.py
