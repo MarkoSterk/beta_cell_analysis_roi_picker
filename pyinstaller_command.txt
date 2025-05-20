@@ -28,3 +28,6 @@ uv run pyinstaller \
   --collect-submodules reportlab.graphics.barcode \
   --noconfirm \
   run_prod.py
+
+uv run pyinstaller RoiPicker_win.spec --distpath dist/windows --noconfirm
+move dist\windows\RoiPicker_win\_internal\RoiPicker_win.exe.config dist\windows\RoiPicker_win\
