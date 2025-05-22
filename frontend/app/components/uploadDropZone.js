@@ -52,7 +52,8 @@ export async function checkProgress(checkUrl){
     setOverlaySpinnerPerc(`${response.data.perc}%`);
     if(response?.data?.status == "finished" && response?.data?.finished){
         clearInterval(this.checkId);
-        this.setData("video", response.data.video)
+        this.setData("video", response.data.video);
+        this.setData("preferences", response.data.preferences);
         removeOverlaySpinner();
     }
 }
@@ -71,7 +72,12 @@ const uploadDropZone = ElementFactory({
         dropzone: querySelector(".dropzone"),
         fileInput: querySelector('input[type="file"]'),
         checkId: defineValue(null),
-        checkDelay: defineValue(3000)
+        checkDelay: defineValue(3000),
+        preferencesOffcanvas: {
+            get(){
+                return this.app.querySelector("configurations-offcanvas");
+            }
+        }
     }
 })
 

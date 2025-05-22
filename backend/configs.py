@@ -42,7 +42,7 @@ class Config:
     AVG_FRAME: str = "avg_frame.png"
     TEMP_LIF: str = "temp_lif.lif"
 
-    ABOUT: dict[str, str] = {
+    ABOUT: dict[str, str|float] = {
         "version": 1.0,
         "name": APP_NAME,
         "author": "Marko Šterk, Marko Gosak",

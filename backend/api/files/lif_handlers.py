@@ -23,6 +23,8 @@ def create_frames_array(lif: LifFile, islet) -> torch.Tensor:
     islet.change_process_status({
         "message": "Parsing LIF file for time series data"
     })
+    #print(dir(lif))
+    #print(lif.xml_root)
     image_series: LifImage | None = None
     for lif_img in lif.get_iter_image():
         if lif_img.dims.t > 1:
@@ -30,6 +32,15 @@ def create_frames_array(lif: LifFile, islet) -> torch.Tensor:
             break
     if image_series is None:
         return False
+    #extracts experiment data from image_series
+    scale: float = round(image_series.info.get("scale_n", {1: 1.0})[1], 2)
+    name: str = image_series.info.get("path", "Project")
+    sampling = round(1.0/float((image_series.info.get("settings", {}).get("CycleTime", "0.1"))), 2)
+    preferences = islet.get_preferences()
+    preferences["project_name"] = name.replace(".lif/", "")
+    preferences["sampling"] = sampling
+    preferences["px_to_um"] = scale
+    islet.save_preferences(preferences) #saves preferences
     islet.change_process_status({
         "message": "Time series data found. Constructing video frames."
     })

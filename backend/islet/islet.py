@@ -373,7 +373,7 @@ class Islet:
                 "message": "Failed to export coordinates",
                 "ok": False,
             }
-    def set_process_status(self, status: dict[str, float|bool|str]):
+    def set_process_status(self, status: dict[str, float|bool|str|dict]):
         """
         Sets new process status
         """

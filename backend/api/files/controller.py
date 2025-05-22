@@ -49,7 +49,8 @@ def process_lif_upload(temp_file: str):
             "alive": True,
             "finished": True,
             "message": "Lif upload finished.",
-            "video": islet.video_url
+            "video": islet.video_url,
+            "preferences": islet.get_preferences()
         })
     #pylint: disable-next=W0718
     except Exception as err:

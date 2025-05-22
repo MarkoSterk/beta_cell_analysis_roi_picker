@@ -51,11 +51,15 @@ export function removeSimpleSpinner(){
 
 export function startOverlaySpinner(){
     const markup = overlaySpinner();
+    removeOverlaySpinner();
     document.body.insertAdjacentHTML("afterbegin", markup);
 }
 
 export function removeOverlaySpinner(){
     const spinner = document.querySelector("#spinner-overlay");
+    if(!spinner){
+        return;
+    }
     spinner.remove();
 }
 

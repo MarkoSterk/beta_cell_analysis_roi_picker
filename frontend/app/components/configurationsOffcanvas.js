@@ -16,24 +16,24 @@ async function configurationsOffcanvasMarkup(){
             <div>
                 <div class="row vh-100 mx-auto">
                     <form id="configurationsForm">
-                        <div class="col-12" data-bind="preferences">
+                        <div class="col-12" data-bind="app.preferences">
                             <div class="m-3">
                                 <div class="row g-3 mb-2">
                                     <div class="col-12 col-md-8 mb-3">
                                         <label for="project_name" class="form-label">Experiment name</label>
-                                        <input value="${this.preferences.project_name}" type="text" name="project_name" 
+                                        <input value="{{=this.preferences.project_name}}" type="text" name="project_name" 
                                         class="form-control" id="project_name" placeholder="Project name">
                                     </div>
                                     <div class="col-12 col-md-4 mb-3">
                                         <label for="sampling" class="form-label">Sampling [Hz]</label>
-                                        <input value="${this.preferences.sampling}" type="number" min="0" max="1000" step="0.1" 
+                                        <input value="{{=this.preferences.sampling}}" type="number" min="0" max="1000" step="0.1" 
                                         name="sampling" class="form-control" id="sampling" placeholder="Sampling rate (Hz)">
                                     </div>
                                 </div>
                                 <div class="row g-3 mb-2">
                                     <div class="col-12 col-md-6 mb-3">
                                         <label for="px_to_um" class="form-label">Coordinate transform (px to um)</label>
-                                        <input value="${this.preferences.px_to_um}" type="number" min="0.01" max="100" 
+                                        <input value="{{=this.preferences.px_to_um}}" type="number" min="0.01" max="100" 
                                         step="0.01" name="px_to_um" class="form-control" id="px_to_um" placeholder="Coordinate transform">
                                     </div>
                                 </div>

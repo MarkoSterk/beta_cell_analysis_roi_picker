@@ -26,6 +26,7 @@
       <div class="row mt-3">
         <!-- video -->
         <div class="col-12 col-lg-6 col-xl-12">
+          <small>Select roi (left-click + drag), View roi (left-click), Delete roi (D + left-click)</small>
           <div class="video-container">
             <video loop
                    id="video"
@@ -49,6 +50,7 @@
   
         <!-- avg frame -->
         <div class="col-12 col-lg-6 col-xl-12">
+          <small></small>
           <div class="avg-frame-container">
             <img src="{{ protocol }}://{{ host }}:{{ port }}{{ url_for('static', path='avg_frame.png') }}"
                  width="{{ width }}"

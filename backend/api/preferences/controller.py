@@ -11,17 +11,16 @@ preferences_controller: Blueprint = Blueprint(__name__,
                                               url_prefix="/api/v1/preferences")
 
 @preferences_controller.get("/")
-@preferences_controller.output(PreferencesSchema)
 async def get_preferences(_: Request, res: Response):
     """
     Returns current preferences
     """
     from backend.extensions import islet
-
+    preferences: dict = islet.get_preferences()
     return res.json({
         "message": "Preferences fetched successfully.",
         "status": "success",
-        "data": islet.get_preferences()
+        "data": preferences
     }).status(200)
 
 @preferences_controller.post("/")

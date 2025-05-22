@@ -10,7 +10,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 (async () => {
-  var _s2, _e, _h, _r2, _t2, _o2, _a2, _i, _l2, _p, _c2, _n2, _d2, _f, _m, _g, _u, _b, _w, _E, _x, _C, _v, _y, _k, _T, _S, _s3, _fs_instances, e_fn, _h2, _r3, _t3, _o3, a_fn, _i2, _l3, _p2, _c3, _n3, _d3, _f2, _m2, _g2, _u2, _b2, _s4, _e2, _h3, _r4, _t4, _o4, _a3, _i3, _l4, _p3, _c4, _n4, _d4, _f3, _m3, _g3, _u3, _b3;
+  var _s2, _e2, _h, _r2, _t2, _o2, _a2, _i, _l2, _p, _c2, _n2, _d2, _f, _m, _g, _u, _b, _w, _E, _x, _C, _v, _y, _k, _T, _S, _s3, _fs_instances, e_fn, _h2, _r3, _t3, _o3, a_fn, _i2, _l3, _p2, _c3, _n3, _d3, _f2, _m2, _g2, _u2, _b2, _s4, _e3, _h3, _r4, _t4, _o4, _a3, _i3, _l4, _p3, _c4, _n4, _d4, _f3, _m3, _g3, _u3, _b3;
   (function() {
     const e = document.createElement("link").relList;
     if (e && e.supports && e.supports("modulepreload")) return;
@@ -217,7 +217,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       __publicField(this, "markup");
       __publicField(this, "css");
       __privateAdd(this, _s2);
-      __privateAdd(this, _e);
+      __privateAdd(this, _e2);
       __publicField(this, "_beforeInit");
       __publicField(this, "_beforeInitResolve");
       __publicField(this, "_afterInit");
@@ -318,14 +318,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
       __privateAdd(this, _d2, async () => {
         var _a4, _b4;
-        Hn && (__privateSet(this, _s2, ((_a4 = this == null ? void 0 : this.css) == null ? void 0 : _a4.scoped) || false), __privateSet(this, _e, await ((_b4 = this.css) == null ? void 0 : _b4.style.bind(this)()) || null), __privateGet(this, _f).call(this));
+        Hn && (__privateSet(this, _s2, ((_a4 = this == null ? void 0 : this.css) == null ? void 0 : _a4.scoped) || false), __privateSet(this, _e2, await ((_b4 = this.css) == null ? void 0 : _b4.style.bind(this)()) || null), __privateGet(this, _f).call(this));
       });
       __privateAdd(this, _f, () => {
-        if (!__privateGet(this, _e)) return;
+        if (!__privateGet(this, _e2)) return;
         const e = `[data-element="${this.tagName.toLowerCase()}"]`;
         if (document.head.querySelector(e)) return;
         const t = document.createElement("style");
-        if (t.textContent = __privateGet(this, _e), t.setAttribute("disabled", ""), t.setAttribute("data-element", this.tagName.toLowerCase()), document.head.appendChild(t), !__privateGet(this, _s2)) {
+        if (t.textContent = __privateGet(this, _e2), t.setAttribute("disabled", ""), t.setAttribute("data-element", this.tagName.toLowerCase()), document.head.appendChild(t), !__privateGet(this, _s2)) {
           t.removeAttribute("disabled");
           return;
         }
@@ -591,7 +591,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
   };
   _s2 = new WeakMap();
-  _e = new WeakMap();
+  _e2 = new WeakMap();
   _h = new WeakMap();
   _r2 = new WeakMap();
   _t2 = new WeakMap();
@@ -1282,14 +1282,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       case V.Tag:
         return yn(n);
       case V.PseudoElement:
-        return `::${Me(n.name, et)}${n.data === null ? "" : `(${Me(n.data, vn)})`}`;
+        return `::${Oe(n.name, et)}${n.data === null ? "" : `(${Oe(n.data, vn)})`}`;
       case V.Pseudo:
-        return `:${Me(n.name, et)}${n.data === null ? "" : `(${typeof n.data == "string" ? Me(n.data, vn) : Un(n.data)})`}`;
+        return `:${Oe(n.name, et)}${n.data === null ? "" : `(${typeof n.data == "string" ? Oe(n.data, vn) : Un(n.data)})`}`;
       case V.Attribute: {
-        if (n.name === "id" && n.action === Z.Equals && n.ignoreCase === "quirks" && !n.namespace) return `#${Me(n.value, et)}`;
-        if (n.name === "class" && n.action === Z.Element && n.ignoreCase === "quirks" && !n.namespace) return `.${Me(n.value, et)}`;
+        if (n.name === "id" && n.action === Z.Equals && n.ignoreCase === "quirks" && !n.namespace) return `#${Oe(n.value, et)}`;
+        if (n.name === "class" && n.action === Z.Element && n.ignoreCase === "quirks" && !n.namespace) return `.${Oe(n.value, et)}`;
         const o = yn(n);
-        return n.action === Z.Exists ? `[${o}]` : `[${o}${Cs(n.action)}="${Me(n.value, Es)}"${n.ignoreCase === null ? "" : n.ignoreCase ? " i" : " s"}]`;
+        return n.action === Z.Exists ? `[${o}]` : `[${o}${Cs(n.action)}="${Oe(n.value, Es)}"${n.ignoreCase === null ? "" : n.ignoreCase ? " i" : " s"}]`;
       }
     }
   }
@@ -1314,12 +1314,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
   }
   function yn(n) {
-    return `${zn(n.namespace)}${Me(n.name, et)}`;
+    return `${zn(n.namespace)}${Oe(n.name, et)}`;
   }
   function zn(n) {
-    return n !== null ? `${n === "*" ? "*" : Me(n, et)}|` : "";
+    return n !== null ? `${n === "*" ? "*" : Oe(n, et)}|` : "";
   }
-  function Me(n, e) {
+  function Oe(n, e) {
     let t = 0, o = "";
     for (let i = 0; i < n.length; i++) e.has(n.charCodeAt(i)) && (o += `${n.slice(t, i)}\\${n.charAt(i)}`, t = i + 1);
     return o.length > 0 ? o + n.slice(t) : n;
@@ -1682,7 +1682,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         } else C = true;
       }; !C; ) _();
       return u.subsets = x, u.subsetsAge = 100, x;
-    }, _e3 = function() {
+    }, Be = function() {
       function u() {
         this.list = [];
       }
@@ -1961,9 +1961,9 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         }
         return "";
       }), a[0];
-    }, Be = function() {
+    }, Me = function() {
       function u(c, a, f) {
-        this.options = f, this.t1 = typeof Element < "u" && o(c, "Element") ? D(c, this.options) : typeof c == "string" ? xe(c, this.options) : JSON.parse(JSON.stringify(c)), this.t2 = typeof Element < "u" && o(a, "Element") ? D(a, this.options) : typeof a == "string" ? xe(a, this.options) : JSON.parse(JSON.stringify(a)), this.diffcount = 0, this.foundAll = false, this.debug && (this.t1Orig = typeof Element < "u" && o(c, "Element") ? D(c, this.options) : typeof c == "string" ? xe(c, this.options) : JSON.parse(JSON.stringify(c)), this.t2Orig = typeof Element < "u" && o(a, "Element") ? D(a, this.options) : typeof a == "string" ? xe(a, this.options) : JSON.parse(JSON.stringify(a))), this.tracker = new _e3();
+        this.options = f, this.t1 = typeof Element < "u" && o(c, "Element") ? D(c, this.options) : typeof c == "string" ? xe(c, this.options) : JSON.parse(JSON.stringify(c)), this.t2 = typeof Element < "u" && o(a, "Element") ? D(a, this.options) : typeof a == "string" ? xe(a, this.options) : JSON.parse(JSON.stringify(a)), this.diffcount = 0, this.foundAll = false, this.debug && (this.t1Orig = typeof Element < "u" && o(c, "Element") ? D(c, this.options) : typeof c == "string" ? xe(c, this.options) : JSON.parse(JSON.stringify(c)), this.t2Orig = typeof Element < "u" && o(a, "Element") ? D(a, this.options) : typeof a == "string" ? xe(a, this.options) : JSON.parse(JSON.stringify(a))), this.tracker = new Be();
       }
       return u.prototype.init = function() {
         return this.findDiffs(this.t1, this.t2);
@@ -2131,7 +2131,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }, u.prototype.undo = function(c, a) {
         return g(c, a, this.options);
       }, u.prototype.diff = function(c, a) {
-        var f = new Be(c, a, this.options);
+        var f = new Me(c, a, this.options);
         return f.init();
       }, u;
     }(), Kt = function() {
@@ -2267,7 +2267,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       super();
       __publicField(this, "identifier", "app");
       __privateAdd(this, _s4);
-      __privateAdd(this, _e2, /* @__PURE__ */ new Map());
+      __privateAdd(this, _e3, /* @__PURE__ */ new Map());
       __privateAdd(this, _h3);
       __privateAdd(this, _r4);
       __privateAdd(this, _t4);
@@ -2377,7 +2377,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         for (const [t, o] of Object.entries(e)) await o.bind(this)();
       });
       __privateAdd(this, _f3, (e) => {
-        for (const [t, o] of Object.entries(e)) __privateGet(this, _e2).set(t, o);
+        for (const [t, o] of Object.entries(e)) __privateGet(this, _e3).set(t, o);
       });
       __privateAdd(this, _m3, async () => {
         const e = [];
@@ -2386,18 +2386,18 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         }), await Promise.all(e);
       });
       __publicField(this, "setData", (e, t) => {
-        if (!__privateGet(this, _e2).has(e)) throw new Error(`Failed to set data. Missing data field ${e} in app data structure`);
-        __privateGet(this, _e2).set(e, t), __privateGet(this, _g3).call(this, e);
+        if (!__privateGet(this, _e3).has(e)) throw new Error(`Failed to set data. Missing data field ${e} in app data structure`);
+        __privateGet(this, _e3).set(e, t), __privateGet(this, _g3).call(this, e);
       });
       __publicField(this, "removeData", (e) => {
-        if (!__privateGet(this, _e2).has(e)) throw new Error(`Failed to set data. Missing data field ${e} in app data structure`);
-        __privateGet(this, _e2).set(e, null), __privateGet(this, _g3).call(this, e);
+        if (!__privateGet(this, _e3).has(e)) throw new Error(`Failed to set data. Missing data field ${e} in app data structure`);
+        __privateGet(this, _e3).set(e, null), __privateGet(this, _g3).call(this, e);
       });
       __publicField(this, "getData", (e) => {
-        if (!__privateGet(this, _e2).has(e)) throw new Error(`Failed to fetch data for field ${e}. Data field does not exist`);
-        return __privateGet(this, _e2).get(e);
+        if (!__privateGet(this, _e3).has(e)) throw new Error(`Failed to fetch data for field ${e}. Data field does not exist`);
+        return __privateGet(this, _e3).get(e);
       });
-      __publicField(this, "getAllData", (e = false) => e ? Object.fromEntries(__privateGet(this, _e2)) : __privateGet(this, _e2));
+      __publicField(this, "getAllData", (e = false) => e ? Object.fromEntries(__privateGet(this, _e3)) : __privateGet(this, _e3));
       __privateAdd(this, _g3, (e) => {
         const t = new CustomEvent(Pe.CHANGE, {
           detail: {
@@ -2513,7 +2513,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
   }
   _s4 = new WeakMap();
-  _e2 = new WeakMap();
+  _e3 = new WeakMap();
   _h3 = new WeakMap();
   _r4 = new WeakMap();
   _t4 = new WeakMap();
@@ -2905,10 +2905,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   }
   function We() {
     const n = Us();
-    document.body.insertAdjacentHTML("afterbegin", n);
+    _e(), document.body.insertAdjacentHTML("afterbegin", n);
   }
-  function Ne() {
-    document.querySelector("#spinner-overlay").remove();
+  function _e() {
+    const n = document.querySelector("#spinner-overlay");
+    n && n.remove();
   }
   function zs(n) {
     const e = document.getElementById("spinner-message");
@@ -2933,7 +2934,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     We();
     const n = await window.pywebview.api.native_upload_lif_file();
     if (n.status == "aborted") {
-      Ne();
+      _e();
       return;
     }
     await this.checkProgress(n.data), this.checkId = setInterval(async () => {
@@ -2941,7 +2942,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }, this.checkDelay);
   }
   function Yn() {
-    return clearInterval(this.checkId), Ne(), this.ext.messenger.setMessage({
+    return clearInterval(this.checkId), _e(), this.ext.messenger.setMessage({
       message: "Failed to process LIF",
       status: "danger"
     });
@@ -2954,7 +2955,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     if (e) return this.handleFailedProgressCheck();
     if ([e, t] = await t.json(), e) return this.handleFailedProgressCheck();
     if (!((_a4 = t == null ? void 0 : t.data) == null ? void 0 : _a4.alive)) return this.handleFailedProgressCheck();
-    zs(t.data.message), qs(`${t.data.perc}%`), ((_b4 = t == null ? void 0 : t.data) == null ? void 0 : _b4.status) == "finished" && ((_c5 = t == null ? void 0 : t.data) == null ? void 0 : _c5.finished) && (clearInterval(this.checkId), this.setData("video", t.data.video), Ne());
+    zs(t.data.message), qs(`${t.data.perc}%`), ((_b4 = t == null ? void 0 : t.data) == null ? void 0 : _b4.status) == "finished" && ((_c5 = t == null ? void 0 : t.data) == null ? void 0 : _c5.finished) && (clearInterval(this.checkId), this.setData("video", t.data.video), this.setData("preferences", t.data.preferences), _e());
   }
   const Ys = he({
     tagName: "upload-dropzone",
@@ -2962,7 +2963,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     methods: {
       handleFile: Wn,
       startOverlaySpinner: We,
-      removeOverlaySpinner: Ne,
+      removeOverlaySpinner: _e,
       checkProgress: Xn,
       handleFailedProgressCheck: Yn
     },
@@ -2970,7 +2971,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       dropzone: be(".dropzone"),
       fileInput: be('input[type="file"]'),
       checkId: ae(null),
-      checkDelay: ae(3e3)
+      checkDelay: ae(3e3),
+      preferencesOffcanvas: {
+        get() {
+          return this.app.querySelector("configurations-offcanvas");
+        }
+      }
     }
   });
   function Xs(n) {
@@ -3112,7 +3118,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     for (const e of this.selectedRois) this.plot.drawTimeSeries(e);
     this.singlePlot.removeTrace();
     const n = this.selectedRois[this.selectedRois.length - 1];
-    this.singlePlot.drawTimeSeries(n), Ne();
+    this.singlePlot.drawTimeSeries(n), _e();
   }
   function ur(n, e) {
     return this.selectedRois.reduce((o, i, s) => {
@@ -3174,7 +3180,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       drawRois: function() {
         this.selectedRois && this.redrawCanvas();
       },
-      removeOverlaySpinner: Ne
+      removeOverlaySpinner: _e
     },
     afterDisconnect: {
       removeEventListeners: lr
@@ -3311,7 +3317,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     `;
   }
   async function Gn() {
-    if (We(), !(await window.pywebview.api.shutdown()).ok) return Ne(), this.ext.messenger.setMessage({
+    if (We(), !(await window.pywebview.api.shutdown()).ok) return _e(), this.ext.messenger.setMessage({
       msg: "Something went wrong. Failed to shutdown.",
       status: "danger"
     });
@@ -3398,7 +3404,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       location.reload();
       return;
     }
-    Ne(), this.ext.messenger.setMessage({
+    _e(), this.ext.messenger.setMessage({
       msg: n.message,
       status: n.status
     });
@@ -3615,24 +3621,24 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             <div>
                 <div class="row vh-100 mx-auto">
                     <form id="configurationsForm">
-                        <div class="col-12" data-bind="preferences">
+                        <div class="col-12" data-bind="app.preferences">
                             <div class="m-3">
                                 <div class="row g-3 mb-2">
                                     <div class="col-12 col-md-8 mb-3">
                                         <label for="project_name" class="form-label">Experiment name</label>
-                                        <input value="${this.preferences.project_name}" type="text" name="project_name" 
+                                        <input value="{{=this.preferences.project_name}}" type="text" name="project_name" 
                                         class="form-control" id="project_name" placeholder="Project name">
                                     </div>
                                     <div class="col-12 col-md-4 mb-3">
                                         <label for="sampling" class="form-label">Sampling [Hz]</label>
-                                        <input value="${this.preferences.sampling}" type="number" min="0" max="1000" step="0.1" 
+                                        <input value="{{=this.preferences.sampling}}" type="number" min="0" max="1000" step="0.1" 
                                         name="sampling" class="form-control" id="sampling" placeholder="Sampling rate (Hz)">
                                     </div>
                                 </div>
                                 <div class="row g-3 mb-2">
                                     <div class="col-12 col-md-6 mb-3">
                                         <label for="px_to_um" class="form-label">Coordinate transform (px to um)</label>
-                                        <input value="${this.preferences.px_to_um}" type="number" min="0.01" max="100" 
+                                        <input value="{{=this.preferences.px_to_um}}" type="number" min="0.01" max="100" 
                                         step="0.01" name="px_to_um" class="form-control" id="px_to_um" placeholder="Coordinate transform">
                                     </div>
                                 </div>
@@ -3861,7 +3867,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function ue(n) {
     return ze(n) === "object";
   }
-  function Ie(n) {
+  function Ne(n) {
     return ze(n) === "string";
   }
   function jr(n) {
@@ -4186,7 +4192,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     }
     static containsOnlyInlineElements(e) {
       let t;
-      Ie(e) ? (t = document.createElement("div"), t.innerHTML = e) : t = e;
+      Ne(e) ? (t = document.createElement("div"), t.innerHTML = e) : t = e;
       const o = (i) => !me.blockElements.includes(i.tagName.toLowerCase()) && Array.from(i.children).every(o);
       return Array.from(t.children).every(o);
     }
@@ -4199,7 +4205,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       ], []);
     }
     static getHolder(e) {
-      return Ie(e) ? document.getElementById(e) : e;
+      return Ne(e) ? document.getElementById(e) : e;
     }
     static isAnchor(e) {
       return e.tagName.toLowerCase() === "a";
@@ -4331,7 +4337,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       this.subscribers = {};
     }
   }
-  function Oe(n) {
+  function Ae(n) {
     Object.setPrototypeOf(this, {
       get id() {
         return n.id;
@@ -4613,7 +4619,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   function uo(n, e) {
     if (!n.conversionConfig) return false;
     const t = n.conversionConfig[e];
-    return Q(t) || Ie(t);
+    return Q(t) || Ne(t);
   }
   function It(n, e) {
     return uo(n.tool, e);
@@ -4643,15 +4649,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
   }
   function ta(n, e) {
     const t = e == null ? void 0 : e.export;
-    return Q(t) ? t(n) : Ie(t) ? n[t] : (t !== void 0 && z("Conversion \xABexport\xBB property must be a string or function. String means key of saved data object to export. Function should export processed string to export."), "");
+    return Q(t) ? t(n) : Ne(t) ? n[t] : (t !== void 0 && z("Conversion \xABexport\xBB property must be a string or function. String means key of saved data object to export. Function should export processed string to export."), "");
   }
   function Sn(n, e, t) {
     const o = e == null ? void 0 : e.import;
-    return Q(o) ? o(n, t) : Ie(o) ? {
+    return Q(o) ? o(n, t) : Ne(o) ? {
       [o]: n
     } : (o !== void 0 && z("Conversion \xABimport\xBB property must be a string or function. String means key of tool data to import. Function accepts a imported string and return composed tool data."), {});
   }
-  var G = ((n) => (n.Default = "default", n.Separator = "separator", n.Html = "html", n))(G || {}), Ae = ((n) => (n.APPEND_CALLBACK = "appendCallback", n.RENDERED = "rendered", n.MOVED = "moved", n.UPDATED = "updated", n.REMOVED = "removed", n.ON_PASTE = "onPaste", n))(Ae || {});
+  var G = ((n) => (n.Default = "default", n.Separator = "separator", n.Html = "html", n))(G || {}), Ie = ((n) => (n.APPEND_CALLBACK = "appendCallback", n.RENDERED = "rendered", n.MOVED = "moved", n.UPDATED = "updated", n.REMOVED = "removed", n.ON_PASTE = "onPaste", n))(Ie || {});
   class de extends yt {
     constructor({ id: e = zr(), data: t, tool: o, readOnly: i, tunesData: s }, r) {
       super(), this.cachedInputs = [], this.toolRenderedElement = null, this.tunesInstances = /* @__PURE__ */ new Map(), this.defaultTunesInstances = /* @__PURE__ */ new Map(), this.unavailableTunesData = {}, this.inputIndex = 0, this.editorEventBus = null, this.handleFocus = () => {
@@ -4668,7 +4674,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             y
           ].some((T) => (k.isElement(T) || (T = T.parentElement), T && T.closest('[data-mutation-free="true"]') !== null));
         })), g && (this.dropInputsCache(), this.updateCurrentInput(), this.toggleInputsEmptyMark(), this.call("updated"), this.emit("didMutated", this));
-      }, this.name = o.name, this.id = e, this.settings = o.settings, this.config = o.settings.config || {}, this.editorEventBus = r || null, this.blockAPI = new Oe(this), this.tool = o, this.toolInstance = o.create(t, this.blockAPI, i), this.tunes = o.tunes, this.composeTunes(s), this.holder = this.compose(), window.requestIdleCallback(() => {
+      }, this.name = o.name, this.id = e, this.settings = o.settings, this.config = o.settings.config || {}, this.editorEventBus = r || null, this.blockAPI = new Ae(this), this.tool = o, this.toolInstance = o.create(t, this.blockAPI, i), this.tunes = o.tunes, this.composeTunes(s), this.holder = this.compose(), window.requestIdleCallback(() => {
         this.watchBlockMutations(), this.addInputEvents(), this.toggleInputsEmptyMark();
       });
     }
@@ -4907,7 +4913,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           needToFocus: s,
           replace: r
         });
-        return new Oe(d);
+        return new Ae(d);
       }, this.composeBlockData = async (e) => {
         const t = this.Editor.Tools.blockTools.get(e);
         return new de({
@@ -4921,7 +4927,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         const { BlockManager: i } = this.Editor, s = i.getBlockById(e);
         if (s === void 0) throw new Error(`Block with id "${e}" not found`);
         const r = await i.update(s, t, o);
-        return new Oe(r);
+        return new Ae(r);
       }, this.convert = async (e, t, o) => {
         var i, s;
         const { BlockManager: r, Tools: l } = this.Editor, d = r.getBlockById(e);
@@ -4931,7 +4937,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         const b = ((i = h == null ? void 0 : h.conversionConfig) == null ? void 0 : i.export) !== void 0, v = ((s = g.conversionConfig) == null ? void 0 : s.import) !== void 0;
         if (b && v) {
           const w = await r.convert(d, t, o);
-          return new Oe(w);
+          return new Ae(w);
         } else {
           const w = [
             b ? false : At(d.name),
@@ -4946,7 +4952,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
           tool: s || this.config.defaultBlock,
           data: r
         }));
-        return this.Editor.BlockManager.insertMany(o, t), o.map((i) => new Oe(i));
+        return this.Editor.BlockManager.insertMany(o, t), o.map((i) => new Ae(i));
       };
     }
     get methods() {
@@ -4992,11 +4998,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         we("There is no block at index `" + e + "`", "warn");
         return;
       }
-      return new Oe(t);
+      return new Ae(t);
     }
     getById(e) {
       const t = this.Editor.BlockManager.getBlockById(e);
-      return t === void 0 ? (we("There is no block with id `" + e + "`", "warn"), null) : new Oe(t);
+      return t === void 0 ? (we("There is no block with id `" + e + "`", "warn"), null) : new Ae(t);
     }
     getBlockByElement(e) {
       const t = this.Editor.BlockManager.getBlock(e);
@@ -5004,7 +5010,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         we("There is no block corresponding to element `" + e + "`", "warn");
         return;
       }
-      return new Oe(t);
+      return new Ae(t);
     }
     swap(e, t) {
       z("`blocks.swap()` method is deprecated and will be removed in the next major release. Use `block.move()` method instead", "info"), this.Editor.BlockManager.swap(e, t);
@@ -5407,16 +5413,16 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             }
             if (S.singleton) {
               var ie = b++;
-              L = g || (g = q(S)), D = _e3.bind(null, L, ie, false), Y = _e3.bind(null, L, ie, true);
+              L = g || (g = q(S)), D = Be.bind(null, L, ie, false), Y = Be.bind(null, L, ie, true);
             } else O.sourceMap && typeof URL == "function" && typeof URL.createObjectURL == "function" && typeof URL.revokeObjectURL == "function" && typeof Blob == "function" && typeof btoa == "function" ? (L = function(H) {
               var pe = document.createElement("link");
               return H.attrs.type === void 0 && (H.attrs.type = "text/css"), H.attrs.rel = "stylesheet", le(pe, H.attrs), W(H, pe), pe;
             }(S), D = (function(H, pe, xe) {
-              var Be = xe.css, st = xe.sourceMap, Xt = pe.convertToAbsoluteUrls === void 0 && st;
-              (pe.convertToAbsoluteUrls || Xt) && (Be = w(Be)), st && (Be += `
+              var Me = xe.css, st = xe.sourceMap, Xt = pe.convertToAbsoluteUrls === void 0 && st;
+              (pe.convertToAbsoluteUrls || Xt) && (Me = w(Me)), st && (Me += `
 /*# sourceMappingURL=data:application/json;base64,` + btoa(unescape(encodeURIComponent(JSON.stringify(st)))) + " */");
               var Kt = new Blob([
-                Be
+                Me
               ], {
                 type: "text/css"
               }), u = H.href;
@@ -5424,8 +5430,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             }).bind(null, L, S), Y = function() {
               U(L), L.href && URL.revokeObjectURL(L.href);
             }) : (L = q(S), D = (function(H, pe) {
-              var xe = pe.css, Be = pe.media;
-              if (Be && H.setAttribute("media", Be), H.styleSheet) H.styleSheet.cssText = xe;
+              var xe = pe.css, Me = pe.media;
+              if (Me && H.setAttribute("media", Me), H.styleSheet) H.styleSheet.cssText = xe;
               else {
                 for (; H.firstChild; ) H.removeChild(H.firstChild);
                 H.appendChild(document.createTextNode(xe));
@@ -5462,7 +5468,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             return J[O] = S, J.filter(Boolean).join(`
 `);
           });
-          function _e3(O, S, L, D) {
+          function Be(O, S, L, D) {
             var Y = L ? "" : D.css;
             if (O.styleSheet) O.styleSheet.cssText = re(S, Y);
             else {
@@ -5623,8 +5629,8 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
             break;
           }
           for (var re = 0; re < y.attributes.length; re += 1) {
-            var _e3 = y.attributes[re];
-            g(_e3, te, y) && (y.removeAttribute(_e3.name), re = re - 1);
+            var Be = y.attributes[re];
+            g(Be, te, y) && (y.removeAttribute(Be.name), re = re - 1);
           }
           this._sanitize(b, y);
         } while (y = w.nextSibling());
@@ -5660,7 +5666,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     return new ga(t).clean(n);
   }
   function bo(n, e) {
-    return Array.isArray(n) ? ma(n, e) : ue(n) ? ba(n, e) : Ie(n) ? va(n, e) : n;
+    return Array.isArray(n) ? ma(n, e) : ue(n) ? ba(n, e) : Ne(n) ? va(n, e) : n;
   }
   function ma(n, e) {
     return n.map((t) => bo(t, e));
@@ -6015,7 +6021,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     return Object.entries(n).forEach(([o, i]) => {
       if (ue(i)) {
         const s = e ? `${e}.${o}` : o;
-        Object.values(i).every((r) => Ie(r)) ? t[o] = s : t[o] = mi(i, s);
+        Object.values(i).every((r) => Ne(r)) ? t[o] = s : t[o] = mi(i, s);
         return;
       }
       t[o] = i;
@@ -7291,7 +7297,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         r = Object.assign(d, t);
       }
       const l = this.api.blocks.insert(e, r, void 0, s, void 0, i.isEmpty);
-      l.call(Ae.APPEND_CALLBACK), this.api.caret.setToBlock(s), this.emit("toolbox-block-added", {
+      l.call(Ie.APPEND_CALLBACK), this.api.caret.setToBlock(s), this.emit("toolbox-block-added", {
         block: l
       }), this.api.toolbar.close();
     }
@@ -8745,11 +8751,11 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         return re.isSingleTag;
       }
     });
-    var _e3 = $t;
+    var Be = $t;
     Object.defineProperty(n, "make", {
       enumerable: true,
       get: function() {
-        return _e3.make;
+        return Be.make;
       }
     });
     var O = Xi;
@@ -9250,14 +9256,14 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         fromIndex: t,
         toIndex: e
       });
-      o.call(Ae.MOVED, l);
+      o.call(Ie.MOVED, l);
     }
     insert(e, t, o = false) {
       if (!this.length) {
         this.push(t);
         return;
       }
-      e > this.length && (e = this.length), o && (this.blocks[e].holder.remove(), this.blocks[e].call(Ae.REMOVED));
+      e > this.length && (e = this.length), o && (this.blocks[e].holder.remove(), this.blocks[e].call(Ie.REMOVED));
       const i = o ? 1 : 0;
       if (this.blocks.splice(e, i, t), e > 0) {
         const s = this.blocks[e - 1];
@@ -9281,13 +9287,13 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
         } else t === 0 && this.workingArea.prepend(o);
         this.blocks.splice(t, 0, ...e);
       } else this.blocks.push(...e), this.workingArea.appendChild(o);
-      e.forEach((i) => i.call(Ae.RENDERED));
+      e.forEach((i) => i.call(Ie.RENDERED));
     }
     remove(e) {
-      isNaN(e) && (e = this.length - 1), this.blocks[e].holder.remove(), this.blocks[e].call(Ae.REMOVED), this.blocks.splice(e, 1);
+      isNaN(e) && (e = this.length - 1), this.blocks[e].holder.remove(), this.blocks[e].call(Ie.REMOVED), this.blocks.splice(e, 1);
     }
     removeAll() {
-      this.workingArea.innerHTML = "", this.blocks.forEach((e) => e.call(Ae.REMOVED)), this.blocks.length = 0;
+      this.workingArea.innerHTML = "", this.blocks.forEach((e) => e.call(Ie.REMOVED)), this.blocks.length = 0;
     }
     insertAfter(e, t) {
       const o = this.blocks.indexOf(e);
@@ -9300,7 +9306,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       return this.blocks.indexOf(e);
     }
     insertToDOM(e, t, o) {
-      t ? o.holder.insertAdjacentElement(t, e.holder) : this.workingArea.appendChild(e.holder), e.call(Ae.RENDERED);
+      t ? o.holder.insertAdjacentElement(t, e.holder) : this.workingArea.appendChild(e.holder), e.call(Ie.RENDERED);
     }
     composeBlockEvent(e, t) {
       return new CustomEvent(e, {
@@ -9430,7 +9436,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       });
       try {
         window.requestIdleCallback(() => {
-          i.call(Ae.ON_PASTE, t);
+          i.call(Ie.ON_PASTE, t);
         });
       } catch (s) {
         z(`${e}: onPaste callback call is failed`, "error", s);
@@ -9588,7 +9594,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     blockDidMutated(e, t, o) {
       const i = new CustomEvent(e, {
         detail: {
-          target: new Oe(t),
+          target: new Ae(t),
           ...o
         }
       });
@@ -10072,7 +10078,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       Array.from(e.values()).forEach(this.processTool);
     }
     collectTagNames(e) {
-      return Ie(e) ? [
+      return Ne(e) ? [
         e
       ] : ue(e) ? Object.keys(e) : [];
     }
@@ -11621,7 +11627,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
     validate() {
       const { holderId: e, holder: t } = this.config;
       if (e && t) throw Error("\xABholderId\xBB and \xABholder\xBB param can't assign at the same time.");
-      if (Ie(t) && !k.get(t)) throw Error(`element with ID \xAB${t}\xBB is missing. Pass correct holder's ID.`);
+      if (Ne(t) && !k.get(t)) throw Error(`element with ID \xAB${t}\xBB is missing. Pass correct holder's ID.`);
       if (t && ue(t) && !k.isElement(t)) throw Error("\xABholder\xBB value must be an Element node");
     }
     init() {
@@ -12644,7 +12650,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
       }
     },
     afterInit: {
-      removeOverlaySpinner: Ne
+      removeOverlaySpinner: _e
     }
   });
   async function mu() {
