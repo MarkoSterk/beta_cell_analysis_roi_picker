@@ -24,7 +24,10 @@ uv run pyinstaller \
   --add-data "backend/logs;backend/logs" \
   --add-data "backend/templates;backend/templates" \
   --add-data "backend/static/temp_files;backend/static/temp_files" \
-  --add-data "dist/RoiPicker_win.exe.config;." \
+  --add-data "RoiPicker_win.exe.config;." \
   --collect-submodules reportlab.graphics.barcode \
   --noconfirm \
   run_prod.py
+
+uv run pyinstaller RoiPicker_win.spec --distpath dist/windows --noconfirm
+move dist\windows\RoiPicker_win\_internal\RoiPicker_win.exe.config dist\windows\RoiPicker_win\
