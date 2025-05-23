@@ -6,6 +6,7 @@ dist/
 wheels/
 *.egg-info
 *.mp4
+application.log
 
 # Virtual environments
 .venv
