@@ -93,7 +93,7 @@ def frames_to_video(data: torch.Tensor, islet):
         output_path,
         fps=fps,
         codec='libx264',
-        format='mp4',
+        format='mp4', # type: ignore
         pixelformat='yuv420p'
     )
     avg_frame: np.ndarray = np.zeros((height, width), float)

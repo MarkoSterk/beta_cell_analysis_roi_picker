@@ -136,7 +136,7 @@ class Islet:
         Saves preferences
         """
         self.preferences = preferences
-    
+
     def project_name(self) -> str:
         """Returns current project name"""
         return self.preferences["project_name"]
@@ -183,7 +183,7 @@ class Islet:
         }
 
     def get_roi_time_series(self, roi_type: str,
-                            roi_data: dict[str, int]) -> ResponseDict[tuple[torch.Tensor, list[float]]]:
+        roi_data: dict[str, int]) -> ResponseDict[tuple[torch.Tensor, list[float]]]:
         """
         Gets ROI time series based on roi coordinates
         """
@@ -258,7 +258,7 @@ class Islet:
             for i, roi in enumerate(self.selected_rois):
                 if isinstance(roi["data"], list):
                     roi["data"] = torch.Tensor(roi["data"])
-                traces[:,i] = roi["data"]
+                traces[:,i] = roi["data"] # type: ignore
             return {
                 "data": traces,
                 "message": "ROI data fetched successfully.",
@@ -277,11 +277,11 @@ class Islet:
         """
         Removes ROI data based on selected index
         """
-        if(len(self.selected_rois)>index>=0):
+        if len(self.selected_rois)>index>=0:
             del self.selected_rois[index]
             self.raw_number_of_cells-=1
-            self.raw_time_series = self.get_all_selected_roi_traces()
-    
+            self.raw_time_series = self.get_all_selected_roi_traces() # type: ignore
+
     def get_selected_roi_data(self, index: int) -> dict[str, torch.Tensor|dict] | None:
         """
         Returns selected roi data based on index
@@ -389,7 +389,7 @@ class Islet:
         """
         Sets new process status
         """
-        self.process_status = status
+        self.process_status = status # type: ignore
 
     def get_process_status(self) -> dict[str, float|bool|str]:
         """
