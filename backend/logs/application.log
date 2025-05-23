@@ -9,3 +9,4 @@
 2025-05-22 20:55:11 | DEBUG   | Failed to process LIF file: 0
 2025-05-22 20:56:00 | DEBUG   | Failed to process LIF file: 0
 2025-05-22 20:57:10 | DEBUG   | Failed to process LIF file: unsupported operand type(s) for /: 'float' and 'str'
+2025-05-23 19:48:22 | DEBUG   | No ROIs were selected.
