@@ -38,7 +38,7 @@ def create_app(config: object = Config) -> PyJolt:
 
     @app.on_shutdown
     @app.on_startup
-    def on_startup_shutdown(app):
+    def on_startup_shutdown(_):
         """
         Runs on startup/shutdown
         """

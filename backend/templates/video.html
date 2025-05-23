@@ -26,7 +26,7 @@
       <div class="row mt-3">
         <!-- video -->
         <div class="col-12 col-lg-6 col-xl-12">
-          <small>Select roi (left-click + drag), View roi (left-click), Delete roi (D + left-click)</small>
+          <small>Select roi (right-click + drag), View roi (left-click), Delete roi (D + left-click)</small>
           <div class="video-container">
             <video loop
                    id="video"
@@ -50,7 +50,7 @@
   
         <!-- avg frame -->
         <div class="col-12 col-lg-6 col-xl-12">
-          <small></small>
+          <small>&nbsp;</small>
           <div class="avg-frame-container">
             <img src="{{ protocol }}://{{ host }}:{{ port }}{{ url_for('static', path='avg_frame.png') }}"
                  width="{{ width }}"
@@ -69,7 +69,7 @@
     </div>
   
     <!-- RIGHT PANEL (plots) -->
-    <div class="col-12 col-xl-6 mx-auto m-1">
+    <div class="col-12 col-xl-6 mx-auto m-1 mt-5">
       <div>
         <small class="d-block text-muted fw-bold">All</small>
         <ts-plot-all style="width: 100%;"

@@ -5,6 +5,7 @@ the current project
 from io import BufferedReader
 import os
 import gc
+from pathlib import Path
 import pickle
 import uuid
 
@@ -88,7 +89,7 @@ class Islet:
         host = self._app.get_conf("HOST")
         port = self._app.get_conf("PORT")
         video: str = self._app.get_conf("LIF_VIDEO")
-        video = video.replace("%", self.video_hash)
+        video = video.replace("%", self.video_hash) # type: ignore
         url = f"{protocol}://{host}:{port}/static/{video}"
         return url
 
@@ -100,16 +101,27 @@ class Islet:
         """Creates video hash"""
         return str(uuid.uuid4())
 
+    def find_mp4_files(self) -> list[str]:
+        """
+        Recursively find all .mp4 files in the given folder.
+
+        :return: A list of full file paths for all .mp4 files found.
+        """
+        app_path: str = self._app.get_conf("APP_PATH")
+        static_folder: str = os.path.join(app_path, "static")
+        folder_path = Path(static_folder)
+        # Use rglob for recursive search; change to glob('*.mp4') for top-level only
+        mp4_files: list[str] = [str(path) for path in folder_path.rglob('*.mp4')]
+        return mp4_files
+
     def delete_video_and_avg_frame(self):
         """
         Deletes video and average frame
         """
         app_path: str = self._app.get_conf("APP_PATH")
-        video_name: str = self._app.get_conf("LIF_VIDEO")
-        if self.video_hash is not None:
-            video_name = video_name.replace("%", self.video_hash)
-        video_path: str = os.path.join(app_path, "static", video_name)
-        delete_file(video_path)
+        video_paths: list[str] = self.find_mp4_files()
+        for path in video_paths:
+            delete_file(path)
         img_path: str = os.path.join(app_path, "static", self._app.get_conf("AVG_FRAME"))
         delete_file(img_path)
 

@@ -16,7 +16,7 @@ from backend.utilities.utils import get_device
 from backend.configs import Config
 
 
-def create_frames_array(lif: LifFile, islet) -> torch.Tensor:
+def create_frames_array(lif: LifFile, islet) -> torch.Tensor|bool:
     """
     Creates a 3D/4D array from frames of video
     """

@@ -1,6 +1,6 @@
 //WORKS FOR MacOS
 uv run pyinstaller \
-  --name RoiPicker \
+  --name RoiPicker_macos \
   --onedir \
   --windowed \
   --icon=icon.ico \
@@ -19,6 +19,7 @@ uv run pyinstaller \
   --name RoiPicker \
   --onedir \
   --windowed \
+  --icon=icon.ico \
   --distpath dist/windows \
   --add-data "backend/static;backend/static" \
   --add-data "backend/logs;backend/logs" \
