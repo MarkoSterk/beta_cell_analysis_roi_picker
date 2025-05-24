@@ -27,6 +27,9 @@ First a terminal window will open and then the actual application window will st
 is still in the testing phase the terminal window can be used to monitor the application and report
 any potential bugs. **If you find any bugs, please report them in the Issues section of the github repositorty**.
 
+#### Test data
+The onedrive folder also contains a test `.lif` file called `Experiment3-rampa.lif`which can be used for testing.
+
 ---
 
 ## Requirements
