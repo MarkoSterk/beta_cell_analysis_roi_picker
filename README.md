@@ -44,7 +44,7 @@ The onedrive folder also contains a test `.lif` file called `Experiment3-rampa.l
 
 1. **Start or Open a Project**  
    - To begin with existing data, choose _File → Open Project_ and select your saved `.pkl` file.  
-   - To load a new dataset, choose _File → Import LIF_ and pick your `.lif` file (or drop it into the dropzone).  
+   - To load a new dataset, choose _File → Import LIF_ and pick your `.lif` file (or click on the large button on the main screen).  
 
 2. **Set Your Preferences**  
 The app tries to load the following meta data from the provided `.lif` file. If this is unsuccessful you can set
