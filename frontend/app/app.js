@@ -12,7 +12,8 @@ const app = new App({
         video: null,
         rois: null,
         preferences: null,
-        quicknotes: null
+        quicknotes: null,
+        suppress: false
     },
     elements,
     properties,
@@ -55,7 +56,22 @@ const app = new App({
         },
         suppressContextMenu: function(){
             //Prevents right click
+            document.addEventListener("keydown", (event) => {
+                if(event.key == "q" || event.key == "Q"){
+                    event.preventDefault();
+                    this.setData("suppress", true)
+                }
+            })
+            document.addEventListener("keyup", (event) => {
+                if(event.key == "q" || event.key == "Q"){
+                    event.preventDefault();
+                    this.setData("suppress", false)
+                }
+            })
             document.addEventListener('contextmenu', event => {
+                if(!this.getData("suppress")){
+                    return;
+                }
                 event.preventDefault();
             });
         }

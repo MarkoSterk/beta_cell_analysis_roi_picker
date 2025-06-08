@@ -3,23 +3,39 @@
     <div class="col-12 col-xl-5 mx-auto m-1">
       <!-- your play/pause controls -->
       <div id="video-controls" class="video-controls" style="width: {{ width }}px;">
-        <button id="play-pause"
-                jolt-click="playPauseVideo"
-                class="btn btn-sm btn-dark rounded text-center"
-                style="width: 59px;">
-          Play
-        </button>
-        <div class="video-seekbar" jolt-click="seek">
-          <div id="seekbar" class="seekbar"></div>
-        </div>
-        <div class="playback-slider">
-          <label for="playback-speed">Speed: 1.0x</label>
-          <input type="range"
-                 min="0.5" {% if system == 'Darwin' %} max="2.0" {% else %} max="16.0" {%endif%} value="1.0" step="0.5"
-                 class="slider"
-                 id="playback-speed"
-                 jolt-change="setPlaybackSpeed">
-        </div>
+          <button id="play-pause"
+                  jolt-click="playPauseVideo"
+                  class="btn btn-sm btn-dark rounded text-center mt-3"
+                  style="width: 59px;">
+            Play
+          </button>
+          <div class="video-seekbar mt-3" jolt-click="seek">
+            <div id="seekbar" class="seekbar"></div>
+          </div>
+          <div class="playback-slider text-center mx-1">
+            <label 
+              for="playback-speed"
+              class="form-label d-block small mb-1"
+            >
+              Speed: 1.0x
+            </label>
+
+            <input
+              type="range"
+              id="playback-speed"
+              class="form-range mx-auto"
+              min="0.5"
+              {% if system == 'Darwin' %}
+                max="2.0"
+              {% else %}
+                max="16.0"
+              {% endif %}
+              value="1.0"
+              step="0.5"
+              jolt-change="setPlaybackSpeed"
+            >
+          </div>
+          <button class="btn btn-sm btn-dark rounded text-center mt-3" type="button" jolt-click="resetScale">Zoom out</button>
       </div>
   
       <!-- responsive row for your two canvases -->
@@ -27,9 +43,10 @@
         <!-- video -->
         <div class="col-12 col-lg-6 col-xl-12">
           <small>Select roi (right-click + drag), View roi (left-click), Delete roi (D + left-click)</small>
-          <div class="video-container">
+          <div class="video-container" style="width: {{width}}px; height: {{height}}px;">
             <video loop
                    id="video"
+                   class="video-player"
                    width="{{ width }}"
                    height="{{ height }}"
                    jolt-timeupdate="updateSeekBar"
@@ -38,12 +55,13 @@
                       type="video/mp4">
             </video>
             <canvas id="video-canvas"
-                    class="canvas"
+                    class="canvas video-canvas"
                     width="{{ width }}"
                     height="{{ height }}"
                     jolt-mousedown="canvasClick"
                     jolt-mousemove="canvasMouseMove"
-                    jolt-mouseup="canvasMouseUp">
+                    jolt-mouseup="canvasMouseUp"
+                    jolt-wheel="wheelHandler">
             </canvas>
           </div>
         </div>

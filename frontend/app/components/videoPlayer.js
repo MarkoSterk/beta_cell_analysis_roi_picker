@@ -2,6 +2,7 @@ import { ElementFactory, defineValue, querySelector, dataEventEnum, RequestMaker
 import { startOverlaySpinner, removeOverlaySpinner } from "../utilities/spinner";
 
 function getRoiData(ellipseData){
+    console.log("Ellipse data: ", ellipseData)
     fetch("/api/v1/roi/", {
         method: "POST",
         headers: {
@@ -40,9 +41,7 @@ async function canvasClick(elem, event){
     switch (event.button){
         case 0:
             if(this.isDPressed == true){
-                const rect = elem.getBoundingClientRect();
-                let clickX = event.clientX - rect.left;
-                let clickY = event.clientY - rect.top;
+                let [clickX, clickY] = this.coordinateTransform(elem, event);
                 const index = this.findClickedEllipseIndex(clickX, clickY);
                 if(index != null){
                     let response = await fetch(`/api/v1/roi/${index}`, {method: "DELETE"})
@@ -60,9 +59,7 @@ async function canvasClick(elem, event){
                     return;
                 }
             }else{
-                const rect = elem.getBoundingClientRect();
-                let clickX = event.clientX - rect.left;
-                let clickY = event.clientY - rect.top;
+                let [clickX, clickY] = this.coordinateTransform(elem, event);
                 const index = this.findClickedEllipseIndex(clickX, clickY);
                 if(index != null){
                     this.singlePlot.removeTrace();
@@ -71,9 +68,9 @@ async function canvasClick(elem, event){
             }
             break;
         case 2:
-            const rect = elem.getBoundingClientRect();
-            this.startX = event.clientX - rect.left;
-            this.startY = event.clientY - rect.top;
+            let [clickX, clickY] = this.coordinateTransform(elem, event);
+            this.startX = clickX;
+            this.startY = clickY;
             this.isDrawing = true;
             break;
         default:
@@ -81,13 +78,22 @@ async function canvasClick(elem, event){
     }
 }
 
+function coordinateTransform(elem, event){
+    const rect = elem.getBoundingClientRect();
+    const scaleX = rect.width  / this.canvas.width;
+    const scaleY = rect.height / this.canvas.height;
+    const xInBox = event.clientX - rect.left;
+    const yInBox = event.clientY - rect.top;
+    let clickX = xInBox / scaleX;
+    let clickY = yInBox / scaleY;
+    return [clickX, clickY];
+}
+
 function canvasMouseMove(elem, event){
     if (this.isDrawing) {
         // Clear and redraw canvas with all ellipses
         this.redrawCanvas();
-        const rect = elem.getBoundingClientRect();
-        const endX = event.clientX - rect.left;
-        const endY = event.clientY - rect.top;
+        const [endX, endY] = this.coordinateTransform(elem, event);
         // Draw the current ellipse without saving
         this.drawEllipse(this.startX, this.startY, endX, endY, false);
     }
@@ -99,9 +105,7 @@ function canvasMouseUp(elem, event){
             break;
         case 2:
             if (this.isDrawing) {
-                const rect = elem.getBoundingClientRect();
-                const endX = event.clientX - rect.left;
-                const endY = event.clientY - rect.top;
+                const [endX, endY] = this.coordinateTransform(elem, event);
                 if((Math.abs(endX - this.startX) > 3) || (Math.abs(endY - this.startY) > 3)){
                     // Get time series of selected ellipse
                     this.getRoiData({
@@ -183,6 +187,9 @@ export async function playPauseVideo(elem, event){
 }
 
 async function keyDownHandler(e){
+    if(e.key == "Control"){
+        this.ctrlBtn = true;
+    }
     if(e.key === 'D' || e.key === 'd'){
         e.preventDefault();
         this.isDPressed = true;
@@ -190,6 +197,9 @@ async function keyDownHandler(e){
 }
 
 async function keyUpHandler(e){
+    if(e.key == "Control"){
+        this.ctrlBtn = false;
+    }
     if(e.key === 'D' || e.key === 'd'){
         this.isDPressed = false;
     }
@@ -270,6 +280,37 @@ export async function tryNativeExport(elem, event, args){
     })
 }
 
+async function wheelHandler(elem, event, args){
+
+    if (!this.ctrlBtn) return;
+
+    // 1) normalize & prevent
+    let delta = event.deltaY;
+    if (event.deltaMode !== 0) delta *= 16;
+    event.preventDefault();
+
+    // 2) compute new scale (multiplicative)
+    const ZOOM_STEP = 1.1;
+    const factor   = delta < 0 ? ZOOM_STEP : 1/ZOOM_STEP;
+    let newScale = this.currentScale * factor;
+
+    // 3) clamp
+    newScale = Math.max(1, Math.min(4, newScale));
+
+    this.currentScale = newScale
+    const transform = `scale(${newScale})`
+    this.video.style.transform = transform;
+    this.canvas.style.transform = transform;
+}
+
+function resetScale(elem, event, args){
+    elem.blur();
+    this.currentScale = 1.0;
+    const transform = `scale(${this.currentScale})`
+    this.video.style.transform = transform;
+    this.canvas.style.transform = transform;
+}
+
 const videoPlayer = ElementFactory({
     tagName: "video-player",
     markup: async function(){
@@ -293,7 +334,10 @@ const videoPlayer = ElementFactory({
         findClickedEllipseIndex,
         removeTrace,
         redrawAllTS,
-        tryNativeExport
+        tryNativeExport,
+        wheelHandler,
+        coordinateTransform,
+        resetScale
     },
     beforeInit: {
         startOverlaySpinner,
@@ -327,6 +371,8 @@ const videoPlayer = ElementFactory({
         removeEventListeners
     },
     define: {
+        ctrlBtn: defineValue(false),
+        currentScale: defineValue(1.0),
         video: querySelector("video"),
         seekbar: querySelector(".seekbar"),
         playPauseButton: querySelector("#play-pause"),

@@ -1,5 +1,4 @@
 import { ElementFactory, html, defineValue, querySelector } from "jolt-ui";
-import { startSimpleSpinner, removeSimpleSpinner } from "../utilities/spinner";
 
 async function tsPlotMarkup(){
     return html`
